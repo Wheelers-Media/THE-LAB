@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- STREAMING_CHUNK:Configuring document head and Tailwind CSS... -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The LAB | Visual Identity System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#000000',
+                        carbon: '#0D0D12',
+                        edge: '#1E1E28',
+                        labBlue: '#0066FF',
+                        labCyan: '#00E5FF',
+                        textMain: '#FFFFFF',
+                        textBody: '#A0A0AB',
+                    },
+                    fontFamily: {
+                        heading: ['Manrope', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'oled-blue': '0 0 20px rgba(0, 102, 255, 0.4)',
+                        'oled-cyan': '0 0 20px rgba(0, 229, 255, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #000000; color: #A0A0AB; }
+        .grid-bg {
+            background-image: linear-gradient(rgba(0, 102, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 102, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .glass-panel {
+            background: rgba(13, 13, 18, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="font-body antialiased selection:bg-labBlue selection:text-white pb-20">
+
+    <!-- STREAMING_CHUNK:Rendering the Header Section... -->
+    <!-- HEADER SECTION -->
+    <header class="border-b border-edge bg-void relative overflow-hidden">
+        <div class="absolute inset-0 grid-bg opacity-40 pointer-events-none"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-32 bg-labBlue opacity-10 blur-[100px] pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 py-16 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                <div>
+                    <div class="text-labBlue font-heading font-bold tracking-[0.2em] text-xs uppercase mb-4 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-labBlue animate-pulse shadow-oled-blue"></span>
+                        Visual Identity System 1.0
+                    </div>
+                    <div class="py-2 bg-carbon/50 p-4 rounded-xl border border-edge inline-block mb-4">
+                        <img src="image_22bc04.png" alt="The LAB" class="h-16 md:h-24 w-auto object-contain">
+                    </div>
+                    <p class="mt-2 text-xl text-gray-400 max-w-2xl font-light">
+                        <strong class="text-white font-medium">Where Grit Meets Luxury.</strong> The strategic blueprint for deep OLED aesthetics, bridging high-volume diesel e-commerce with bespoke local detailing.
+                    </p>
+                </div>
+                <div class="text-right hidden md:block">
+                    <div class="text-sm text-gray-500 mb-1">Architecture</div>
+                    <div class="font-mono text-white text-sm bg-edge px-3 py-1 rounded">Dark Mode Native</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-12 space-y-24">
+
+        <!-- STREAMING_CHUNK:Building Color Palette section... -->
+        <!-- SECTION 01: COLOR PALETTE -->
+        <section>
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-labBlue font-mono text-sm">01</span>
+                <h2 class="text-2xl font-heading font-bold text-white">OLED Core Palette</h2>
+                <div class="h-px bg-edge flex-grow"></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <!-- Color 1: The Void -->
+                <div class="group">
+                    <div class="h-32 rounded-lg bg-void border border-edge shadow-lg relative overflow-hidden group-hover:border-gray-700 transition-colors"></div>
+                    <div class="mt-3">
+                        <p class="text-white font-bold font-heading">The Void</p>
+                        <p class="text-xs font-mono text-gray-500 uppercase">#000000</p>
+                        <p class="text-xs text-gray-500 mt-1">Deep Backgrounds</p>
+                    </div>
+                </div>
+
+                <!-- Color 2: Carbon -->
+                <div class="group">
+                    <div class="h-32 rounded-lg bg-carbon border border-edge shadow-lg relative overflow-hidden group-hover:border-gray-700 transition-colors"></div>
+                    <div class="mt-3">
+                        <p class="text-white font-bold font-heading">Midnight Carbon</p>
+                        <p class="text-xs font-mono text-gray-500 uppercase">#0D0D12</p>
+                        <p class="text-xs text-gray-500 mt-1">Cards / UI Surfaces</p>
+                    </div>
+                </div>
+
+                <!-- Color 3: Signal White -->
+                <div class="group">
+                    <div class="h-32 rounded-lg bg-white border border-gray-200 shadow-lg relative overflow-hidden"></div>
+                    <div class="mt-3">
+                        <p class="text-white font-bold font-heading">Signal White</p>
+                        <p class="text-xs font-mono text-gray-500 uppercase">#FFFFFF</p>
+                        <p class="text-xs text-gray-500 mt-1">Primary Typography</p>
+                    </div>
+                </div>
+
+                <!-- Color 4: LAB Blue -->
+                <div class="group">
+                    <div class="h-32 rounded-lg bg-labBlue border border-labBlue shadow-oled-blue relative overflow-hidden flex items-center justify-center">
+                        <span class="text-white text-xs font-bold tracking-widest opacity-50">PRIMARY</span>
+                    </div>
+                    <div class="mt-3">
+                        <p class="text-labBlue font-bold font-heading">Performance Blue</p>
+                        <p class="text-xs font-mono text-gray-500 uppercase">#0066FF</p>
+                        <p class="text-xs text-gray-500 mt-1">Primary Actions / Branding</p>
+                    </div>
+                </div>
+
+                <!-- Color 5: LAB Cyan -->
+                <div class="group">
+                    <div class="h-32 rounded-lg bg-labCyan border border-labCyan shadow-oled-cyan relative overflow-hidden flex items-center justify-center">
+                        <span class="text-black text-xs font-bold tracking-widest opacity-50">ACCENT</span>
+                    </div>
+                    <div class="mt-3">
+                        <p class="text-labCyan font-bold font-heading">Electric Cyan</p>
+                        <p class="text-xs font-mono text-gray-500 uppercase">#00E5FF</p>
+                        <p class="text-xs text-gray-500 mt-1">Highlights / Hover States</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STREAMING_CHUNK:Constructing Typography section... -->
+        <!-- SECTION 02: TYPOGRAPHY -->
+        <section>
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-labBlue font-mono text-sm">02</span>
+                <h2 class="text-2xl font-heading font-bold text-white">Typography System</h2>
+                <div class="h-px bg-edge flex-grow"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div class="space-y-8">
+                    <div>
+                        <span class="text-xs text-labBlue font-mono mb-3 block tracking-widest">DISPLAY / HEADINGS</span>
+                        <h1 class="text-4xl md:text-5xl font-heading font-extrabold text-white leading-tight uppercase">
+                            Uncompromising Power.<br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-labBlue to-labCyan">Flawless Aesthetics.</span>
+                        </h1>
+                    </div>
+                    <div>
+                        <span class="text-xs text-labBlue font-mono mb-3 block tracking-widest">BODY COPY</span>
+                        <p class="text-textBody text-lg leading-relaxed">
+                            We operate in the space where heavy-duty diesel performance meets high-end vehicle preservation. Whether you need a 6.7L full delete kit shipped across the border or a pristine ceramic coating in Fort St. John, we engineer perfection.
+                        </p>
+                    </div>
+                </div>
+                <div class="glass-panel p-8 rounded-xl border border-edge">
+                    <div class="flex justify-between items-center mb-6 border-b border-edge pb-4">
+                        <span class="text-white font-heading font-bold uppercase tracking-wider text-sm">Font Families</span>
+                        <span class="text-gray-500 font-mono text-xs">CSS Classes</span>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="flex justify-between items-center group">
+                            <div>
+                                <p class="text-3xl font-heading font-bold text-white mb-1">Manrope</p>
+                                <p class="text-sm text-gray-500">Bold / ExtraBold (700-800)</p>
+                            </div>
+                            <span class="text-xs font-mono bg-edge px-3 py-2 rounded text-gray-300 border border-transparent group-hover:border-gray-600 transition-colors">font-heading</span>
+                        </div>
+                        <div class="flex justify-between items-center group">
+                            <div>
+                                <p class="text-3xl font-body font-normal text-white mb-1">Inter</p>
+                                <p class="text-sm text-gray-500">Light / Regular / Medium</p>
+                            </div>
+                            <span class="text-xs font-mono bg-edge px-3 py-2 rounded text-gray-300 border border-transparent group-hover:border-gray-600 transition-colors">font-body</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STREAMING_CHUNK:Implementing Logo Physics... -->
+        <!-- SECTION 03: LOGO PHYSICS (DO'S AND DON'TS) -->
+        <section>
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-labBlue font-mono text-sm">03</span>
+                <h2 class="text-2xl font-heading font-bold text-white">Logo Application</h2>
+                <div class="h-px bg-edge flex-grow"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                
+                <!-- DO: Dark Mode -->
+                <div class="flex flex-col">
+                    <div class="bg-black border border-green-900/50 p-10 flex items-center justify-center rounded-t-lg h-48 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,102,255,0.1)_0,transparent_50%)]"></div>
+                        <div class="absolute top-4 left-4 bg-green-500 text-black text-[10px] font-bold px-2 py-1 rounded uppercase">Correct</div>
+                        <img src="image_22bc04.png" alt="The LAB Logo" class="max-w-[200px] w-full h-auto object-contain relative z-10 drop-shadow-2xl">
+                    </div>
+                    <div class="bg-carbon p-5 rounded-b-lg border-x border-b border-edge">
+                        <p class="text-white font-bold text-sm mb-1">Primary Display</p>
+                        <p class="text-xs text-gray-400">Always use the provided white stroke logo verbatim on <code class="text-green-400 font-mono">#000000</code> backgrounds.</p>
+                    </div>
+                </div>
+
+                <!-- DO: Over Imagery -->
+                <div class="flex flex-col">
+                    <div class="bg-edge border border-green-900/50 p-10 flex items-center justify-center rounded-t-lg h-48 relative overflow-hidden">
+                        <!-- Simulated image background -->
+                        <div class="absolute inset-0 bg-gray-800 opacity-50" style="background-image: repeating-linear-gradient(45deg, #111 25%, transparent 25%, transparent 75%, #111 75%, #111), repeating-linear-gradient(45deg, #111 25%, #000 25%, #000 75%, #111 75%, #111); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
+                        <div class="absolute inset-0 bg-black/60"></div>
+                        
+                        <div class="absolute top-4 left-4 bg-green-500 text-black text-[10px] font-bold px-2 py-1 rounded uppercase">Correct</div>
+                        <img src="image_22bc04.png" alt="The LAB Logo" class="max-w-[200px] w-full h-auto object-contain relative z-10">
+                    </div>
+                    <div class="bg-carbon p-5 rounded-b-lg border-x border-b border-edge">
+                        <p class="text-white font-bold text-sm mb-1">Photographic Overlay</p>
+                        <p class="text-xs text-gray-400">Ensure a minimum 60% black overlay on images behind the logo for maximum contrast.</p>
+                    </div>
+                </div>
+
+                <!-- DON'T: Colorization -->
+                <div class="flex flex-col">
+                    <div class="bg-white border border-red-900/50 p-10 flex items-center justify-center rounded-t-lg h-48 relative">
+                        <div class="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase">Don't</div>
+                        <div class="p-4 bg-black rounded">
+                           <img src="image_22bc04.png" alt="The LAB Logo" class="max-w-[150px] w-full h-auto object-contain sepia hue-rotate-180 saturate-200">
+                        </div>
+                    </div>
+                    <div class="bg-carbon p-5 rounded-b-lg border-x border-b border-edge">
+                        <p class="text-white font-bold text-sm mb-1">Color Alteration</p>
+                        <p class="text-xs text-gray-400">Never tint, colorize, or invert the provided <code class="text-red-400 font-mono">image_22bc04.png</code>. Keep it pure white.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- STREAMING_CHUNK:Designing Dual CTA Architecture... -->
+        <!-- SECTION 04: UI COMPONENTS & CTA -->
+        <section>
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-labBlue font-mono text-sm">04</span>
+                <h2 class="text-2xl font-heading font-bold text-white">Dual-Identity CTAs</h2>
+                <div class="h-px bg-edge flex-grow"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- The Parts Store CTAs -->
+                <div class="glass-panel p-8 rounded-xl border border-edge relative overflow-hidden group">
+                    <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+                        <svg class="w-64 h-64 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                    </div>
+                    <div class="relative z-10">
+                        <span class="text-xs font-bold text-labBlue tracking-widest uppercase mb-2 block">Global E-Commerce</span>
+                        <h3 class="text-2xl font-heading font-extrabold text-white mb-2">The Parts Store</h3>
+                        <p class="text-sm text-gray-400 mb-8">High-volume transactional logic. Designed for quick YMM (Year/Make/Model) lookups and aggressive conversions.</p>
+                        
+                        <div class="space-y-4">
+                            <button class="w-full bg-labBlue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-lg transition-all active:scale-[0.98] uppercase tracking-wide text-sm shadow-oled-blue flex justify-center items-center gap-2">
+                                Shop By Vehicle
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </button>
+                            <button class="w-full bg-transparent border border-edge hover:border-labBlue text-white hover:text-labCyan font-bold py-4 px-6 rounded-lg transition-all uppercase tracking-wide text-sm">
+                                Browse Delete Kits
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Boutique CTAs -->
+                <div class="glass-panel p-8 rounded-xl border border-edge relative overflow-hidden group">
+                    <div class="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+                        <svg class="w-64 h-64 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                    </div>
+                    <div class="relative z-10">
+                        <span class="text-xs font-bold text-gray-400 tracking-widest uppercase mb-2 block">Local Fort St. John, BC</span>
+                        <h3 class="text-2xl font-heading font-extrabold text-white mb-2">The Boutique</h3>
+                        <p class="text-sm text-gray-400 mb-8">Consultative, trust-based logic. Focused on high-ticket service bookings, ceramic coatings, and premium tinting.</p>
+                        
+                        <div class="space-y-4">
+                            <button class="w-full bg-white hover:bg-gray-200 text-black font-extrabold py-4 px-6 rounded-lg transition-all active:scale-[0.98] uppercase tracking-wide text-sm flex justify-center items-center gap-2">
+                                Book Detailing
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            </button>
+                            <button class="w-full bg-transparent border border-white text-white hover:bg-white/10 font-bold py-4 px-6 rounded-lg transition-all uppercase tracking-wide text-sm">
+                                View Ceramic Packages
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- STREAMING_CHUNK:Structuring Service Pillars... -->
+        <!-- SECTION 05: SERVICE PILLARS -->
+        <section>
+             <div class="flex items-center gap-4 mb-8">
+                <span class="text-labBlue font-mono text-sm">05</span>
+                <h2 class="text-2xl font-heading font-bold text-white">Strategic Service Pillars</h2>
+                <div class="h-px bg-edge flex-grow"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Pillar 1: Diesel Performance -->
+                <div class="bg-carbon p-8 rounded-xl border border-edge hover:border-labBlue transition-all duration-300 group flex flex-col h-full hover:-translate-y-1 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-labBlue to-labCyan transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                    <div class="mb-6 text-labBlue">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h4 class="text-white font-heading font-bold text-lg mb-2 group-hover:text-labCyan transition-colors">Diesel Performance</h4>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow">Emissions solutions, custom tuning, and hardware for Powerstroke, Cummins, and Duramax.</p>
+                    <div class="flex items-center text-labBlue text-xs font-bold uppercase tracking-wider">
+                        <span>Shop Parts</span>
+                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </div>
+                </div>
+
+                <!-- Pillar 2: Premium Detailing -->
+                <div class="bg-carbon p-8 rounded-xl border border-edge hover:border-white transition-all duration-300 group flex flex-col h-full hover:-translate-y-1 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                    <div class="mb-6 text-white">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                    </div>
+                    <h4 class="text-white font-heading font-bold text-lg mb-2">Premium Detailing</h4>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow">Multi-stage paint correction and professional-grade ceramic coatings for total preservation.</p>
+                    <div class="flex items-center text-white text-xs font-bold uppercase tracking-wider">
+                        <span>Book Detail</span>
+                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </div>
+                </div>
+
+                <!-- Pillar 3: Window Tinting -->
+                <div class="bg-carbon p-8 rounded-xl border border-edge hover:border-gray-400 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gray-400 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                    <div class="mb-6 text-gray-300">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h4 class="text-white font-heading font-bold text-lg mb-2">Window Tinting</h4>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow">Carbon and Ceramic film installations for superior heat rejection and UV block.</p>
+                    <div class="flex items-center text-gray-300 text-xs font-bold uppercase tracking-wider">
+                        <span>Get Quote</span>
+                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </div>
+                </div>
+
+                <!-- Pillar 4: Custom Styling -->
+                <div class="bg-carbon p-8 rounded-xl border border-edge hover:border-labCyan transition-all duration-300 group flex flex-col h-full hover:-translate-y-1 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-labCyan transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                    <div class="mb-6 text-labCyan">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                    </div>
+                    <h4 class="text-white font-heading font-bold text-lg mb-2">Custom Styling</h4>
+                    <p class="text-sm text-gray-400 mb-6 flex-grow">Morimoto lighting, custom bumpers, and off-road wheel/tire fitment configurations.</p>
+                    <div class="flex items-center text-labCyan text-xs font-bold uppercase tracking-wider">
+                        <span>View Gallery</span>
+                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- STREAMING_CHUNK:Building E-commerce Mockups & Social Proof... -->
+        <!-- SECTION 06: E-COMMERCE & TRUST -->
+        <section>
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-labBlue font-mono text-sm">06</span>
+                <h2 class="text-2xl font-heading font-bold text-white">E-Commerce & Social Proof</h2>
+                <div class="h-px bg-edge flex-grow"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                
+                <!-- PRODUCT CARD MOCKUP (WITH COMPLIANCE) -->
+                <div>
+                    <div class="flex justify-between items-end mb-4">
+                        <h3 class="text-sm text-gray-500 font-mono uppercase">E-Commerce Parts Card</h3>
+                        <span class="bg-red-900/30 text-red-400 text-[10px] font-bold px-2 py-1 rounded border border-red-900">MANDATORY COMPLIANCE UI</span>
+                    </div>
+                    <div class="bg-carbon border border-edge rounded-xl overflow-hidden group">
+                        <!-- Image Area -->
+                        <div class="bg-gradient-to-b from-gray-900 to-black h-64 flex items-center justify-center relative p-6 border-b border-edge group-hover:border-labBlue transition-colors">
+                             <!-- Compliance Badge -->
+                            <div class="absolute top-4 left-4 bg-void border border-gray-700 text-gray-400 text-[10px] font-bold px-2 py-1 rounded shadow-sm z-10 tracking-widest uppercase flex items-center gap-2">
+                                <svg class="w-3 h-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                                Off-Road Use Only
+                            </div>
+                             <!-- Product Image Placeholder -->
+                            <div class="w-full h-full flex items-center justify-center opacity-50 group-hover:opacity-100 transition-opacity">
+                                <svg class="w-32 h-32 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="p-6">
+                            <div class="text-xs text-labBlue font-bold uppercase tracking-widest mb-1">Ford / Powerstroke</div>
+                            <h4 class="text-white font-heading font-bold text-xl mb-1 line-clamp-2">6.7L Powerstroke Full Delete Kit (2017-2019)</h4>
+                            
+                            <div class="flex items-baseline gap-3 mb-6 mt-4">
+                                <span class="text-2xl text-white font-extrabold">$1,325.00</span>
+                                <span class="text-sm text-gray-500 line-through">$1,450.00</span>
+                            </div>
+
+                            <!-- Buttons -->
+                            <button class="w-full bg-labBlue text-white font-bold py-4 px-4 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 transition-colors shadow-oled-blue flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REVIEW CARD MOCKUP -->
+                <div>
+                    <h3 class="text-sm text-gray-500 font-mono mb-4 uppercase">Social Proof Component</h3>
+                    <div class="glass-panel border border-edge rounded-xl p-8 relative h-full flex flex-col justify-between">
+                        <div>
+                            <!-- Quote Icon -->
+                            <div class="text-labBlue text-5xl font-serif absolute top-4 left-6 opacity-20">"</div>
+                            
+                            <!-- Stars -->
+                            <div class="flex gap-1 text-labCyan mb-6 pl-6 relative z-10">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+
+                            <p class="text-gray-300 text-lg leading-relaxed mb-8 pl-6 relative z-10">
+                                "The full ceramic package on my F-350 is flawless. While it was in the shop, Eric handled my EZ LYNK tune and the truck has never run better. These guys are the only ones I trust in Northern BC."
+                            </p>
+                        </div>
+
+                        <div class="flex items-center justify-between border-t border-edge pt-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center font-bold text-white border border-gray-700">MT</div>
+                                <div>
+                                    <div class="text-white font-bold">Mike T.</div>
+                                    <div class="text-gray-500 text-xs">2022 Ford F-350 Lariat</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="bg-green-900/30 text-green-400 text-[10px] font-bold px-2 py-1 rounded border border-green-900 uppercase">Verified Buyer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- STREAMING_CHUNK:Implementing Lead Generation Forms... -->
+        <!-- SECTION 07: FORMS & DATA CAPTURE -->
+        <section class="border-t border-edge pt-12">
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-labBlue font-mono text-sm">07</span>
+                <h2 class="text-2xl font-heading font-bold text-white">Lead Gen / GHL Booking Form</h2>
+                <div class="h-px bg-edge flex-grow"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="glass-panel p-8 rounded-xl border border-edge relative">
+                    <!-- Subtle Glow -->
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-labBlue to-labCyan rounded-xl blur opacity-20 pointer-events-none"></div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="font-heading font-bold text-white text-xl mb-2">Request Boutique Service</h3>
+                        <p class="text-sm text-gray-400 mb-6">Connects directly to GoHighLevel Pipeline.</p>
+                        
+                        <form class="space-y-5">
+                            <!-- Text Input -->
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-widest text-gray-500 mb-2 font-bold">Vehicle details</label>
+                                <input type="text" placeholder="Year / Make / Model" class="w-full bg-void border border-gray-800 rounded-lg p-4 text-white focus:border-labBlue focus:outline-none focus:ring-1 focus:ring-labBlue transition-colors placeholder-gray-700 shadow-inner">
+                            </div>
+
+                            <!-- Select Input -->
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-widest text-gray-500 mb-2 font-bold">Service Required</label>
+                                <div class="relative">
+                                    <select class="w-full bg-void border border-gray-800 rounded-lg p-4 text-white appearance-none focus:border-labBlue focus:outline-none shadow-inner">
+                                        <option>Ceramic Coating (Full Vehicle)</option>
+                                        <option>Premium Window Tinting</option>
+                                        <option>Performance Tuning / Delete</option>
+                                        <option>Custom Lighting Install</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="w-full bg-white hover:bg-gray-200 text-black font-extrabold py-4 rounded-lg mt-2 uppercase tracking-wide text-sm transition-transform active:scale-[0.98]">
+                                Get Custom Quote
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="flex flex-col justify-center">
+                    <h4 class="text-white font-heading font-bold mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        OLED Input Logic
+                    </h4>
+                    <p class="text-gray-400 mb-6 text-sm leading-relaxed">
+                        Standard web forms break the premium immersion of a dark-mode native site. All input fields must utilize <code class="text-labCyan font-mono">#000000 (Void)</code> backgrounds with heavy <code class="text-labCyan font-mono">p-4</code> padding to feel substantial and touch-friendly for mobile garage scrollers. Borders should glow <code class="text-labBlue font-mono">#0066FF</code> on focus.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STREAMING_CHUNK:Finalizing Partner Ecosystem... -->
+        <!-- SECTION 08: PARTNER ECOSYSTEM -->
+        <section class="border-t border-edge pt-12">
+            <div class="flex items-center gap-4 mb-8">
+                <span class="text-labBlue font-mono text-sm">08</span>
+                <h2 class="text-2xl font-heading font-bold text-white">Trust Signals & Partners</h2>
+                <div class="h-px bg-edge flex-grow"></div>
+            </div>
+
+            <div class="glass-panel border border-edge rounded-xl p-10 text-center">
+                <div class="mb-10 max-w-2xl mx-auto">
+                    <h3 class="font-heading font-bold text-white mb-3 text-xl">"Backed by the brands that matter."</h3>
+                    <p class="text-sm text-gray-400">Partner authority is critical for high-ticket sales. Logos must be presented in monochrome (opacity 40%) to maintain aesthetic purity, transitioning to full brand color only upon hover.</p>
+                </div>
+
+                <!-- Logo Grid (Simulated typography logos for example) -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-12 items-center justify-items-center">
+                    
+                    <div class="opacity-40 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer text-white hover:text-green-500">
+                        <div class="text-2xl font-black italic tracking-tighter">EZ LYNK</div>
+                    </div>
+                    
+                    <div class="opacity-40 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer text-white hover:text-red-600">
+                        <div class="text-2xl font-bold tracking-widest uppercase">SunTek</div>
+                    </div>
+                    
+                    <div class="opacity-40 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer text-white hover:text-orange-500">
+                        <div class="text-2xl font-serif font-bold uppercase">Morimoto</div>
+                    </div>
+                    
+                    <div class="opacity-40 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer text-white hover:text-blue-500">
+                        <div class="text-2xl font-mono font-bold">HP TUNERS</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-12 text-gray-600 text-xs uppercase tracking-widest border-t border-edge bg-void mt-20 font-mono">
+        <p>The LAB | Luxx Automotive Boutique & Premium Detailing — Brand Architecture System V1.0</p>
+    </footer>
+
+</body>
+</html>
+```eof

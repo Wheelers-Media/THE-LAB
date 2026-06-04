@@ -1,0 +1,820 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Boutique | THE LAB — Fort St. John, BC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#000000',
+                        midnight: '#0D0D12',
+                        edge: '#1E1E28',
+                        signal: '#FFFFFF',
+                        labBlue: '#0066FF',
+                        labCyan: '#00E5FF',
+                    },
+                    fontFamily: {
+                        heading: ['Manrope', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'oled-blue': '0 0 20px rgba(0, 102, 255, 0.4)',
+                        'oled-cyan': '0 0 20px rgba(0, 229, 255, 0.3)',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #000000; font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(13,13,18,0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .grid-bg {
+            background-image: linear-gradient(rgba(0,102,255,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,102,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        ::selection { background: #0066FF; color: #fff; }
+    </style>
+</head>
+<body class="bg-void text-zinc-400 antialiased">
+
+    <!-- ═══ GLOBAL HEADER ═══ -->
+    <div class="sticky top-0 z-50">
+    <div class="border-b border-edge/60" style="background:rgba(0,0,0,0.97);">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-8">
+            <span class="text-[10px] text-zinc-600 font-mono uppercase tracking-wider hidden sm:block">Premium Detailing &nbsp;·&nbsp; Fort St. John, BC</span>
+            <div class="flex items-center gap-2 ml-auto">
+                <span class="text-[10px] text-zinc-600 font-mono uppercase tracking-wider">Currency:</span>
+                <button id="btn-cad" onclick="setCurrency('CAD')" class="text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all">CAD</button>
+                <button id="btn-usd" onclick="setCurrency('USD')" class="text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all">USD</button>
+            </div>
+        </div>
+    </div>
+    <header class="border-b border-edge" style="background:rgba(0,0,0,0.97); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="/" class="flex items-center p-1 rounded focus:outline-none focus:ring-2 focus:ring-labBlue flex-shrink-0">
+                    <img src="/assets/LAB-LOGO.png" alt="THE LAB" class="h-9 md:h-11 w-auto object-contain">
+                </a>
+                <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
+                    <div class="relative group">
+                        <button class="text-xs font-bold text-white uppercase tracking-[0.2em] flex items-center gap-1.5 py-2 focus:outline-none">The Boutique <svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 min-w-[200px] z-50">
+                            <div class="rounded-xl border border-edge overflow-hidden" style="background:#0D0D12; box-shadow:0 24px 64px rgba(0,0,0,0.9);">
+                                <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Fort St. John, BC</span></div>
+                                <div class="py-1">
+                                    <a href="/boutique/tinting/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Window Tinting</a>
+                                    <a href="/boutique/coatings/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Ceramic Coatings</a>
+                                    <a href="/boutique/detailing/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Premium Detailing</a>
+                                    <a href="/boutique/ppf/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Paint Protection Film</a>
+                                    <a href="/boutique/morimoto/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Morimoto Lighting</a>
+                                    <div class="mx-4 my-1 h-px bg-edge"></div>
+                                    <a href="/contact/" class="flex items-center justify-between px-4 py-2.5 text-xs text-white font-bold hover:bg-white/5 transition-colors">Book Consultation <span class="text-labBlue ml-1">→</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <button class="text-xs font-bold text-zinc-400 hover:text-white transition-colors uppercase tracking-[0.2em] flex items-center gap-1.5 py-2 focus:outline-none">The Parts Store <svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50" style="min-width:440px;">
+                            <div class="rounded-xl border border-edge overflow-hidden" style="background:#0D0D12; box-shadow:0 24px 64px rgba(0,0,0,0.9);">
+                                <div class="grid grid-cols-2 divide-x divide-edge">
+                                    <div>
+                                        <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Shop by Make</span></div>
+                                        <div class="py-1">
+                                            <a href="/store/ford/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Ford / Powerstroke</a>
+                                            <a href="/store/ram/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Ram / Cummins</a>
+                                            <a href="/store/chevy/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Chevy / Duramax</a>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Shop by Category</span></div>
+                                        <div class="py-1">
+                                            <a href="/store/egr/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>EGR Solutions</a>
+                                            <a href="/store/exhaust/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Exhaust Systems</a>
+                                            <a href="/store/ccv/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>CCV Solutions</a>
+                                            <a href="/store/tuning/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-labBlue font-bold hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Custom Tuning</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t border-edge px-4 py-2.5"><a href="/store/" class="text-xs text-labBlue font-bold hover:text-labCyan transition-colors">View All Parts →</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="flex items-center gap-2">
+                    <button id="cart-btn" aria-label="Cart" class="relative p-2 text-zinc-400 hover:text-white transition-colors rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-labBlue">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        <span id="cart-count" class="absolute -top-0.5 -right-0.5 bg-labBlue text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold leading-none hidden">0</span>
+                    </button>
+                    <a href="/contact/" class="hidden md:inline-flex bg-white text-black font-extrabold py-2 px-5 rounded-lg hover:bg-zinc-200 transition-all uppercase tracking-widest text-xs">Book Now</a>
+                    <button id="mob-btn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-labBlue text-white">
+                        <svg id="ham-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg id="x-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mob-menu" class="hidden md:hidden border-t border-edge" style="background:#000;">
+            <nav class="px-6 py-6 space-y-1">
+                <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] pt-2 pb-1">The Boutique</p>
+                <a href="/boutique/" class="block py-2 text-sm font-bold text-white uppercase tracking-[0.15em] transition-colors">Overview</a>
+                <a href="/boutique/tinting/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">Window Tinting</a>
+                <a href="/boutique/coatings/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">Ceramic Coatings</a>
+                <a href="/boutique/detailing/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">Premium Detailing</a>
+                <a href="/boutique/ppf/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">Paint Protection Film</a>
+                <div class="h-px bg-edge my-3"></div>
+                <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] pb-1">The Parts Store</p>
+                <a href="/store/" class="block py-2 text-sm font-bold text-zinc-300 hover:text-white uppercase tracking-[0.15em] transition-colors">Overview</a>
+                <a href="/store/egr/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">EGR Solutions</a>
+                <a href="/store/tuning/" class="block py-1.5 pl-3 text-xs text-labBlue font-bold hover:text-labCyan transition-colors">Custom Tuning</a>
+                <div class="h-px bg-edge my-3"></div>
+                <a href="/contact/" class="block bg-white text-black font-extrabold py-4 text-center rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all">Book Now</a>
+            </nav>
+        </div>
+        <script>
+            (function(){var b=document.getElementById('mob-btn'),m=document.getElementById('mob-menu'),h=document.getElementById('ham-icon'),x=document.getElementById('x-icon');if(!b||!m)return;b.addEventListener('click',function(){var o=!m.classList.contains('hidden');m.classList.toggle('hidden',o);h.classList.toggle('hidden',!o);x.classList.toggle('hidden',o);b.setAttribute('aria-expanded',String(!o));});})();
+            window.setCurrency=function(c){var r=0.74,ac='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all',ic='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all';var cb=document.getElementById('btn-cad'),ub=document.getElementById('btn-usd');if(cb)cb.className=(c==='CAD')?ac:ic;if(ub)ub.className=(c==='USD')?ac:ic;localStorage.setItem('theLab_currency',c);};setTimeout(function(){window.setCurrency(localStorage.getItem('theLab_currency')||'CAD');},0);
+        </script>
+    </header>
+    </div>
+
+    <main>
+
+        <!-- ═══ HERO ═══ -->
+        <section class="relative min-h-[85vh] flex items-center overflow-hidden">
+            <!-- Layered dark background with subtle blue glow -->
+            <div class="absolute inset-0 bg-void grid-bg"></div>
+            <div class="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-white/[0.02] to-transparent pointer-events-none"></div>
+            <div class="absolute top-1/3 left-1/4 w-96 h-96 rounded-full bg-labBlue opacity-[0.06] blur-[120px] pointer-events-none"></div>
+            <div class="absolute bottom-0 right-1/3 w-64 h-64 rounded-full bg-white opacity-[0.03] blur-[80px] pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-6 py-28">
+                <div class="max-w-3xl">
+                    <span class="text-labCyan font-mono tracking-[0.25em] uppercase text-xs mb-6 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-labCyan animate-pulse"></span>
+                        Fort St. John, BC — Local Aesthetics
+                    </span>
+                    <h1 class="font-heading font-extrabold text-5xl md:text-7xl text-white leading-[1.05] uppercase mb-6">
+                        Flawless<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-500">Aesthetic<br>Preservation.</span>
+                    </h1>
+                    <p class="text-zinc-400 text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
+                        Multi-stage paint correction, premium Carbon and Ceramic tinting, and elite coating packages. We protect what you've invested in.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#contact" class="bg-white text-black font-extrabold py-4 px-10 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-sm text-center">Book Consultation</a>
+                        <a href="#services" class="border border-edge text-white font-bold py-4 px-10 rounded-lg hover:border-white/40 transition-all uppercase tracking-widest text-sm text-center">View Services</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom fade -->
+            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-void to-transparent pointer-events-none"></div>
+        </section>
+
+        <!-- ═══ SERVICE MATRIX ═══ -->
+        <section id="services" class="py-24 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center gap-4 mb-14">
+                    <span class="text-labBlue font-mono text-xs tracking-widest uppercase">Services</span>
+                    <div class="h-px bg-edge flex-grow"></div>
+                    <a href="#contact" class="text-xs font-bold text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">Get Quote →</a>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Window Tinting -->
+                    <div class="glass-panel p-8 border border-edge rounded-2xl group hover:border-white/20 transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="mb-5 text-zinc-300">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Window Tinting</h3>
+                        <p class="text-zinc-500 text-sm mb-6">SunTek Carbon and Ceramic film for superior heat rejection and UV block.</p>
+                        <ul class="space-y-3 font-mono text-sm border-t border-edge pt-5">
+                            <li class="flex justify-between text-zinc-400"><span>Carbon Front Roll-Ups</span><span>$180</span></li>
+                            <li class="flex justify-between text-white font-bold"><span>Ceramic Front Roll-Ups</span><span>$260</span></li>
+                            <li class="flex justify-between text-zinc-400"><span>Full Vehicle Ceramic</span><span>$850–$1,300</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Ceramic Coatings -->
+                    <div class="glass-panel p-8 border border-edge rounded-2xl group hover:border-labBlue/40 transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-labBlue to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="mb-5 text-labBlue">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Ceramic Coatings</h3>
+                        <p class="text-zinc-500 text-sm mb-6">Long-term paint protection with hydrophobic properties and a show-quality gloss.</p>
+                        <ul class="space-y-3 font-mono text-sm border-t border-edge pt-5">
+                            <li class="flex justify-between text-zinc-400"><span>Standard Paint Coat</span><span>$800</span></li>
+                            <li class="flex justify-between text-labBlue font-bold"><span>Full Vehicle + Glass</span><span>$1,400</span></li>
+                            <li class="flex justify-between text-zinc-400"><span>Graphene Elite</span><span>$2,200</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Premium Detailing -->
+                    <div class="glass-panel p-8 border border-edge rounded-2xl group hover:border-labCyan/40 transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-labCyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="mb-5 text-labCyan">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Premium Detailing</h3>
+                        <p class="text-zinc-500 text-sm mb-6">Multi-stage paint correction, interior refresh, and professional-grade surface treatments.</p>
+                        <ul class="space-y-3 font-mono text-sm border-t border-edge pt-5">
+                            <li class="flex justify-between text-zinc-400"><span>Interior Deep Clean</span><span>$200–$350</span></li>
+                            <li class="flex justify-between text-zinc-400"><span>Single Stage Correction</span><span>$450</span></li>
+                            <li class="flex justify-between text-labCyan font-bold"><span>Multi-Stage Correction</span><span>$900+</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Morimoto Lighting -->
+                    <div class="glass-panel p-8 border border-edge rounded-2xl group hover:border-white/20 transition-all duration-300 relative overflow-hidden flex flex-col">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="mb-5 text-zinc-300">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Morimoto Lighting</h3>
+                        <p class="text-zinc-500 text-sm mb-6 flex-grow">OEM-grade LED and HID headlight retrofits, fog lights, and custom pod installations.</p>
+                        <div class="border-t border-edge pt-5">
+                            <a href="/boutique/morimoto/" class="text-xs font-bold text-zinc-400 hover:text-white uppercase tracking-widest flex items-center gap-2 transition-colors group-hover:gap-3">
+                                View Lighting Page
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Paint Protection Film -->
+                    <div class="glass-panel p-8 border border-edge rounded-2xl group hover:border-white/20 transition-all duration-300 relative overflow-hidden flex flex-col">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="mb-5 text-zinc-300">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Paint Protection Film</h3>
+                        <p class="text-zinc-500 text-sm mb-6 flex-grow">Self-healing PPF to guard against rock chips, road debris, and environmental damage.</p>
+                        <div class="border-t border-edge pt-5">
+                            <a href="/boutique/ppf/" class="text-xs font-bold text-zinc-400 hover:text-white uppercase tracking-widest flex items-center gap-2 transition-colors group-hover:gap-3">
+                                View PPF Page
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Off-Road / SxS -->
+                    <div class="glass-panel p-8 border border-edge rounded-2xl group hover:border-labBlue/40 transition-all duration-300 relative overflow-hidden flex flex-col">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-labBlue to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="mb-5 text-labBlue">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-white mb-2">Off-Road & SxS</h3>
+                        <p class="text-zinc-500 text-sm mb-6 flex-grow">Polaris, Can-Am, and CFMOTO detailing, tinting, and full protection packages.</p>
+                        <div class="border-t border-edge pt-5">
+                            <a href="#contact" class="text-xs font-bold text-zinc-400 hover:text-white uppercase tracking-widest flex items-center gap-2 transition-colors group-hover:gap-3">
+                                Get Quote
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ REVIEWS CAROUSEL ═══ -->
+        <section class="py-24 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+
+                <!-- Header row -->
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-10">
+                    <div>
+                        <span class="text-xs font-mono text-zinc-600 uppercase tracking-widest block mb-2">Google Reviews · Fort St. John, BC</span>
+                        <h2 class="font-heading font-extrabold text-3xl text-white uppercase">What Clients Say</h2>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex gap-0.5">
+                            <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </div>
+                        <span class="text-white font-extrabold text-base">5.0</span>
+                        <span class="text-zinc-600 text-xs font-medium">· 19 Reviews</span>
+                    </div>
+                </div>
+
+                <!-- Carousel -->
+                <div class="relative">
+                    <!-- Left arrow -->
+                    <button id="rev-prev" aria-label="Previous reviews"
+                        class="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-edge flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 transition-all"
+                        style="background:#000;">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <!-- Right arrow -->
+                    <button id="rev-next" aria-label="Next reviews"
+                        class="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-edge flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-500 transition-all"
+                        style="background:#000;">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+
+                    <!-- Viewport -->
+                    <div id="rev-viewport" class="overflow-hidden mx-6">
+                        <div id="rev-track" class="flex gap-5" style="transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);">
+
+                            <!-- Card template — star SVG shorthand -->
+                            <!-- 1 Cassidy Canova -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3">
+                                    <svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                </div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"We brought our Jeep in for the De-Luxx package and we were absolutely in shock when we picked it up! It looks so good!! We were so happy to be leaving with a fresh ride not to mention the inside also smells incredible now!"</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#1a3a5c;">CC</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Cassidy Canova</p>
+                                        <p class="text-zinc-600 text-[10px]">9 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2 Kenneth Gilmore -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"I don't know where to begin with the gratitude and appreciation I have for Eric. The L5P delete came out flawless — truck runs better than the day it was new. Incredible work and communication throughout."</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#2d4a1e;">KG</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Kenneth Gilmore</p>
+                                        <p class="text-zinc-600 text-[10px]">4 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3 Lisa Werle -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"I highly recommend Luxx for your detailing needs! I chose the standard package and I'm blown away with how fresh my Yukon smells and amazed how brand new it looks! The communication was great from booking to pick up. I'll be seeing you for future details."</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#4a1e3a;">LW</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Lisa Werle</p>
+                                        <p class="text-zinc-600 text-[10px]">10 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4 Tayler Wilkinson -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"I have only great things to say about Luxx! The communication was incredible, the updates & personal check ins to make sure we were happy was awesome. I highly trust & recommend Luxx to anyone looking for a detail or upgrades!"</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#1e3a2d;">TW</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Tayler Wilkinson</p>
+                                        <p class="text-zinc-600 text-[10px]">6 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5 Carmen Foster -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"My car looks and smells even better than brand new! Such impressive attention to detail, I am beyond happy with the job that was done. I will definitely be bringing my vehicles back. Excellent communication before, during, and afterwards."</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#3a1e1e;">CF</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Carmen Foster</p>
+                                        <p class="text-zinc-600 text-[10px]">1 year ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 6 Anita Wiens -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"They did an amazing job. Not only my car looked clean but also smelled fresh. The job was done quick, last minute booking and they squeezed us in a few days later. I recommend these people to get your car cleaned. Good job done 👍"</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#1e2d4a;">AW</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Anita Wiens</p>
+                                        <p class="text-zinc-600 text-[10px]">1 year ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7 Lisa Mason -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"Luxe diamond detail did an awesome job of cleaning our vehicle. Would highly recommend. Very reasonably priced. Thank you!"</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#3a2d1e;">LM</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Lisa Mason</p>
+                                        <p class="text-zinc-600 text-[10px]">9 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 8 Rikki Kearns -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"I was fortunate enough to win a standard cleaning through their Mother's Day draw and I can say I am thoroughly impressed! They were super professional and very easy to make plans with for pickup and drop-off."</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#2d1e3a;">RK</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Rikki Kearns</p>
+                                        <p class="text-zinc-600 text-[10px]">1 year ago · Google · Local Guide</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 9 Rhandi Wiebe -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"Customer service is amazing, so friendly from the booking to the drop off and pick up of my vehicle. And don't even get me started on the end result, my truck looks brand new! Couldn't be happier, thank you Luxx!"</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#1a3a2d;">RW</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Rhandi Wiebe</p>
+                                        <p class="text-zinc-600 text-[10px]">9 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 10 Jessica Howell -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"Had my truck detailed the other day and it came back amazing!!! I had hot sauce on my seat, goat milk on my seat, sprinkles from kids — you name it, it was in my cloth seats. All of it gone. Incredible."</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#3a3a1e;">JH</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Jessica Howell</p>
+                                        <p class="text-zinc-600 text-[10px]">1 year ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 11 Jordan K -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"Amazing customer service, outstanding results. Highly recommend if you want your vehicle cleaned properly."</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#1e2d3a;">JK</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Jordan K</p>
+                                        <p class="text-zinc-600 text-[10px]">8 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 12 Shaneice Chase -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"Very impressed on the interior detail of my work truck. I've gotten other details done before and they just don't compare to how well done these guys did!"</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#2d3a1e;">SC</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Shaneice Chase</p>
+                                        <p class="text-zinc-600 text-[10px]">1 year ago · Google · Local Guide</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 13 Keanan Ehl -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"Very nice detail, knowledgeable, very trustworthy and did a walk-through after to show a very pristine clean."</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#1e3a3a;">KE</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Keanan Ehl</p>
+                                        <p class="text-zinc-600 text-[10px]">8 months ago · Google · Local Guide</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 14 Zach -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"It was a great experience and was done in great time, highly recommend."</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#3a1e2d;">Z</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Zach</p>
+                                        <p class="text-zinc-600 text-[10px]">2 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 15 Kat Davies -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"They did a fantastic job of my vehicle, I am very pleased with the results."</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#2d1e3a;">KD</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Kat Davies</p>
+                                        <p class="text-zinc-600 text-[10px]">11 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 16 Melanie Carew -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"Did an amazing job. Can't recommend more!"</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#1a3a1a;">MC</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Melanie Carew</p>
+                                        <p class="text-zinc-600 text-[10px]">9 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 17 Diana -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"Excellent customer service 🙂"</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#3a2d1e;">D</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Diana</p>
+                                        <p class="text-zinc-600 text-[10px]">10 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 18 Jayden King -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"Did an amazing job."</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#1e3a1e;">JK</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Jayden King</p>
+                                        <p class="text-zinc-600 text-[10px]">1 year ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 19 Hailey Lineham -->
+                            <div class="rev-card flex-shrink-0 border border-edge rounded-2xl p-6 flex flex-col" style="background-color:#0D0D12;">
+                                <div class="flex gap-0.5 mb-3"><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-3.5 h-3.5 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
+                                <p class="text-zinc-300 text-sm leading-relaxed flex-grow" style="display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">"Amazing job. Will be coming back for sure!"</p>
+                                <div class="flex items-center gap-3 mt-5 pt-4 border-t border-edge">
+                                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-extrabold text-white flex-shrink-0" style="background:#3a1a1a;">HL</div>
+                                    <div>
+                                        <p class="text-white text-xs font-bold">Hailey Lineham</p>
+                                        <p class="text-zinc-600 text-[10px]">2 months ago · Google</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- /rev-track -->
+                    </div><!-- /rev-viewport -->
+                </div><!-- /relative -->
+
+                <!-- Dot indicators -->
+                <div id="rev-dots" class="flex justify-center gap-2 mt-8"></div>
+
+                <!-- Card width CSS -->
+                <style>
+                    .rev-card { width: 100%; }
+                    @media (min-width: 640px)  { .rev-card { width: calc(50% - 10px); } }
+                    @media (min-width: 1024px) { .rev-card { width: calc(33.333% - 14px); } }
+                </style>
+
+                <!-- Carousel JS -->
+                <script>
+                (function(){
+                    var track = document.getElementById('rev-track');
+                    var dotsEl = document.getElementById('rev-dots');
+                    var prevBtn = document.getElementById('rev-prev');
+                    var nextBtn = document.getElementById('rev-next');
+                    var cards = track.querySelectorAll('.rev-card');
+                    var total = cards.length;
+                    var idx = 0;
+                    var autoTimer;
+
+                    function visible() {
+                        var w = window.innerWidth;
+                        return w >= 1024 ? 3 : w >= 640 ? 2 : 1;
+                    }
+
+                    function maxIdx() { return Math.max(0, total - visible()); }
+
+                    function goTo(n) {
+                        idx = Math.max(0, Math.min(n, maxIdx()));
+                        var cardW = cards[0].offsetWidth + 20;
+                        track.style.transform = 'translateX(-' + (idx * cardW) + 'px)';
+                        updateDots();
+                        updateArrows();
+                    }
+
+                    function buildDots() {
+                        dotsEl.innerHTML = '';
+                        var pages = Math.ceil(total / visible());
+                        for (var i = 0; i < pages; i++) {
+                            var d = document.createElement('button');
+                            d.setAttribute('aria-label', 'Go to page ' + (i+1));
+                            d.style.cssText = 'width:6px;height:6px;border-radius:50%;border:none;cursor:pointer;transition:all 0.2s;background:#3f3f46;';
+                            d.dataset.page = i;
+                            d.addEventListener('click', (function(page){ return function(){ goTo(page * visible()); resetAuto(); }; })(i));
+                            dotsEl.appendChild(d);
+                        }
+                        updateDots();
+                    }
+
+                    function updateDots() {
+                        var dots = dotsEl.querySelectorAll('button');
+                        var page = Math.floor(idx / visible());
+                        dots.forEach(function(d, i) {
+                            d.style.background = i === page ? '#ffffff' : '#3f3f46';
+                            d.style.width = i === page ? '20px' : '6px';
+                            d.style.borderRadius = i === page ? '3px' : '50%';
+                        });
+                    }
+
+                    function updateArrows() {
+                        prevBtn.style.opacity = idx === 0 ? '0.3' : '1';
+                        nextBtn.style.opacity = idx >= maxIdx() ? '0.3' : '1';
+                    }
+
+                    function resetAuto() {
+                        clearInterval(autoTimer);
+                        autoTimer = setInterval(function(){ goTo(idx >= maxIdx() ? 0 : idx + 1); }, 5000);
+                    }
+
+                    prevBtn.addEventListener('click', function(){ goTo(idx - 1); resetAuto(); });
+                    nextBtn.addEventListener('click', function(){ goTo(idx + 1); resetAuto(); });
+
+                    var vp = document.getElementById('rev-viewport');
+                    vp.addEventListener('mouseenter', function(){ clearInterval(autoTimer); });
+                    vp.addEventListener('mouseleave', resetAuto);
+
+                    // Touch/swipe support
+                    var touchStartX = 0;
+                    vp.addEventListener('touchstart', function(e){ touchStartX = e.changedTouches[0].clientX; }, {passive:true});
+                    vp.addEventListener('touchend', function(e){
+                        var dx = e.changedTouches[0].clientX - touchStartX;
+                        if (Math.abs(dx) > 40) { goTo(dx < 0 ? idx + 1 : idx - 1); resetAuto(); }
+                    }, {passive:true});
+
+                    window.addEventListener('resize', function(){ buildDots(); goTo(idx); });
+
+                    buildDots();
+                    goTo(0);
+                    resetAuto();
+                })();
+                </script>
+
+            </div>
+        </section>
+
+        <!-- ═══ LEAD CAPTURE ═══ -->
+        <section id="contact" class="py-24 px-6 border-t border-edge relative overflow-hidden">
+            <div class="absolute inset-0 grid-bg opacity-40"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-64 bg-labBlue opacity-[0.04] blur-[100px] pointer-events-none"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+
+                    <div>
+                        <span class="text-labBlue font-mono text-xs tracking-[0.25em] uppercase mb-4 block">Book Your Service</span>
+                        <h2 class="font-heading font-extrabold text-4xl md:text-5xl text-white uppercase mb-5 leading-tight">Get A<br>Custom Quote.</h2>
+                        <p class="text-zinc-400 text-lg leading-relaxed mb-8">Tell us about your vehicle and the service you're looking for. We respond same day.</p>
+                        <div class="space-y-4 text-sm">
+                            <div class="flex items-center gap-3 text-zinc-400">
+                                <span class="w-1 h-1 rounded-full bg-labBlue flex-shrink-0"></span>
+                                <span>Fort St. John, BC — In-Shop and Mobile Available</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-zinc-400">
+                                <span class="w-1 h-1 rounded-full bg-labBlue flex-shrink-0"></span>
+                                <span>Trucks, SUVs, Cars, and Side-by-Side Vehicles</span>
+                            </div>
+                            <div class="flex items-center gap-3 text-zinc-400">
+                                <span class="w-1 h-1 rounded-full bg-labBlue flex-shrink-0"></span>
+                                <span>Fast response — same-day pipeline processing</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GHL Lead Capture Form -->
+                    <div class="rounded-2xl p-8 border border-edge" style="background-color: #0D0D12; box-shadow: 0 0 20px rgba(0,102,255,0.15);">
+                        <h3 class="font-heading text-2xl font-bold text-white mb-6">Request Service</h3>
+                        <form class="space-y-4" onsubmit="event.preventDefault();">
+                            <input type="text" placeholder="Full Name" required
+                                class="w-full text-white placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors"
+                                style="background-color:#000;">
+                            <input type="tel" placeholder="Phone Number" required
+                                class="w-full text-white placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors"
+                                style="background-color:#000;">
+                            <input type="text" placeholder="Vehicle — Year / Make / Model" required
+                                class="w-full text-white placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors"
+                                style="background-color:#000;">
+                            <div class="relative">
+                                <select required class="w-full text-white p-4 pr-12 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors cursor-pointer appearance-none" style="background-color:#000;">
+                                    <option value="" disabled selected hidden>Select Service</option>
+                                    <option>Ceramic Coating — Full Vehicle</option>
+                                    <option>Window Tinting — Ceramic</option>
+                                    <option>Window Tinting — Carbon</option>
+                                    <option>Premium Detailing</option>
+                                    <option>Paint Protection Film</option>
+                                    <option>Morimoto Lighting Install</option>
+                                    <option>Off-Road / SxS Package</option>
+                                    <option>Multiple Services</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-zinc-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-white text-black font-extrabold py-4 rounded-xl uppercase tracking-widest text-sm hover:bg-zinc-200 active:scale-[0.98] transition-all mt-2">Submit Request</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══ GLOBAL FOOTER ═══ -->
+    <footer class="bg-void border-t border-edge pt-14 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-14">
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">The Boutique</h4>
+                    <ul class="space-y-4 text-sm text-zinc-400 font-medium">
+                        <li><a href="/boutique/detailing/" class="hover:text-white transition-colors block">Premium Detailing</a></li>
+                        <li><a href="/boutique/coatings/" class="hover:text-white transition-colors block">Ceramic Coatings</a></li>
+                        <li><a href="/boutique/tinting/" class="hover:text-white transition-colors block">Window Tinting</a></li>
+                        <li><a href="/boutique/ppf/" class="hover:text-white transition-colors block">Paint Protection Film</a></li>
+                        <li><a href="/boutique/morimoto/" class="hover:text-white transition-colors block">Morimoto Lighting</a></li>
+                        <li><a href="/boutique/" class="hover:text-white transition-colors block">Paint Protection</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">The Parts Store</h4>
+                    <ul class="space-y-4 text-sm text-zinc-400 font-medium">
+                        <li><a href="/store/" class="hover:text-labCyan transition-colors block">Diesel Upgrades</a></li>
+                        <li><a href="/store/" class="hover:text-labCyan transition-colors block">Custom Tuning</a></li>
+                        <li><a href="/store/" class="hover:text-labCyan transition-colors block">Delete Kits</a></li>
+                        <li><a href="/store/" class="hover:text-labCyan transition-colors block">Performance Parts</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">Partners</h4>
+                    <ul class="space-y-4 text-sm text-zinc-400 font-medium">
+                        <li class="hover:text-white transition-colors cursor-pointer">SunTek Films</li>
+                        <li class="hover:text-white transition-colors cursor-pointer">Morimoto</li>
+                        <li class="hover:text-white transition-colors cursor-pointer">EZ LYNK</li>
+                        <li class="hover:text-white transition-colors cursor-pointer">HP Tuners</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">Contact</h4>
+                    <ul class="space-y-4 text-sm text-zinc-400 font-medium">
+                        <li class="leading-relaxed">10219 95 Ave<br><span class="text-zinc-500">Fort St. John, BC &nbsp;V1J 5J5</span></li>
+                        <li><a href="https://maps.google.com/?q=10219+95+Ave+Fort+Saint+John+BC" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors block">Get Directions →</a></li>
+                        <li><a href="tel:+12502619502" class="hover:text-white transition-colors block">(250) 261-9502</a></li>
+                        <li class="text-zinc-600 text-xs">Mon–Fri &nbsp;9 a.m.–5 p.m.</li>
+                        <li><a href="/contact/" class="hover:text-white transition-colors block">Book a Service</a></li>
+                        <li><a href="/store/" class="hover:text-white transition-colors block">Shop Online</a></li>
+                        <li><a href="/shipping/" class="hover:text-white transition-colors block">Shipping &amp; Returns</a></li>
+                        <li><a href="/terms/" class="hover:text-white transition-colors block">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Social icons row -->
+            <div class="flex items-center justify-center gap-3 mb-10">
+                <span class="text-xs text-zinc-600 font-mono uppercase tracking-widest mr-2">Follow THE LAB:</span>
+                <a href="#" aria-label="THE LAB on Facebook" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+                <a href="#" aria-label="THE LAB on Instagram" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+                <a href="#" aria-label="THE LAB on TikTok" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.93a8.29 8.29 0 004.84 1.54V7.02a4.85 4.85 0 01-1.07-.33z"/></svg>
+                </a>
+            </div>
+            <div class="border-t border-edge pt-8">
+                <p class="text-[10px] leading-relaxed text-zinc-600 font-medium text-center uppercase tracking-wide mb-4">
+                    Certain products are for Off-Road and Sanctioned Racing Use Only. The purchaser assumes all legal liability for Clean Air Act compliance.
+                </p>
+                <p class="text-[10px] text-center text-zinc-700 uppercase tracking-widest font-bold">&copy; 2026 THE LAB. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

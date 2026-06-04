@@ -1,0 +1,784 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Parts Store | THE LAB Performance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#000000',
+                        midnight: '#0D0D12',
+                        edge: '#1E1E28',
+                        signal: '#FFFFFF',
+                        labBlue: '#0066FF',
+                        labCyan: '#00E5FF',
+                    },
+                    fontFamily: {
+                        heading: ['Manrope', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'oled-blue': '0 0 20px rgba(0, 102, 255, 0.4)',
+                        'oled-cyan': '0 0 20px rgba(0, 229, 255, 0.3)',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #000000; font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(13,13,18,0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .grid-bg {
+            background-image: linear-gradient(rgba(0,102,255,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,102,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        ::selection { background: #0066FF; color: #fff; }
+    </style>
+</head>
+<body class="bg-void text-zinc-400 antialiased">
+
+    <!-- --- COMPLIANCE BANNER --- -->
+    <div class="bg-red-900/20 border-b border-red-900 text-center py-2 px-4 z-50 relative">
+        <p class="text-red-500 text-xs font-bold uppercase tracking-widest">Warning: Off-Road &amp; Sanctioned Racing Use Only. Not legal for use on pollution-controlled vehicles.</p>
+    </div>
+
+    <!-- --- GLOBAL HEADER --- -->
+    <!-- Currency / Info Bar -->
+    <div class="sticky top-0 z-50">
+    <div class="border-b border-edge/60" style="background:rgba(0,0,0,0.97);">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-8">
+            <span class="text-[10px] text-zinc-600 font-mono uppercase tracking-wider hidden sm:block">Authorized Polar Diesel Dealer &nbsp;ï¿½&nbsp; Fort St. John, BC</span>
+            <div class="flex items-center gap-2 ml-auto">
+                <span class="text-[10px] text-zinc-600 font-mono uppercase tracking-wider">Currency:</span>
+                <button id="btn-cad" onclick="setCurrency('CAD')" class="text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all">CAD</button>
+                <button id="btn-usd" onclick="setCurrency('USD')" class="text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all">USD</button>
+            </div>
+        </div>
+    </div>
+    <header class="border-b border-edge" style="background:rgba(0,0,0,0.97); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="/" class="flex items-center p-1 rounded focus:outline-none focus:ring-2 focus:ring-labBlue flex-shrink-0">
+                    <img src="/assets/LAB-LOGO.png" alt="THE LAB" class="h-9 md:h-11 w-auto object-contain">
+                </a>
+                <!-- Desktop nav -->
+                <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
+                    <div class="relative group">
+                        <button class="text-xs font-bold text-zinc-400 hover:text-white transition-colors uppercase tracking-[0.2em] flex items-center gap-1.5 py-2 focus:outline-none">The Boutique <svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 min-w-[200px] z-50">
+                            <div class="rounded-xl border border-edge overflow-hidden" style="background:#0D0D12; box-shadow:0 24px 64px rgba(0,0,0,0.9);">
+                                <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Fort St. John, BC</span></div>
+                                <div class="py-1">
+                                    <a href="/boutique/tinting/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Window Tinting</a>
+                                    <a href="/boutique/coatings/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Ceramic Coatings</a>
+                                    <a href="/boutique/detailing/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Premium Detailing</a>
+                                    <a href="/boutique/ppf/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Paint Protection Film</a>
+                                    <a href="/boutique/morimoto/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Morimoto Lighting</a>
+                                    <div class="mx-4 my-1 h-px bg-edge"></div>
+                                    <a href="/contact/" class="flex items-center justify-between px-4 py-2.5 text-xs text-white font-bold hover:bg-white/5 transition-colors">Book Consultation <span class="text-labBlue ml-1">?</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <button class="text-xs font-bold text-white uppercase tracking-[0.2em] flex items-center gap-1.5 py-2 focus:outline-none">The Parts Store <svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50" style="min-width:440px;">
+                            <div class="rounded-xl border border-edge overflow-hidden" style="background:#0D0D12; box-shadow:0 24px 64px rgba(0,0,0,0.9);">
+                                <div class="grid grid-cols-2 divide-x divide-edge">
+                                    <div>
+                                        <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Shop by Make</span></div>
+                                        <div class="py-1">
+                                            <a href="/store/ford/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Ford / Powerstroke</a>
+                                            <a href="/store/ram/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Ram / Cummins</a>
+                                            <a href="/store/chevy/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Chevy / Duramax</a>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Shop by Category</span></div>
+                                        <div class="py-1">
+                                            <a href="/store/egr/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>EGR Solutions</a>
+                                            <a href="/store/exhaust/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Exhaust Systems</a>
+                                            <a href="/store/ccv/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>CCV Solutions</a>
+                                            <a href="/store/tuning/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-labBlue font-bold hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Custom Tuning</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t border-edge px-4 py-2.5"><a href="/store/" class="text-xs text-labBlue font-bold hover:text-labCyan transition-colors">View All Parts ?</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="flex items-center gap-2">
+                    <button id="cart-btn" aria-label="Cart" class="relative p-2 text-zinc-400 hover:text-white transition-colors rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-labBlue">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        <span id="cart-count" class="absolute -top-0.5 -right-0.5 bg-labBlue text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold leading-none hidden">0</span>
+                    </button>
+                    <a href="/contact/" class="hidden md:inline-flex bg-white text-black font-extrabold py-2 px-5 rounded-lg hover:bg-zinc-200 transition-all uppercase tracking-widest text-xs">Book Now</a>
+                    <button id="mob-btn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-labBlue text-white">
+                        <svg id="ham-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg id="x-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile drawer -->
+        <div id="mob-menu" class="hidden md:hidden border-t border-edge" style="background:#000;">
+            <nav class="px-6 py-6 space-y-1">
+                <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] pt-2 pb-1">The Boutique</p>
+                <a href="/boutique/" class="block py-2 text-sm font-bold text-zinc-300 hover:text-white uppercase tracking-[0.15em] transition-colors">Overview</a>
+                <a href="/boutique/tinting/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">Window Tinting</a>
+                <a href="/boutique/coatings/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">Ceramic Coatings</a>
+                <a href="/boutique/detailing/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">Premium Detailing</a>
+                <a href="/boutique/ppf/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">Paint Protection Film</a>
+                <a href="/boutique/morimoto/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">Morimoto Lighting</a>
+                <div class="h-px bg-edge my-3"></div>
+                <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] pb-1">The Parts Store</p>
+                <a href="/store/" class="block py-2 text-sm font-bold text-white uppercase tracking-[0.15em] transition-colors">Overview</a>
+                <a href="/store/egr/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">EGR Solutions</a>
+                <a href="/store/exhaust/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">Exhaust Systems</a>
+                <a href="/store/ccv/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white transition-colors">CCV Solutions</a>
+                <a href="/store/tuning/" class="block py-1.5 pl-3 text-xs text-labBlue font-bold hover:text-labCyan transition-colors">Custom Tuning</a>
+                <div class="h-px bg-edge my-3"></div>
+                <a href="/contact/" class="block bg-white text-black font-extrabold py-4 text-center rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all">Book Now</a>
+            </nav>
+        </div>
+        <script>
+            (function(){var b=document.getElementById('mob-btn'),m=document.getElementById('mob-menu'),h=document.getElementById('ham-icon'),x=document.getElementById('x-icon');if(!b||!m)return;b.addEventListener('click',function(){var o=!m.classList.contains('hidden');m.classList.toggle('hidden',o);h.classList.toggle('hidden',!o);x.classList.toggle('hidden',o);b.setAttribute('aria-expanded',String(!o));});})();
+            window.setCurrency=function(c){var r=0.74,ac='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all',ic='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all';var cb=document.getElementById('btn-cad'),ub=document.getElementById('btn-usd');if(cb)cb.className=(c==='CAD')?ac:ic;if(ub)ub.className=(c==='USD')?ac:ic;localStorage.setItem('theLab_currency',c);document.querySelectorAll('[data-price-cad]').forEach(function(el){var cad=parseFloat(el.getAttribute('data-price-cad'));el.textContent=c==='USD'?'$'+(cad*r).toFixed(2)+' USD':'$'+cad.toFixed(2)+' CAD';});document.querySelectorAll('[data-price-from-cad]').forEach(function(el){var cad=parseFloat(el.getAttribute('data-price-from-cad'));el.textContent=c==='USD'?'From $'+(cad*r).toFixed(2)+' USD':'From $'+cad.toFixed(2)+' CAD';});};
+            setTimeout(function(){window.setCurrency(localStorage.getItem('theLab_currency')||'CAD');},0);
+        </script>
+    </header>
+    </div>
+
+    <main>
+
+        <!-- --- HERO --- -->
+        <section class="relative min-h-[80vh] flex items-center overflow-hidden">
+            <div class="absolute inset-0 bg-void grid-bg"></div>
+            <div class="absolute top-1/3 right-0 w-1/2 h-96 rounded-full bg-labBlue opacity-[0.07] blur-[150px] pointer-events-none"></div>
+            <div class="absolute bottom-0 left-1/4 w-1/3 h-48 bg-labCyan opacity-[0.03] blur-[80px] pointer-events-none"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-6 py-28 w-full">
+                <div class="max-w-3xl">
+                    <span class="text-labBlue font-mono tracking-[0.25em] uppercase text-xs mb-6 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-labBlue animate-pulse"></span>
+                        North American Distribution ï¿½ Diesel Performance
+                    </span>
+                    <h1 class="font-heading font-extrabold text-5xl md:text-7xl text-white leading-[1.05] uppercase mb-6">
+                        Uncompromising<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-labBlue to-labCyan">Power.</span>
+                    </h1>
+                    <p class="text-zinc-400 text-lg md:text-xl max-w-xl mb-6 leading-relaxed">
+                        Performance parts for Powerstroke, Cummins, and Duramax. Polar Diesel authorized dealer. Custom tuning available.
+                    </p>
+                    <div class="flex flex-wrap gap-3 mb-10">
+                        <a href="/store/egr/" class="bg-labBlue text-white font-bold px-7 py-3 rounded-lg text-sm uppercase tracking-widest hover:bg-blue-600 transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.4);">Shop Parts</a>
+                        <a href="/store/tuning/" class="border border-labBlue text-labBlue font-bold px-7 py-3 rounded-lg text-sm uppercase tracking-widest hover:bg-labBlue hover:text-white transition-all">Book Custom Tuning</a>
+                    </div>
+                    <!-- YMM Search -->
+                    <div id="ymm" class="rounded-xl border border-edge p-4" style="background-color:#0D0D12; box-shadow:0 0 20px rgba(0,102,255,0.2);">
+                        <p class="text-xs font-bold text-labBlue uppercase tracking-widest mb-3">Find Parts For Your Vehicle</p>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <select id="ymm-year" class="flex-1 text-white p-3 rounded-lg border border-edge focus:outline-none focus:border-labBlue text-sm cursor-pointer" style="background-color:#000;">
+                                <option value="" disabled selected>Year</option>
+                                <option>2026</option><option>2025</option><option>2024</option><option>2023</option>
+                                <option>2022</option><option>2021</option><option>2020</option><option>2019</option>
+                                <option>2018</option><option>2017</option><option>2016</option><option>2015</option>
+                                <option>2014</option><option>2013</option><option>2012</option><option>2011</option>
+                                <option>2010</option><option>2009</option><option>2008</option>
+                            </select>
+                            <select id="ymm-make" class="flex-1 text-white p-3 rounded-lg border border-edge focus:outline-none focus:border-labBlue text-sm cursor-pointer" style="background-color:#000;">
+                                <option value="" disabled selected>Make</option>
+                                <option value="ford">Ford</option>
+                                <option value="ram">Ram / Dodge</option>
+                                <option value="chevy">Chevrolet</option>
+                                <option value="chevy">GMC</option>
+                            </select>
+                            <select id="ymm-engine" class="flex-1 text-white p-3 rounded-lg border border-edge focus:outline-none focus:border-labBlue text-sm cursor-pointer" style="background-color:#000;">
+                                <option value="" disabled selected>Engine</option>
+                                <option>6.7L Powerstroke</option>
+                                <option>6.6L Duramax L5P</option>
+                                <option>6.6L Duramax LML</option>
+                                <option>6.7L Cummins</option>
+                                <option>5.9L Cummins</option>
+                            </select>
+                            <button id="ymm-find" class="bg-labBlue text-white font-bold px-8 py-3 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 active:scale-[0.98] transition-all whitespace-nowrap" style="box-shadow:0 0 16px rgba(0,102,255,0.4);">Find Parts</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-void to-transparent pointer-events-none"></div>
+        </section>
+
+        <!-- --- SHOP BY MAKE --- -->
+        <section class="py-20 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center gap-4 mb-10">
+                    <span class="text-labBlue font-mono text-xs tracking-widest uppercase">Shop by Make</span>
+                    <div class="h-px bg-edge flex-grow"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Ford -->
+                    <a id="ford" href="/store/egr/" class="group relative overflow-hidden rounded-xl border border-edge hover:border-labBlue/50 transition-all duration-300 p-8 block" style="background-color:#0D0D12;">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-labBlue to-labCyan transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                        <div class="text-zinc-700 group-hover:text-labBlue/30 transition-colors mb-4">
+                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="font-heading font-extrabold text-2xl text-white uppercase mb-1">Ford</h3>
+                        <p class="text-labBlue text-xs font-mono uppercase tracking-widest mb-3">6.7L Powerstroke ï¿½ 2011ï¿½2026</p>
+                        <p class="text-zinc-500 text-sm mb-4">EGR delete kits, CCV solutions, 5" exhaust systems, billet throttle valve deletes.</p>
+                        <span class="text-labBlue text-xs font-bold uppercase tracking-wider group-hover:text-labCyan transition-colors">Shop Powerstroke Parts ?</span>
+                    </a>
+                    <!-- Ram -->
+                    <a id="ram" href="/store/egr/" class="group relative overflow-hidden rounded-xl border border-edge hover:border-labBlue/50 transition-all duration-300 p-8 block" style="background-color:#0D0D12;">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-labBlue to-labCyan transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                        <div class="text-zinc-700 group-hover:text-labBlue/30 transition-colors mb-4">
+                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+                        </div>
+                        <h3 class="font-heading font-extrabold text-2xl text-white uppercase mb-1">Ram</h3>
+                        <p class="text-labBlue text-xs font-mono uppercase tracking-widest mb-3">6.7L Cummins ï¿½ 2007.5ï¿½2024</p>
+                        <p class="text-zinc-500 text-sm mb-4">EGR delete kits, CCV upgrades, exhaust systems, and custom tuning packages.</p>
+                        <span class="text-labBlue text-xs font-bold uppercase tracking-wider group-hover:text-labCyan transition-colors">Shop Cummins Parts ?</span>
+                    </a>
+                    <!-- Chevy/GMC -->
+                    <a id="chevy" href="/store/egr/" class="group relative overflow-hidden rounded-xl border border-edge hover:border-labBlue/50 transition-all duration-300 p-8 block" style="background-color:#0D0D12;">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-labBlue to-labCyan transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                        <div class="text-zinc-700 group-hover:text-labBlue/30 transition-colors mb-4">
+                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <h3 class="font-heading font-extrabold text-2xl text-white uppercase mb-1">Chevy / GMC</h3>
+                        <p class="text-labBlue text-xs font-mono uppercase tracking-widest mb-3">6.6L Duramax ï¿½ 2017ï¿½2026</p>
+                        <p class="text-zinc-500 text-sm mb-4">EGR delete kits, CCV upgrades, performance exhausts, and Duramax-specific solutions.</p>
+                        <span class="text-labBlue text-xs font-bold uppercase tracking-wider group-hover:text-labCyan transition-colors">Shop Duramax Parts ?</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------- -->
+        <!-- CATEGORY SECTIONS ï¿½ Modeled after Polar Diesel layout  -->
+        <!-- ------------------------------------------------------- -->
+
+        <!-- --- EGR SOLUTIONS --- -->
+        <section id="egr" class="py-24 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+                <!-- Section intro (Polar Diesel style) -->
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div>
+                        <span class="text-labBlue font-mono text-xs tracking-widest uppercase mb-3 block">Category ï¿½ Off-Road Use Only</span>
+                        <h2 class="font-heading font-extrabold text-4xl md:text-5xl text-white uppercase leading-tight mb-4">EGR Solutions.</h2>
+                        <p class="text-zinc-300 text-xl mb-3 font-medium">Rid your engine of factory EGR failure.</p>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-6">Factory EGR systems are notorious for carbon buildup, coolant leaks, and premature engine damage. Our Polar Diesel delete kits eliminate the system entirely ï¿½ cleaner air, lower EGTs, and more reliable power. Off-road and sanctioned racing use only.</p>
+                        <a href="#egr-products" class="inline-flex items-center bg-labBlue text-white font-extrabold py-3 px-8 rounded-lg text-sm uppercase tracking-widest hover:bg-blue-600 transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.4);">Shop EGR Kits</a>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-5 rounded-xl border border-edge" style="background-color:#0D0D12;">
+                            <div class="text-labBlue mb-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                            <p class="text-white text-sm font-bold">Lower EGTs</p>
+                            <p class="text-zinc-500 text-xs mt-1">Cooler, cleaner combustion</p>
+                        </div>
+                        <div class="p-5 rounded-xl border border-edge" style="background-color:#0D0D12;">
+                            <div class="text-labBlue mb-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                            <p class="text-white text-sm font-bold">More Power</p>
+                            <p class="text-zinc-500 text-xs mt-1">Eliminate restriction</p>
+                        </div>
+                        <div class="p-5 rounded-xl border border-edge" style="background-color:#0D0D12;">
+                            <div class="text-labBlue mb-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9"/></svg></div>
+                            <p class="text-white text-sm font-bold">3 Platforms</p>
+                            <p class="text-zinc-500 text-xs mt-1">Ford ï¿½ Ram ï¿½ Chevy</p>
+                        </div>
+                        <div class="p-5 rounded-xl border border-edge" style="background-color:#0D0D12;">
+                            <div class="text-labBlue mb-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6H7.5l-1-1H5a2 2 0 01-2-2z"/></svg></div>
+                            <p class="text-white text-sm font-bold">Canadian Made</p>
+                            <p class="text-zinc-500 text-xs mt-1">Polar Diesel ï¿½ Premium QC</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product grid ï¿½ Shopify: {% for product in collections.egr-solutions.products %} -->
+                <div id="egr-products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- EGR Delete ï¿½ Powerstroke 6.7L -->
+                    <div class="glass-panel border border-edge rounded-xl overflow-hidden group hover:border-labBlue/40 transition-all duration-300"
+                        data-shopify-product-id="polar-egr-powerstroke-67"
+                        data-shopify-variant-id="default">
+                        <div class="h-52 relative flex items-center justify-center border-b border-edge group-hover:border-labBlue/30 transition-colors" style="background-color:#0D0D12;">
+                            <span class="absolute top-3 left-3 border border-red-900 text-red-500 text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded" style="background-color:#000;">Off-Road Only</span>
+                            <span class="absolute top-3 right-3 bg-labBlue/10 border border-labBlue/30 text-labBlue text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded">Polar Diesel</span>
+                            <div class="text-zinc-700 group-hover:text-labBlue/30 transition-colors">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M12 3v1m0 16v1M4.22 4.22l.707.707m12.727 12.727l.707.707M1 12h1m20 0h1M4.22 19.78l.707-.707M18.657 5.343l.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs text-labBlue font-bold uppercase tracking-widest mb-1">Ford / 6.7L Powerstroke</div>
+                            <h4 class="font-heading font-bold text-white text-lg mb-3 leading-snug">Polar EGR Delete Kit (2011ï¿½2026)</h4>
+                            <div class="flex items-baseline gap-3 mb-5">
+                                <span class="text-2xl text-white font-extrabold" data-price-cad="350.00">$350.00 CAD</span>
+                            </div>
+                            <!-- Shopify: <form action="/cart/add" method="post"> -->
+                            <button type="button" data-shopify-action="add-to-cart" data-shopify-product-id="polar-egr-powerstroke-67"
+                                class="w-full bg-labBlue text-white font-bold py-3.5 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 active:scale-[0.98] transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.35);">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- EGR Delete ï¿½ Cummins 6.7L -->
+                    <div class="glass-panel border border-edge rounded-xl overflow-hidden group hover:border-labBlue/40 transition-all duration-300"
+                        data-shopify-product-id="polar-egr-cummins-67"
+                        data-shopify-variant-id="default">
+                        <div class="h-52 relative flex items-center justify-center border-b border-edge group-hover:border-labBlue/30 transition-colors" style="background-color:#0D0D12;">
+                            <span class="absolute top-3 left-3 border border-red-900 text-red-500 text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded" style="background-color:#000;">Off-Road Only</span>
+                            <span class="absolute top-3 right-3 bg-labBlue/10 border border-labBlue/30 text-labBlue text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded">Polar Diesel</span>
+                            <div class="text-zinc-700 group-hover:text-labBlue/30 transition-colors">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M12 3v1m0 16v1M4.22 4.22l.707.707m12.727 12.727l.707.707M1 12h1m20 0h1M4.22 19.78l.707-.707M18.657 5.343l.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs text-labCyan font-bold uppercase tracking-widest mb-1">Ram / 6.7L Cummins</div>
+                            <h4 class="font-heading font-bold text-white text-lg mb-3 leading-snug">Polar EGR Delete Kit (2007.5ï¿½2024)</h4>
+                            <div class="flex items-baseline gap-3 mb-5">
+                                <span class="text-2xl text-white font-extrabold" data-price-cad="308.00">$308.00 CAD</span>
+                            </div>
+                            <button type="button" data-shopify-action="add-to-cart" data-shopify-product-id="polar-egr-cummins-67"
+                                class="w-full bg-labBlue text-white font-bold py-3.5 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 active:scale-[0.98] transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.35);">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- EGR Delete ï¿½ Duramax 6.6L -->
+                    <div class="glass-panel border border-edge rounded-xl overflow-hidden group hover:border-labBlue/40 transition-all duration-300"
+                        data-shopify-product-id="polar-egr-duramax-66"
+                        data-shopify-variant-id="default">
+                        <div class="h-52 relative flex items-center justify-center border-b border-edge group-hover:border-labBlue/30 transition-colors" style="background-color:#0D0D12;">
+                            <span class="absolute top-3 left-3 border border-red-900 text-red-500 text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded" style="background-color:#000;">Off-Road Only</span>
+                            <span class="absolute top-3 right-3 bg-labBlue/10 border border-labBlue/30 text-labBlue text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded">Polar Diesel</span>
+                            <div class="text-zinc-700 group-hover:text-labBlue/30 transition-colors">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M12 3v1m0 16v1M4.22 4.22l.707.707m12.727 12.727l.707.707M1 12h1m20 0h1M4.22 19.78l.707-.707M18.657 5.343l.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs text-labCyan font-bold uppercase tracking-widest mb-1">Chevy / GMC / 6.6L Duramax</div>
+                            <h4 class="font-heading font-bold text-white text-lg mb-3 leading-snug">Polar EGR Delete Kit (2017ï¿½2026)</h4>
+                            <div class="flex items-baseline gap-3 mb-5">
+                                <span class="text-2xl text-white font-extrabold" data-price-cad="483.00">$483.00 CAD</span>
+                            </div>
+                            <button type="button" data-shopify-action="add-to-cart" data-shopify-product-id="polar-egr-duramax-66"
+                                class="w-full bg-labBlue text-white font-bold py-3.5 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 active:scale-[0.98] transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.35);">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Shopify: {% endfor %} -->
+            </div>
+        </section>
+
+        <!-- --- EXHAUST SYSTEMS --- -->
+        <section id="exhaust" class="py-24 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div>
+                        <span class="text-labBlue font-mono text-xs tracking-widest uppercase mb-3 block">Category ï¿½ Off-Road Use Only</span>
+                        <h2 class="font-heading font-extrabold text-4xl md:text-5xl text-white uppercase leading-tight mb-4">Exhaust Systems.</h2>
+                        <p class="text-zinc-300 text-xl mb-3 font-medium">Let the horsepower flow.</p>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-6">Restrictive factory exhaust is leaving power on the table. Our 5" Polar Diesel systems maximize flow, reduce backpressure, and give your diesel the tone it deserves. Available for Powerstroke, Cummins, and Duramax platforms.</p>
+                        <a href="#exhaust-products" class="inline-flex items-center bg-labBlue text-white font-extrabold py-3 px-8 rounded-lg text-sm uppercase tracking-widest hover:bg-blue-600 transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.4);">Shop Exhaust</a>
+                    </div>
+                    <div class="rounded-xl border border-labBlue/20 p-6" style="background:linear-gradient(135deg, rgba(0,102,255,0.07) 0%, rgba(13,13,18,0.95) 70%);">
+                        <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-lg bg-labBlue/10 border border-labBlue/30 flex items-center justify-center"><svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div><span class="text-white font-bold text-sm">5" Diameter ï¿½ Maximum Flow</span></div>
+                        <p class="text-zinc-500 text-sm mb-4">Premium mandrel-bent 5" piping for maximum exhaust flow. Available in aluminized or stainless steel construction.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[10px] bg-void border border-edge text-zinc-400 px-2.5 py-1 rounded font-mono">Powerstroke</span>
+                            <span class="text-[10px] bg-void border border-edge text-zinc-400 px-2.5 py-1 rounded font-mono">Cummins</span>
+                            <span class="text-[10px] bg-void border border-edge text-zinc-400 px-2.5 py-1 rounded font-mono">Duramax</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Products ï¿½ Shopify: {% for product in collections.exhaust-systems.products %} -->
+                <div id="exhaust-products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- 5" Exhaust ï¿½ Powerstroke 6.7L -->
+                    <div class="glass-panel border border-edge rounded-xl overflow-hidden group hover:border-labCyan/40 transition-all duration-300"
+                        data-shopify-product-id="polar-exhaust-5in-powerstroke-67"
+                        data-shopify-variant-id="default">
+                        <div class="h-52 relative flex items-center justify-center border-b border-edge group-hover:border-labCyan/30 transition-colors" style="background-color:#0D0D12;">
+                            <span class="absolute top-3 left-3 border border-red-900 text-red-500 text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded" style="background-color:#000;">Off-Road Only</span>
+                            <span class="absolute top-3 right-3 bg-labBlue/10 border border-labBlue/30 text-labBlue text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded">Polar Diesel</span>
+                            <div class="text-zinc-700 group-hover:text-labCyan/20 transition-colors">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs text-labBlue font-bold uppercase tracking-widest mb-1">Ford / 6.7L Powerstroke</div>
+                            <h4 class="font-heading font-bold text-white text-lg mb-3 leading-snug">5" Polar Exhaust System (2011ï¿½2026)</h4>
+                            <div class="flex items-baseline gap-3 mb-5">
+                                <span class="text-2xl text-white font-extrabold" data-price-cad="966.00">$966.00 CAD</span>
+                            </div>
+                            <button type="button" data-shopify-action="add-to-cart" data-shopify-product-id="polar-exhaust-5in-powerstroke-67"
+                                class="w-full bg-labBlue text-white font-bold py-3.5 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 active:scale-[0.98] transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.35);">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- 5" Exhaust ï¿½ Cummins 6.7L -->
+                    <div class="glass-panel border border-edge rounded-xl overflow-hidden group hover:border-labCyan/40 transition-all duration-300"
+                        data-shopify-product-id="polar-exhaust-5in-cummins-67"
+                        data-shopify-variant-id="default">
+                        <div class="h-52 relative flex items-center justify-center border-b border-edge group-hover:border-labCyan/30 transition-colors" style="background-color:#0D0D12;">
+                            <span class="absolute top-3 left-3 border border-red-900 text-red-500 text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded" style="background-color:#000;">Off-Road Only</span>
+                            <span class="absolute top-3 right-3 bg-labBlue/10 border border-labBlue/30 text-labBlue text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded">Polar Diesel</span>
+                            <div class="text-zinc-700 group-hover:text-labCyan/20 transition-colors">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs text-labCyan font-bold uppercase tracking-widest mb-1">Ram / 6.7L Cummins</div>
+                            <h4 class="font-heading font-bold text-white text-lg mb-3 leading-snug">5" Polar Exhaust System (2010ï¿½2024)</h4>
+                            <div class="flex items-baseline gap-3 mb-5">
+                                <span class="text-2xl text-white font-extrabold" data-price-cad="966.00">$966.00 CAD</span>
+                            </div>
+                            <button type="button" data-shopify-action="add-to-cart" data-shopify-product-id="polar-exhaust-5in-cummins-67"
+                                class="w-full bg-labBlue text-white font-bold py-3.5 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 active:scale-[0.98] transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.35);">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- 5" Exhaust ï¿½ Duramax 6.6L -->
+                    <div class="glass-panel border border-edge rounded-xl overflow-hidden group hover:border-labCyan/40 transition-all duration-300"
+                        data-shopify-product-id="polar-exhaust-5in-duramax-66"
+                        data-shopify-variant-id="default">
+                        <div class="h-52 relative flex items-center justify-center border-b border-edge group-hover:border-labCyan/30 transition-colors" style="background-color:#0D0D12;">
+                            <span class="absolute top-3 left-3 border border-red-900 text-red-500 text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded" style="background-color:#000;">Off-Road Only</span>
+                            <span class="absolute top-3 right-3 bg-labBlue/10 border border-labBlue/30 text-labBlue text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded">Polar Diesel</span>
+                            <div class="text-zinc-700 group-hover:text-labCyan/20 transition-colors">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs text-labCyan font-bold uppercase tracking-widest mb-1">Chevy / GMC / 6.6L Duramax</div>
+                            <h4 class="font-heading font-bold text-white text-lg mb-3 leading-snug">5" Polar Exhaust System (2017ï¿½2026)</h4>
+                            <div class="flex items-baseline gap-3 mb-5">
+                                <span class="text-2xl text-white font-extrabold" data-price-cad="1043.00">$1,043.00 CAD</span>
+                            </div>
+                            <button type="button" data-shopify-action="add-to-cart" data-shopify-product-id="polar-exhaust-5in-duramax-66"
+                                class="w-full bg-labBlue text-white font-bold py-3.5 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 active:scale-[0.98] transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.35);">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- CCV SOLUTIONS --- -->
+        <section id="ccv" class="py-24 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div>
+                        <span class="text-labBlue font-mono text-xs tracking-widest uppercase mb-3 block">Category ï¿½ Off-Road Use Only</span>
+                        <h2 class="font-heading font-extrabold text-4xl md:text-5xl text-white uppercase leading-tight mb-4">CCV Solutions.</h2>
+                        <p class="text-zinc-300 text-xl mb-3 font-medium">Quit feeding your turbo oil vapors.</p>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-6">The factory CCV (Crankcase Ventilation) system routes oil vapor directly into your intake ï¿½ fouling the intercooler and building deposits on the intake manifold. Our Polar Diesel delete kits reroute or eliminate the system for cleaner air delivery and a longer-lasting turbo.</p>
+                        <a href="#ccv-products" class="inline-flex items-center bg-labBlue text-white font-extrabold py-3 px-8 rounded-lg text-sm uppercase tracking-widest hover:bg-blue-600 transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.4);">Shop CCV Kits</a>
+                    </div>
+                    <div class="rounded-xl border border-edge p-6" style="background-color:#0D0D12;">
+                        <p class="text-zinc-600 text-xs font-mono uppercase tracking-widest mb-4">Why CCV delete?</p>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-labBlue mt-1.5 flex-shrink-0"></div><p class="text-zinc-400 text-sm">Prevent oil contamination in your intake and intercooler</p></div>
+                            <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-labBlue mt-1.5 flex-shrink-0"></div><p class="text-zinc-400 text-sm">Extend turbo life by eliminating oil vapor ingestion</p></div>
+                            <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-labBlue mt-1.5 flex-shrink-0"></div><p class="text-zinc-400 text-sm">Cleaner intake tract ï¿½ more consistent air/fuel ratio</p></div>
+                            <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-labBlue mt-1.5 flex-shrink-0"></div><p class="text-zinc-400 text-sm">Pairs perfectly with EGR delete for a fully clean build</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Products ï¿½ Shopify: {% for product in collections.ccv-solutions.products %} -->
+                <div id="ccv-products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- CCV Delete ï¿½ Powerstroke 6.7L -->
+                    <div class="glass-panel border border-edge rounded-xl overflow-hidden group hover:border-labCyan/40 transition-all duration-300"
+                        data-shopify-product-id="polar-ccv-powerstroke-67"
+                        data-shopify-variant-id="default">
+                        <div class="h-52 relative flex items-center justify-center border-b border-edge" style="background-color:#0D0D12;">
+                            <span class="absolute top-3 left-3 border border-red-900 text-red-500 text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded" style="background-color:#000;">Off-Road Only</span>
+                            <span class="absolute top-3 right-3 bg-labBlue/10 border border-labBlue/30 text-labBlue text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded">Polar Diesel</span>
+                            <div class="text-zinc-700 group-hover:text-labCyan/20 transition-colors">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs text-labBlue font-bold uppercase tracking-widest mb-1">Ford / 6.7L Powerstroke</div>
+                            <h4 class="font-heading font-bold text-white text-lg mb-3 leading-snug">Polar CCV Delete Kit (2011ï¿½2026)</h4>
+                            <div class="flex items-baseline gap-3 mb-5">
+                                <span class="text-2xl text-white font-extrabold" data-price-cad="280.00">$280.00 CAD</span>
+                            </div>
+                            <button type="button" data-shopify-action="add-to-cart" data-shopify-product-id="polar-ccv-powerstroke-67"
+                                class="w-full bg-labBlue text-white font-bold py-3.5 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 active:scale-[0.98] transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.35);">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- CCV Delete ï¿½ Cummins -->
+                    <div class="glass-panel border border-edge rounded-xl overflow-hidden group hover:border-labCyan/40 transition-all duration-300"
+                        data-shopify-product-id="polar-ccv-cummins-67"
+                        data-shopify-variant-id="default">
+                        <div class="h-52 relative flex items-center justify-center border-b border-edge" style="background-color:#0D0D12;">
+                            <span class="absolute top-3 left-3 border border-red-900 text-red-500 text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded" style="background-color:#000;">Off-Road Only</span>
+                            <span class="absolute top-3 right-3 bg-labBlue/10 border border-labBlue/30 text-labBlue text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded">Polar Diesel</span>
+                            <div class="text-zinc-700 group-hover:text-labCyan/20 transition-colors">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs text-labCyan font-bold uppercase tracking-widest mb-1">Ram / 6.7L Cummins</div>
+                            <h4 class="font-heading font-bold text-white text-lg mb-3 leading-snug">Polar CCV Vent Kit (2007.5ï¿½2024)</h4>
+                            <div class="flex items-baseline gap-3 mb-5">
+                                <span class="text-2xl text-white font-extrabold" data-price-cad="69.00">$69.00 CAD</span>
+                            </div>
+                            <button type="button" data-shopify-action="add-to-cart" data-shopify-product-id="polar-ccv-cummins-67"
+                                class="w-full bg-labBlue text-white font-bold py-3.5 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 active:scale-[0.98] transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.35);">Add to Cart</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- --- CUSTOM TUNING (PROMINENT) --- -->
+        <section id="tuning" class="py-24 px-6 border-t border-edge" style="background:linear-gradient(135deg, rgba(0,102,255,0.05) 0%, rgba(0,0,0,0) 60%);">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-labBlue font-mono text-xs tracking-widest uppercase mb-3 block">Featured Service</span>
+                    <h2 class="font-heading font-extrabold text-4xl md:text-6xl text-white uppercase leading-tight mb-4">Custom Tuning.</h2>
+                    <p class="text-zinc-300 text-xl mb-4 font-medium">Maximize every build.</p>
+                    <p class="text-zinc-500 text-base max-w-2xl mx-auto leading-relaxed mb-8">
+                        A delete kit alone is just the start. Custom tuning unlocks the full potential of your engine ï¿½ optimizing fueling, boost, timing, and driver demand for maximum power, efficiency, and reliability.
+                    </p>
+                    <a href="/contact/" class="inline-flex items-center bg-labBlue text-white font-extrabold py-4 px-10 rounded-lg text-sm uppercase tracking-widest hover:bg-blue-600 transition-all text-center" style="box-shadow:0 0 24px rgba(0,102,255,0.5);">Book a Tuning Session ?</a>
+                </div>
+
+                <!-- Tuning options -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="p-8 rounded-xl border border-labBlue/20 hover:border-labBlue/50 transition-all duration-300 group relative overflow-hidden" style="background:linear-gradient(135deg, rgba(0,102,255,0.07) 0%, rgba(13,13,18,0.95) 70%);">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-labBlue to-labCyan transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                        <div class="w-12 h-12 rounded-lg bg-labBlue/10 border border-labBlue/30 flex items-center justify-center mb-5">
+                            <svg class="w-6 h-6 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9"/></svg>
+                        </div>
+                        <div class="text-labBlue text-xs font-mono uppercase tracking-widest mb-2">EZ LYNK AutoAgent</div>
+                        <h3 class="font-heading font-bold text-white text-xl mb-3">EZ LYNK Tuning</h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">AutoAgent 3.0 device with custom tune file. OTA updates, data logging, and multi-tune capability. Plug-and-play install.</p>
+                        <a href="/contact/" class="text-labBlue text-xs font-bold uppercase tracking-wider hover:text-labCyan transition-colors">Book Session ?</a>
+                    </div>
+
+                    <div class="p-8 rounded-xl border border-labBlue/20 hover:border-labBlue/50 transition-all duration-300 group relative overflow-hidden" style="background:linear-gradient(135deg, rgba(0,102,255,0.07) 0%, rgba(13,13,18,0.95) 70%);">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-labBlue to-labCyan transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                        <div class="w-12 h-12 rounded-lg bg-labBlue/10 border border-labBlue/30 flex items-center justify-center mb-5">
+                            <svg class="w-6 h-6 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <div class="text-labBlue text-xs font-mono uppercase tracking-widest mb-2">HP Tuners</div>
+                        <h3 class="font-heading font-bold text-white text-xl mb-3">HP Tuners Platform</h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">Professional-grade ECM and TCM tuning with HP Tuners MPVI3 hardware. Deep calibration for maximum performance and reliability.</p>
+                        <a href="/contact/" class="text-labBlue text-xs font-bold uppercase tracking-wider hover:text-labCyan transition-colors">Book Session ?</a>
+                    </div>
+
+                    <div class="p-8 rounded-xl border border-labBlue/20 hover:border-labBlue/50 transition-all duration-300 group relative overflow-hidden" style="background:linear-gradient(135deg, rgba(0,102,255,0.07) 0%, rgba(13,13,18,0.95) 70%);">
+                        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-labBlue to-labCyan transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+                        <div class="w-12 h-12 rounded-lg bg-labBlue/10 border border-labBlue/30 flex items-center justify-center mb-5">
+                            <svg class="w-6 h-6 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        </div>
+                        <div class="text-labBlue text-xs font-mono uppercase tracking-widest mb-2">AMDP</div>
+                        <h3 class="font-heading font-bold text-white text-xl mb-3">AMDP Tunes</h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">AMDP performance files tailored to your build. Ideal for delete-equipped trucks running custom hardware.</p>
+                        <a href="/contact/" class="text-labBlue text-xs font-bold uppercase tracking-wider hover:text-labCyan transition-colors">Book Session ?</a>
+                    </div>
+                </div>
+
+                <!-- Trust strip for tuning -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center py-6 rounded-xl border border-edge" style="background-color:#0D0D12;"><div class="text-2xl font-extrabold text-white font-heading">100%</div><div class="text-xs text-zinc-500 mt-1">Custom Per Build</div></div>
+                    <div class="text-center py-6 rounded-xl border border-edge" style="background-color:#0D0D12;"><div class="text-2xl font-extrabold text-labBlue font-heading">3+</div><div class="text-xs text-zinc-500 mt-1">Tune Platforms</div></div>
+                    <div class="text-center py-6 rounded-xl border border-edge" style="background-color:#0D0D12;"><div class="text-2xl font-extrabold text-white font-heading">Remote</div><div class="text-xs text-zinc-500 mt-1">Available Nationwide</div></div>
+                    <div class="text-center py-6 rounded-xl border border-edge" style="background-color:#0D0D12;"><div class="text-2xl font-extrabold text-labCyan font-heading">Fast</div><div class="text-xs text-zinc-500 mt-1">Same-Day Response</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- BILLET THROTTLE VALVE DELETES --- -->
+        <section id="billet" class="py-24 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="text-labBlue font-mono text-xs tracking-widest uppercase">Billet Throttle Deletes</span>
+                    <div class="h-px bg-edge flex-grow"></div>
+                    <span class="text-[10px] text-zinc-600 font-mono uppercase tracking-widest border border-red-900/50 text-red-600 px-2 py-0.5 rounded">Off-Road Only</span>
+                </div>
+                <h2 class="font-heading font-extrabold text-3xl md:text-4xl text-white uppercase mb-3">Billet Throttle Valve Deletes.</h2>
+                <p class="text-zinc-500 text-sm max-w-2xl mb-10 leading-relaxed">Replace the factory plastic throttle valve with a precision CNC-machined billet aluminum unit ï¿½ eliminating a common failure point and improving airflow. Powerstroke-specific fitment.</p>
+                <!-- Products ï¿½ Shopify: {% for product in collections.billet-deletes.products %} -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <div class="glass-panel border border-edge rounded-xl overflow-hidden group hover:border-labBlue/40 transition-all duration-300"
+                        data-shopify-product-id="polar-billet-tvd-powerstroke-2011-2019"
+                        data-shopify-variant-id="default">
+                        <div class="h-52 relative flex items-center justify-center border-b border-edge" style="background-color:#0D0D12;">
+                            <span class="absolute top-3 left-3 border border-red-900 text-red-500 text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded" style="background-color:#000;">Off-Road Only</span>
+                            <span class="absolute top-3 right-3 bg-labBlue/10 border border-labBlue/30 text-labBlue text-[10px] px-2 py-1 uppercase tracking-widest font-bold rounded">Polar Diesel</span>
+                            <div class="text-zinc-700 group-hover:text-labBlue/30 transition-colors">
+                                <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs text-labBlue font-bold uppercase tracking-widest mb-1">Ford / 6.7L Powerstroke</div>
+                            <h4 class="font-heading font-bold text-white text-lg mb-3 leading-snug">Billet Throttle Valve Delete (2011ï¿½2019)</h4>
+                            <div class="flex items-baseline gap-3 mb-5">
+                                <span class="text-2xl text-white font-extrabold" data-price-cad="211.00">$211.00 CAD</span>
+                            </div>
+                            <button type="button" data-shopify-action="add-to-cart" data-shopify-product-id="polar-billet-tvd-powerstroke-2011-2019"
+                                class="w-full bg-labBlue text-white font-bold py-3.5 rounded-lg text-sm uppercase tracking-wider hover:bg-blue-600 active:scale-[0.98] transition-all" style="box-shadow:0 0 16px rgba(0,102,255,0.35);">Add to Cart</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- --- POLAR DIESEL PARTNERSHIP --- -->
+        <section class="py-12 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+                <div class="rounded-2xl border border-labBlue/30 p-8 md:p-10 relative overflow-hidden" style="background:linear-gradient(135deg, rgba(0,102,255,0.07) 0%, rgba(13,13,18,0.95) 55%);">
+                    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-labBlue via-labCyan to-transparent"></div>
+                    <div class="absolute bottom-0 right-0 w-64 h-64 bg-labBlue opacity-[0.05] blur-[80px] rounded-full pointer-events-none"></div>
+                    <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-8">
+                        <div class="flex-shrink-0">
+                            <div class="text-white font-black text-3xl tracking-tighter leading-tight mb-1">POLAR<br>DIESEL</div>
+                            <div class="inline-block bg-labBlue/10 border border-labBlue/30 text-labCyan text-[10px] font-mono tracking-[0.2em] uppercase px-2 py-1 rounded mt-1">Authorized Dealer</div>
+                        </div>
+                        <div class="hidden md:block w-px h-16 bg-edge flex-shrink-0"></div>
+                        <div class="flex-grow">
+                            <span class="text-labBlue text-[10px] font-mono uppercase tracking-[0.2em] mb-2 block">Featured Partner ï¿½ Proudly Canadian</span>
+                            <h3 class="font-heading font-extrabold text-xl text-white mb-2">Making Diesels Great Again.</h3>
+                            <p class="text-zinc-500 text-sm leading-relaxed mb-4 max-w-2xl">THE LAB is an authorized Polar Diesel dealer ï¿½ premium Canadian-made EGR delete kits, CCV solutions, billet throttle valve deletes, performance exhausts, and twin turbo systems for Powerstroke, Cummins &amp; Duramax.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-[10px] bg-void border border-edge text-zinc-400 px-2.5 py-1 rounded font-mono">EGR Delete Kits</span>
+                                <span class="text-[10px] bg-void border border-edge text-zinc-400 px-2.5 py-1 rounded font-mono">CCV Upgrades</span>
+                                <span class="text-[10px] bg-void border border-edge text-zinc-400 px-2.5 py-1 rounded font-mono">Exhaust Systems</span>
+                                <span class="text-[10px] bg-void border border-edge text-zinc-400 px-2.5 py-1 rounded font-mono">Billet Throttle Deletes</span>
+                                <span class="text-[10px] bg-void border border-edge text-zinc-400 px-2.5 py-1 rounded font-mono">Twin Turbo Systems</span>
+                            </div>
+                        </div>
+                        <!-- Internal CTA ï¿½ no external links to polardiesel.ca -->
+                        <a href="/store/egr/" class="flex-shrink-0 border border-labBlue text-labBlue font-extrabold py-3 px-8 rounded-lg text-xs uppercase tracking-widest hover:bg-labBlue hover:text-white transition-all whitespace-nowrap">Browse All Parts →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- TRUST SIGNALS --- -->
+        <section class="py-20 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-xl bg-midnight border border-edge flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/></svg>
+                        </div>
+                        <h4 class="text-white font-bold text-sm mb-1">Fast Shipping</h4>
+                        <p class="text-zinc-500 text-xs">Canada-wide &amp; US delivery</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-xl bg-midnight border border-edge flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        </div>
+                        <h4 class="text-white font-bold text-sm mb-1">Verified Dealer</h4>
+                        <p class="text-zinc-500 text-xs">Authorized Polar Diesel partner</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-xl bg-midnight border border-edge flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <h4 class="text-white font-bold text-sm mb-1">Expert Support</h4>
+                        <p class="text-zinc-500 text-xs">Real diesel techs, not bots</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 rounded-xl bg-midnight border border-edge flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        </div>
+                        <h4 class="text-white font-bold text-sm mb-1">Returns Policy</h4>
+                        <p class="text-zinc-500 text-xs"><a href="/shipping/" class="hover:text-white transition-colors">View our returns policy</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- --- GLOBAL FOOTER --- -->
+    <footer class="bg-void border-t border-edge pt-14 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-14">
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">The Boutique</h4>
+                    <ul class="space-y-3 text-sm text-zinc-400">
+                        <li><a href="/boutique/detailing/" class="hover:text-white transition-colors block">Premium Detailing</a></li>
+                        <li><a href="/boutique/coatings/" class="hover:text-white transition-colors block">Ceramic Coatings</a></li>
+                        <li><a href="/boutique/tinting/" class="hover:text-white transition-colors block">Window Tinting</a></li>
+                        <li><a href="/boutique/ppf/" class="hover:text-white transition-colors block">Paint Protection Film</a></li>
+                        <li><a href="/boutique/morimoto/" class="hover:text-white transition-colors block">Morimoto Lighting</a></li>
+                        <li><a href="/contact/" class="hover:text-white transition-colors block">Book a Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">The Parts Store</h4>
+                    <ul class="space-y-3 text-sm text-zinc-400">
+                        <li><a href="/store/egr/" class="hover:text-labCyan transition-colors block">EGR Solutions</a></li>
+                        <li><a href="/store/exhaust/" class="hover:text-labCyan transition-colors block">Exhaust Systems</a></li>
+                        <li><a href="/store/ccv/" class="hover:text-labCyan transition-colors block">CCV Solutions</a></li>
+                        <li><a href="/store/tuning/" class="hover:text-labCyan transition-colors block">Custom Tuning</a></li>
+                        <li><a href="#billet" class="hover:text-labCyan transition-colors block">Billet Throttle Deletes</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">Information</h4>
+                    <ul class="space-y-3 text-sm text-zinc-400">
+                        <li><a href="/contact/" class="hover:text-white transition-colors block">Contact Us</a></li>
+                        <li><a href="/shipping/" class="hover:text-white transition-colors block">Shipping &amp; Returns</a></li>
+                        <li><a href="/terms/" class="hover:text-white transition-colors block">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">Connect</h4>
+                    <address class="not-italic text-zinc-500 text-sm mb-1 leading-relaxed">10219 95 Ave<br>Fort St. John, BC &nbsp;V1J 5J5</address>
+                    <a href="https://maps.google.com/?q=10219+95+Ave+Fort+Saint+John+BC" target="_blank" rel="noopener noreferrer" class="text-xs text-labBlue hover:text-labCyan transition-colors block mb-2">Get Directions ?</a>
+                    <a href="tel:+12502619502" class="text-xs text-zinc-400 hover:text-white transition-colors block mb-1">(250) 261-9502</a>
+                    <p class="text-xs text-zinc-600">Monï¿½Fri &nbsp;9 a.m.ï¿½5 p.m.</p>
+                    <!-- Social icons ï¿½ update hrefs with THE LAB's actual profiles -->
+                    <div class="flex items-center gap-3">
+                        <a href="#" aria-label="THE LAB on Facebook" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="#" aria-label="THE LAB on Instagram" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <a href="#" aria-label="THE LAB on TikTok" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.93a8.29 8.29 0 004.84 1.54V7.02a4.85 4.85 0 01-1.07-.33z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-edge pt-8">
+                <p class="text-[10px] leading-relaxed text-zinc-600 font-medium text-center uppercase tracking-wide mb-4">
+                    All performance products are for Off-Road and Sanctioned Racing Use Only. The purchaser assumes all legal liability for Clean Air Act compliance. THE LAB does not advise on or authorize the illegal bypass of emissions testing.
+                </p>
+                <p class="text-[10px] text-center text-zinc-700 uppercase tracking-widest font-bold">&copy; 2026 THE LAB. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* YMM Find Parts ï¿½ scrolls to make-specific anchor */
+        document.getElementById('ymm-find').addEventListener('click', function() {
+            var make = document.getElementById('ymm-make').value;
+            var target = document.getElementById('egr');
+            if (make === 'ford') target = document.getElementById('ford');
+            else if (make === 'ram') target = document.getElementById('ram');
+            else if (make === 'chevy') target = document.getElementById('chevy');
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    </script>
+
+</body>
+</html>

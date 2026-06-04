@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | THE LAB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { void: '#000000', midnight: '#0D0D12', edge: '#1E1E28', labBlue: '#0066FF', labCyan: '#00E5FF' },
+                    fontFamily: { heading: ['Manrope', 'sans-serif'], body: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #000000; font-family: 'Inter', sans-serif; }
+        ::selection { background: #0066FF; color: #fff; }
+        .prose-lab h2 { font-family: 'Manrope', sans-serif; font-weight: 800; color: #ffffff; font-size: 1.25rem; margin-top: 2.5rem; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .prose-lab h3 { font-family: 'Manrope', sans-serif; font-weight: 700; color: #d4d4d8; font-size: 0.95rem; margin-top: 1.5rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
+        .prose-lab p { color: #a1a1aa; font-size: 0.9rem; line-height: 1.8; margin-bottom: 0.875rem; }
+        .prose-lab ul { color: #a1a1aa; font-size: 0.9rem; list-style: disc; padding-left: 1.25rem; margin-bottom: 1rem; }
+        .prose-lab ul li { margin-bottom: 0.4rem; line-height: 1.7; }
+        .prose-lab ol { color: #a1a1aa; font-size: 0.9rem; list-style: decimal; padding-left: 1.25rem; margin-bottom: 1rem; }
+        .prose-lab ol li { margin-bottom: 0.4rem; line-height: 1.7; }
+        .prose-lab strong { color: #e4e4e7; font-weight: 600; }
+    </style>
+</head>
+<body class="bg-void text-zinc-400 antialiased">
+
+    <!-- HEADER -->
+    <div class="sticky top-0 z-50">
+    <div class="border-b border-edge/60" style="background:rgba(0,0,0,0.97);">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-8">
+            <span class="text-[10px] text-zinc-600 font-mono uppercase tracking-wider hidden sm:block">THE LAB &nbsp;·&nbsp; Fort St. John, BC</span>
+        </div>
+    </div>
+    <header class="border-b border-edge" style="background:rgba(0,0,0,0.97); backdrop-filter:blur(16px);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="/" class="flex items-center p-1 rounded focus:outline-none focus:ring-2 focus:ring-labBlue flex-shrink-0">
+                    <img src="/assets/LAB-LOGO.png" alt="THE LAB" class="h-9 md:h-11 w-auto object-contain">
+                </a>
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="/boutique/" class="text-xs font-bold text-zinc-400 hover:text-white transition-colors uppercase tracking-[0.2em]">The Boutique</a>
+                    <a href="/store/" class="text-xs font-bold text-zinc-400 hover:text-white transition-colors uppercase tracking-[0.2em]">The Parts Store</a>
+                </nav>
+                <a href="/contact/" class="hidden md:inline-flex bg-white text-black font-extrabold py-2 px-5 rounded-lg hover:bg-zinc-200 transition-all uppercase tracking-widest text-xs">Contact</a>
+                <button id="mob-btn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors text-white">
+                    <svg id="ham-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <svg id="x-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mob-menu" class="hidden md:hidden border-t border-edge" style="background:#000;">
+            <nav class="px-6 py-6 space-y-4">
+                <a href="/boutique/" class="block text-sm font-bold text-zinc-300 hover:text-white uppercase tracking-widest transition-colors">The Boutique</a>
+                <a href="/store/" class="block text-sm font-bold text-zinc-300 hover:text-white uppercase tracking-widest transition-colors">The Parts Store</a>
+            </nav>
+        </div>
+        <script>(function(){var b=document.getElementById('mob-btn'),m=document.getElementById('mob-menu'),h=document.getElementById('ham-icon'),x=document.getElementById('x-icon');if(!b||!m)return;b.addEventListener('click',function(){var o=!m.classList.contains('hidden');m.classList.toggle('hidden',o);h.classList.toggle('hidden',!o);x.classList.toggle('hidden',o);b.setAttribute('aria-expanded',String(!o));});})();</script>
+    </header>
+    </div>
+
+    <main class="max-w-3xl mx-auto px-6 py-20 prose-lab">
+
+        <span class="text-labBlue font-mono tracking-[0.25em] uppercase text-xs mb-4 block">Legal &amp; Policies</span>
+        <h1 class="font-heading font-extrabold text-4xl text-white uppercase mb-2">Terms of Service</h1>
+        <p class="text-zinc-600 text-xs mb-12">Last updated: June 2026 &nbsp;·&nbsp; Governed by British Columbia, Canada law</p>
+
+        <h2>1. Acceptance of Terms</h2>
+        <p>By accessing or using the THE LAB website (thelab.ca) or purchasing any products or services from THE LAB, you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use this website or place any orders.</p>
+
+        <h2>2. About THE LAB</h2>
+        <p>THE LAB operates as a dual-identity business in Fort St. John, British Columbia, Canada, providing two distinct services:</p>
+        <ul>
+            <li><strong>The Boutique</strong> — Vehicle detailing, ceramic coatings, window tinting, paint protection film (PPF), and aesthetic upgrades.</li>
+            <li><strong>The Parts Store</strong> — Diesel performance parts, aftermarket components, and custom tuning services.</li>
+        </ul>
+
+        <h2>3. Products &amp; Services</h2>
+
+        <h3>Detailing &amp; Aesthetic Services</h3>
+        <p>Quotes for in-shop or mobile detailing services are estimates only. Final pricing may vary based on vehicle condition, size, and complexity. All work is performed by trained technicians. THE LAB is not responsible for pre-existing damage discovered during a service appointment. Customers are advised to document pre-existing damage before drop-off.</p>
+
+        <h3>Performance Parts</h3>
+        <p>Parts are sold as described. While we make every effort to ensure fitment guides are accurate, it is the buyer's responsibility to verify compatibility with their specific vehicle before ordering. THE LAB is not liable for labour costs associated with an incorrect parts order.</p>
+
+        <h3>Custom Tuning</h3>
+        <p>Custom tuning services are performed by certified or experienced technicians. Results vary by vehicle condition, modifications, and platform. Tuning files and data are the intellectual property of the tuner or platform provider (EZ LYNK, HP Tuners, AMDP). No refunds are provided on completed tuning sessions unless a verifiable error was made by THE LAB.</p>
+
+        <h2>4. Off-Road &amp; Emissions Compliance Disclaimer</h2>
+        <p><strong>IMPORTANT — READ CAREFULLY:</strong> Certain products sold by THE LAB, including EGR (Exhaust Gas Recirculation) delete kits, DPF (Diesel Particulate Filter) delete systems, exhaust modifications, and related emissions-altering components, are sold exclusively for:</p>
+        <ul>
+            <li>Off-road use on private property.</li>
+            <li>Use in closed-course sanctioned competition events.</li>
+            <li>Agricultural or industrial equipment not subject to on-road emissions regulations.</li>
+        </ul>
+        <p>These products are <strong>not legal for use on publicly registered, street-driven vehicles</strong> in Canada, the United States, or any other jurisdiction that enforces emissions standards. The purchaser assumes all legal liability for proper use and compliance with federal, provincial, and municipal regulations, including but not limited to the <em>Canadian Environmental Protection Act (CEPA)</em> and the <em>US Clean Air Act</em>. THE LAB disclaims all liability for fines, penalties, or legal action arising from improper use of these products.</p>
+
+        <h2>5. Pricing &amp; Currency</h2>
+        <p>All prices are displayed in Canadian Dollars (CAD) by default. USD pricing is provided as an estimate based on an approximate exchange rate and may not reflect the exact rate charged by your payment provider at the time of purchase. THE LAB reserves the right to update pricing at any time without prior notice. Prices displayed at checkout are the final prices unless otherwise stated.</p>
+
+        <h2>6. Payment</h2>
+        <p>We accept major credit cards and other payment methods presented at checkout. Payment is processed securely. THE LAB does not store your full payment card details. All transactions are encrypted via SSL/TLS.</p>
+
+        <h2>7. Limitation of Liability</h2>
+        <p>To the maximum extent permitted by applicable law, THE LAB shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or goodwill, arising from your use of our products or services. Our aggregate liability shall not exceed the total amount paid by you for the specific product or service giving rise to the claim.</p>
+
+        <h2>8. Intellectual Property</h2>
+        <p>All content on this website — including but not limited to text, logos, graphics, photographs, and code — is the property of THE LAB or its licensors and is protected by applicable Canadian and international copyright law. You may not reproduce, distribute, or create derivative works without express written permission.</p>
+
+        <h2>9. Privacy</h2>
+        <p>Your personal information is collected and used in accordance with Canadian privacy law (PIPEDA). We collect information you provide through contact forms, checkout, and account creation for the purpose of fulfilling your orders and communicating with you. We do not sell your personal data to third parties.</p>
+
+        <h2>10. Governing Law</h2>
+        <p>These Terms are governed by the laws of the Province of British Columbia and the federal laws of Canada applicable therein. Any disputes shall be resolved in the courts of British Columbia, Canada.</p>
+
+        <h2>11. Changes to Terms</h2>
+        <p>THE LAB reserves the right to update these Terms at any time. Continued use of the website following any changes constitutes acceptance of the revised Terms. We will update the "Last Updated" date at the top of this page when changes are made.</p>
+
+        <h2>12. Contact</h2>
+        <p>For questions about these Terms, contact us via our <a href="/contact/" class="text-labBlue hover:text-white transition-colors">contact page</a>.</p>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-void border-t border-edge py-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-[10px] text-zinc-700 uppercase tracking-widest font-bold">&copy; 2026 THE LAB. All Rights Reserved. &nbsp;·&nbsp; Fort St. John, BC &nbsp;·&nbsp; <a href="/shipping/" class="hover:text-zinc-500 transition-colors">Shipping</a> &nbsp;·&nbsp; <a href="/contact/" class="hover:text-zinc-500 transition-colors">Contact</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>

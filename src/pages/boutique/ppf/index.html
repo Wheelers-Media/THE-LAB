@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint Protection Film (PPF) | THE LAB Fort St. John</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { void:'#000000', midnight:'#0D0D12', edge:'#1E1E28', labBlue:'#0066FF', labCyan:'#00E5FF' },
+                    fontFamily: { heading:['Manrope','sans-serif'], body:['Inter','sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color:#000000; font-family:'Inter',sans-serif; }
+        .glass-panel { background:rgba(13,13,18,0.75); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }
+        .grid-bg {
+            background-image:linear-gradient(rgba(0,102,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,102,255,0.05) 1px,transparent 1px);
+            background-size:40px 40px;
+        }
+        ::selection { background:#0066FF; color:#fff; }
+    </style>
+</head>
+<body class="bg-void text-zinc-400 antialiased">
+
+    <!-- ═══ GLOBAL HEADER ═══ -->
+    <div class="sticky top-0 z-50">
+    <div class="border-b border-edge/60" style="background:rgba(0,0,0,0.97);">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-8">
+            <span class="text-[10px] text-zinc-600 font-mono uppercase tracking-wider hidden sm:block">Paint Protection Film &nbsp;·&nbsp; Fort St. John, BC</span>
+            <div class="flex items-center gap-2 ml-auto">
+                <span class="text-[10px] text-zinc-600 font-mono uppercase tracking-wider">Currency:</span>
+                <button id="btn-cad" onclick="setCurrency('CAD')" class="text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all">CAD</button>
+                <button id="btn-usd" onclick="setCurrency('USD')" class="text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all">USD</button>
+            </div>
+        </div>
+    </div>
+    <header class="border-b border-edge" style="background:rgba(0,0,0,0.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="/" class="flex items-center p-1 rounded focus:outline-none focus:ring-2 focus:ring-labBlue flex-shrink-0">
+                    <img src="/assets/LAB-LOGO.png" alt="THE LAB" class="h-9 md:h-11 w-auto object-contain">
+                </a>
+                <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
+                    <div class="relative group">
+                        <button class="text-xs font-bold text-white uppercase tracking-[0.2em] flex items-center gap-1.5 py-2 focus:outline-none">The Boutique <svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 min-w-[200px] z-50">
+                            <div class="rounded-xl border border-edge overflow-hidden" style="background:#0D0D12;box-shadow:0 24px 64px rgba(0,0,0,0.9);">
+                                <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Fort St. John, BC</span></div>
+                                <div class="py-1">
+                                    <a href="/boutique/tinting/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Window Tinting</a>
+                                    <a href="/boutique/coatings/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Ceramic Coatings</a>
+                                    <a href="/boutique/detailing/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Premium Detailing</a>
+                                    <a href="/boutique/ppf/" class="block px-4 py-2.5 text-xs text-labBlue font-bold hover:bg-white/5 transition-colors">Paint Protection Film</a>
+                                    <a href="/boutique/morimoto/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Morimoto Lighting</a>
+                                    <div class="mx-4 my-1 h-px bg-edge"></div>
+                                    <a href="/contact/" class="flex items-center justify-between px-4 py-2.5 text-xs text-white font-bold hover:bg-white/5 transition-colors">Book Consultation <span class="text-labBlue ml-1">→</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <button class="text-xs font-bold text-zinc-400 hover:text-white transition-colors uppercase tracking-[0.2em] flex items-center gap-1.5 py-2 focus:outline-none">The Parts Store <svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50" style="min-width:440px;">
+                            <div class="rounded-xl border border-edge overflow-hidden" style="background:#0D0D12;box-shadow:0 24px 64px rgba(0,0,0,0.9);">
+                                <div class="grid grid-cols-2 divide-x divide-edge">
+                                    <div>
+                                        <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Shop by Make</span></div>
+                                        <div class="py-1">
+                                            <a href="/store/ford/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Ford / Powerstroke</a>
+                                            <a href="/store/ram/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Ram / Cummins</a>
+                                            <a href="/store/chevy/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Chevy / Duramax</a>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Shop by Category</span></div>
+                                        <div class="py-1">
+                                            <a href="/store/egr/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>EGR Solutions</a>
+                                            <a href="/store/exhaust/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Exhaust Systems</a>
+                                            <a href="/store/ccv/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>CCV Solutions</a>
+                                            <a href="/store/tuning/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-labBlue font-bold hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Custom Tuning</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t border-edge px-4 py-2.5"><a href="/store/" class="text-xs text-labBlue font-bold hover:text-labCyan transition-colors">View All Parts →</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="flex items-center gap-2">
+                    <a href="/contact/" class="hidden md:inline-flex bg-white text-black font-extrabold py-2 px-5 rounded-lg hover:bg-zinc-200 transition-all uppercase tracking-widest text-xs">Book Now</a>
+                    <button id="mob-btn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-labBlue text-white">
+                        <svg id="ham-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg id="x-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mob-menu" class="hidden md:hidden border-t border-edge" style="background:#000;">
+            <nav class="px-6 py-6 space-y-1">
+                <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] pt-2 pb-1">The Boutique</p>
+                <a href="/boutique/" class="block py-2 text-sm font-bold text-zinc-300 hover:text-white uppercase tracking-[0.15em]">Overview</a>
+                <a href="/boutique/tinting/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white">Window Tinting</a>
+                <a href="/boutique/coatings/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white">Ceramic Coatings</a>
+                <a href="/boutique/detailing/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white">Premium Detailing</a>
+                <a href="/boutique/ppf/" class="block py-1.5 pl-3 text-xs text-labBlue font-bold">Paint Protection Film</a>
+                <div class="h-px bg-edge my-3"></div>
+                <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] pb-1">The Parts Store</p>
+                <a href="/store/" class="block py-2 text-sm font-bold text-zinc-300 hover:text-white uppercase tracking-[0.15em]">Overview</a>
+                <a href="/store/egr/" class="block py-1.5 pl-3 text-xs text-zinc-500 hover:text-white">EGR Solutions</a>
+                <a href="/store/tuning/" class="block py-1.5 pl-3 text-xs text-labBlue font-bold hover:text-labCyan">Custom Tuning</a>
+                <div class="h-px bg-edge my-3"></div>
+                <a href="/contact/" class="block bg-white text-black font-extrabold py-4 text-center rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all">Book Now</a>
+            </nav>
+        </div>
+        <script>
+            (function(){var b=document.getElementById('mob-btn'),m=document.getElementById('mob-menu'),h=document.getElementById('ham-icon'),x=document.getElementById('x-icon');if(!b||!m)return;b.addEventListener('click',function(){var o=!m.classList.contains('hidden');m.classList.toggle('hidden',o);h.classList.toggle('hidden',!o);x.classList.toggle('hidden',o);b.setAttribute('aria-expanded',String(!o));});})();
+            window.setCurrency=function(c){var r=0.74,ac='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all',ic='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all';var cb=document.getElementById('btn-cad'),ub=document.getElementById('btn-usd');if(cb)cb.className=(c==='CAD')?ac:ic;if(ub)ub.className=(c==='USD')?ac:ic;localStorage.setItem('theLab_currency',c);};
+            setTimeout(function(){window.setCurrency(localStorage.getItem('theLab_currency')||'CAD');},0);
+        </script>
+    </header>
+    </div>
+
+    <main>
+
+        <!-- ═══ HERO ═══ -->
+        <section class="relative overflow-hidden pt-20 pb-28 px-6">
+            <div class="absolute inset-0 bg-void grid-bg"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-void pointer-events-none"></div>
+            <div class="relative z-10 max-w-5xl mx-auto">
+                <nav class="flex items-center gap-2 text-xs text-zinc-600 mb-12 font-mono">
+                    <a href="/" class="hover:text-white transition-colors">THE LAB</a>
+                    <span>/</span>
+                    <a href="/boutique/" class="hover:text-white transition-colors">The Boutique</a>
+                    <span>/</span>
+                    <span class="text-zinc-400">Paint Protection Film</span>
+                </nav>
+                <div class="text-center">
+                    <p class="text-xs font-mono text-labBlue uppercase tracking-[0.3em] mb-5 flex items-center justify-center gap-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-labBlue"></span>
+                        Self-Healing Paint Protection Film
+                    </p>
+                    <h1 class="font-heading font-extrabold text-6xl md:text-8xl text-white uppercase leading-none mb-6 tracking-tight">THE LAST<br>LINE OF<br>DEFENCE.</h1>
+                    <p class="text-zinc-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+                        Paint Protection Film is the thickest line of defence between your paint and the road. Rock chips, gravel, bug splatter, door dings — PPF takes the hit so your paint doesn't.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <a href="/contact/" class="bg-labBlue text-white font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all">Book PPF Consultation</a>
+                        <a href="#coverage" class="border border-edge text-white font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 transition-all">Coverage Options ↓</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ WHAT IS PPF ═══ -->
+        <section class="py-20 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-14 items-center">
+                    <div>
+                        <p class="text-xs font-mono text-labBlue uppercase tracking-widest mb-4">What Is PPF?</p>
+                        <h2 class="font-heading font-extrabold text-4xl text-white uppercase leading-tight mb-6">PAINT THAT HEALS ITSELF.</h2>
+                        <p class="text-zinc-400 leading-relaxed mb-5">Paint Protection Film is a thick, clear urethane film that wraps over your paint. Unlike ceramic coatings, PPF is a physical barrier — thick enough to absorb rock chips, resist minor abrasion, and actually heal light scratches when exposed to heat.</p>
+                        <p class="text-zinc-400 leading-relaxed">Northern BC roads are hard on paint. Gravel, frost heave debris, and highway grit take a toll every season. PPF is the only product that will stop a rock chip from reaching your clear coat.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 border border-edge rounded-xl p-5" style="background:#0D0D12;">
+                            <div class="w-10 h-10 rounded-lg bg-labBlue/10 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                            <div><p class="text-white font-bold text-sm mb-1">Self-Healing Technology</p><p class="text-zinc-600 text-xs">Minor swirls and light scratches disappear with heat — sunlight or warm water activates the topcoat to reflow and repair itself.</p></div>
+                        </div>
+                        <div class="flex items-start gap-4 border border-edge rounded-xl p-5" style="background:#0D0D12;">
+                            <div class="w-10 h-10 rounded-lg bg-labBlue/10 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+                            <div><p class="text-white font-bold text-sm mb-1">Rock Chip Protection</p><p class="text-zinc-600 text-xs">The film absorbs the impact of gravel and road debris that would normally chip and crack your clear coat.</p></div>
+                        </div>
+                        <div class="flex items-start gap-4 border border-edge rounded-xl p-5" style="background:#0D0D12;">
+                            <div class="w-10 h-10 rounded-lg bg-labBlue/10 flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></div>
+                            <div><p class="text-white font-bold text-sm mb-1">Optically Clear</p><p class="text-zinc-600 text-xs">High-clarity film is virtually invisible on the vehicle — you protect the paint without changing how it looks.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ COVERAGE OPTIONS ═══ -->
+        <section id="coverage" class="py-20 px-6 border-t border-edge">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center gap-4 mb-12">
+                    <span class="text-labBlue font-mono text-xs tracking-widest uppercase">Coverage Options</span>
+                    <div class="h-px bg-edge flex-grow"></div>
+                    <span class="text-[10px] text-zinc-600 font-mono">All pricing by quote — contact us for your vehicle</span>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="border border-edge rounded-2xl overflow-hidden flex flex-col" style="background:#0D0D12;">
+                        <div class="px-6 py-5 border-b border-edge">
+                            <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-1">Entry</p>
+                            <h3 class="font-heading font-extrabold text-lg text-white uppercase">Partial Front</h3>
+                        </div>
+                        <div class="px-6 py-5 flex-grow">
+                            <p class="text-zinc-500 text-xs mb-4 leading-relaxed">Covers the highest-impact zones — the areas most likely to take rock chip damage on daily drives.</p>
+                            <ul class="space-y-2 text-sm text-zinc-400">
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/60 flex-shrink-0"></span>Hood leading edge (24")</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/60 flex-shrink-0"></span>Front bumper</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/60 flex-shrink-0"></span>Front fenders</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/60 flex-shrink-0"></span>Mirror caps</li>
+                            </ul>
+                        </div>
+                        <div class="px-6 pb-5">
+                            <a href="/contact/" class="block w-full text-center border border-edge text-white font-bold py-3 rounded-xl text-sm uppercase tracking-widest hover:border-labBlue hover:text-labBlue transition-all">Get Quote</a>
+                        </div>
+                    </div>
+
+                    <div class="border border-labBlue/50 rounded-2xl overflow-hidden flex flex-col relative" style="background:#0D0D12;">
+                        <div class="absolute top-4 right-4 bg-labBlue text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest">Most Popular</div>
+                        <div class="px-6 py-5 border-b border-labBlue/30">
+                            <p class="text-[9px] font-bold text-labBlue uppercase tracking-[0.2em] mb-1">Recommended</p>
+                            <h3 class="font-heading font-extrabold text-lg text-white uppercase">Full Front</h3>
+                        </div>
+                        <div class="px-6 py-5 flex-grow">
+                            <p class="text-zinc-500 text-xs mb-4 leading-relaxed">Full coverage on every panel that faces the road. The most complete protection for the front of your vehicle.</p>
+                            <ul class="space-y-2 text-sm text-zinc-300">
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Full hood</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Full front bumper</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Full front fenders</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Mirror caps</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>A-pillars</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Door cups</li>
+                            </ul>
+                        </div>
+                        <div class="px-6 pb-5">
+                            <a href="/contact/" class="block w-full text-center bg-labBlue text-white font-extrabold py-3 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all">Get Quote</a>
+                        </div>
+                    </div>
+
+                    <div class="border border-edge rounded-2xl overflow-hidden flex flex-col" style="background:#0D0D12;">
+                        <div class="px-6 py-5 border-b border-edge">
+                            <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-1">Maximum</p>
+                            <h3 class="font-heading font-extrabold text-lg text-white uppercase">Full Vehicle</h3>
+                        </div>
+                        <div class="px-6 py-5 flex-grow">
+                            <p class="text-zinc-500 text-xs mb-4 leading-relaxed">Every painted panel wrapped. The ultimate paint protection for show vehicles, new purchases, or long-term preservation.</p>
+                            <ul class="space-y-2 text-sm text-zinc-400">
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/60 flex-shrink-0"></span>Everything in Full Front</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/60 flex-shrink-0"></span>Doors &amp; door edges</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/60 flex-shrink-0"></span>Rocker panels</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/60 flex-shrink-0"></span>Rear bumper &amp; quarters</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/60 flex-shrink-0"></span>Trunk lid / tailgate</li>
+                                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/60 flex-shrink-0"></span>Roof &amp; pillars</li>
+                            </ul>
+                        </div>
+                        <div class="px-6 pb-5">
+                            <a href="/contact/" class="block w-full text-center border border-edge text-white font-bold py-3 rounded-xl text-sm uppercase tracking-widest hover:border-labCyan hover:text-labCyan transition-all">Get Quote</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom coverage note -->
+                <div class="mt-6 border border-edge rounded-xl px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4" style="background:#0D0D12;">
+                    <div class="flex-grow">
+                        <p class="text-white font-bold text-sm">Need a custom area covered?</p>
+                        <p class="text-zinc-600 text-xs mt-1">Rocker panels only, door edges, hood + fenders combo, tailgate — we cut PPF to any zone. Just ask.</p>
+                    </div>
+                    <a href="/contact/" class="flex-shrink-0 text-xs font-bold text-labBlue hover:text-white transition-colors uppercase tracking-wider whitespace-nowrap">Contact Us →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ PPF vs CERAMIC ═══ -->
+        <section class="py-20 px-6 border-t border-edge">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center gap-4 mb-12">
+                    <span class="text-labBlue font-mono text-xs tracking-widest uppercase">PPF vs Ceramic</span>
+                    <div class="h-px bg-edge flex-grow"></div>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="border border-edge rounded-xl p-6" style="background:#0D0D12;">
+                        <h3 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Use PPF When You Want:</h3>
+                        <ul class="space-y-2.5 text-sm">
+                            <li class="flex items-start gap-2 text-zinc-400"><svg class="w-4 h-4 text-labBlue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Physical impact protection (rock chips)</li>
+                            <li class="flex items-start gap-2 text-zinc-400"><svg class="w-4 h-4 text-labBlue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Self-healing scratch resistance</li>
+                            <li class="flex items-start gap-2 text-zinc-400"><svg class="w-4 h-4 text-labBlue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>New vehicle protection (day one)</li>
+                            <li class="flex items-start gap-2 text-zinc-400"><svg class="w-4 h-4 text-labBlue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Highest resale value preservation</li>
+                        </ul>
+                    </div>
+                    <div class="border border-edge rounded-xl p-6" style="background:#0D0D12;">
+                        <h3 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Combine PPF + Ceramic For:</h3>
+                        <ul class="space-y-2.5 text-sm">
+                            <li class="flex items-start gap-2 text-zinc-400"><svg class="w-4 h-4 text-labCyan flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>The ultimate dual-layer protection</li>
+                            <li class="flex items-start gap-2 text-zinc-400"><svg class="w-4 h-4 text-labCyan flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>PPF impact protection + ceramic hydrophobics</li>
+                            <li class="flex items-start gap-2 text-zinc-400"><svg class="w-4 h-4 text-labCyan flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Easiest maintenance possible</li>
+                            <li class="flex items-start gap-2 text-zinc-400"><svg class="w-4 h-4 text-labCyan flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Maximum gloss + maximum longevity</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ CTA ═══ -->
+        <section class="py-20 px-6 border-t border-edge">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="font-heading font-extrabold text-4xl md:text-5xl text-white uppercase leading-tight mb-6">PROTECT YOUR<br>INVESTMENT.</h2>
+                <p class="text-zinc-500 mb-8">PPF pricing is by quote only — it depends on vehicle size, panel selection, and current paint condition. Book a consultation and we'll walk you through the options in person.</p>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <a href="/contact/" class="bg-white text-black font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all">Book Consultation</a>
+                    <a href="/boutique/" class="border border-edge text-zinc-400 font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 hover:text-white transition-all">← All Boutique Services</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══ GLOBAL FOOTER ═══ -->
+    <footer class="bg-void border-t border-edge pt-14 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-14">
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">The Boutique</h4>
+                    <ul class="space-y-4 text-sm text-zinc-400 font-medium">
+                        <li><a href="/boutique/tinting/" class="hover:text-white transition-colors block">Window Tinting</a></li>
+                        <li><a href="/boutique/coatings/" class="hover:text-white transition-colors block">Ceramic Coatings</a></li>
+                        <li><a href="/boutique/detailing/" class="hover:text-white transition-colors block">Premium Detailing</a></li>
+                        <li><a href="/boutique/ppf/" class="hover:text-white transition-colors block text-labBlue font-bold">Paint Protection Film</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">The Parts Store</h4>
+                    <ul class="space-y-4 text-sm text-zinc-400 font-medium">
+                        <li><a href="/store/" class="hover:text-labCyan transition-colors block">Diesel Upgrades</a></li>
+                        <li><a href="/store/tuning/" class="hover:text-labCyan transition-colors block">Custom Tuning</a></li>
+                        <li><a href="/store/egr/" class="hover:text-labCyan transition-colors block">Delete Kits</a></li>
+                        <li><a href="/store/exhaust/" class="hover:text-labCyan transition-colors block">Performance Parts</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">Partners</h4>
+                    <ul class="space-y-4 text-sm text-zinc-400 font-medium">
+                        <li>SunTek Films</li><li>Morimoto</li><li>EZ LYNK</li><li>HP Tuners</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">Contact</h4>
+                    <ul class="space-y-4 text-sm text-zinc-400 font-medium">
+                        <li class="leading-relaxed">10219 95 Ave<br><span class="text-zinc-500">Fort St. John, BC &nbsp;V1J 5J5</span></li>
+                        <li><a href="https://maps.google.com/?q=10219+95+Ave+Fort+Saint+John+BC" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors block">Get Directions →</a></li>
+                        <li><a href="tel:+12502619502" class="hover:text-white transition-colors block">(250) 261-9502</a></li>
+                        <li class="text-zinc-600 text-xs">Mon–Fri &nbsp;9 a.m.–5 p.m.</li>
+                        <li><a href="/contact/" class="hover:text-white transition-colors block">Book a Service</a></li>
+                        <li><a href="/shipping/" class="hover:text-white transition-colors block">Shipping &amp; Returns</a></li>
+                        <li><a href="/terms/" class="hover:text-white transition-colors block">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex items-center justify-center gap-3 mb-10">
+                <span class="text-xs text-zinc-600 font-mono uppercase tracking-widest mr-2">Follow THE LAB:</span>
+                <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.93a8.29 8.29 0 004.84 1.54V7.02a4.85 4.85 0 01-1.07-.33z"/></svg></a>
+            </div>
+            <div class="border-t border-edge pt-8">
+                <p class="text-[10px] text-center text-zinc-700 uppercase tracking-widest font-bold">&copy; 2026 THE LAB. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

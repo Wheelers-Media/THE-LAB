@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-void text-signal font-body antialiased selection:bg-labBlue selection:text-white;
+  }
+  
+  /* Input Logic overrides for dark mode forms */
+  input, select, textarea {
+    @apply bg-void border border-edge text-signal focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-all;
+    -webkit-appearance: none;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    background: rgba(13, 13, 18, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  
+  .grid-bg {
+    background-image: linear-gradient(rgba(0, 102, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 102, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}

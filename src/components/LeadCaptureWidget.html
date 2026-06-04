@@ -1,0 +1,33 @@
+<!-- GHL Lead Capture Widget -->
+<div class="bg-midnight rounded-2xl p-6 border border-edge shadow-oled-blue flex flex-col">
+    <h3 class="font-heading text-2xl font-bold mb-6">Get A Custom Quote</h3>
+    <form class="space-y-4 flex-grow flex flex-col justify-between" onsubmit="event.preventDefault();">
+        
+        <!-- Standard Info -->
+        <div class="space-y-4">
+            <input type="text" placeholder="Full Name" required class="w-full bg-void text-signal placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors shadow-inner">
+            
+            <input type="tel" placeholder="Phone Number" required class="w-full bg-void text-signal placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors shadow-inner">
+        </div>
+
+        <!-- Vehicle Type Dropdown -->
+        <div class="relative">
+            <select required class="w-full bg-void text-signal p-4 pr-12 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors cursor-pointer shadow-inner appearance-none">
+                <option value="" disabled selected hidden>Select Vehicle Type</option>
+                <option value="car">Car / Sedan</option>
+                <option value="truck">Truck / SUV</option>
+                <option value="sxs" class="font-semibold text-labBlue">Side-by-Side / Off-Road (Polaris, Can-Am, CFMOTO)</option>
+                <option value="other">Other</option>
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-zinc-500">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+        </div>
+
+        <!-- Submit Action -->
+        <button type="submit" class="w-full mt-6 bg-signal text-void font-extrabold text-[15px] tracking-wide min-h-[48px] rounded-xl flex items-center justify-center hover:bg-zinc-200 active:bg-zinc-300 active:scale-[0.98] transition-all touch-manipulation focus:outline-none focus:ring-2 focus:ring-labBlue focus:ring-offset-2 focus:ring-offset-midnight uppercase">
+            Submit Request
+        </button>
+        
+    </form>
+</div>
