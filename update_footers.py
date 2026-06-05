@@ -23,11 +23,11 @@ target_block = """        <!-- Trust Signals (Partner Logos) -->
                 </a>
                 <!-- GDP -->
                 <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GDP" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <span class="text-white font-extrabold font-heading text-xl tracking-widest">GDP</span>
+                    <img src="/assets/GDP.png" alt="GDP" class="h-8 w-auto object-contain">
                 </a>
                 <!-- SD -->
                 <a href="#" target="_blank" rel="noopener noreferrer" aria-label="SD" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <span class="text-white font-extrabold font-heading text-xl tracking-widest">SD</span>
+                    <img src="/assets/speed-demon.png" alt="Speed Demon" class="h-10 w-auto object-contain">
                 </a>
                 <!-- POLAR DIESEL -->
                 <a href="https://polardiesel.ca/" target="_blank" rel="noopener noreferrer" aria-label="Polar Diesel" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
@@ -47,11 +47,11 @@ target_block = """        <!-- Trust Signals (Partner Logos) -->
                 </a>
                 <!-- Baja Designs -->
                 <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Baja Designs" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <span class="text-white font-extrabold font-heading text-xl tracking-widest">BAJA DESIGNS</span>
+                    <img src="/assets/baja-designs-inc-logo-vector (1).png" alt="Baja Designs" class="h-8 w-auto object-contain">
                 </a>
                 <!-- BMC LIGHTS -->
                 <a href="#" target="_blank" rel="noopener noreferrer" aria-label="BMC LIGHTS" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <span class="text-white font-extrabold font-heading text-xl tracking-widest">BMC LIGHTS</span>
+                    <img src="/assets/bmc-lights.png" alt="BMC Lights" class="h-8 w-auto object-contain">
                 </a>
             </div>
         </div>"""
