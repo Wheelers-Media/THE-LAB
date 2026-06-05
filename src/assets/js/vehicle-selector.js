@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // OEM Logo mapping for UI
     const logoMap = {
-        'Cummins': '/assets/ram-logo.png',
-        'Duramax': '/assets/gm-logo.png',
-        'Powerstroke': '/assets/ford-logo.png',
+        'Cummins': '/assets/ram-logo.svg',
+        'Duramax': '/assets/gm-logo.svg',
+        'Powerstroke': '/assets/ford-logo.svg',
         'Half-Ton': '/assets/half-ton.png'
     };
 
