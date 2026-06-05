@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -182,7 +182,7 @@
                         </label>
                     </div>
 
-                    <div>
+                    <div class="mb-6">
                         <h3 class="text-xs font-mono text-labBlue uppercase tracking-widest mb-3">Category</h3>
                         <label class="flex items-center gap-3 mb-2 cursor-pointer group">
                             <input type="checkbox" value="EGR" data-type="category" id="filter-cat-EGR" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
@@ -200,6 +200,31 @@
                             <input type="checkbox" value="CCV" data-type="category" id="filter-cat-CCV" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
                             <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">CCV Reroutes</span>
                         </label>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-xs font-mono text-labBlue uppercase tracking-widest mb-3">Engine</h3>
+                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
+                            <input type="checkbox" value="6.7L Cummins" data-type="engine" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
+                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">6.7L Cummins</span>
+                        </label>
+                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
+                            <input type="checkbox" value="6.7L Powerstroke" data-type="engine" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
+                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">6.7L Powerstroke</span>
+                        </label>
+                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
+                            <input type="checkbox" value="6.6L Duramax" data-type="engine" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
+                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">6.6L Duramax</span>
+                        </label>
+                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
+                            <input type="checkbox" value="Universal" data-type="engine" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
+                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">Universal Fit</span>
+                        </label>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xs font-mono text-labBlue uppercase tracking-widest mb-3">Vehicle Year</h3>
+                        <input type="number" id="filter-year" placeholder="e.g. 2018" class="w-full bg-void border border-edge rounded p-3 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" min="1990" max="2025">
                     </div>
                 </div>
             </aside>

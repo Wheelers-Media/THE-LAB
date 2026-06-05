@@ -133,7 +133,9 @@ function updateCartUI() {
 /* --- STORE GRID & FILTER LOGIC --- */
 let activeFilters = {
     makes: [],
-    categories: []
+    categories: [],
+    engines: [],
+    year: null
 };
 
 function initStore() {
@@ -156,7 +158,7 @@ function initStore() {
     document.querySelectorAll('.store-filter').forEach(checkbox => {
         checkbox.addEventListener('change', (e) => {
             const val = e.target.value;
-            const type = e.target.dataset.type; // 'make' or 'category'
+            const type = e.target.dataset.type;
             
             if (type === 'make') {
                 if (e.target.checked) activeFilters.makes.push(val);
@@ -164,10 +166,23 @@ function initStore() {
             } else if (type === 'category') {
                 if (e.target.checked) activeFilters.categories.push(val);
                 else activeFilters.categories = activeFilters.categories.filter(c => c !== val);
+            } else if (type === 'engine') {
+                if (e.target.checked) activeFilters.engines.push(val);
+                else activeFilters.engines = activeFilters.engines.filter(e => e !== val);
             }
             renderProducts();
         });
     });
+
+    // Attach listener to year input
+    const yearInput = document.getElementById('filter-year');
+    if (yearInput) {
+        yearInput.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            activeFilters.year = isNaN(val) ? null : val;
+            renderProducts();
+        });
+    }
 
     renderProducts();
 }
@@ -179,7 +194,10 @@ function renderProducts() {
     const filtered = window.storeCatalog.filter(p => {
         const makeMatch = activeFilters.makes.length === 0 || activeFilters.makes.some(m => p.makes.includes(m));
         const catMatch = activeFilters.categories.length === 0 || activeFilters.categories.includes(p.category);
-        return makeMatch && catMatch;
+        const engMatch = activeFilters.engines.length === 0 || activeFilters.engines.includes(p.engine) || p.engine === "Universal";
+        const yearMatch = !activeFilters.year || (activeFilters.year >= p.years[0] && activeFilters.year <= p.years[1]);
+        
+        return makeMatch && catMatch && engMatch && yearMatch;
     });
 
     if (filtered.length === 0) {
