@@ -48,10 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
             '3.0L Powerstroke'
         ],
         'Half-Ton': [
-            'Ford F-150 (All Engines)',
-            'Chevy/GMC 1500 (All Engines)',
-            'Ram 1500 (All Engines)',
-            'Toyota Tundra / Tacoma'
+            '2014-2023 EcoDiesel 3.0L',
+            '2016-2022 Duramax 2.8L LWN',
+            '2019-2022 Duramax 3.0L LM2/LZ0',
+            '2018-2021 Powerstroke 3.0L',
+            '2016-2019 Nissan Titan 5.0L Cummins',
+            '2018-2019 Equinox 1.6L',
+            '2018-2019 Terrain 1.6L',
+            '2014-2019 Chevrolet Cruze 1.6L'
         ]
     };
     
@@ -133,8 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedEngine = null;
         
         makeBtns.forEach(btn => {
-            btn.classList.remove('border-labBlue', 'bg-labBlue/10', 'ring-2', 'ring-labBlue/50');
-            btn.classList.add('border-edge', 'bg-[#0D0D12]');
+            btn.classList.remove('selected-make');
         });
         
         step2.classList.add('opacity-30', 'pointer-events-none');
@@ -148,11 +151,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update UI
         makeBtns.forEach(btn => {
             if (btn.dataset.make === make) {
-                btn.classList.add('border-labBlue', 'bg-labBlue/10', 'ring-2', 'ring-labBlue/50');
-                btn.classList.remove('border-edge', 'bg-[#0D0D12]');
+                btn.classList.add('selected-make');
             } else {
-                btn.classList.remove('border-labBlue', 'bg-labBlue/10', 'ring-2', 'ring-labBlue/50');
-                btn.classList.add('border-edge', 'bg-[#0D0D12]');
+                btn.classList.remove('selected-make');
             }
         });
         
