@@ -128,6 +128,58 @@ const catalog = [
         description: "Official Polar Diesel calibration and tuning support.",
         features: ["Multiple power levels", "Optimized shifting", "Official Polar Diesel component"],
         isPopular: false
+    },
+    {
+        id: "tune-l5p-hp",
+        name: "L5P Duramax HP Tuners Hardware + Unlock + Credits + Tune",
+        makes: ["Chevy"],
+        category: "Tuning",
+        engine: "6.6L Duramax",
+        years: [2017, 2023],
+        price: 3350.00,
+        image: "/assets/HPTuners-Logo.png",
+        description: "Complete tuning package for L5P Duramax. Includes HP Tuners MPVI3, ECM unlock, Universal Credits, and custom THE LAB calibration.",
+        features: ["MPVI3 Interface", "ECM Unlock service", "Required Credits", "Custom AMDP tuning"],
+        isPopular: true
+    },
+    {
+        id: "tune-ps-17-19",
+        name: "17-19 6.7L Powerstroke AutoAgent 3 package",
+        makes: ["Ford"],
+        category: "Tuning",
+        engine: "6.7L Powerstroke",
+        years: [2017, 2019],
+        price: 2400.00,
+        image: "/assets/EZ-Lynk-Logo.png",
+        description: "EZ LYNK AutoAgent 3 complete package for 2017-2019 6.7L Powerstroke. Includes hardware, shift-on-the-fly switch, and lifetime support.",
+        features: ["AutoAgent 3", "SOTF Switch", "Custom AMDP Tunes", "Live Diagnostics"],
+        isPopular: true
+    },
+    {
+        id: "tune-ps-20-22",
+        name: "20-22 6.7L Powerstroke AutoAgent 3 package",
+        makes: ["Ford"],
+        category: "Tuning",
+        engine: "6.7L Powerstroke",
+        years: [2020, 2022],
+        price: 3250.00,
+        image: "/assets/EZ-Lynk-Logo.png",
+        description: "EZ LYNK AutoAgent 3 complete package for 2020-2022 6.7L Powerstroke. ECM unlock included.",
+        features: ["AutoAgent 3", "SOTF Switch", "ECM Unlock", "Custom AMDP Tunes"],
+        isPopular: true
+    },
+    {
+        id: "tune-l5p-20-22",
+        name: "20-22 L5P 6.6L Duramax Tuning Package",
+        makes: ["Chevy"],
+        category: "Tuning",
+        engine: "6.6L Duramax",
+        years: [2020, 2022],
+        price: 3350.00,
+        image: "/assets/HPTuners-Logo.png",
+        description: "Complete tuning solution for 2020-2022 L5P Duramax.",
+        features: ["MPVI3 Interface", "T87A TCM Unlock", "Required Credits", "Custom AMDP tuning"],
+        isPopular: true
     }
 ];
 
