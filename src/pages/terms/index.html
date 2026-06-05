@@ -64,7 +64,26 @@
         </div>
         <script>(function(){var b=document.getElementById('mob-btn'),m=document.getElementById('mob-menu'),h=document.getElementById('ham-icon'),x=document.getElementById('x-icon');if(!b||!m)return;b.addEventListener('click',function(){var o=!m.classList.contains('hidden');m.classList.toggle('hidden',o);h.classList.toggle('hidden',!o);x.classList.toggle('hidden',o);b.setAttribute('aria-expanded',String(!o));});})();</script>
     </header>
-    </div>
+    
+    <!-- ACTIVE GARAGE BANNER -->
+    <section id="active-garage-banner" class="hidden bg-labBlue/10 border-b border-labBlue/30 py-4 px-6 relative z-10 shadow-xl backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-labBlue/20 flex items-center justify-center text-labBlue">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-labBlue uppercase tracking-widest">Active Vehicle</p>
+                    <p id="active-vehicle-name" class="text-white font-heading font-extrabold text-lg">2018 Ram 2500 6.7L Cummins</p>
+                </div>
+            </div>
+            <button id="vs-clear" class="text-xs font-bold text-zinc-400 hover:text-white uppercase tracking-widest border border-edge hover:border-zinc-500 rounded px-4 py-2 transition-all">
+                Change Vehicle
+            </button>
+        </div>
+    </section>
+
+</div>
 
     <main class="max-w-3xl mx-auto px-6 py-20 prose-lab">
 
@@ -246,5 +265,6 @@
 
 
 
+    <script src="/assets/js/global-banner.js"></script>
 </body>
 </html>

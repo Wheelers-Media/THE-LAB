@@ -228,23 +228,6 @@ function initVehicleSelector() {
         btnSubmit.disabled = !sEngine.value;
     });
 
-    function applyVehicleState() {
-        const hero = document.getElementById("vehicle-selector-hero");
-        const banner = document.getElementById("active-garage-banner");
-        const nameStr = document.getElementById("active-vehicle-name");
-
-        if (activeVehicle) {
-            if (hero) hero.classList.add("hidden");
-            if (banner) banner.classList.remove("hidden");
-            if (nameStr) {
-                nameStr.textContent = `${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.model} ${activeVehicle.engine}`;
-            }
-        } else {
-            if (hero) hero.classList.remove("hidden");
-            if (banner) banner.classList.add("hidden");
-        }
-    }
-
     btnSubmit.addEventListener('click', () => {
         const vehicle = {
             year: parseInt(sYear.value),
@@ -253,46 +236,10 @@ function initVehicleSelector() {
             engine: sEngine.value
         };
         sessionStorage.setItem('lab_active_vehicle', JSON.stringify(vehicle));
-        activeVehicle = vehicle;
         
         // Redirect to catalog page
-        if (!window.location.pathname.includes('/catalog')) {
-            window.location.href = './catalog/';
-        } else {
-            applyVehicleState();
-            renderProducts();
-        }
+        window.location.href = './catalog/';
     });
-
-    const btnClear = document.getElementById("vs-clear");
-    if (btnClear) {
-        btnClear.addEventListener('click', () => {
-            sessionStorage.removeItem('lab_active_vehicle');
-            activeVehicle = null;
-            // Redirect back to store landing page
-            window.location.href = '../';
-        });
-    }
-
-
-    applyVehicleState();
-}
-
-function applyVehicleState() {
-    const hero = document.getElementById("vehicle-selector-hero");
-    const banner = document.getElementById("active-garage-banner");
-    const nameStr = document.getElementById("active-vehicle-name");
-
-    if (activeVehicle) {
-        hero.classList.add("hidden");
-        banner.classList.remove("hidden");
-        if (nameStr) {
-            nameStr.textContent = `${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.model} ${activeVehicle.engine}`;
-        }
-    } else {
-        hero.classList.remove("hidden");
-        banner.classList.add("hidden");
-    }
 }
 
 function initStore() {

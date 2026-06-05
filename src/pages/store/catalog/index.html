@@ -155,23 +155,7 @@
             window.setCurrency=function(c){var r=0.74,ac='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all',ic='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all';var cb=document.getElementById('btn-cad'),ub=document.getElementById('btn-usd');if(cb)cb.className=(c==='CAD')?ac:ic;if(ub)ub.className=(c==='USD')?ac:ic;localStorage.setItem('theLab_currency',c);document.querySelectorAll('[data-price-cad]').forEach(function(el){var cad=parseFloat(el.getAttribute('data-price-cad'));el.textContent=c==='USD'?'$'+(cad*r).toFixed(2)+' USD':'$'+cad.toFixed(2)+' CAD';});document.querySelectorAll('[data-price-from-cad]').forEach(function(el){var cad=parseFloat(el.getAttribute('data-price-from-cad'));el.textContent=c==='USD'?'From $'+(cad*r).toFixed(2)+' USD':'From $'+cad.toFixed(2)+' CAD';});};
             setTimeout(function(){window.setCurrency(localStorage.getItem('theLab_currency')||'CAD');},0);
         </script>
-    <!-- ACTIVE GARAGE BANNER -->
-    <section id="active-garage-banner" class="hidden bg-labBlue/10 border-b border-labBlue/30 py-4 px-6 relative z-10 shadow-xl backdrop-blur-md">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-labBlue/20 flex items-center justify-center text-labBlue">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                </div>
-                <div>
-                    <p class="text-[10px] font-bold text-labBlue uppercase tracking-widest">Active Vehicle</p>
-                    <p id="active-vehicle-name" class="text-white font-heading font-extrabold text-lg">2018 Ram 2500 6.7L Cummins</p>
-                </div>
-            </div>
-            <button id="vs-clear" class="text-xs font-bold text-zinc-400 hover:text-white uppercase tracking-widest border border-edge hover:border-zinc-500 rounded px-4 py-2 transition-all">
-                Change Vehicle
-            </button>
-        </div>
-    </section>
+    
     </div>
 
     <main>
@@ -381,5 +365,6 @@
 
     <script src="/assets/js/products.js"></script>
     <script src="/assets/js/store.js"></script>
+    <script src="/assets/js/global-banner.js"></script>
 </body>
 </html>
