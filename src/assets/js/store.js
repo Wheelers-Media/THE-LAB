@@ -228,6 +228,23 @@ function initVehicleSelector() {
         btnSubmit.disabled = !sEngine.value;
     });
 
+    function applyVehicleState() {
+        const hero = document.getElementById("vehicle-selector-hero");
+        const banner = document.getElementById("active-garage-banner");
+        const nameStr = document.getElementById("active-vehicle-name");
+
+        if (activeVehicle) {
+            if (hero) hero.classList.add("hidden");
+            if (banner) banner.classList.remove("hidden");
+            if (nameStr) {
+                nameStr.textContent = `${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.model} ${activeVehicle.engine}`;
+            }
+        } else {
+            if (hero) hero.classList.remove("hidden");
+            if (banner) banner.classList.add("hidden");
+        }
+    }
+
     btnSubmit.addEventListener('click', () => {
         const vehicle = {
             year: parseInt(sYear.value),
@@ -237,8 +254,14 @@ function initVehicleSelector() {
         };
         sessionStorage.setItem('lab_active_vehicle', JSON.stringify(vehicle));
         activeVehicle = vehicle;
-        applyVehicleState();
-        renderProducts();
+        
+        // Redirect to catalog page
+        if (!window.location.pathname.includes('/catalog')) {
+            window.location.href = './catalog/';
+        } else {
+            applyVehicleState();
+            renderProducts();
+        }
     });
 
     const btnClear = document.getElementById("vs-clear");
@@ -246,10 +269,11 @@ function initVehicleSelector() {
         btnClear.addEventListener('click', () => {
             sessionStorage.removeItem('lab_active_vehicle');
             activeVehicle = null;
-            applyVehicleState();
-            renderProducts();
+            // Redirect back to store landing page
+            window.location.href = '../';
         });
     }
+
 
     applyVehicleState();
 }
@@ -275,6 +299,25 @@ function initStore() {
     const params = new URLSearchParams(window.location.search);
     const make = params.get("make");
     const category = params.get("category");
+
+    // Auto-check filters based on activeVehicle
+    if (activeVehicle) {
+        activeFilters.makes.push(activeVehicle.make);
+        activeFilters.engines.push(activeVehicle.engine);
+        activeFilters.year = activeVehicle.year;
+
+        const makeCb = document.getElementById(`filter-make-${activeVehicle.make === "GMC" ? "Chevy" : activeVehicle.make}`);
+        if (makeCb) makeCb.checked = true;
+
+        // Note: engine checkbox IDs aren't currently bound to exact string matches easily via ID, 
+        // but we can query them by value
+        const engCb = document.querySelector(`input[data-type="engine"][value="${activeVehicle.engine}"]`);
+        if (engCb) engCb.checked = true;
+
+        const yrInput = document.getElementById('filter-year');
+        if (yrInput) yrInput.value = activeVehicle.year;
+    }
+
 
     if (make) {
         activeFilters.makes.push(make);
