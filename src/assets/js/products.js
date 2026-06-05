@@ -76,6 +76,58 @@ const catalog = [
         description: "The fastest and most powerful OBDII scanning and logging interface on the market. Connect to your vehicle, log data, read codes, and write custom calibrations engineered by THE LAB.",
         features: ["Pro Feature Set compatible", "Standalone data logging", "Bluetooth 5.0 connectivity", "Requires universal credits (sold separately)"],
         isPopular: true
+    },
+    {
+        id: "pd-egr-101",
+        name: "Polar Diesel 6.7L Cummins EGR Cooler Delete Kit",
+        makes: ["Ram"],
+        category: "EGR",
+        engine: "6.7L Cummins",
+        years: [2013, 2018],
+        price: 349.99,
+        image: "/assets/Polar-Diesel-Logo.webp",
+        description: "Official Polar Diesel EGR Cooler Delete kit. High quality construction and direct fitment.",
+        features: ["Billet Aluminum", "Includes all hardware", "Official Polar Diesel component"],
+        isPopular: true
+    },
+    {
+        id: "pd-exh-102",
+        name: "Polar Diesel 5\" Exhaust System for Powerstroke",
+        makes: ["Ford"],
+        category: "Exhaust",
+        engine: "6.7L Powerstroke",
+        years: [2017, 2022],
+        price: 899.99,
+        image: "/assets/Polar-Diesel-Logo.webp",
+        description: "Official Polar Diesel Exhaust System. Maximize flow and reduce EGTs.",
+        features: ["409 Stainless Steel", "Mandrel bent", "Official Polar Diesel component"],
+        isPopular: false
+    },
+    {
+        id: "pd-ccv-103",
+        name: "Polar Diesel L5P Duramax CCV Reroute",
+        makes: ["Chevy"],
+        category: "CCV",
+        engine: "6.6L Duramax",
+        years: [2017, 2023],
+        price: 199.99,
+        image: "/assets/Polar-Diesel-Logo.webp",
+        description: "Official Polar Diesel CCV Reroute kit for L5P Duramax.",
+        features: ["High quality hose", "Billet catch can", "Official Polar Diesel component"],
+        isPopular: false
+    },
+    {
+        id: "pd-tune-104",
+        name: "Polar Diesel Custom Tuning Package",
+        makes: ["Ford", "Ram", "Chevy"],
+        category: "Tuning",
+        engine: "Universal",
+        years: [2008, 2024],
+        price: 599.99,
+        image: "/assets/Polar-Diesel-Logo.webp",
+        description: "Official Polar Diesel calibration and tuning support.",
+        features: ["Multiple power levels", "Optimized shifting", "Official Polar Diesel component"],
+        isPopular: false
     }
 ];
 
