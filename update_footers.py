@@ -7,7 +7,7 @@ target_block = """        <!-- Trust Signals (Partner Logos) -->
             <div class="flex flex-wrap justify-center gap-x-8 gap-y-6 items-center">
                 <!-- DIESELR -->
                 <a href="#" target="_blank" rel="noopener noreferrer" aria-label="DIESELR" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                    <span class="text-white font-extrabold font-heading text-xl tracking-widest">DIESELR</span>
+                    <img src="/assets/DIESELR-Logo.png" alt="DIESELR" class="h-8 w-auto object-contain">
                 </a>
                 <!-- AMDP -->
                 <a href="https://amdieselperformance.ca/" target="_blank" rel="noopener noreferrer" aria-label="AMDP" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
