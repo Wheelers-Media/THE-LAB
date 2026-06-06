@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const triggerBtn = document.getElementById('vehicle-selector-trigger');
+    const triggerBtns = [
+        document.getElementById('vehicle-selector-trigger'),
+        document.getElementById('vehicle-selector-trigger-mob')
+    ].filter(Boolean);
     const modal = document.getElementById('vehicle-selector-modal');
     const closeBtn = document.getElementById('close-vs-modal');
     const cancelBtn = document.getElementById('vs-cancel');
@@ -9,9 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const makeBtns = document.querySelectorAll('.vs-make-btn');
     const step2 = document.getElementById('vs-step-2');
     const engineSelect = document.getElementById('vs-engine-select');
-    
-    const greetingEl = document.getElementById('vs-greeting');
-    const labelEl = document.getElementById('vs-label');
     
     let selectedMake = null;
     let selectedEngine = null;
@@ -61,9 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // OEM Logo mapping for UI
     const logoMap = {
-        'Cummins': '/assets/ram-logo.svg',
-        'Duramax': '/assets/gm-logo.svg',
-        'Powerstroke': '/assets/ford-logo.svg',
+        'Cummins': '/assets/ram-logo.png',
+        'Duramax': '/assets/gm-logo.png',
+        'Powerstroke': '/assets/ford-logo.png',
         'Half-Ton': '/assets/half-ton.png'
     };
 
@@ -81,31 +81,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function updateHeaderUI(make, engine) {
-        // Change the text and icon
-        greetingEl.textContent = 'Your selected truck:';
-        greetingEl.className = 'text-[10px] text-zinc-400 font-bold uppercase tracking-wider';
-        
-        labelEl.innerHTML = `<span class="text-labBlue">${make}</span> &middot; ${engine}`;
-        labelEl.className = 'text-xs text-white font-extrabold tracking-wide whitespace-nowrap';
-        
-        // Update the icon to the OEM logo if possible, or fallback to text/truck
-        const iconSvg = triggerBtn.querySelector('svg');
-        let imgEl = triggerBtn.querySelector('img.vs-header-icon');
-        
-        if (!imgEl) {
-            imgEl = document.createElement('img');
-            imgEl.className = 'vs-header-icon w-8 h-8 object-contain transition-transform group-hover:scale-105';
-            triggerBtn.insertBefore(imgEl, triggerBtn.children[0]);
-        }
-        
-        if (iconSvg) iconSvg.style.display = 'none';
-        
-        imgEl.src = logoMap[make] || '';
-        imgEl.onerror = () => {
-            imgEl.style.display = 'none';
-            if (iconSvg) iconSvg.style.display = 'block';
-        };
-        imgEl.style.display = 'block';
+        triggerBtns.forEach(btn => {
+            const greetingEl = btn.querySelector('#vs-greeting') || btn.querySelector('#vs-greeting-mob');
+            const labelEl = btn.querySelector('#vs-label') || btn.querySelector('#vs-label-mob');
+            
+            if (greetingEl) {
+                greetingEl.textContent = 'Your selected truck:';
+                greetingEl.className = 'text-[10px] text-zinc-400 font-bold uppercase tracking-wider';
+            }
+            
+            if (labelEl) {
+                labelEl.innerHTML = `<span class="text-labBlue">${make}</span> &middot; ${engine}`;
+                labelEl.className = 'text-xs text-white font-extrabold tracking-wide whitespace-nowrap';
+            }
+            
+            const iconSvg = btn.querySelector('svg');
+            let imgEl = btn.querySelector('img.vs-header-icon');
+            
+            if (!imgEl) {
+                imgEl = document.createElement('img');
+                imgEl.className = 'vs-header-icon w-8 h-8 object-contain transition-transform group-hover:scale-105';
+                btn.insertBefore(imgEl, btn.children[0]);
+            }
+            
+            if (iconSvg) iconSvg.style.display = 'none';
+            
+            imgEl.src = logoMap[make] || '';
+            imgEl.onerror = () => {
+                imgEl.style.display = 'none';
+                if (iconSvg) iconSvg.style.display = 'block';
+            };
+            imgEl.style.display = 'block';
+        });
     }
 
     // 2. Modal interactions
@@ -140,9 +147,39 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.remove('selected-make');
         });
         
-        step2.classList.add('opacity-30', 'pointer-events-none');
-        engineSelect.innerHTML = '<option value="">Select Engine</option>';
+        if (step2) step2.classList.add('opacity-30', 'pointer-events-none');
+        if (engineSelect) engineSelect.innerHTML = '<option value="">Select Engine</option>';
         validateStep2();
+
+        // Clear stored vehicle
+        localStorage.removeItem('lab_selected_truck');
+        sessionStorage.removeItem('lab_active_vehicle');
+
+        // Reset trigger button UI to default "Select your truck"
+        triggerBtns.forEach(btn => {
+            const greetingEl = btn.querySelector('#vs-greeting') || btn.querySelector('#vs-greeting-mob');
+            const labelEl = btn.querySelector('#vs-label') || btn.querySelector('#vs-label-mob');
+            if (greetingEl) {
+                greetingEl.textContent = 'Hello,';
+                greetingEl.className = 'text-[10px] text-labBlue font-bold uppercase tracking-wider';
+            }
+            if (labelEl) {
+                labelEl.textContent = 'Select your truck';
+                labelEl.className = 'text-xs text-white font-extrabold uppercase tracking-widest whitespace-nowrap';
+            }
+            const imgEl = btn.querySelector('img.vs-header-icon');
+            if (imgEl) imgEl.style.display = 'none';
+            const iconSvg = btn.querySelector('svg');
+            if (iconSvg) iconSvg.style.display = 'block';
+        });
+
+        // Close the modal and reload catalog to reset filtering
+        closeModal();
+        if (window.location.pathname.includes('/store/catalog')) {
+            window.location.href = '/store/catalog/';
+        } else {
+            window.location.reload();
+        }
     }
     
     function selectMake(make) {
@@ -193,15 +230,51 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         localStorage.setItem('lab_selected_truck', JSON.stringify(payload));
+        
+        // Map the selected make to the corresponding catalog make format
+        let makeVal = selectedMake;
+        if (selectedMake === "Cummins") makeVal = "Ram";
+        else if (selectedMake === "Duramax") makeVal = "Chevy";
+        else if (selectedMake === "Powerstroke") makeVal = "Ford";
+        else if (selectedMake === "Half-Ton") {
+            const engLower = engineSelect.value.toLowerCase();
+            if (engLower.includes("ecodiesel")) makeVal = "Ram";
+            else if (engLower.includes("duramax") || engLower.includes("cruze") || engLower.includes("equinox") || engLower.includes("terrain")) makeVal = "Chevy";
+            else if (engLower.includes("powerstroke")) makeVal = "Ford";
+            else if (engLower.includes("titan")) makeVal = "Nissan";
+        }
+        
+        // Parse a dynamic year matching the selected engine's year range
+        let yearVal = 2020;
+        const yearRangeMatch = engineSelect.value.match(/(\d{4})-(\d{4})/);
+        const yearPlusMatch = engineSelect.value.match(/(\d{4})\+/);
+        if (yearRangeMatch) {
+            yearVal = Math.floor((parseInt(yearRangeMatch[1]) + parseInt(yearRangeMatch[2])) / 2);
+        } else if (yearPlusMatch) {
+            yearVal = parseInt(yearPlusMatch[1]);
+        }
+        
+        sessionStorage.setItem('lab_active_vehicle', JSON.stringify({
+            year: yearVal,
+            make: makeVal,
+            model: "",
+            engine: engineSelect.value
+        }));
+        
         updateHeaderUI(payload.make, payload.engine);
         closeModal();
         
         // Optional: Trigger a custom event for the store to filter products
         window.dispatchEvent(new CustomEvent('truckSelected', { detail: payload }));
+        
+        // Redirect to catalog page showing all parts for that truck!
+        window.location.href = '/store/catalog/';
     }
 
     // Event Listeners
-    if (triggerBtn) triggerBtn.addEventListener('click', openModal);
+    triggerBtns.forEach(btn => {
+        btn.addEventListener('click', openModal);
+    });
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
     if (resetBtn) resetBtn.addEventListener('click', resetModal);

@@ -136,8 +136,45 @@ let activeFilters = {
     makes: [],
     categories: [],
     engines: [],
-    year: null
+    year: null,
+    searchQuery: ""
 };
+
+// Helper for matching selected vehicle/dropdown engines to product engine specifications
+function enginesMatch(selected, product) {
+    if (product === "Universal") return true;
+    if (!selected) return true;
+    
+    const selLower = selected.toLowerCase();
+    const prodLower = product.toLowerCase();
+    
+    const getSpecs = (str) => {
+        const displacementMatch = str.match(/(\d+\.\d+)l?/i);
+        const brandMatch = str.match(/(cummins|powerstroke|duramax|ecodiesel)/i);
+        return {
+            displacement: displacementMatch ? displacementMatch[1] : null,
+            brand: brandMatch ? brandMatch[1].toLowerCase() : null
+        };
+    };
+    
+    const selSpecs = getSpecs(selLower);
+    const prodSpecs = getSpecs(prodLower);
+    
+    if (!selSpecs.brand || !prodSpecs.brand) {
+        return selLower.includes(prodLower) || prodLower.includes(selLower);
+    }
+    
+    if (selSpecs.brand !== prodSpecs.brand) {
+        return false;
+    }
+    
+    if (selSpecs.displacement && prodSpecs.displacement) {
+        return selSpecs.displacement === prodSpecs.displacement;
+    }
+    
+    return true;
+}
+
 
 
 /* --- VEHICLE SELECTOR ENGINE --- */
@@ -256,10 +293,12 @@ function initStore() {
         const makeCb = document.getElementById(`filter-make-${activeVehicle.make === "GMC" ? "Chevy" : activeVehicle.make}`);
         if (makeCb) makeCb.checked = true;
 
-        // Note: engine checkbox IDs aren't currently bound to exact string matches easily via ID, 
-        // but we can query them by value
-        const engCb = document.querySelector(`input[data-type="engine"][value="${activeVehicle.engine}"]`);
-        if (engCb) engCb.checked = true;
+        // Check the matching engine checkbox in the sidebar
+        document.querySelectorAll('input[data-type="engine"]').forEach(cb => {
+            if (enginesMatch(activeVehicle.engine, cb.value)) {
+                cb.checked = true;
+            }
+        });
 
         const yrInput = document.getElementById('filter-year');
         if (yrInput) yrInput.value = activeVehicle.year;
@@ -307,6 +346,15 @@ function initStore() {
         });
     }
 
+    // Attach listener to search input
+    const searchInput = document.getElementById('store-search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            activeFilters.searchQuery = e.target.value.trim();
+            renderProducts();
+        });
+    }
+
     renderProducts();
 }
 
@@ -316,10 +364,20 @@ function renderProducts() {
     if (!grid) return;
 
     const filtered = window.storeCatalog.filter(p => {
+        // Search filter matching product name, description, makes, or category
+        let searchMatch = true;
+        if (activeFilters.searchQuery) {
+            const query = activeFilters.searchQuery.toLowerCase();
+            searchMatch = p.name.toLowerCase().includes(query) ||
+                          p.description.toLowerCase().includes(query) ||
+                          p.category.toLowerCase().includes(query) ||
+                          p.makes.some(m => m.toLowerCase().includes(query));
+        }
+
         // Evaluate Sidebar Filters (Make, Category, Engine, Year)
         let makeMatch = activeFilters.makes.length === 0 || activeFilters.makes.some(m => p.makes.includes(m));
         let catMatch = activeFilters.categories.length === 0 || activeFilters.categories.includes(p.category);
-        let engMatch = activeFilters.engines.length === 0 || activeFilters.engines.includes(p.engine) || p.engine === "Universal";
+        let engMatch = activeFilters.engines.length === 0 || activeFilters.engines.some(e => enginesMatch(e, p.engine)) || p.engine === "Universal";
         let yearMatch = !activeFilters.year || (activeFilters.year >= p.years[0] && activeFilters.year <= p.years[1]);
         
         // STRICT OVERRIDE: If a vehicle is pinned in the session, override sidebar constraints for Make, Engine, Year
@@ -327,22 +385,12 @@ function renderProducts() {
             // Map GMC back to Chevy constraints for catalog matching if needed
             const vMake = activeVehicle.make === "GMC" ? "Chevy" : activeVehicle.make;
             makeMatch = p.makes.includes(vMake) || p.makes.includes("Universal");
-            engMatch = p.engine === activeVehicle.engine || p.engine === "Universal";
+            engMatch = enginesMatch(activeVehicle.engine, p.engine);
             yearMatch = activeVehicle.year >= p.years[0] && activeVehicle.year <= p.years[1];
         }
 
-        return makeMatch && catMatch && engMatch && yearMatch;
+        return searchMatch && makeMatch && catMatch && engMatch && yearMatch;
     });
-
-    if (filtered.length === 0) {
-        grid.innerHTML = `
-            <div class="col-span-full py-20 text-center">
-                <h3 class="text-white text-xl font-bold mb-2">No products found</h3>
-                <p class="text-zinc-500">Try adjusting your filters.</p>
-            </div>
-        `;
-        return;
-    }
 
     if (filtered.length === 0) {
         grid.innerHTML = `
