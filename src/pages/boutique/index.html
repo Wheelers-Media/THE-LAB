@@ -182,139 +182,151 @@
         </section>
 
         <!-- ═══ PREMIUM DETAILING ═══ -->
-        <section id="services" class="py-24 px-6 border-t border-edge bg-void overflow-hidden">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-20">
-                <div class="w-full md:w-1/2 relative group">
-                    <div class="absolute inset-0 bg-labCyan/20 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                    <img src="/assets/boutique-detailing.jpg" alt="Premium Detailing" class="w-full aspect-[4/3] object-cover rounded-2xl border border-edge shadow-2xl relative z-10 transition-transform duration-700 group-hover:scale-[1.02]">
-                </div>
-                <div class="w-full md:w-1/2 flex flex-col justify-center">
+        <section id="services" class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="/assets/detailing.png" alt="" class="w-full h-full object-cover" onerror="this.src='/assets/boutique-detailing.jpg'">
+                <div class="absolute inset-0 bg-black/65"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-end">
+                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
                     <span class="text-labCyan font-mono tracking-[0.2em] uppercase text-xs mb-4">The Boutique</span>
                     <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Premium<br>Detailing</h2>
-                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed">Multi-stage paint correction, extensive interior deep cleaning, and professional-grade surface treatments to restore your vehicle to showroom perfection.</p>
+                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">Multi-stage paint correction, extensive interior deep cleaning, and professional-grade surface treatments to restore your vehicle to showroom perfection.</p>
                     <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Single & Multi-Stage Paint Correction</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Interior Deep Extraction</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Maintenance Wash Packages</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Single & Multi-Stage Paint Correction</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Interior Deep Extraction</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Maintenance Wash Packages</li>
                     </ul>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="/boutique/detailing/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-8 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-sm text-center">View Detailing Packages</a>
-                        <a href="/boutique/detailing/#maintenance" class="inline-flex items-center justify-center border border-edge text-zinc-400 font-extrabold py-4 px-8 rounded-lg hover:border-white/20 hover:text-white active:scale-[0.98] transition-all uppercase tracking-widest text-sm text-center">View Maintenance Plans</a>
+                    <div class="flex flex-col sm:flex-row gap-4 mt-auto">
+                        <a href="/boutique/detailing/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-6 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">View Detailing Packages</a>
+                        <a href="/boutique/detailing/#maintenance" class="inline-flex items-center justify-center border border-edge text-zinc-400 font-extrabold py-4 px-6 rounded-lg hover:border-white/20 hover:text-white active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">View Maintenance Plans</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- ═══ CERAMIC COATINGS ═══ -->
-        <section class="py-24 px-6 border-t border-edge bg-[#050508] overflow-hidden">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row-reverse items-center gap-12 lg:gap-20">
-                <div class="w-full md:w-1/2 relative group">
-                    <div class="absolute inset-0 bg-labBlue/20 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                    <img src="/assets/boutique-coatings.jpg" alt="Ceramic Coatings" class="w-full aspect-[4/3] object-cover rounded-2xl border border-edge shadow-2xl relative z-10 transition-transform duration-700 group-hover:scale-[1.02]">
-                </div>
-                <div class="w-full md:w-1/2 flex flex-col justify-center">
+        <section class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="/assets/boutique-coatings.jpg" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/65"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-start">
+                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
                     <span class="text-labBlue font-mono tracking-[0.2em] uppercase text-xs mb-4">Ultimate Protection</span>
                     <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Ceramic<br>Coatings</h2>
-                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed">Lock in the gloss. Our ultra-hydrophobic ceramic coatings protect your paint from UV rays, harsh chemicals, and minor abrasions while keeping your vehicle cleaner, longer.</p>
+                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">Lock in the gloss. Our ultra-hydrophobic ceramic coatings protect your paint from UV rays, harsh chemicals, and minor abrasions while keeping your vehicle cleaner, longer.</p>
                     <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Years of Durable Protection</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Extreme Gloss & Slickness</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Effortless Washing</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Years of Durable Protection</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Extreme Gloss & Slickness</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Effortless Washing</li>
                     </ul>
-                    <div>
-                        <a href="/boutique/coatings/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-8 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-sm">Explore Coatings</a>
+                    <div class="mt-auto">
+                        <a href="/boutique/coatings/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-8 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">Explore Coatings</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- ═══ WINDOW TINTING ═══ -->
-        <section class="py-24 px-6 border-t border-edge bg-void overflow-hidden">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-20">
-                <div class="w-full md:w-1/2 relative group">
-                    <div class="absolute inset-0 bg-white/10 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                    <img src="/assets/boutique-tinting.jpg" alt="Window Tinting" class="w-full aspect-[4/3] object-cover rounded-2xl border border-edge shadow-2xl relative z-10 transition-transform duration-700 group-hover:scale-[1.02]">
-                </div>
-                <div class="w-full md:w-1/2 flex flex-col justify-center">
+        <section class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="/assets/boutique-tinting.jpg" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/65"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-end">
+                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
                     <span class="text-zinc-500 font-mono tracking-[0.2em] uppercase text-xs mb-4">SunTek Films</span>
                     <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Window<br>Tinting</h2>
-                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed">Enhance your vehicle's look while drastically reducing interior heat and glare. We install premium SunTek Carbon and Ceramic films cut precisely to your vehicle's specs.</p>
+                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">Enhance your vehicle's look while drastically reducing interior heat and glare. We install premium SunTek Carbon and Ceramic films cut precisely to your vehicle's specs.</p>
                     <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Maximum Heat Rejection</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 99% UV Blockage</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Flawless Lifetime Install</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Maximum Heat Rejection</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 99% UV Blockage</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Flawless Lifetime Install</li>
                     </ul>
-                    <div>
-                        <a href="/boutique/tinting/" class="inline-flex items-center justify-center border border-edge bg-[#0D0D12] text-white font-extrabold py-4 px-8 rounded-lg hover:border-white/40 active:scale-[0.98] transition-all uppercase tracking-widest text-sm">View Tint Pricing</a>
+                    <div class="mt-auto">
+                        <a href="/boutique/tinting/" class="inline-flex items-center justify-center border border-edge bg-[#0D0D12] text-white font-extrabold py-4 px-8 rounded-lg hover:border-white/40 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">View Tint Pricing</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- ═══ PAINT PROTECTION FILM ═══ -->
-        <section class="py-24 px-6 border-t border-edge bg-[#050508] overflow-hidden">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row-reverse items-center gap-12 lg:gap-20">
-                <div class="w-full md:w-1/2 relative group">
-                    <div class="absolute inset-0 bg-white/10 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                    <img src="/assets/boutique-ppf.jpg" alt="Paint Protection Film" class="w-full aspect-[4/3] object-cover rounded-2xl border border-edge shadow-2xl relative z-10 transition-transform duration-700 group-hover:scale-[1.02]">
-                </div>
-                <div class="w-full md:w-1/2 flex flex-col justify-center">
+        <section class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="/assets/boutique-ppf.jpg" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/65"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-start">
+                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
                     <span class="text-zinc-500 font-mono tracking-[0.2em] uppercase text-xs mb-4">Invisible Armor</span>
                     <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Paint Protection<br>Film (PPF)</h2>
-                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed">The ultimate defense against rock chips, road salt, and debris. Our self-healing clear bras are virtually invisible and preserve your factory paint flawlessly.</p>
+                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">The ultimate defense against rock chips, road salt, and debris. Our self-healing clear bras are virtually invisible and preserve your factory paint flawlessly.</p>
                     <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Self-Healing Technology</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> High Gloss or Stealth Matte Finish</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Custom Patterns & Bulk Installs</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Self-Healing Technology</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> High Gloss or Stealth Matte Finish</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Custom Patterns & Bulk Installs</li>
                     </ul>
-                    <div>
-                        <a href="/boutique/ppf/" class="inline-flex items-center justify-center border border-edge bg-[#0D0D12] text-white font-extrabold py-4 px-8 rounded-lg hover:border-white/40 active:scale-[0.98] transition-all uppercase tracking-widest text-sm">Explore PPF</a>
+                    <div class="mt-auto">
+                        <a href="/boutique/ppf/" class="inline-flex items-center justify-center border border-edge bg-[#0D0D12] text-white font-extrabold py-4 px-8 rounded-lg hover:border-white/40 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">Explore PPF</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- ═══ CUSTOM LIGHTING ═══ -->
-        <section class="py-24 px-6 border-t border-edge bg-void overflow-hidden">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-20">
-                <div class="w-full md:w-1/2 relative group">
-                    <div class="absolute inset-0 bg-labBlue/20 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                    <img src="/assets/boutique-lighting.jpg" alt="Custom Lighting" class="w-full aspect-[4/3] object-cover rounded-2xl border border-edge shadow-2xl relative z-10 transition-transform duration-700 group-hover:scale-[1.02]">
-                </div>
-                <div class="w-full md:w-1/2 flex flex-col justify-center">
+        <section class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="/assets/boutique-lighting.jpg" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/65"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-end">
+                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
                     <span class="text-labBlue font-mono tracking-[0.2em] uppercase text-xs mb-4">Authorized Retailer & Installer</span>
                     <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Custom<br>Lighting</h2>
-                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed">Night-piercing visibility combined with aggressive, modern styling. We install premium lighting from top brands like Morimoto, Baja Designs, and Diode Dynamics, plus custom interior Starlight Headliners.</p>
+                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">Night-piercing visibility combined with aggressive, modern styling. We install premium lighting from top brands like Morimoto, Baja Designs, and Diode Dynamics, plus custom interior Starlight Headliners.</p>
                     <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Full Headlight/Taillight Assemblies</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Off-Road Light Bars & Pods</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Starlight Headliner Installations</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Full Headlight/Taillight Assemblies</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Off-Road Light Bars & Pods</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Starlight Headliner Installations</li>
                     </ul>
-                    <div>
-                        <a href="/boutique/lighting/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-8 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-sm">Explore Custom Lighting</a>
+                    <div class="mt-auto">
+                        <a href="/boutique/lighting/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-8 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">Explore Custom Lighting</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- ═══ OFF-ROAD & SXS ═══ -->
-        <section class="py-24 px-6 border-t border-edge bg-[#050508] overflow-hidden">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row-reverse items-center gap-12 lg:gap-20">
-                <div class="w-full md:w-1/2 relative group">
-                    <div class="absolute inset-0 bg-labCyan/20 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                    <img src="/assets/boutique-sxs.jpg" alt="Off-Road and Side by Side" class="w-full aspect-[4/3] object-cover rounded-2xl border border-edge shadow-2xl relative z-10 transition-transform duration-700 group-hover:scale-[1.02]">
-                </div>
-                <div class="w-full md:w-1/2 flex flex-col justify-center">
+        <section class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="/assets/boutique-sxs.jpg" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/65"></div>
+            </div>
+            
+            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-start">
+                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
                     <span class="text-labCyan font-mono tracking-[0.2em] uppercase text-xs mb-4">Powersports</span>
                     <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Off-Road<br>& SxS</h2>
-                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed">Protect your toys before you hit the trails. We offer specialized ceramic coating and tinting packages specifically engineered for Polaris, Can-Am, and CFMOTO machines.</p>
+                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">Protect your toys before you hit the trails. We offer specialized ceramic coating and tinting packages specifically engineered for Polaris, Can-Am, and CFMOTO machines.</p>
                     <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Mud & Dirt Repellent Coatings</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Polycarbonate Tinting</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Heavy Duty Surface Prep</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Mud & Dirt Repellent Coatings</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Polycarbonate Tinting</li>
+                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Heavy Duty Surface Prep</li>
                     </ul>
-                    <div>
-                        <a href="/contact/" class="inline-flex items-center justify-center border border-edge bg-[#0D0D12] text-white font-extrabold py-4 px-8 rounded-lg hover:border-white/40 active:scale-[0.98] transition-all uppercase tracking-widest text-sm">Book Your SxS</a>
+                    <div class="mt-auto">
+                        <a href="/contact/" class="inline-flex items-center justify-center border border-edge bg-[#0D0D12] text-white font-extrabold py-4 px-8 rounded-lg hover:border-white/40 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">Book Your SxS</a>
                     </div>
                 </div>
             </div>
