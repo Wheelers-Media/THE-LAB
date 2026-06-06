@@ -180,6 +180,45 @@ const catalog = [
         description: "Complete tuning solution for 2020-2022 L5P Duramax.",
         features: ["MPVI3 Interface", "T87A TCM Unlock", "Required Credits", "Custom AMDP tuning"],
         isPopular: true
+    },
+    {
+        id: "acc-ford-701",
+        name: "Gridiron Heavy-Duty Front Steel Bumper (2017-2022 Ford F-250/F-350)",
+        makes: ["Ford"],
+        category: "Accessories",
+        engine: "6.7L Powerstroke",
+        years: [2017, 2022],
+        price: 2499.00,
+        image: "/assets/GRIDIRON-logo.webp",
+        description: "Designed and manufactured in Canada. This heavy-duty steel bumper offers unmatched front-end protection, featuring laser-cut precision fitment, integrated fog light mounts, and a durable black textured powder coat finish.",
+        features: ["Severe duty 3/16\" steel construction", "Official Gridiron Dealer product", "Direct bolt-on fitment", "Includes heavy-duty shackle mounts"],
+        isPopular: true
+    },
+    {
+        id: "acc-ram-702",
+        name: "Gridiron Extreme Grille Guard Front Bumper (2019-2024 Ram 2500/3500)",
+        makes: ["Ram"],
+        category: "Accessories",
+        engine: "6.7L Cummins",
+        years: [2019, 2024],
+        price: 2699.00,
+        image: "/assets/GRIDIRON-logo.webp",
+        description: "Severe-duty front bumper with full wrap-around grille guard. Built for heavy-duty protection against wildlife and off-road obstacles. Canadian engineered for the toughest conditions.",
+        features: ["Full grille & headlight protection", "1/4\" winch mount plate included", "Sensor-compatible design", "Durable powder coat finish"],
+        isPopular: false
+    },
+    {
+        id: "acc-chevy-703",
+        name: "Gridiron Severe-Duty Rear Steel Bumper (2015-2019 Chevy/GMC 2500HD/3500HD)",
+        makes: ["Chevy"],
+        category: "Accessories",
+        engine: "6.6L Duramax",
+        years: [2015, 2019],
+        price: 1899.00,
+        image: "/assets/GRIDIRON-logo.webp",
+        description: "Canadian-made heavy duty rear bumper. Offers reinforced tow hook mounts, integrated steps, and direct compatibility with factory backup sensors and trailer plugs.",
+        features: ["Heavy-duty steps integrated into corners", "Sensor cutouts included", "Severe duty steel plate", "Made in Canada"],
+        isPopular: false
     }
 ];
 
