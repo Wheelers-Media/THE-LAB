@@ -45,7 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
             '2008-2010 6.4L Powerstroke',
             '2003-2007 6.0L Powerstroke',
             '1994-2003 7.3L Powerstroke',
-            '3.0L Powerstroke'
+            '3.0L Powerstroke',
+            '2018-2024 Expedition 3.5L EcoBoost',
+            '2023-2026 Expedition Interceptor 3.5L EcoBoost'
         ],
         'Half-Ton': [
             '2014-2023 EcoDiesel 3.0L',
@@ -56,6 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
             '2018-2019 Equinox 1.6L',
             '2018-2019 Terrain 1.6L',
             '2014-2019 Chevrolet Cruze 1.6L'
+        ],
+        'CF Moto': [
+            '2015-2021 ZForce 800/1000',
+            '2015-2021 UForce 800/1000'
+        ],
+        'Kenworth': [
+            '2021-2026 PACCAR MX-13 / Cummins X15'
         ]
     };
     
@@ -64,7 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'Cummins': '/assets/ram-logo.png',
         'Duramax': '/assets/gm-logo.png',
         'Powerstroke': '/assets/ford-logo.png',
-        'Half-Ton': '/assets/half-ton.png'
+        'Half-Ton': '/assets/half-ton.png',
+        'CF Moto': 'https://placehold.co/100x100/0D0D12/1E1E28?text=CF+MOTO',
+        'Kenworth': 'https://placehold.co/100x100/0D0D12/1E1E28?text=KENWORTH'
     };
 
     // 1. Initialize UI on Load

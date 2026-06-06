@@ -219,7 +219,495 @@ const catalog = [
         description: "Canadian-made heavy duty rear bumper. Offers reinforced tow hook mounts, integrated steps, and direct compatibility with factory backup sensors and trailer plugs.",
         features: ["Heavy-duty steps integrated into corners", "Sensor cutouts included", "Severe duty steel plate", "Made in Canada"],
         isPopular: false
-    }
+    },
+{
+    "id": "acc-cfm-front",
+    "name": "Gridiron 2015-2021 CF MOTO ZForce/UForce Front Bumper",
+    "makes": [
+        "CF Moto"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2015,
+        2021
+    ],
+    "price": 1549.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Severe-duty front bumper designed specifically for CF Moto UTVs. Offers robust front-end protection, integrated light mounts, and a durable powder coat finish.",
+    "features": [
+        "Direct bolt-on installation",
+        "Integrated accessory tabs",
+        "Heavy-duty steel construction"
+    ],
+    "isPopular": true
+},
+{
+    "id": "acc-cfm-rear",
+    "name": "Gridiron 2015-2021 CF MOTO ZForce/UForce Rear Bumper",
+    "makes": [
+        "CF Moto"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2015,
+        2021
+    ],
+    "price": 1049.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Heavy-duty rear steel bumper for CF Moto side-by-sides, designed to protect the cargo bed and frame during off-road operations.",
+    "features": [
+        "Protects rear bodywork and exhaust",
+        "Rugged textured black powder coat",
+        "Includes mount hardware"
+    ],
+    "isPopular": false
+},
+{
+    "id": "acc-kw-base",
+    "name": "GRIDIRON 2021-2026 Kenworth T680 - T880 Base Front Bumper",
+    "makes": [
+        "Kenworth"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2021,
+        2026
+    ],
+    "price": 8999.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Severe-duty steel replacement bumper for Kenworth T680 and T880 semi-trucks. Offers maximum protection, integrated tow receiver, and impact resistance.",
+    "features": [
+        "High-tensile steel construction",
+        "Integrated heavy tow hooks",
+        "Laser-cut exact fitment"
+    ],
+    "isPopular": true
+},
+{
+    "id": "acc-kw-bull",
+    "name": "GRIDIRON 2021-2026 Kenworth T680 - T880 Bull-Bar Front Bumper",
+    "makes": [
+        "Kenworth"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2021,
+        2026
+    ],
+    "price": 7499.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Severe-duty front bumper with a heavy-duty integrated bull bar for Kenworth highway and vocational commercial trucks.",
+    "features": [
+        "Full wrap protection",
+        "Reinforced vertical uprights",
+        "Brushed steel or black finish"
+    ],
+    "isPopular": false
+},
+{
+    "id": "acc-exp-base",
+    "name": "GRIDIRON 2018-2024 Ford Expedition Base Front Bumper",
+    "makes": [
+        "Ford"
+    ],
+    "category": "Accessories",
+    "engine": "3.5L EcoBoost",
+    "years": [
+        2018,
+        2024
+    ],
+    "price": 2549.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "High-clearance base steel bumper for Ford Expedition SUVs. Increases approach angle and provides severe duty protection.",
+    "features": [
+        "Aggressive high-clearance design",
+        "3/16\" steel plate body",
+        "Sensor-compatible mounting"
+    ],
+    "isPopular": false
+},
+{
+    "id": "acc-exp-winch",
+    "name": "GRIDIRON 2018-2024 Ford Expedition Base Winch Front Bumper",
+    "makes": [
+        "Ford"
+    ],
+    "category": "Accessories",
+    "engine": "3.5L EcoBoost",
+    "years": [
+        2018,
+        2024
+    ],
+    "price": 3099.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Severe-duty front steel winch bumper for 2018-2024 Ford Expedition. Supports winches up to 12,000 lbs.",
+    "features": [
+        "Integrated internal winch tray",
+        "Reinforcing gussets",
+        "Dual shackle tabs"
+    ],
+    "isPopular": true
+},
+{
+    "id": "acc-exp-tube",
+    "name": "GRIDIRON 2018-2024 Ford Expedition Full-Tube Front Bumper",
+    "makes": [
+        "Ford"
+    ],
+    "category": "Accessories",
+    "engine": "3.5L EcoBoost",
+    "years": [
+        2018,
+        2024
+    ],
+    "price": 3749.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Extreme wrap-around full-tube front bumper offering maximum protection for the grille and headlights on Ford Expedition.",
+    "features": [
+        "Heavy-wall DOM steel tubing",
+        "Complete grille coverage",
+        "Rugged off-road styling"
+    ],
+    "isPopular": false
+},
+{
+    "id": "acc-exp-interceptor-full",
+    "name": "GRIDIRON 2023-2026 Ford Expedition Interceptor Front Bumper (Grille Guard + Mounts + Center Tub + Wings + Headlight Guards)",
+    "makes": [
+        "Ford"
+    ],
+    "category": "Accessories",
+    "engine": "3.5L EcoBoost",
+    "years": [
+        2023,
+        2026
+    ],
+    "price": 3750.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Complete modular Interceptor bumper kit for 2023-2026 Ford Expedition. Fulfills law enforcement and severe-duty protection requirements.",
+    "features": [
+        "Full modular configuration",
+        "Includes headlight guards and wings",
+        "Center tub reinforced mounts",
+        "Sensor compatible"
+    ],
+    "isPopular": true
+},
+{
+    "id": "acc-exp-interceptor-mid",
+    "name": "GRIDIRON 2023-2026 Ford Expedition Interceptor Front Bumper (Grille Guard + Mounts + Center Tub + Wings)",
+    "makes": [
+        "Ford"
+    ],
+    "category": "Accessories",
+    "engine": "3.5L EcoBoost",
+    "years": [
+        2023,
+        2026
+    ],
+    "price": 3550.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Modular Interceptor front bumper kit for Ford Expedition. Includes heavy duty grille guard, wings, and center mounts (headlight guards sold separately).",
+    "features": [
+        "Aggressive police-spec look",
+        "Wings guard front fenders",
+        "Textured black coat finish"
+    ],
+    "isPopular": false
+},
+{
+    "id": "acc-exp-wings",
+    "name": "Expedition Interceptor Bumper Wings",
+    "makes": [
+        "Ford"
+    ],
+    "category": "Accessories",
+    "engine": "3.5L EcoBoost",
+    "years": [
+        2018,
+        2026
+    ],
+    "price": 800.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Heavy-duty steel replacement wings for the modular Interceptor bumper line. Adds wrap-around fender guard protection.",
+    "features": [
+        "Left and right wings included",
+        "Bolt-on expansion for center tub",
+        "Matches bumper powder coat"
+    ],
+    "isPopular": false
+},
+{
+    "id": "acc-exp-headlight",
+    "name": "Expedition Interceptor Headlight Guards",
+    "makes": [
+        "Ford"
+    ],
+    "category": "Accessories",
+    "engine": "3.5L EcoBoost",
+    "years": [
+        2018,
+        2026
+    ],
+    "price": 500.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Headlight guard tubes that bolt on to the Interceptor bumper system, shielding the headlights from brush and debris.",
+    "features": [
+        "Bolt-on headlight tubes",
+        "High strength steel fabrication",
+        "Rust resistant e-coat"
+    ],
+    "isPopular": false
+},
+{
+    "id": "acc-interceptor-tub",
+    "name": "Interceptor Bumper Center Tub",
+    "makes": [
+        "Ford",
+        "Universal"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2018,
+        2026
+    ],
+    "price": 750.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "The structural center tub core for the Gridiron Interceptor modular bumper system. Serves as the primary winch and mount anchor.",
+    "features": [
+        "Heavy-duty winch tray standard",
+        "Durable 1/4\" steel mounting frame",
+        "Modular bolt holes"
+    ],
+    "isPopular": false
+},
+{
+    "id": "acc-ram-94",
+    "name": "GRIDIRON 1994.5-2002 Ram 2500/3500 Base Front Bumper",
+    "makes": [
+        "Ram"
+    ],
+    "category": "Accessories",
+    "engine": "5.9L Cummins",
+    "years": [
+        1994,
+        2002
+    ],
+    "price": 2549.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Replacement heavy-duty front steel bumper for 2nd Gen Ram diesel trucks. Solid plate design for severe duty utility.",
+    "features": [
+        "2nd Gen Ram specific fitment",
+        "Includes lower valance skid",
+        "Pre-drilled light mounts"
+    ],
+    "isPopular": false
+},
+{
+    "id": "acc-ram-rear-94",
+    "name": "GRIDIRON 1994.5-2002 Ram 2500/3500 Rear Bumper",
+    "makes": [
+        "Ram"
+    ],
+    "category": "Accessories",
+    "engine": "5.9L Cummins",
+    "years": [
+        1994,
+        2002
+    ],
+    "price": 2599.0,
+    "image": "/assets/GRIDIRON-logo.webp",
+    "description": "Match your front bumper with a heavy duty steel rear plate bumper for the 2nd Gen Ram Cummins.",
+    "features": [
+        "Reinforced receiver hitch access",
+        "Shackle tabs included",
+        "Matches front finish"
+    ],
+    "isPopular": false
+},
+{
+    "id": "light-sd-20-ops",
+    "name": "Speed Demon 20\" Dual Row Light Bar - DBC20 Black Ops",
+    "makes": [
+        "Universal"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2000,
+        2030
+    ],
+    "price": 395.99,
+    "image": "/assets/speed-demon.png",
+    "description": "Speed Demon dual row 20-inch light bar with Black Ops dark reflector design. Delivers outstanding forward lighting with stealth aesthetics.",
+    "features": [
+        "Black Ops stealth plating",
+        "Dual row high intensity LEDs",
+        "IP67 waterproof rating",
+        "Wiring harness included"
+    ],
+    "isPopular": true
+},
+{
+    "id": "light-sd-30-hilux",
+    "name": "Speed Demon 30\" Hi-Lux 2.0 Dual Row Light Bar",
+    "makes": [
+        "Universal"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2000,
+        2030
+    ],
+    "price": 523.99,
+    "image": "/assets/speed-demon.png",
+    "description": "Next generation 30-inch Hi-Lux 2.0 dual row light bar. Features ultra-efficient optics for maximum distance throw.",
+    "features": [
+        "Hi-Lux 2.0 high efficiency reflectors",
+        "Combines spot and flood beams",
+        "Stainless steel hardware",
+        "Thermal management technology"
+    ],
+    "isPopular": false
+},
+{
+    "id": "light-sd-30-inf",
+    "name": "Speed Demon 30\" Infinity Dual Row Light Bar",
+    "makes": [
+        "Universal"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2000,
+        2030
+    ],
+    "price": 643.99,
+    "image": "/assets/speed-demon.png",
+    "description": "Premium Infinity series 30-inch dual row light bar, providing a seamless edge-to-edge light output and high-lumen density.",
+    "features": [
+        "Infinity edge-to-edge optics",
+        "Vibration resistant mounts",
+        "Breather valve prevents fogging"
+    ],
+    "isPopular": false
+},
+{
+    "id": "light-sd-3-scene",
+    "name": "Speed Demon 3\" Slim Scene Light Flush Mount",
+    "makes": [
+        "Universal"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2000,
+        2030
+    ],
+    "price": 71.99,
+    "image": "/assets/speed-demon.png",
+    "description": "Perfect secondary or scene light. Flush mounts easily into bumpers, truck beds, or cargo boxes for wide-angle task lighting.",
+    "features": [
+        "Ultra slim flush-mount bezel",
+        "120-degree flood beam pattern",
+        "Rugged aluminum body"
+    ],
+    "isPopular": false
+},
+{
+    "id": "light-sd-d20-pod",
+    "name": "Speed Demon D20 LED Driving Light Pod DOT/SAE",
+    "makes": [
+        "Universal"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2000,
+        2030
+    ],
+    "price": 108.99,
+    "image": "/assets/speed-demon.png",
+    "description": "SAE/DOT compliant driving pod. Legal for auxiliary high-beam use on public roads. Compact power.",
+    "features": [
+        "DOT/SAE certified for road use",
+        "High-power projector optics",
+        "Includes brackets"
+    ],
+    "isPopular": false
+},
+{
+    "id": "light-sd-h1-harness",
+    "name": "Speed Demon H1 Wiring Harness & Switch Kit",
+    "makes": [
+        "Universal"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2000,
+        2030
+    ],
+    "price": 44.99,
+    "image": "/assets/speed-demon.png",
+    "description": "Plug-and-play wiring harness for a single light bar. Includes relay, inline fuse, and an illuminated dash switch.",
+    "features": [
+        "Deutsch DT connectors",
+        "12V 40A heavy duty relay",
+        "Pre-wired illuminated toggle switch"
+    ],
+    "isPopular": false
+},
+{
+    "id": "light-sd-fog-adapter",
+    "name": "Fog Light Adapter (Pair) Fits H11 10-30287",
+    "makes": [
+        "Universal"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2000,
+        2030
+    ],
+    "price": 47.99,
+    "image": "/assets/speed-demon.png",
+    "description": "Converts H11 factory fog light plugs to Deutsch DT connectors. Allows easy connection of aftermarket LED pods without cutting factory wiring.",
+    "features": [
+        "Plug and play H11 to DT adapter",
+        "Waterproof seals",
+        "Sold as a pair"
+    ],
+    "isPopular": false
+},
+{
+    "id": "light-sd-amber-cover",
+    "name": "Amber Light Covers for 4PACK & Hi-Lux 2.0 Pod Lights 10-30027",
+    "makes": [
+        "Universal"
+    ],
+    "category": "Accessories",
+    "engine": "Universal",
+    "years": [
+        2000,
+        2030
+    ],
+    "price": 13.99,
+    "image": "/assets/speed-demon.png",
+    "description": "Protective polycarbonate amber lens cover for Speed Demon pods. Enhances visibility in dust, snow, or fog.",
+    "features": [
+        "Amber color filter",
+        "Durable snap-on installation",
+        "Protects main lens from rock chips"
+    ],
+    "isPopular": false
+}
 ];
 
 // Attach to window so other scripts can access it easily without modules for now

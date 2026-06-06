@@ -184,8 +184,8 @@ const V_DATA = {
         engines: ["6.7L Cummins"]
     },
     "Ford": {
-        models: ["F-250", "F-350"],
-        engines: ["6.7L Powerstroke"]
+        models: ["F-250", "F-350", "Expedition"],
+        engines: ["6.7L Powerstroke", "3.5L EcoBoost"]
     },
     "Chevy": {
         models: ["Silverado 2500HD", "Silverado 3500HD"],
@@ -194,6 +194,14 @@ const V_DATA = {
     "GMC": {
         models: ["Sierra 2500HD", "Sierra 3500HD"],
         engines: ["6.6L Duramax"]
+    },
+    "CF Moto": {
+        models: ["ZForce", "UForce"],
+        engines: ["ZForce Engine", "UForce Engine"]
+    },
+    "Kenworth": {
+        models: ["T680", "T880"],
+        engines: ["PACCAR MX-13", "Cummins X15"]
     }
 };
 
@@ -214,7 +222,7 @@ function initVehicleSelector() {
 
     // Populate Years
     if (sYear.options.length === 1) {
-        for (let y = 2024; y >= 2000; y--) {
+        for (let y = 2026; y >= 2000; y--) {
             sYear.add(new Option(y, y));
         }
     }
