@@ -127,6 +127,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 2. Modal interactions
+    function clearModalSelections() {
+        selectedMake = null;
+        selectedEngine = null;
+        
+        makeBtns.forEach(btn => {
+            btn.classList.remove('selected-make');
+        });
+        
+        if (step2) step2.classList.add('opacity-30', 'pointer-events-none');
+        if (engineSelect) engineSelect.innerHTML = '<option value="">Select Engine</option>';
+        validateStep2();
+    }
+
     function openModal() {
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
@@ -139,9 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 selectMake(parsed.make);
                 engineSelect.value = parsed.engine;
                 validateStep2();
-            } catch (e) {}
+            } catch (e) {
+                clearModalSelections();
+            }
         } else {
-            resetModal();
+            clearModalSelections();
         }
     }
     
