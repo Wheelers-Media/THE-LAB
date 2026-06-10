@@ -150,8 +150,11 @@
                         Carbon and Ceramic window film installed by certified specialists. Reduce heat, block UV, protect your interior — and look sharp doing it. We also tint SxS's.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                        <a href="/contact/" class="bg-labBlue text-white font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all">Book Tinting Appointment</a>
-                        <a href="#shade-levels" class="border border-edge text-white font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 transition-all">Choose Shade ↓</a>
+                        <button onclick="openEstimator('tinting')" class="bg-labBlue text-white font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Get an Estimated Price
+                        </button>
+                        <a href="#shade-levels" class="border border-edge text-white font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 transition-all flex items-center justify-center">Choose Shade ↓</a>
                     </div>
                 </div>
             </div>
@@ -582,8 +585,11 @@
                 <h2 class="font-heading font-extrabold text-4xl md:text-5xl text-white uppercase leading-tight mb-6">READY TO GET<br>TINTED?</h2>
                 <p class="text-zinc-500 mb-8">Drop off your vehicle and let us handle the rest. We use SunTek Premium Films with a satisfaction guarantee.</p>
                 <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                    <a href="/contact/" class="bg-white text-black font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all">Book Now</a>
-                    <a href="/boutique/" class="border border-edge text-zinc-400 font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 hover:text-white transition-all">← All Boutique Services</a>
+                    <button onclick="openEstimator('tinting')" class="bg-white text-black font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        Get an Estimated Price
+                    </button>
+                    <a href="/boutique/" class="border border-edge text-zinc-400 font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 hover:text-white transition-all flex items-center justify-center">← All Boutique Services</a>
                 </div>
             </div>
         </section>
@@ -734,4 +740,5 @@
 
     <script src="/assets/js/global-banner.js"></script>
 </body>
+<script src="/assets/js/estimator.js"></script>
 </html>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -147,8 +147,11 @@
                         Paint Protection Film is the thickest line of defence between your paint and the road. Rock chips, gravel, bug splatter, door dings — PPF takes the hit so your paint doesn't.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                        <a href="/contact/" class="bg-labBlue text-white font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all">Book PPF Consultation</a>
-                        <a href="#coverage" class="border border-edge text-white font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 transition-all">Coverage Options ↓</a>
+                        <button onclick="openEstimator('ppf')" class="bg-labBlue text-white font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Get an Estimated Price
+                        </button>
+                        <a href="#coverage" class="border border-edge text-white font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 transition-all flex items-center justify-center">Coverage Options ↓</a>
                     </div>
                 </div>
             </div>
@@ -301,8 +304,11 @@
                 <h2 class="font-heading font-extrabold text-4xl md:text-5xl text-white uppercase leading-tight mb-6">PROTECT YOUR<br>INVESTMENT.</h2>
                 <p class="text-zinc-500 mb-8">PPF pricing is by quote only — it depends on vehicle size, panel selection, and current paint condition. Book a consultation and we'll walk you through the options in person.</p>
                 <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                    <a href="/contact/" class="bg-white text-black font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all">Book Consultation</a>
-                    <a href="/boutique/" class="border border-edge text-zinc-400 font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 hover:text-white transition-all">← All Boutique Services</a>
+                    <button onclick="openEstimator('ppf')" class="bg-white text-black font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        Get an Estimated Price
+                    </button>
+                    <a href="/boutique/" class="border border-edge text-zinc-400 font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 hover:text-white transition-all flex items-center justify-center">← All Boutique Services</a>
                 </div>
             </div>
         </section>
@@ -453,4 +459,5 @@
 
     <script src="/assets/js/global-banner.js"></script>
 </body>
+<script src="/assets/js/estimator.js"></script>
 </html>

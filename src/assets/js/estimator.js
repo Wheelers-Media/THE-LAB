@@ -1,0 +1,402 @@
+const estimatorConfig = {
+    detailing: {
+        title: "Detailing Estimator",
+        steps: [
+            {
+                id: 'vehicle_size',
+                question: "What size is your vehicle?",
+                options: [
+                    { label: "Car / Sedan", value: 1 },
+                    { label: "Small SUV / Truck", value: 1.2 },
+                    { label: "Large SUV / Minivan", value: 1.5 },
+                    { label: "Semi Truck", value: 2.5 }
+                ]
+            },
+            {
+                id: 'package',
+                question: "Which package are you interested in?",
+                options: [
+                    { label: "Standard (Entry Level)", basePrice: 149 },
+                    { label: "De-Luxx (Signature)", basePrice: 279 },
+                    { label: "Semi Interior (Heavy Duty)", basePrice: 500 }
+                ]
+            },
+            {
+                id: 'addons',
+                question: "Any specific add-ons needed? (Select one)",
+                options: [
+                    { label: "None", addPrice: 0 },
+                    { label: "Pet Hair Removal", addPrice: 50 },
+                    { label: "Heavy Odour Elimination", addPrice: 100 }
+                ]
+            }
+        ],
+        calculate: (answers) => {
+            let base = answers.package.basePrice * answers.vehicle_size.value;
+            base += answers.addons.addPrice;
+            return base;
+        }
+    },
+    tinting: {
+        title: "Window Tinting Estimator",
+        steps: [
+            {
+                id: 'coverage',
+                question: "What coverage are you looking for?",
+                options: [
+                    { label: "Front 2 Windows", basePrice: 150 },
+                    { label: "Full Vehicle", basePrice: 350 },
+                    { label: "Windshield Brow Only", basePrice: 80 }
+                ]
+            },
+            {
+                id: 'film_type',
+                question: "Which film type do you prefer?",
+                options: [
+                    { label: "Standard Carbon", multiplier: 1 },
+                    { label: "Premium Ceramic (Heat Rejection)", multiplier: 1.5 }
+                ]
+            }
+        ],
+        calculate: (answers) => {
+            return answers.coverage.basePrice * answers.film_type.multiplier;
+        }
+    },
+    coatings: {
+        title: "Ceramic Coating Estimator",
+        steps: [
+            {
+                id: 'vehicle_size',
+                question: "What size is your vehicle?",
+                options: [
+                    { label: "Car / Sedan", basePrice: 800 },
+                    { label: "Small SUV / Truck", basePrice: 1000 },
+                    { label: "Large SUV / Rig", basePrice: 1200 }
+                ]
+            },
+            {
+                id: 'paint_condition',
+                question: "What condition is your paint currently in?",
+                options: [
+                    { label: "Brand New (Minor Prep)", addPrice: 0 },
+                    { label: "Used (Needs 1-Step Correction)", addPrice: 300 },
+                    { label: "Heavy Swirls (Needs 2-Step Correction)", addPrice: 600 }
+                ]
+            }
+        ],
+        calculate: (answers) => {
+            return answers.vehicle_size.basePrice + answers.paint_condition.addPrice;
+        }
+    },
+    ppf: {
+        title: "Paint Protection Film Estimator",
+        steps: [
+            {
+                id: 'coverage',
+                question: "What areas do you want protected?",
+                options: [
+                    { label: "Front Bumper Only", basePrice: 500 },
+                    { label: "Partial Front Clip", basePrice: 900 },
+                    { label: "Full Front Clip", basePrice: 1800 },
+                    { label: "Full Body Protection", basePrice: 5000 }
+                ]
+            }
+        ],
+        calculate: (answers) => {
+            return answers.coverage.basePrice;
+        }
+    },
+    lighting: {
+        title: "Custom Lighting Estimator",
+        steps: [
+            {
+                id: 'project_type',
+                question: "What type of lighting project?",
+                options: [
+                    { label: "Custom Headlight Build", basePrice: 1200 },
+                    { label: "Rock Lights (Underglow)", basePrice: 600 },
+                    { label: "Wheel Rings", basePrice: 400 },
+                    { label: "Cab Lights / Interior", basePrice: 300 }
+                ]
+            }
+        ],
+        calculate: (answers) => {
+            return answers.project_type.basePrice;
+        }
+    }
+};
+
+let currentService = null;
+let currentStepIndex = 0;
+let userAnswers = {};
+
+function initEstimatorModal() {
+    if (document.getElementById('ai-estimator-modal')) return;
+
+    const modalHTML = `
+        <div id="ai-estimator-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+            <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeEstimator()"></div>
+            <div class="relative w-full max-w-lg mx-4 bg-[#0D0D12] border border-edge rounded-2xl shadow-[0_0_50px_rgba(0,102,255,0.15)] overflow-hidden flex flex-col max-h-[90vh]">
+                
+                <!-- Header -->
+                <div class="px-6 py-4 border-b border-edge flex items-center justify-between bg-black/50">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-labBlue/20 flex items-center justify-center border border-labBlue/50 relative">
+                            <svg class="w-4 h-4 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            <div class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border border-[#0D0D12]"></div>
+                        </div>
+                        <div>
+                            <h3 id="estimator-title" class="font-bold text-white text-sm uppercase tracking-widest">LAB AI Estimator</h3>
+                            <p class="text-[10px] text-labCyan font-mono">Online</p>
+                        </div>
+                    </div>
+                    <button onclick="closeEstimator()" class="text-zinc-500 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+
+                <!-- Chat Body -->
+                <div id="estimator-body" class="p-6 overflow-y-auto flex-grow flex flex-col gap-6 custom-scrollbar relative">
+                    <!-- Dynamic content goes here -->
+                </div>
+
+            </div>
+        </div>
+        <style>
+            .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+            .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+            .custom-scrollbar::-webkit-scrollbar-thumb { background: #1E1E28; border-radius: 10px; }
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #0066FF; }
+            
+            .typing-indicator span {
+                display: inline-block;
+                width: 6px;
+                height: 6px;
+                background-color: #0066FF;
+                border-radius: 50%;
+                animation: typing 1.4s infinite both;
+            }
+            .typing-indicator span:nth-child(1) { animation-delay: 0s; }
+            .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+            .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+            @keyframes typing {
+                0%, 80%, 100% { transform: scale(0); }
+                40% { transform: scale(1); }
+            }
+            .message-enter { animation: slideUpFade 0.4s ease-out forwards; }
+            @keyframes slideUpFade {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        </style>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+function openEstimator(serviceKey) {
+    if (!estimatorConfig[serviceKey]) return;
+    
+    initEstimatorModal();
+    
+    currentService = estimatorConfig[serviceKey];
+    currentStepIndex = 0;
+    userAnswers = {};
+    
+    document.getElementById('estimator-title').innerText = currentService.title;
+    
+    const modal = document.getElementById('ai-estimator-modal');
+    modal.classList.remove('hidden');
+    // slight delay for transition
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+    }, 10);
+    
+    const body = document.getElementById('estimator-body');
+    body.innerHTML = ''; // clear
+    
+    // Initial greeting
+    addBotMessage(`Hi there! I'm the LAB's AI quoting assistant. Let's get you a quick estimate for ${currentService.title.replace(' Estimator', '')}.`);
+    
+    setTimeout(() => {
+        renderStep();
+    }, 1200);
+}
+
+function closeEstimator() {
+    const modal = document.getElementById('ai-estimator-modal');
+    if(modal) {
+        modal.classList.add('opacity-0');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            const body = document.getElementById('estimator-body');
+            body.innerHTML = '';
+        }, 300);
+    }
+}
+
+function showTypingIndicator() {
+    const id = 'typing-' + Date.now();
+    const html = \`
+        <div id="\${id}" class="flex items-start gap-3 message-enter">
+            <div class="w-8 h-8 rounded-full bg-labBlue/20 flex items-center justify-center border border-labBlue/50 flex-shrink-0 mt-1">
+                <svg class="w-4 h-4 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div class="bg-edge text-zinc-300 p-3.5 rounded-2xl rounded-tl-sm text-sm border border-edge/50">
+                <div class="typing-indicator flex gap-1 items-center h-4 px-1">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    \`;
+    const body = document.getElementById('estimator-body');
+    body.insertAdjacentHTML('beforeend', html);
+    body.scrollTop = body.scrollHeight;
+    return id;
+}
+
+function removeTypingIndicator(id) {
+    const el = document.getElementById(id);
+    if(el) el.remove();
+}
+
+function addBotMessage(text) {
+    const html = \`
+        <div class="flex items-start gap-3 message-enter">
+            <div class="w-8 h-8 rounded-full bg-labBlue/20 flex items-center justify-center border border-labBlue/50 flex-shrink-0 mt-1">
+                <svg class="w-4 h-4 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div class="bg-edge text-zinc-200 p-3.5 rounded-2xl rounded-tl-sm text-sm border border-white/5 leading-relaxed shadow-lg">
+                \${text}
+            </div>
+        </div>
+    \`;
+    const body = document.getElementById('estimator-body');
+    body.insertAdjacentHTML('beforeend', html);
+    body.scrollTop = body.scrollHeight;
+}
+
+function addUserMessage(text) {
+    const html = \`
+        <div class="flex items-start gap-3 justify-end message-enter">
+            <div class="bg-labBlue text-white p-3.5 rounded-2xl rounded-tr-sm text-sm shadow-[0_4px_20px_rgba(0,102,255,0.3)]">
+                \${text}
+            </div>
+            <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700 flex-shrink-0 mt-1">
+                <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </div>
+        </div>
+    \`;
+    const body = document.getElementById('estimator-body');
+    body.insertAdjacentHTML('beforeend', html);
+    body.scrollTop = body.scrollHeight;
+}
+
+function renderStep() {
+    if (currentStepIndex >= currentService.steps.length) {
+        finishEstimation();
+        return;
+    }
+    
+    const step = currentService.steps[currentStepIndex];
+    
+    const typingId = showTypingIndicator();
+    setTimeout(() => {
+        removeTypingIndicator(typingId);
+        addBotMessage(step.question);
+        
+        // render options
+        const optionsHtml = step.options.map((opt, idx) => \`
+            <button onclick="handleOptionSelect(\${idx})" class="w-full text-left p-4 rounded-xl border border-edge bg-black hover:border-labBlue hover:bg-labBlue/10 transition-all text-sm text-zinc-300 hover:text-white flex justify-between items-center group">
+                <span>\${opt.label}</span>
+                <svg class="w-4 h-4 text-zinc-600 group-hover:text-labBlue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+        \`).join('');
+        
+        const optsContainerId = 'opts-' + Date.now();
+        const html = \`
+            <div id="\${optsContainerId}" class="flex flex-col gap-2 ml-11 message-enter">
+                \${optionsHtml}
+            </div>
+        \`;
+        
+        const body = document.getElementById('estimator-body');
+        body.insertAdjacentHTML('beforeend', html);
+        body.scrollTop = body.scrollHeight;
+        
+        // save container id to remove it after selection
+        step._optsContainerId = optsContainerId;
+        
+    }, 1000);
+}
+
+function handleOptionSelect(optionIndex) {
+    const step = currentService.steps[currentStepIndex];
+    const selectedOption = step.options[optionIndex];
+    
+    // remove buttons
+    const container = document.getElementById(step._optsContainerId);
+    if(container) container.remove();
+    
+    addUserMessage(selectedOption.label);
+    
+    // save answer
+    userAnswers[step.id] = selectedOption;
+    
+    currentStepIndex++;
+    
+    const typingId = showTypingIndicator();
+    setTimeout(() => {
+        removeTypingIndicator(typingId);
+        renderStep();
+    }, 600);
+}
+
+function finishEstimation() {
+    const price = currentService.calculate(userAnswers);
+    
+    const typingId = showTypingIndicator();
+    setTimeout(() => {
+        removeTypingIndicator(typingId);
+        
+        addBotMessage(\`Thanks! Based on your selections, your estimated cost is:<br><br><span class="text-3xl font-extrabold text-white font-heading">$\${price.toFixed(2)}</span><br><br><span class="text-xs text-zinc-400">Note: This is an AI-generated estimate. Exact pricing is confirmed upon vehicle inspection.</span>\`);
+        
+        const body = document.getElementById('estimator-body');
+        const ctaHtml = \`
+            <div class="ml-11 mt-2 message-enter">
+                <button onclick="loadBookingIframe()" class="w-full bg-white text-black font-extrabold py-4 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                    Continue to Booking →
+                </button>
+            </div>
+        \`;
+        body.insertAdjacentHTML('beforeend', ctaHtml);
+        body.scrollTop = body.scrollHeight;
+        
+    }, 1500);
+}
+
+function loadBookingIframe() {
+    const body = document.getElementById('estimator-body');
+    body.innerHTML = \`
+        <div class="flex-grow w-full h-full flex flex-col message-enter">
+            <div class="mb-4 text-center">
+                <h3 class="font-bold text-white uppercase tracking-widest text-sm">Secure Booking</h3>
+                <p class="text-xs text-zinc-500">Complete your details below</p>
+            </div>
+            <div class="w-full flex-grow rounded-xl overflow-hidden border border-edge bg-black relative" style="min-height: 400px;">
+                <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 text-zinc-600">
+                    <svg class="w-8 h-8 animate-spin text-labBlue" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-xs font-mono uppercase tracking-widest">Loading Form...</span>
+                </div>
+                <!-- PLACEHOLDER GOHIGHLEVEL IFRAME -->
+                <iframe src="about:blank" style="width: 100%; height: 100%; border: none; position: relative; z-index: 10;" onload="this.style.background='white'; this.previousElementSibling.style.display='none';"></iframe>
+                <!-- In production, replace src="about:blank" with your GoHighLevel form URL -->
+            </div>
+        </div>
+    \`;
+}
+
+// Global exposure
+window.openEstimator = openEstimator;

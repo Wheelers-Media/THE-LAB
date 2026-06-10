@@ -1,0 +1,602 @@
+<!doctype html>
+<html class="js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="https://polardiesel.ca/collections/all"><link rel="icon" type="image/png" href="//polardiesel.ca/cdn/shop/files/1x1_Transparent_e6ba1647-efd1-4927-afda-0adcbca4b7fd.png?crop=center&height=32&v=1733356853&width=32"><link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin><title>
+      Products
+ &ndash; Polar Diesel</title>
+
+    
+
+    
+
+<meta property="og:site_name" content="Polar Diesel">
+<meta property="og:url" content="https://polardiesel.ca/collections/all">
+<meta property="og:title" content="Products">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Polar Diesel is your premier destination for high-performance diesel products, delivering unparalleled quality and innovation in every component. Proudly Canadian, Making Diesel&#39;s Great Again!"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Products">
+<meta name="twitter:description" content="Polar Diesel is your premier destination for high-performance diesel products, delivering unparalleled quality and innovation in every component. Proudly Canadian, Making Diesel&#39;s Great Again!">
+
+
+    <script src="//polardiesel.ca/cdn/shop/t/3/assets/constants.js?v=132983761750457495441733273735" defer="defer"></script>
+    <script src="//polardiesel.ca/cdn/shop/t/3/assets/pubsub.js?v=158357773527763999511733273737" defer="defer"></script>
+    <script src="//polardiesel.ca/cdn/shop/t/3/assets/global.js?v=152862011079830610291733273736" defer="defer"></script>
+    <script src="//polardiesel.ca/cdn/shop/t/3/assets/details-disclosure.js?v=13653116266235556501733273736" defer="defer"></script>
+    <script src="//polardiesel.ca/cdn/shop/t/3/assets/details-modal.js?v=25581673532751508451733273736" defer="defer"></script>
+    <script src="//polardiesel.ca/cdn/shop/t/3/assets/search-form.js?v=133129549252120666541733273737" defer="defer"></script><script src="//polardiesel.ca/cdn/shop/t/3/assets/animations.js?v=88693664871331136111733273735" defer="defer"></script><script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.start');</script><meta name="google-site-verification" content="LoZoMvKY8ySSfNepXbOEvj8_9Wq7dph7991iStO84XY">
+<meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/71885717795/digital_wallets/dialog">
+<meta name="shopify-checkout-api-token" content="981030595c4deefa66063392bab80178">
+<link rel="alternate" type="application/atom+xml" title="Feed" href="/collections/all.atom" />
+<link rel="next" href="/collections/all?page=2">
+<script async="async" src="/checkouts/internal/preloads.js?locale=en-US"></script>
+<script id="apple-pay-shop-capabilities" type="application/json">{"shopId":71885717795,"countryCode":"CA","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/71885717795","merchantName":"Polar Diesel","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","jcb"],"total":{"type":"pending","label":"Polar Diesel","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script>
+<script id="shopify-features" type="application/json">{"accessToken":"981030595c4deefa66063392bab80178","betas":["rich-media-storefront-analytics"],"domain":"polardiesel.ca","predictiveSearch":true,"shopId":71885717795,"locale":"en"}</script>
+<script>var Shopify = Shopify || {};
+Shopify.shop = "ec58e1-2.myshopify.com";
+Shopify.locale = "en";
+Shopify.currency = {"active":"USD","rate":"1.0"};
+Shopify.country = "US";
+Shopify.theme = {"name":"Refresh","id":174487798051,"schema_name":"Refresh","schema_version":"15.2.0","theme_store_id":1567,"role":"main"};
+Shopify.theme.handle = "null";
+Shopify.theme.style = {"id":null,"handle":null};
+Shopify.cdnHost = "polardiesel.ca/cdn";
+Shopify.routes = Shopify.routes || {};
+Shopify.routes.root = "/";
+Shopify.shopJsCdnBaseUrl = "https://cdn.shopify.com/shopifycloud/shop-js";
+Shopify.SignInWithShop = Shopify.SignInWithShop || {};
+Shopify.SignInWithShop.User = Shopify.SignInWithShop.User || {};
+Shopify.SignInWithShop.User.recognized = false;</script>
+<script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script>
+<script>!function(o){function n(){var o=[];function n(){o.push(Array.prototype.slice.apply(arguments))}return n.q=o,n}var t=o.Shopify=o.Shopify||{};t.loadFeatures=n(),t.autoloadFeatures=n()}(window);</script>
+<script>
+  window.Shopify = window.Shopify || {};
+  window.Shopify.SignInWithShop = window.Shopify.SignInWithShop || {};
+  window.Shopify.SignInWithShop.assetMetrics = { sampleRate: 0.01 };
+  window.Shopify.SignInWithShop.eligible = true;
+</script>
+<script id="shop-js-analytics" type="application/json">{"pageType":"collection"}</script>
+<script defer="defer" async type="module" src="//polardiesel.ca/cdn/shopifycloud/shop-js/modules/v2/loader.init-shop-cart-sync.en.esm.js"></script>
+<script type="module">
+  await import("//polardiesel.ca/cdn/shopifycloud/shop-js/modules/v2/loader.init-shop-cart-sync.en.esm.js");
+
+  window.Shopify.SignInWithShop?.initShopCartSync?.({"fedCMEnabled":true,"windoidEnabled":true});
+
+</script>
+<script>
+  window.Shopify = window.Shopify || {};
+  if (!window.Shopify.featureAssets) window.Shopify.featureAssets = {};
+  window.Shopify.featureAssets['shop-js'] = {"checkout-modal":["modules/v2/loader.checkout-modal.en.esm.js"],"shop-login-button":["modules/v2/loader.shop-login-button.en.esm.js"],"shop-cash-offers":["modules/v2/loader.shop-cash-offers.en.esm.js"],"shop-toast-manager":["modules/v2/loader.shop-toast-manager.en.esm.js"],"shop-login":["modules/v2/loader.shop-login.en.esm.js"],"shop-button":["modules/v2/loader.shop-button.en.esm.js"],"listener":["modules/v2/loader.listener.en.esm.js"],"avatar":["modules/v2/loader.avatar.en.esm.js"],"init-windoid":["modules/v2/loader.init-windoid.en.esm.js"],"init-shop-user-recognition":["modules/v2/loader.init-shop-user-recognition.en.esm.js"],"init-shop-for-new-customer-accounts":["modules/v2/loader.init-shop-for-new-customer-accounts.en.esm.js"],"init-shop-email-lookup-coordinator":["modules/v2/loader.init-shop-email-lookup-coordinator.en.esm.js"],"init-shop-cart-sync":["modules/v2/loader.init-shop-cart-sync.en.esm.js"],"init-fed-cm":["modules/v2/loader.init-fed-cm.en.esm.js"],"init-customer-accounts-sign-up":["modules/v2/loader.init-customer-accounts-sign-up.en.esm.js"],"init-customer-accounts":["modules/v2/loader.init-customer-accounts.en.esm.js"],"shop-user-recognition":["modules/v2/loader.shop-user-recognition.en.esm.js"],"shop-cart-sync":["modules/v2/loader.shop-cart-sync.en.esm.js"],"pay-button":["modules/v2/loader.pay-button.en.esm.js"],"shop-follow-button":["modules/v2/loader.shop-follow-button.en.esm.js"],"lead-capture":["modules/v2/loader.lead-capture.en.esm.js"],"payment-terms":["modules/v2/loader.payment-terms.en.esm.js"]};
+</script>
+<script>(function() {
+  var isLoaded = false;
+  function asyncLoad() {
+    if (isLoaded) return;
+    isLoaded = true;
+    var urls = ["https:\/\/cdn.shopify.com\/s\/files\/1\/0718\/8571\/7795\/t\/2\/assets\/globo.filter.init.js?shop=ec58e1-2.myshopify.com"];
+    for (var i = 0; i < urls.length; i++) {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = urls[i];
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    }
+  };
+  if(window.attachEvent) {
+    window.attachEvent('onload', asyncLoad);
+  } else {
+    window.addEventListener('load', asyncLoad, false);
+  }
+})();</script>
+<script id="__st">var __st={"a":71885717795,"offset":-25200,"reqid":"89ff1355-22bd-40b1-b902-7e3eb73a73bd-1780621072","pageurl":"polardiesel.ca\/collections\/all","u":"2a110e60f51d","p":"collection"};</script>
+<script>window.ShopifyPaypalV4VisibilityTracking = true;</script>
+<script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(','),a=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];function s(){const t=[...o],e=r(t);return a(e)}const i='password',u='form_key',d=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response',i],f=()=>{try{return window.sessionStorage}catch{return}},m='__shopify_v',_=t=>t.elements[u];function p(t,e,n=!1){try{const o=window.sessionStorage,c=JSON.parse(o.getItem(e)),{data:r}=function(t){const{data:e,action:n}=t;return t[m]||n?{data:e,action:n}:{data:t,action:n}}(c);for(const[e,n]of Object.entries(r))t.elements[e]&&(t.elements[e].value=n);n&&o.removeItem(e)}catch(o){console.error('form repopulation failed',{error:o})}}const l='form_type',E='cptcha';function T(t){t.dataset[E]=!0}const w=window,h=w.document,L='Shopify',v='ce_forms',y='captcha';let A=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe',I='https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.5.2.iife.js',D={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=w[L][v],c=o.bindForm;if(c)return c(t,g,e,D).then(n);var r;o.q.push([[t,g,e,D],n]),r=I,A||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:r})),A=!0)});var g,I,D;w[L]=w[L]||{},w[L][v]=w[L][v]||{},w[L][v].q=[],w[L][y]=w[L][y]||{},w[L][y].protect=function(t,e){n(t,void 0,e),T(t)},Object.freeze(w[L][y]),function(t,e,n,w,h,L){const[v,y,A,g]=function(t,e,n){const i=e?o:[],u=t?c:[],d=[...i,...u],f=r(d),m=r(i),_=r(d.filter((([t,e])=>n.includes(e))));return[a(f),a(m),a(_),s()]}(w,h,L),I=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},D=t=>v().includes(t);t.addEventListener('submit',(t=>{const e=I(t);if(!e)return;const n=D(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=_(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!f())return;!function(t){const e=f();if(!e)return;const n=_(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){_(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:u})),t.elements[u].value=e}(t,e),function(t,e){const n=f();if(!n)return;const o=[...t.querySelectorAll(`input[type='${i}']`)].map((({name:t})=>t)),c=[...d,...o],r={};for(const[a,s]of new FormData(t).entries())c.includes(a)||(r[a]=s);n.setItem(e,JSON.stringify({[m]:1,action:t.action,data:r}))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const S=(t,e)=>{t&&!t.dataset[E]&&(n(t,e.some((e=>e===t))),T(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=I(t);D(e)&&S(e,y())}));const B=e.get('form_key'),M=e.get(l),P=B&&M;t.addEventListener('DOMContentLoaded',(()=>{const t=y();if(P)for(const e of t)e.elements[l].value===M&&p(e,B);[...new Set([...A(),...v().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>S(e,t)))}))}(h,new URLSearchParams(w.location.search),n,t,e,['guest_login'])})(!0,!0)}();</script>
+<script integrity="sha256-JjoPp5ZfB1sSAs5SQaol1x1GgvveM+BgmRzyDexInEQ=" data-source-attribution="shopify.loadfeatures" defer="defer" src="//polardiesel.ca/cdn/shopifycloud/storefront/assets/storefront/load_feature-1bd60354.js" crossorigin="anonymous"></script>
+<script data-source-attribution="shopify.dynamic_checkout.dynamic.init">var Shopify=Shopify||{};Shopify.PaymentButton=Shopify.PaymentButton||{isStorefrontPortableWallets:!0,init:function(){window.Shopify.PaymentButton.init=function(){};var t=document.createElement("script");t.src="https://polardiesel.ca/cdn/shopifycloud/portable-wallets/latest/portable-wallets.en.js",t.type="module",document.head.appendChild(t)}};
+</script>
+<script data-source-attribution="shopify.dynamic_checkout.buyer_consent">
+  function portableWalletsHideBuyerConsent(e){var t=document.getElementById("shopify-buyer-consent"),n=document.getElementById("shopify-subscription-policy-button");t&&n&&(t.classList.add("hidden"),t.setAttribute("aria-hidden","true"),n.removeEventListener("click",e))}function portableWalletsShowBuyerConsent(e){var t=document.getElementById("shopify-buyer-consent"),n=document.getElementById("shopify-subscription-policy-button");t&&n&&(t.classList.remove("hidden"),t.removeAttribute("aria-hidden"),n.addEventListener("click",e))}window.Shopify?.PaymentButton&&(window.Shopify.PaymentButton.hideBuyerConsent=portableWalletsHideBuyerConsent,window.Shopify.PaymentButton.showBuyerConsent=portableWalletsShowBuyerConsent);
+</script>
+<script data-source-attribution="shopify.dynamic_checkout.cart.bootstrap">document.addEventListener("DOMContentLoaded",(function(){function t(){return document.querySelector("shopify-accelerated-checkout-cart, shopify-accelerated-checkout")}if(t())Shopify.PaymentButton.init();else{new MutationObserver((function(e,n){t()&&(Shopify.PaymentButton.init(),n.disconnect())})).observe(document.body,{childList:!0,subtree:!0})}}));
+</script>
+<script async="async" integrity="sha256-hlq21VGceRKy8z+Fjhropk1BwDPACP0RdQ5rBrATyUo=" src="//cdn.shopify.com/shopifycloud/storefront/assets/storefront/origin_trials-67b41cb9.js" crossorigin="anonymous"></script>
+<link id="shopify-accelerated-checkout-styles" rel="stylesheet" media="screen" href="https://polardiesel.ca/cdn/shopifycloud/portable-wallets/latest/accelerated-checkout-backwards-compat.css" crossorigin="anonymous">
+<style id="shopify-accelerated-checkout-cart">
+        #shopify-buyer-consent {
+  margin-top: 1em;
+  display: inline-block;
+  width: 100%;
+}
+
+#shopify-buyer-consent.hidden {
+  display: none;
+}
+
+#shopify-subscription-policy-button {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+#shopify-subscription-policy-button::before {
+  box-shadow: none;
+}
+
+      </style>
+<script id="sections-script" data-sections="header" defer="defer" src="//polardiesel.ca/cdn/shop/t/3/compiled_assets/scripts.js?v=184325197989695213571739902946"></script>
+<script id="shopify-cfh-end">window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.end');</script>
+
+
+    <style data-shopify>
+      @font-face {
+  font-family: Rubik;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("//polardiesel.ca/cdn/fonts/rubik/rubik_n4.c2fb67c90aa34ecf8da34fc1da937ee9c0c27942.woff2") format("woff2"),
+       url("//polardiesel.ca/cdn/fonts/rubik/rubik_n4.d229bd4a6a25ec476a0829a74bf3657a5fd9aa36.woff") format("woff");
+}
+
+      @font-face {
+  font-family: Rubik;
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("//polardiesel.ca/cdn/fonts/rubik/rubik_n7.9ddb1ff19ac4667369e1c444a6663062e115e651.woff2") format("woff2"),
+       url("//polardiesel.ca/cdn/fonts/rubik/rubik_n7.2f2815a4763d5118fdb49ad25ccceea3eafcae92.woff") format("woff");
+}
+
+      @font-face {
+  font-family: Rubik;
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url("//polardiesel.ca/cdn/fonts/rubik/rubik_i4.528fdfa8adf0c2cb49c0f6d132dcaffa910849d6.woff2") format("woff2"),
+       url("//polardiesel.ca/cdn/fonts/rubik/rubik_i4.937396c2106c0db7a4072bbcd373d4e3d0ab306b.woff") format("woff");
+}
+
+      @font-face {
+  font-family: Rubik;
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  src: url("//polardiesel.ca/cdn/fonts/rubik/rubik_i7.e37585fef76596b7b87ec84ca28db2ef5e3df433.woff2") format("woff2"),
+       url("//polardiesel.ca/cdn/fonts/rubik/rubik_i7.a18d51774424b841c335ca3a15ab66cba9fce8c1.woff") format("woff");
+}
+
+      @font-face {
+  font-family: Rubik;
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("//polardiesel.ca/cdn/fonts/rubik/rubik_n4.c2fb67c90aa34ecf8da34fc1da937ee9c0c27942.woff2") format("woff2"),
+       url("//polardiesel.ca/cdn/fonts/rubik/rubik_n4.d229bd4a6a25ec476a0829a74bf3657a5fd9aa36.woff") format("woff");
+}
+
+
+      
+        :root,
+        .color-scheme-1 {
+          --color-background: 255,255,255;
+        
+          --gradient-background: #ffffff;
+        
+
+        
+
+        --color-foreground: 54,54,54;
+        --color-background-contrast: 191,191,191;
+        --color-shadow: 14,27,77;
+        --color-button: 255,255,255;
+        --color-button-text: 239,240,245;
+        --color-secondary-button: 255,255,255;
+        --color-secondary-button-text: 14,27,77;
+        --color-link: 14,27,77;
+        --color-badge-foreground: 54,54,54;
+        --color-badge-background: 255,255,255;
+        --color-badge-border: 54,54,54;
+        --payment-terms-background-color: rgb(255 255 255);
+      }
+      
+        
+        .color-scheme-2 {
+          --color-background: 255,255,255;
+        
+          --gradient-background: #ffffff;
+        
+
+        
+
+        --color-foreground: 54,54,54;
+        --color-background-contrast: 191,191,191;
+        --color-shadow: 14,27,77;
+        --color-button: 54,54,54;
+        --color-button-text: 255,255,255;
+        --color-secondary-button: 255,255,255;
+        --color-secondary-button-text: 14,27,77;
+        --color-link: 14,27,77;
+        --color-badge-foreground: 54,54,54;
+        --color-badge-background: 255,255,255;
+        --color-badge-border: 54,54,54;
+        --payment-terms-background-color: rgb(255 255 255);
+      }
+      
+        
+        .color-scheme-3 {
+          --color-background: 54,54,54;
+        
+          --gradient-background: #363636;
+        
+
+        
+
+        --color-foreground: 255,255,255;
+        --color-background-contrast: 67,67,67;
+        --color-shadow: 14,27,77;
+        --color-button: 255,255,255;
+        --color-button-text: 14,27,77;
+        --color-secondary-button: 54,54,54;
+        --color-secondary-button-text: 54,54,54;
+        --color-link: 54,54,54;
+        --color-badge-foreground: 255,255,255;
+        --color-badge-background: 54,54,54;
+        --color-badge-border: 255,255,255;
+        --payment-terms-background-color: rgb(54 54 54);
+      }
+      
+        
+        .color-scheme-4 {
+          --color-background: 113,113,113;
+        
+          --gradient-background: #717171;
+        
+
+        
+
+        --color-foreground: 255,255,255;
+        --color-background-contrast: 49,49,49;
+        --color-shadow: 14,27,77;
+        --color-button: 255,255,255;
+        --color-button-text: 137,137,137;
+        --color-secondary-button: 113,113,113;
+        --color-secondary-button-text: 255,255,255;
+        --color-link: 255,255,255;
+        --color-badge-foreground: 255,255,255;
+        --color-badge-background: 113,113,113;
+        --color-badge-border: 255,255,255;
+        --payment-terms-background-color: rgb(113 113 113);
+      }
+      
+        
+        .color-scheme-5 {
+          --color-background: 227,36,2;
+        
+          --gradient-background: #e32402;
+        
+
+        
+
+        --color-foreground: 255,255,255;
+        --color-background-contrast: 101,16,1;
+        --color-shadow: 14,27,77;
+        --color-button: 255,255,255;
+        --color-button-text: 227,36,2;
+        --color-secondary-button: 227,36,2;
+        --color-secondary-button-text: 255,255,255;
+        --color-link: 255,255,255;
+        --color-badge-foreground: 255,255,255;
+        --color-badge-background: 227,36,2;
+        --color-badge-border: 255,255,255;
+        --payment-terms-background-color: rgb(227 36 2);
+      }
+      
+
+      body, .color-scheme-1, .color-scheme-2, .color-scheme-3, .color-scheme-4, .color-scheme-5 {
+        color: rgba(var(--color-foreground), 0.75);
+        background-color: rgb(var(--color-background));
+      }
+
+      :root {
+        --font-body-family: Rubik, sans-serif;
+        --font-body-style: normal;
+        --font-body-weight: 400;
+        --font-body-weight-bold: 700;
+
+        --font-heading-family: Rubik, sans-serif;
+        --font-heading-style: normal;
+        --font-heading-weight: 400;
+
+        --font-body-scale: 1.05;
+        --font-heading-scale: 1.0476190476190477;
+
+        --media-padding: px;
+        --media-border-opacity: 0.1;
+        --media-border-width: 0px;
+        --media-radius: 6px;
+        --media-shadow-opacity: 0.0;
+        --media-shadow-horizontal-offset: 0px;
+        --media-shadow-vertical-offset: 4px;
+        --media-shadow-blur-radius: 5px;
+        --media-shadow-visible: 0;
+
+        --page-width: 120rem;
+        --page-width-margin: 0rem;
+
+        --product-card-image-padding: 1.6rem;
+        --product-card-corner-radius: 0.6rem;
+        --product-card-text-alignment: left;
+        --product-card-border-width: 0.1rem;
+        --product-card-border-opacity: 1.0;
+        --product-card-shadow-opacity: 0.0;
+        --product-card-shadow-visible: 0;
+        --product-card-shadow-horizontal-offset: 0.0rem;
+        --product-card-shadow-vertical-offset: 0.4rem;
+        --product-card-shadow-blur-radius: 0.5rem;
+
+        --collection-card-image-padding: 1.6rem;
+        --collection-card-corner-radius: 1.8rem;
+        --collection-card-text-alignment: left;
+        --collection-card-border-width: 0.1rem;
+        --collection-card-border-opacity: 1.0;
+        --collection-card-shadow-opacity: 0.0;
+        --collection-card-shadow-visible: 0;
+        --collection-card-shadow-horizontal-offset: 0.0rem;
+        --collection-card-shadow-vertical-offset: 0.4rem;
+        --collection-card-shadow-blur-radius: 0.5rem;
+
+        --blog-card-image-padding: 1.6rem;
+        --blog-card-corner-radius: 1.8rem;
+        --blog-card-text-alignment: left;
+        --blog-card-border-width: 0.1rem;
+        --blog-card-border-opacity: 1.0;
+        --blog-card-shadow-opacity: 0.0;
+        --blog-card-shadow-visible: 0;
+        --blog-card-shadow-horizontal-offset: 0.0rem;
+        --blog-card-shadow-vertical-offset: 0.4rem;
+        --blog-card-shadow-blur-radius: 0.5rem;
+
+        --badge-corner-radius: 0.0rem;
+
+        --popup-border-width: 1px;
+        --popup-border-opacity: 0.1;
+        --popup-corner-radius: 18px;
+        --popup-shadow-opacity: 0.0;
+        --popup-shadow-horizontal-offset: 0px;
+        --popup-shadow-vertical-offset: 4px;
+        --popup-shadow-blur-radius: 5px;
+
+        --drawer-border-width: 0px;
+        --drawer-border-opacity: 0.1;
+        --drawer-shadow-opacity: 0.0;
+        --drawer-shadow-horizontal-offset: 0px;
+        --drawer-shadow-vertical-offset: 4px;
+        --drawer-shadow-blur-radius: 5px;
+
+        --spacing-sections-desktop: 0px;
+        --spacing-sections-mobile: 0px;
+
+        --grid-desktop-vertical-spacing: 28px;
+        --grid-desktop-horizontal-spacing: 28px;
+        --grid-mobile-vertical-spacing: 14px;
+        --grid-mobile-horizontal-spacing: 14px;
+
+        --text-boxes-border-opacity: 0.1;
+        --text-boxes-border-width: 0px;
+        --text-boxes-radius: 20px;
+        --text-boxes-shadow-opacity: 0.0;
+        --text-boxes-shadow-visible: 0;
+        --text-boxes-shadow-horizontal-offset: 0px;
+        --text-boxes-shadow-vertical-offset: 4px;
+        --text-boxes-shadow-blur-radius: 5px;
+
+        --buttons-radius: 6px;
+        --buttons-radius-outset: 7px;
+        --buttons-border-width: 1px;
+        --buttons-border-opacity: 1.0;
+        --buttons-shadow-opacity: 0.0;
+        --buttons-shadow-visible: 0;
+        --buttons-shadow-horizontal-offset: 0px;
+        --buttons-shadow-vertical-offset: 4px;
+        --buttons-shadow-blur-radius: 5px;
+        --buttons-border-offset: 0.3px;
+
+        --inputs-radius: 26px;
+        --inputs-border-width: 1px;
+        --inputs-border-opacity: 0.55;
+        --inputs-shadow-opacity: 0.0;
+        --inputs-shadow-horizontal-offset: 0px;
+        --inputs-margin-offset: 0px;
+        --inputs-shadow-vertical-offset: 4px;
+        --inputs-shadow-blur-radius: 5px;
+        --inputs-radius-outset: 27px;
+
+        --variant-pills-radius: 40px;
+        --variant-pills-border-width: 1px;
+        --variant-pills-border-opacity: 0.55;
+        --variant-pills-shadow-opacity: 0.0;
+        --variant-pills-shadow-horizontal-offset: 0px;
+        --variant-pills-shadow-vertical-offset: 4px;
+        --variant-pills-shadow-blur-radius: 5px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: inherit;
+      }
+
+      html {
+        box-sizing: border-box;
+        font-size: calc(var(--font-body-scale) * 62.5%);
+        height: 100%;
+      }
+
+      body {
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-columns: 100%;
+        min-height: 100%;
+        margin: 0;
+        font-size: 1.5rem;
+        letter-spacing: 0.06rem;
+        line-height: calc(1 + 0.8 / var(--font-body-scale));
+        font-family: var(--font-body-family);
+        font-style: var(--font-body-style);
+        font-weight: var(--font-body-weight);
+      }
+
+      @media screen and (min-width: 750px) {
+        body {
+          font-size: 1.6rem;
+        }
+      }
+    </style>
+
+    <link href="//polardiesel.ca/cdn/shop/t/3/assets/base.css?v=159841507637079171801733273735" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="//polardiesel.ca/cdn/shop/t/3/assets/component-cart-items.css?v=123238115697927560811733273735" media="print" onload="this.media='all'"><link href="//polardiesel.ca/cdn/shop/t/3/assets/component-cart-drawer.css?v=112801333748515159671733273735" rel="stylesheet" type="text/css" media="all" />
+      <link href="//polardiesel.ca/cdn/shop/t/3/assets/component-cart.css?v=164708765130180853531733273735" rel="stylesheet" type="text/css" media="all" />
+      <link href="//polardiesel.ca/cdn/shop/t/3/assets/component-totals.css?v=15906652033866631521733273735" rel="stylesheet" type="text/css" media="all" />
+      <link href="//polardiesel.ca/cdn/shop/t/3/assets/component-price.css?v=70172745017360139101733273735" rel="stylesheet" type="text/css" media="all" />
+      <link href="//polardiesel.ca/cdn/shop/t/3/assets/component-discounts.css?v=152760482443307489271733273735" rel="stylesheet" type="text/css" media="all" />
+
+      <link rel="preload" as="font" href="//polardiesel.ca/cdn/fonts/rubik/rubik_n4.c2fb67c90aa34ecf8da34fc1da937ee9c0c27942.woff2" type="font/woff2" crossorigin>
+      
+
+      <link rel="preload" as="font" href="//polardiesel.ca/cdn/fonts/rubik/rubik_n4.c2fb67c90aa34ecf8da34fc1da937ee9c0c27942.woff2" type="font/woff2" crossorigin>
+      
+<link href="//polardiesel.ca/cdn/shop/t/3/assets/component-localization-form.css?v=170315343355214948141733273735" rel="stylesheet" type="text/css" media="all" />
+      <script src="//polardiesel.ca/cdn/shop/t/3/assets/localization-form.js?v=144176611646395275351733273737" defer="defer"></script><link
+        rel="stylesheet"
+        href="//polardiesel.ca/cdn/shop/t/3/assets/component-predictive-search.css?v=118923337488134913561733273735"
+        media="print"
+        onload="this.media='all'"
+      ><script>
+      if (Shopify.designMode) {
+        document.documentElement.classList.add('shopify-design-mode');
+      }
+    </script>
+  <!-- BEGIN app block: shopify://apps/gsc-countdown-timer/blocks/countdown-bar/58dc5b1b-43d2-4209-b1f3-52aff31643ed --><style>
+  .gta-block__error {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 12px;
+    padding: 32px;
+    border-radius: 12px;
+    margin: 12px 0;
+    background-color: #fff1e3;
+    color: #412d00;
+  }
+
+  .gta-block__error-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+  }
+
+  .gta-block__error-body {
+    font-size: 14px;
+    line-height: 24px;
+  }
+</style>
+
+<script>
+  (function () {
+    try {
+      const widgets = [{"key":"GSC-SMALL-FhAYYvoluTIR","type":"block","timer":{"date":"2025-12-03T23:59:00.000-08:00","mode":"date","daily":{"tz":"Etc\/GMT-0","endHours":14,"endMinutes":0,"repeatDays":[0,1,2,3,4,5,6],"startHours":10,"startMinutes":0},"hours":72,"onEnd":"hide","minutes":0,"seconds":0,"scheduling":{"end":null,"start":null}},"content":{"align":"center","items":[{"id":"text-YNlIETOMXxaM","type":"text","align":"left","color":"#ffffff","value":"Cyber Monday Sale","enabled":true,"padding":{"mobile":{},"desktop":{}},"fontFamily":"font1","fontWeight":"800","textTransform":"unset","mobileFontSize":"32px","desktopFontSize":"32px","mobileLineHeight":"1.3","desktopLineHeight":"1.3","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"text-QtoFwCELsHCp","type":"text","align":"left","color":"#ffffff","value":"Save while you still can with the best deals of the year!","enabled":true,"padding":{"mobile":{"bottom":"8px"},"desktop":{"bottom":"10px"}},"fontFamily":"font1","fontWeight":"400","textTransform":"unset","mobileFontSize":"16px","desktopFontSize":"16px","mobileLineHeight":"1.3","desktopLineHeight":"1.3","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"timer-DlkDzuBCTTSk","type":"timer","view":"custom","border":{"size":"2px","color":"#FFFFFF","enabled":false},"digits":{"gap":"0px","color":"#333333","fontSize":"50px","fontFamily":"font2","fontWeight":"600"},"labels":{"days":"days","color":"#000000","hours":"hours","enabled":true,"minutes":"mins","seconds":"secs","fontSize":"18px","fontFamily":"font3","fontWeight":"500","milliseconds":"ms","textTransform":"unset"},"layout":"separate","margin":{"mobile":{},"desktop":{}},"radius":{"value":"16px","enabled":true},"shadow":{"type":"","color":"black","enabled":true},"enabled":true,"padding":{"mobile":{},"desktop":{"top":"0px","bottom":"8px"}},"fontSize":{"mobile":"14px","desktop":"18px"},"separator":{"type":"colon","color":"#000000","enabled":true},"background":{"blur":"2px","color":"#eeeeee","enabled":true},"unitFormat":"d:h:m:s","mobileWidth":"80%","desktopWidth":"80%"},{"id":"button-nUvcMOgRYaLc","href":"https:\/\/shopify.com","type":"button","label":"Button","width":"content","border":{"size":"2px","color":"#000000","enabled":false},"margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"12px","enabled":true},"target":"_blank","enabled":false,"padding":{"mobile":{"top":"12px","left":"40px","right":"40px","bottom":"12px"},"desktop":{"top":"16px","left":"48px","right":"48px","bottom":"16px"}},"textColor":"#ffffff","background":{"blur":"0px","color":"#000000","enabled":true},"fontFamily":"font1","fontWeight":"500","textTransform":"unset","mobileFontSize":"16px","desktopFontSize":"17px","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"coupon-jtBdQwxTVtlb","code":"PASTE YOUR CODE","icon":{"type":"discount-star","enabled":true},"type":"coupon","label":"Save 35%","action":"copy","border":{"size":"1px","color":"#9e9e9e","enabled":true},"margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"10px","enabled":true},"enabled":false,"padding":{"mobile":{"top":"6px","left":"12px","right":"12px","bottom":"6px"},"desktop":{"top":"12px","left":"16px","right":"16px","bottom":"12px"}},"textColor":"#000000","background":{"blur":"0px","color":"#f2f2f2","enabled":true},"fontFamily":"font1","fontWeight":"600","textTransform":"unset","mobileFontSize":"12px","desktopFontSize":"17px"}],"border":{"size":"1px","color":"#000000","enabled":false},"layout":"column","margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"20px","enabled":true},"padding":{"mobile":{"top":"16px","left":"20px","right":"20px","bottom":"16px"},"desktop":{"top":"20px","left":"24px","right":"24px","bottom":"20px"}},"mobileGap":"6px","background":{"src":null,"blur":"8px","source":"color","bgColor":"#707070","enabled":true,"overlayColor":"rgba(0,0,0,0)"},"desktopGap":"6px","mobileWidth":"100%","desktopWidth":"400px","backgroundClick":{"url":"","target":"_self","enabled":false}},"enabled":false,"general":{"font1":"inherit","font2":"inherit","font3":"inherit","preset":"small2","breakpoint":"768px"},"section":null,"userCss":"","targeting":null},{"key":"GSC-SMALL-reGjNNRvpqIJ","type":"block","timer":{"date":"2025-12-05T23:59:00.000-08:00","mode":"date","daily":{"tz":"Etc\/GMT-0","endHours":14,"endMinutes":0,"repeatDays":[0,1,2,3,4,5,6],"startHours":10,"startMinutes":0},"hours":72,"onEnd":"hide","minutes":0,"seconds":0,"scheduling":{"end":null,"start":null}},"content":{"align":"center","items":[{"id":"text-yiCfIAVYbsBf","type":"text","align":"left","color":"#ffffff","value":"Cyber Monday Sale","enabled":true,"padding":{"mobile":{},"desktop":{}},"fontFamily":"font1","fontWeight":"800","textTransform":"unset","mobileFontSize":"32px","desktopFontSize":"32px","mobileLineHeight":"1.3","desktopLineHeight":"1.3","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"text-MseYQbLJFriR","type":"text","align":"left","color":"#ffffff","value":"Save while you still can with the best deals of the year!","enabled":true,"padding":{"mobile":{"bottom":"8px"},"desktop":{"bottom":"10px"}},"fontFamily":"font1","fontWeight":"400","textTransform":"unset","mobileFontSize":"16px","desktopFontSize":"16px","mobileLineHeight":"1.3","desktopLineHeight":"1.3","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"timer-eRnmDINHADas","type":"timer","view":"custom","border":{"size":"2px","color":"#FFFFFF","enabled":false},"digits":{"gap":"0px","color":"#333333","fontSize":"50px","fontFamily":"font2","fontWeight":"600"},"labels":{"days":"days","color":"#000000","hours":"hours","enabled":true,"minutes":"mins","seconds":"secs","fontSize":"18px","fontFamily":"font3","fontWeight":"500","milliseconds":"ms","textTransform":"unset"},"layout":"separate","margin":{"mobile":{},"desktop":{}},"radius":{"value":"16px","enabled":true},"shadow":{"type":"","color":"black","enabled":true},"enabled":true,"padding":{"mobile":{},"desktop":{"top":"0px","bottom":"8px"}},"fontSize":{"mobile":"14px","desktop":"18px"},"separator":{"type":"colon","color":"#000000","enabled":true},"background":{"blur":"2px","color":"#eeeeee","enabled":true},"unitFormat":"d:h:m:s","mobileWidth":"80%","desktopWidth":"80%"},{"id":"button-prSMLdZsgaKV","href":"https:\/\/shopify.com","type":"button","label":"Button","width":"content","border":{"size":"2px","color":"#000000","enabled":false},"margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"12px","enabled":true},"target":"_blank","enabled":false,"padding":{"mobile":{"top":"12px","left":"40px","right":"40px","bottom":"12px"},"desktop":{"top":"16px","left":"48px","right":"48px","bottom":"16px"}},"textColor":"#ffffff","background":{"blur":"0px","color":"#000000","enabled":true},"fontFamily":"font1","fontWeight":"500","textTransform":"unset","mobileFontSize":"16px","desktopFontSize":"17px","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"coupon-vFBHTDCyHhWZ","code":"PASTE YOUR CODE","icon":{"type":"discount-star","enabled":true},"type":"coupon","label":"Save 35%","action":"copy","border":{"size":"1px","color":"#9e9e9e","enabled":true},"margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"10px","enabled":true},"enabled":false,"padding":{"mobile":{"top":"6px","left":"12px","right":"12px","bottom":"6px"},"desktop":{"top":"12px","left":"16px","right":"16px","bottom":"12px"}},"textColor":"#000000","background":{"blur":"0px","color":"#f2f2f2","enabled":true},"fontFamily":"font1","fontWeight":"600","textTransform":"unset","mobileFontSize":"12px","desktopFontSize":"17px"}],"border":{"size":"1px","color":"#000000","enabled":false},"layout":"column","margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"20px","enabled":true},"padding":{"mobile":{"top":"16px","left":"20px","right":"20px","bottom":"16px"},"desktop":{"top":"20px","left":"24px","right":"24px","bottom":"20px"}},"mobileGap":"6px","background":{"src":null,"blur":"8px","source":"color","bgColor":"#707070","enabled":true,"overlayColor":"rgba(0,0,0,0)"},"desktopGap":"6px","mobileWidth":"100%","desktopWidth":"400px","backgroundClick":{"url":"","target":"_self","enabled":false}},"enabled":false,"general":{"font1":"inherit","font2":"inherit","font3":"inherit","preset":"small2","breakpoint":"768px"},"section":null,"userCss":"","targeting":null},{"bar":{"sticky":false,"justify":"center","position":"top","closeButton":{"color":"#000000","enabled":true}},"key":"GSC-BAR-ckqAHCiWLwMc","type":"bar","timer":{"date":"2025-12-05T23:59:00.000-08:00","mode":"date","daily":{"tz":"Etc\/GMT-0","endHours":14,"endMinutes":0,"repeatDays":[0,1,2,3,4,5,6],"startHours":10,"startMinutes":0},"hours":72,"onEnd":"hide","minutes":0,"seconds":0,"scheduling":{"end":null,"start":null}},"content":{"align":"center","items":[{"id":"text-ZVQHhOpcRdDs","type":"text","align":"left","color":"#000000","value":"Cyber Monday Sale Extended!","enabled":true,"padding":{"mobile":{},"desktop":{}},"fontFamily":"font1","fontWeight":"700","textTransform":"unset","mobileFontSize":"16px","desktopFontSize":"24px","mobileLineHeight":"1.3","desktopLineHeight":"1.2","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"text-RYniPcgkUGjl","type":"text","align":"left","color":"#000000","value":"Sale extended through Dec. 5th","enabled":true,"padding":{"mobile":{},"desktop":{}},"fontFamily":"font1","fontWeight":"400","textTransform":"unset","mobileFontSize":"12px","desktopFontSize":"15px","mobileLineHeight":"1.3","desktopLineHeight":"1.3","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"timer-SIVBcWxjCQoS","type":"timer","view":"custom","border":{"size":"2px","color":"#FFFFFF","enabled":false},"digits":{"gap":"0px","color":"#000000","fontSize":"60px","fontFamily":"font2","fontWeight":"600"},"labels":{"days":"days","color":"#000000","hours":"hours","enabled":true,"minutes":"mins","seconds":"secs","fontSize":"24px","fontFamily":"font3","fontWeight":"500","milliseconds":"ms","textTransform":"unset"},"layout":"separate","margin":{"mobile":{},"desktop":{}},"radius":{"value":"16px","enabled":false},"shadow":{"type":"","color":"black","enabled":true},"enabled":true,"padding":{"mobile":{},"desktop":{"top":"0px"}},"fontSize":{"mobile":"14px","desktop":"18px"},"separator":{"type":"colon","color":"#000000","enabled":true},"background":{"blur":"2px","color":"#eeeeee","enabled":false},"unitFormat":"d:h:m:s","mobileWidth":"160px","desktopWidth":"224px"},{"id":"button-ubYcjzcjqeqs","href":"https:\/\/shopify.com","type":"button","label":"Shop now","width":"content","border":{"size":"2px","color":"#000000","enabled":false},"margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"8px","enabled":true},"target":"_self","enabled":false,"padding":{"mobile":{"top":"8px","left":"12px","right":"12px","bottom":"8px"},"desktop":{"top":"12px","left":"32px","right":"32px","bottom":"12px"}},"textColor":"#ffffff","background":{"blur":"0px","color":"#000000","enabled":true},"fontFamily":"font1","fontWeight":"500","textTransform":"unset","mobileFontSize":"12px","desktopFontSize":"14px","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"coupon-jCHWbYtiQjcg","code":"PASTE YOUR CODE","icon":{"type":"discount-star","enabled":true},"type":"coupon","label":"Save 35%","action":"copy","border":{"size":"1px","color":"#9e9e9e","enabled":true},"margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"6px","enabled":true},"enabled":false,"padding":{"mobile":{"top":"4px","left":"12px","right":"12px","bottom":"4px"},"desktop":{"top":"8px","left":"16px","right":"16px","bottom":"8px"}},"textColor":"#000000","background":{"blur":"0px","color":"#eeeeee","enabled":true},"fontFamily":"font1","fontWeight":"600","textTransform":"uppercase","mobileFontSize":"12px","desktopFontSize":"14px"}],"border":{"size":"1px","color":"#000000","enabled":false},"layout":"column","margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"8px","enabled":false},"padding":{"mobile":{"top":"4px","left":"0px","right":"0px","bottom":"4px"},"desktop":{"top":"8px","left":"28px","right":"28px","bottom":"8px"}},"mobileGap":"6px","background":{"src":null,"blur":"0px","source":"color","bgColor":"#ceecb1","enabled":true,"overlayColor":"rgba(0,0,0,0)"},"desktopGap":"24px","mobileWidth":"100%","desktopWidth":"400px","backgroundClick":{"url":"","target":"_self","enabled":false}},"enabled":false,"general":{"font1":"inherit","font2":"inherit","font3":"inherit","preset":"bar1","breakpoint":"768px"},"section":null,"userCss":"","targeting":{"geo":null,"pages":{"cart":true,"home":true,"other":true,"password":true,"products":{"mode":"all","tags":[],"enabled":true,"specificProducts":[],"productsInCollections":[]},"collections":{"mode":"all","items":[],"enabled":true}}}},{"bar":{"sticky":false,"justify":"center","position":"top","closeButton":{"color":"#bdbdbd","enabled":true}},"key":"GSC-BAR-DegKggHjqtZr","type":"bar","timer":{"date":"2025-12-03T23:59:00.000-08:00","mode":"date","daily":{"tz":"Etc\/GMT-0","endHours":14,"endMinutes":0,"repeatDays":[0,1,2,3,4,5,6],"startHours":10,"startMinutes":0},"hours":72,"onEnd":"hide","minutes":0,"seconds":0,"scheduling":{"end":null,"start":null}},"content":{"align":"center","items":[{"id":"text-iYIXPDgSCKsY","type":"text","align":"left","color":"#000000","value":"Cyber Monday Sale!","enabled":true,"padding":{"mobile":{},"desktop":{}},"fontFamily":"font1","fontWeight":"700","textTransform":"unset","mobileFontSize":"16px","desktopFontSize":"24px","mobileLineHeight":"1.3","desktopLineHeight":"1.2","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"text-zmAvIWCgFhrj","type":"text","align":"left","color":"#000000","value":"Ends December 3rd.","enabled":true,"padding":{"mobile":{},"desktop":{}},"fontFamily":"font1","fontWeight":"400","textTransform":"unset","mobileFontSize":"12px","desktopFontSize":"15px","mobileLineHeight":"1.3","desktopLineHeight":"1.3","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"timer-EmQkhLYVnIXg","type":"timer","view":"custom","border":{"size":"2px","color":"#FFFFFF","enabled":false},"digits":{"gap":"0px","color":"#000000","fontSize":"60px","fontFamily":"font2","fontWeight":"600"},"labels":{"days":"days","color":"#000000","hours":"hours","enabled":true,"minutes":"mins","seconds":"secs","fontSize":"24px","fontFamily":"font3","fontWeight":"500","milliseconds":"ms","textTransform":"unset"},"layout":"separate","margin":{"mobile":{},"desktop":{}},"radius":{"value":"16px","enabled":false},"shadow":{"type":"","color":"black","enabled":true},"enabled":true,"padding":{"mobile":{},"desktop":{"top":"0px"}},"fontSize":{"mobile":"14px","desktop":"18px"},"separator":{"type":"colon","color":"#000000","enabled":true},"background":{"blur":"2px","color":"#eeeeee","enabled":false},"unitFormat":"d:h:m:s","mobileWidth":"160px","desktopWidth":"224px"},{"id":"button-XTignveeCHZK","href":"https:\/\/shopify.com","type":"button","label":"Shop now","width":"content","border":{"size":"2px","color":"#000000","enabled":false},"margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"8px","enabled":true},"target":"_self","enabled":false,"padding":{"mobile":{"top":"8px","left":"12px","right":"12px","bottom":"8px"},"desktop":{"top":"12px","left":"32px","right":"32px","bottom":"12px"}},"textColor":"#ffffff","background":{"blur":"0px","color":"#000000","enabled":true},"fontFamily":"font1","fontWeight":"500","textTransform":"unset","mobileFontSize":"12px","desktopFontSize":"14px","mobileLetterSpacing":"0","desktopLetterSpacing":"0"},{"id":"coupon-STFtSkVKeFSQ","code":"PASTE YOUR CODE","icon":{"type":"discount-star","enabled":true},"type":"coupon","label":"Save 35%","action":"copy","border":{"size":"1px","color":"#9e9e9e","enabled":true},"margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"6px","enabled":true},"enabled":false,"padding":{"mobile":{"top":"4px","left":"12px","right":"12px","bottom":"4px"},"desktop":{"top":"8px","left":"16px","right":"16px","bottom":"8px"}},"textColor":"#000000","background":{"blur":"0px","color":"#eeeeee","enabled":true},"fontFamily":"font1","fontWeight":"600","textTransform":"uppercase","mobileFontSize":"12px","desktopFontSize":"14px"}],"border":{"size":"1px","color":"#000000","enabled":false},"layout":"column","margin":{"mobile":{"top":"0px","left":"0px","right":"0px","bottom":"0px"},"desktop":{"top":"0px","left":"0px","right":"0px","bottom":"0px"}},"radius":{"value":"8px","enabled":false},"padding":{"mobile":{"top":"4px","left":"0px","right":"0px","bottom":"4px"},"desktop":{"top":"8px","left":"28px","right":"28px","bottom":"8px"}},"mobileGap":"6px","background":{"src":null,"blur":"0px","source":"color","bgColor":"#b1ddec","enabled":true,"overlayColor":"rgba(0,0,0,0)"},"desktopGap":"24px","mobileWidth":"100%","desktopWidth":"400px","backgroundClick":{"url":"","target":"_self","enabled":false}},"enabled":false,"general":{"font1":"inherit","font2":"inherit","font3":"inherit","preset":"bar1","breakpoint":"768px"},"section":null,"userCss":"","targeting":{"geo":null,"pages":{"cart":true,"home":true,"other":true,"password":true,"products":{"mode":"all","tags":[],"enabled":true,"specificProducts":[],"productsInCollections":[]},"collections":{"mode":"all","items":[],"enabled":true}}}}] || [];
+
+      if (Array.isArray(window.GSC_COUNTDOWN_WIDGETS)) {
+        // Embed and inline countdown blocks may load on the same page. Inline
+        // pushes a single widget keyed by `key`; embed pushes the whole metafield
+        // array. Dedup by `key` so the same widget isn't duplicated when both
+        // blocks reference it. Widgets without a key push through (no dedup).
+        widgets.forEach(function(w) {
+          if (!w.key || !window.GSC_COUNTDOWN_WIDGETS.find(function(e) { return e.key === w.key; })) {
+            window.GSC_COUNTDOWN_WIDGETS.push(w);
+          }
+        });
+      } else {
+        window.GSC_COUNTDOWN_WIDGETS = widgets;
+      }
+
+      // Stale-metafield guard via theme_store_id (TAE Liquid has `theme.id`
+      // always null, so the check runs on JS). Mismatch = merchant switched
+      // theme family after the last backend sync — fall back to runtime
+      // defaults until re-sync writes a fresh metafield.
+      
+      
+if (!window.GSC_COUNTDOWN_META) {
+        window.GSC_COUNTDOWN_META = {
+          product_collections: null,
+          product_tags: null,
+          storefrontToken:null,
+          productData:null};
+      }window.GSC_COUNTDOWN_COLLECTION_DATA = [{
+          handle: "6-7l-double-trouble-polar-diesel-t-shirt",
+          id: 8980424130851,
+          tags: ["Apparel","Shirt"],
+          collections: ["456929673507","452388356387","456929640739"],
+          available: true,
+          compareAtPrice: null,
+          price: 3350,
+          createdAt: "2024-02-13T13:32:46-0800",variants: [{ id: "47496533606691", available: true, options: {"Size": "XS",} },{ id: "47496533639459", available: true, options: {"Size": "S",} },{ id: "47496533672227", available: true, options: {"Size": "M",} },{ id: "47496533704995", available: true, options: {"Size": "L",} },{ id: "47496533737763", available: true, options: {"Size": "XL",} },{ id: "47496533770531", available: true, options: {"Size": "2XL",} },{ id: "47496539439395", available: false, options: {"Size": "3XL",} }]
+        },{
+          handle: "6-7l-double-trouble-polar-diesel-hoodie",
+          id: 8980429865251,
+          tags: ["Apparel","Shirt"],
+          collections: ["456929673507","452388356387","456929640739"],
+          available: true,
+          compareAtPrice: null,
+          price: 6000,
+          createdAt: "2024-02-13T13:44:10-0800",variants: [{ id: "47496552546595", available: true, options: {"Size": "S",} },{ id: "47496552579363", available: true, options: {"Size": "M",} },{ id: "47496552612131", available: true, options: {"Size": "L",} },{ id: "47496552644899", available: true, options: {"Size": "XL",} },{ id: "47496552677667", available: true, options: {"Size": "2XL",} },{ id: "47496552710435", available: true, options: {"Size": "3XL",} }]
+        },{
+          handle: "can-plug-usa-made-2019-2022-3-0l-duramax-lm2",
+          id: 10036626325795,
+          tags: ["no sale","Tuning \u0026 Electronics 2019-2023 Duramax 3.0L LM2"],
+          collections: ["456929673507","456929640739","495732588835"],
+          available: true,
+          compareAtPrice: null,
+          price: 21500,
+          createdAt: "2025-10-28T14:06:24-0700",variants: [{ id: "54446495629603", available: true, options: {"Title": "Default Title",} }]
+        },{
+          handle: "make-north-america-great-again-polar-diesel-t-shirt",
+          id: 8429023002915,
+          tags: ["Apparel","Shirt"],
+          collections: ["456929673507","452388356387","456929640739"],
+          available: true,
+          compareAtPrice: null,
+          price: 3000,
+          createdAt: "2023-07-11T10:00:03-0700",variants: [{ id: "45362677252387", available: true, options: {"Size": "XS",} },{ id: "45362677285155", available: true, options: {"Size": "S",} },{ id: "45362677317923", available: true, options: {"Size": "M",} },{ id: "45362677350691", available: false, options: {"Size": "L",} },{ id: "45362677383459", available: false, options: {"Size": "XL",} },{ id: "45362677416227", available: true, options: {"Size": "2XL",} },{ id: "53010151964963", available: true, options: {"Size": "3XL",} }]
+        },{
+          handle: "03-07-tts-60-64-ultimate-towmaster",
+          id: 10122714186019,
+          tags: ["TURBOCHARGERS \u0026 ACCESSORIES 2002.5-2004 CUMMINS 5.9L","TURBOCHARGERS \u0026 ACCESSORIES 2004.5-2007 CUMMINS 5.9L"],
+          collections: ["456929673507","456929640739","501753872675","501753839907"],
+          available: true,
+          compareAtPrice: null,
+          price: 129186,
+          createdAt: "2026-02-10T11:42:38-0800",variants: [{ id: "54722660139299", available: true, options: {"Turbine": "10 Blade (Louder)","Color": "Raw",} },{ id: "54722660172067", available: true, options: {"Turbine": "10 Blade (Louder)","Color": "Custom Powder Coating (6-10 Day Lead)",} },{ id: "54722660204835", available: true, options: {"Turbine": "10 Blade (Louder)","Color": "Polished (5 Day Lead)",} },{ id: "54722660237603", available: true, options: {"Turbine": "12 Blade (OE Spec)","Color": "Raw",} },{ id: "54722660270371", available: true, options: {"Turbine": "12 Blade (OE Spec)","Color": "Custom Powder Coating (6-10 Day Lead)",} },{ id: "54722660303139", available: true, options: {"Turbine": "12 Blade (OE Spec)","Color": "Polished (5 Day Lead)",} }]
+        },{
+          handle: "03-07-tts-62-64-towmaster",
+          id: 10122714218787,
+          tags: ["TURBOCHARGERS \u0026 ACCESSORIES 2002.5-2004 CUMMINS 5.9L","TURBOCHARGERS \u0026 ACCESSORIES 2004.5-2007 CUMMINS 5.9L"],
+          collections: ["456929673507","456929640739","501753872675","501753839907"],
+          available: true,
+          compareAtPrice: null,
+          price: 134458,
+          createdAt: "2026-02-10T11:42:39-0800",variants: [{ id: "54722660335907", available: true, options: {"Color": "Raw","Turbine": "10 Blade (Louder)",} },{ id: "54722660368675", available: true, options: {"Color": "Raw","Turbine": "12 Blade (OE Spec)",} },{ id: "54722660401443", available: true, options: {"Color": "Custom Powder Coating (6-10 Day Lead)","Turbine": "10 Blade (Louder)",} },{ id: "54722660434211", available: true, options: {"Color": "Custom Powder Coating (6-10 Day Lead)","Turbine": "12 Blade (OE Spec)",} },{ id: "54722660466979", available: true, options: {"Color": "Polished (5 Day Lead)","Turbine": "10 Blade (Louder)",} },{ id: "54722660499747", available: true, options: {"Color": "Polished (5 Day Lead)","Turbine": "12 Blade (OE Spec)",} }]
+        },{
+          handle: "03-07-tts-64-64",
+          id: 10122714251555,
+          tags: ["TURBOCHARGERS \u0026 ACCESSORIES 2002.5-2004 CUMMINS 5.9L","TURBOCHARGERS \u0026 ACCESSORIES 2004.5-2007 CUMMINS 5.9L"],
+          collections: ["456929673507","456929640739","501753872675","501753839907"],
+          available: true,
+          compareAtPrice: null,
+          price: 139731,
+          createdAt: "2026-02-10T11:42:41-0800",variants: [{ id: "54722660532515", available: true, options: {"Turbine": "10 Blade (Louder)","Color": "Raw",} },{ id: "54722660565283", available: true, options: {"Turbine": "10 Blade (Louder)","Color": "Custom Powder Coating (6-10 Day Lead)",} },{ id: "54722660598051", available: true, options: {"Turbine": "10 Blade
