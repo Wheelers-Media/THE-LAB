@@ -236,8 +236,8 @@ function closeEstimator() {
 
 function showTypingIndicator() {
     const id = 'typing-' + Date.now();
-    const html = \`
-        <div id="\${id}" class="flex items-start gap-3 message-enter">
+    const html = `
+        <div id="${id}" class="flex items-start gap-3 message-enter">
             <div class="w-8 h-8 rounded-full bg-labBlue/20 flex items-center justify-center border border-labBlue/50 flex-shrink-0 mt-1">
                 <svg class="w-4 h-4 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
@@ -247,7 +247,7 @@ function showTypingIndicator() {
                 </div>
             </div>
         </div>
-    \`;
+    `;
     const body = document.getElementById('estimator-body');
     body.insertAdjacentHTML('beforeend', html);
     body.scrollTop = body.scrollHeight;
@@ -260,32 +260,32 @@ function removeTypingIndicator(id) {
 }
 
 function addBotMessage(text) {
-    const html = \`
+    const html = `
         <div class="flex items-start gap-3 message-enter">
             <div class="w-8 h-8 rounded-full bg-labBlue/20 flex items-center justify-center border border-labBlue/50 flex-shrink-0 mt-1">
                 <svg class="w-4 h-4 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </div>
             <div class="bg-edge text-zinc-200 p-3.5 rounded-2xl rounded-tl-sm text-sm border border-white/5 leading-relaxed shadow-lg">
-                \${text}
+                ${text}
             </div>
         </div>
-    \`;
+    `;
     const body = document.getElementById('estimator-body');
     body.insertAdjacentHTML('beforeend', html);
     body.scrollTop = body.scrollHeight;
 }
 
 function addUserMessage(text) {
-    const html = \`
+    const html = `
         <div class="flex items-start gap-3 justify-end message-enter">
             <div class="bg-labBlue text-white p-3.5 rounded-2xl rounded-tr-sm text-sm shadow-[0_4px_20px_rgba(0,102,255,0.3)]">
-                \${text}
+                ${text}
             </div>
             <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700 flex-shrink-0 mt-1">
                 <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
             </div>
         </div>
-    \`;
+    `;
     const body = document.getElementById('estimator-body');
     body.insertAdjacentHTML('beforeend', html);
     body.scrollTop = body.scrollHeight;
@@ -305,19 +305,19 @@ function renderStep() {
         addBotMessage(step.question);
         
         // render options
-        const optionsHtml = step.options.map((opt, idx) => \`
-            <button onclick="handleOptionSelect(\${idx})" class="w-full text-left p-4 rounded-xl border border-edge bg-black hover:border-labBlue hover:bg-labBlue/10 transition-all text-sm text-zinc-300 hover:text-white flex justify-between items-center group">
-                <span>\${opt.label}</span>
+        const optionsHtml = step.options.map((opt, idx) => `
+            <button onclick="handleOptionSelect(${idx})" class="w-full text-left p-4 rounded-xl border border-edge bg-black hover:border-labBlue hover:bg-labBlue/10 transition-all text-sm text-zinc-300 hover:text-white flex justify-between items-center group">
+                <span>${opt.label}</span>
                 <svg class="w-4 h-4 text-zinc-600 group-hover:text-labBlue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </button>
-        \`).join('');
+        `).join('');
         
         const optsContainerId = 'opts-' + Date.now();
-        const html = \`
-            <div id="\${optsContainerId}" class="flex flex-col gap-2 ml-11 message-enter">
-                \${optionsHtml}
+        const html = `
+            <div id="${optsContainerId}" class="flex flex-col gap-2 ml-11 message-enter">
+                ${optionsHtml}
             </div>
-        \`;
+        `;
         
         const body = document.getElementById('estimator-body');
         body.insertAdjacentHTML('beforeend', html);
@@ -358,16 +358,16 @@ function finishEstimation() {
     setTimeout(() => {
         removeTypingIndicator(typingId);
         
-        addBotMessage(\`Thanks! Based on your selections, your estimated cost is:<br><br><span class="text-3xl font-extrabold text-white font-heading">$\${price.toFixed(2)}</span><br><br><span class="text-xs text-zinc-400">Note: This is an AI-generated estimate. Exact pricing is confirmed upon vehicle inspection.</span>\`);
+        addBotMessage(`Thanks! Based on your selections, your estimated cost is:<br><br><span class="text-3xl font-extrabold text-white font-heading">$${price.toFixed(2)}</span><br><br><span class="text-xs text-zinc-400">Note: This is an AI-generated estimate. Exact pricing is confirmed upon vehicle inspection.</span>`);
         
         const body = document.getElementById('estimator-body');
-        const ctaHtml = \`
+        const ctaHtml = `
             <div class="ml-11 mt-2 message-enter">
                 <button onclick="loadBookingIframe()" class="w-full bg-white text-black font-extrabold py-4 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                     Continue to Booking →
                 </button>
             </div>
-        \`;
+        `;
         body.insertAdjacentHTML('beforeend', ctaHtml);
         body.scrollTop = body.scrollHeight;
         
@@ -376,7 +376,7 @@ function finishEstimation() {
 
 function loadBookingIframe() {
     const body = document.getElementById('estimator-body');
-    body.innerHTML = \`
+    body.innerHTML = `
         <div class="flex-grow w-full h-full flex flex-col message-enter">
             <div class="mb-4 text-center">
                 <h3 class="font-bold text-white uppercase tracking-widest text-sm">Secure Booking</h3>
@@ -395,7 +395,7 @@ function loadBookingIframe() {
                 <!-- In production, replace src="about:blank" with your GoHighLevel form URL -->
             </div>
         </div>
-    \`;
+    `;
 }
 
 // Global exposure
