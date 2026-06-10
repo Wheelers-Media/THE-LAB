@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -211,62 +211,26 @@
                         <a href="tel:+12502619502" class="border border-edge rounded-xl p-4 hover:border-labBlue transition-all" style="background:#000;"><span class="block text-[10px] text-zinc-600 uppercase tracking-widest font-bold mb-1">Call</span><span class="text-white font-bold text-sm">(250) 261-9502</span></a>
                         <a href="sms:+12502619502" class="border border-edge rounded-xl p-4 hover:border-labBlue transition-all" style="background:#000;"><span class="block text-[10px] text-zinc-600 uppercase tracking-widest font-bold mb-1">Text</span><span class="text-white font-bold text-sm">Send Vehicle Info</span></a>
                     </div>
-                    <!-- NOTE: Connect to form backend / CRM / Shopify Contact form -->
-                    <form class="space-y-4" onsubmit="event.preventDefault(); document.getElementById('form-success').classList.remove('hidden'); this.classList.add('hidden');">
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="text" placeholder="First Name" required
-                                class="w-full text-white placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors text-sm"
-                                style="background-color:#000;">
-                            <input type="text" placeholder="Last Name" required
-                                class="w-full text-white placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors text-sm"
-                                style="background-color:#000;">
-                        </div>
-                        <input type="email" placeholder="Email Address" required
-                            class="w-full text-white placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors text-sm"
-                            style="background-color:#000;">
-                        <input type="tel" placeholder="Phone Number (optional)"
-                            class="w-full text-white placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors text-sm"
-                            style="background-color:#000;">
-                        <input type="text" placeholder="Vehicle — Year / Make / Model / Engine"
-                            class="w-full text-white placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors text-sm"
-                            style="background-color:#000;">
-                        <div class="relative">
-                            <select required class="w-full text-white p-4 pr-12 rounded-xl border border-edge focus:outline-none focus:border-labBlue transition-colors cursor-pointer appearance-none text-sm" style="background-color:#000;">
-                                <option value="" disabled selected hidden>What are you looking for?</option>
-                                <optgroup label="Detailing &amp; Aesthetics">
-                                    <option>Ceramic Coating — Full Vehicle</option>
-                                    <option>Window Tinting</option>
-                                    <option>Paint Protection Film (PPF)</option>
-                                    <option>Premium Detailing Package</option>
-                                    <option>Morimoto Lighting Install</option>
-                                </optgroup>
-                                <optgroup label="Diesel Performance">
-                                    <option>EGR Delete Kit</option>
-                                    <option>Exhaust System</option>
-                                    <option>CCV Solution</option>
-                                    <option>Custom Tuning (EZ LYNK / HP Tuners)</option>
-                                    <option>Billet Throttle Valve Delete</option>
-                                    <option>Parts Order / Quote</option>
-                                </optgroup>
-                                <option>General Inquiry</option>
-                            </select>
-                            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-zinc-500">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                            </div>
-                        </div>
-                        <textarea placeholder="Anything specific? Preferred date, shade level, package, parts needed, or current issue..." rows="4"
-                            class="w-full text-white placeholder-zinc-600 p-4 rounded-xl border border-edge focus:outline-none focus:border-labBlue focus:ring-1 focus:ring-labBlue transition-colors resize-none text-sm"
-                            style="background-color:#000;"></textarea>
-                        <button type="submit" class="w-full bg-labBlue text-white font-extrabold py-4 rounded-xl uppercase tracking-widest text-sm hover:bg-blue-600 active:scale-[0.98] transition-all" style="box-shadow:0 0 20px rgba(0,102,255,0.4);">Request Quote / Booking →</button>
-                    </form>
-                    <!-- Success message -->
-                    <div id="form-success" class="hidden text-center py-8">
-                        <div class="w-16 h-16 rounded-full bg-labBlue/10 border border-labBlue/30 flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </div>
-                        <h3 class="font-heading font-bold text-white text-xl mb-2">Request Received!</h3>
-                        <p class="text-zinc-400 text-sm">We will follow up with pricing, availability, and the next step to get you booked.</p>
-                    </div>
+                    <!-- GoHighLevel Form -->
+                    <iframe
+                        src="https://api.leadconnectorhq.com/widget/form/z0mxfa83vDRmfWYqXmnb"
+                        style="width:100%;height:100%;border:none;border-radius:8px"
+                        id="inline-z0mxfa83vDRmfWYqXmnb" 
+                        data-layout="{'id':'INLINE'}"
+                        data-trigger-type="alwaysShow"
+                        data-trigger-value=""
+                        data-activation-type="alwaysActivated"
+                        data-activation-value=""
+                        data-deactivation-type="neverDeactivate"
+                        data-deactivation-value=""
+                        data-form-name="The Boutique Service Appointment"
+                        data-height="1688"
+                        data-layout-iframe-id="inline-z0mxfa83vDRmfWYqXmnb"
+                        data-form-id="z0mxfa83vDRmfWYqXmnb"
+                        title="The Boutique Service Appointment"
+                    >
+                    </iframe>
+                    <script src="https://link.msgsndr.com/js/form_embed.js"></script>
                 </div>
 
             </div>
