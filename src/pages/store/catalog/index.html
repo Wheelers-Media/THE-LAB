@@ -235,73 +235,69 @@
     <section class="py-12 px-6">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
             <!-- Sidebar Filters -->
-            <aside class="w-full md:w-64 flex-shrink-0">
-                <div class="sticky top-28 bg-[#111115] border border-edge rounded-xl p-6">
-                    <h2 class="text-white font-bold uppercase tracking-widest text-sm mb-6 border-b border-edge pb-2">Filter Parts</h2>
-                    
-                    <div class="mb-6">
-                        <h3 class="text-xs font-mono text-labBlue uppercase tracking-widest mb-3">Make</h3>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="Ford" data-type="make" id="filter-make-Ford" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">Ford</span>
-                        </label>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="Ram" data-type="make" id="filter-make-Ram" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">Ram</span>
-                        </label>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="Chevy" data-type="make" id="filter-make-Chevy" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">Chevy / GMC</span>
-                        </label>
+            <aside class="w-full md:w-72 flex-shrink-0">
+                <div class="sticky top-28 bg-[#111115] border border-edge rounded-xl overflow-hidden">
+                    <!-- Filter Header -->
+                    <div class="p-5 border-b border-edge flex items-center justify-between">
+                        <h2 class="text-white font-bold uppercase tracking-widest text-sm">Filter Parts</h2>
+                        <button id="filter-reset-btn" class="text-[10px] text-zinc-500 hover:text-labCyan uppercase tracking-widest font-bold px-3 py-1.5 rounded border border-edge hover:border-labCyan/40 transition-all min-h-[36px]">Reset All</button>
                     </div>
 
-                    <div class="mb-6">
-                        <h3 class="text-xs font-mono text-labBlue uppercase tracking-widest mb-3">Category</h3>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="EGR" data-type="category" id="filter-cat-EGR" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">EGR Solutions</span>
-                        </label>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="Exhaust" data-type="category" id="filter-cat-Exhaust" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">Exhaust Systems</span>
-                        </label>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="Tuning" data-type="category" id="filter-cat-Tuning" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">Custom Tuning</span>
-                        </label>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="CCV" data-type="category" id="filter-cat-CCV" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">CCV Reroutes</span>
-                        </label>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="Accessories" data-type="category" id="filter-cat-Accessories" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">Bumpers &amp; Accessories</span>
-                        </label>
-                    </div>
+                    <div class="p-5 space-y-6 max-h-[70vh] overflow-y-auto" style="-webkit-overflow-scrolling:touch;">
 
-                    <div class="mb-6">
-                        <h3 class="text-xs font-mono text-labBlue uppercase tracking-widest mb-3">Engine</h3>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="6.7L Cummins" data-type="engine" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">6.7L Cummins</span>
-                        </label>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="6.7L Powerstroke" data-type="engine" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">6.7L Powerstroke</span>
-                        </label>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="6.6L Duramax" data-type="engine" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">6.6L Duramax</span>
-                        </label>
-                        <label class="flex items-center gap-3 mb-2 cursor-pointer group">
-                            <input type="checkbox" value="Universal" data-type="engine" class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50">
-                            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors">Universal Fit</span>
-                        </label>
-                    </div>
+                        <!-- Active Filters Chips -->
+                        <div id="active-filters-bar" class="hidden flex-wrap gap-2"></div>
 
-                    <div>
-                        <h3 class="text-xs font-mono text-labBlue uppercase tracking-widest mb-3">Vehicle Year</h3>
-                        <input type="number" id="filter-year" placeholder="e.g. 2018" class="w-full bg-void border border-edge rounded p-3 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" min="1990" max="2025">
+                        <!-- Category -->
+                        <div>
+                            <button class="filter-accordion-btn w-full flex items-center justify-between text-xs font-mono text-labBlue uppercase tracking-widest mb-3 cursor-pointer" data-target="filter-category-group">
+                                <span>Category</span>
+                                <svg class="w-3 h-3 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="filter-category-group" class="space-y-1"></div>
+                        </div>
+
+                        <div class="h-px bg-edge"></div>
+
+                        <!-- Make / Vehicle -->
+                        <div>
+                            <button class="filter-accordion-btn w-full flex items-center justify-between text-xs font-mono text-labBlue uppercase tracking-widest mb-3 cursor-pointer" data-target="filter-make-group">
+                                <span>Vehicle</span>
+                                <svg class="w-3 h-3 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="filter-make-group" class="space-y-1"></div>
+                        </div>
+
+                        <div class="h-px bg-edge"></div>
+
+                        <!-- Engine -->
+                        <div>
+                            <button class="filter-accordion-btn w-full flex items-center justify-between text-xs font-mono text-labBlue uppercase tracking-widest mb-3 cursor-pointer" data-target="filter-engine-group">
+                                <span>Engine</span>
+                                <svg class="w-3 h-3 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="filter-engine-group" class="space-y-1"></div>
+                        </div>
+
+                        <div class="h-px bg-edge"></div>
+
+                        <!-- Brand -->
+                        <div>
+                            <button class="filter-accordion-btn w-full flex items-center justify-between text-xs font-mono text-labBlue uppercase tracking-widest mb-3 cursor-pointer" data-target="filter-brand-group">
+                                <span>Brand</span>
+                                <svg class="w-3 h-3 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="filter-brand-group" class="space-y-1"></div>
+                        </div>
+
+                        <div class="h-px bg-edge"></div>
+
+                        <!-- Vehicle Year -->
+                        <div>
+                            <h3 class="text-xs font-mono text-labBlue uppercase tracking-widest mb-3">Vehicle Year</h3>
+                            <input type="number" id="filter-year" placeholder="e.g. 2018" class="w-full bg-void border border-edge rounded-lg p-4 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" min="1990" max="2026">
+                        </div>
+
                     </div>
                 </div>
             </aside>
@@ -309,7 +305,10 @@
             <!-- Product Grid -->
             <div class="flex-1">
                 <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-3xl font-heading font-extrabold text-white uppercase">The Parts Store</h1>
+                    <div class="flex items-center gap-4">
+                        <h1 class="text-3xl font-heading font-extrabold text-white uppercase">The Parts Store</h1>
+                        <span data-product-count class="text-xs font-mono text-zinc-500 bg-edge px-3 py-1 rounded-full hidden sm:inline-block">Loading...</span>
+                    </div>
                     <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest hidden sm:block">Performance Parts & Tuning</span>
                 </div>
                 <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
