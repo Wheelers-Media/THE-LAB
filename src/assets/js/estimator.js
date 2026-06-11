@@ -506,27 +506,15 @@ function finishEstimation() {
 }
 
 function loadBookingIframe() {
-    let queryParams = [];
-
-    // Map Vehicle Info
-    if (userAnswers['vehicle_year']) queryParams.push(`contact.contact_vehicle_year=${encodeURIComponent(userAnswers['vehicle_year'].label)}`);
-    if (userAnswers['vehicle_make']) queryParams.push(`contact.contact_vehicle_make=${encodeURIComponent(userAnswers['vehicle_make'].label)}`);
-    if (userAnswers['vehicle_model']) queryParams.push(`contact.contact_vehicle_model=${encodeURIComponent(userAnswers['vehicle_model'].label)}`);
+    // Build summary of user's estimator selections
+    const vehicle = [
+        userAnswers['vehicle_year']?.label,
+        userAnswers['vehicle_make']?.label,
+        userAnswers['vehicle_model']?.label
+    ].filter(Boolean).join(' ');
     
-    // Map Vehicle Size
-    if (userAnswers['vehicle_size']) {
-        const sizeMap = {
-            "Car / Sedan": "Car",
-            "Small SUV / Truck": "SUV",
-            "Large SUV / Minivan": "Large SUV",
-            "Large SUV / Rig": "Large SUV",
-            "Semi Truck": "Off-Road"
-        };
-        const size = sizeMap[userAnswers['vehicle_size'].label];
-        if (size) queryParams.push(`contact.vehicle_type=${encodeURIComponent(size)}`);
-    }
-
-    // Map Primary Service
+    const vehicleSize = userAnswers['vehicle_size']?.label || '';
+    
     const serviceNameMap = {
         "Detailing Estimator": "Premium Detailing",
         "Window Tinting Estimator": "Window Tinting",
@@ -534,154 +522,84 @@ function loadBookingIframe() {
         "Paint Protection Film Estimator": "Paint Protection Film (PPF)",
         "Custom Lighting Estimator": "Custom Lighting"
     };
-    const primaryService = serviceNameMap[currentService.title] || currentService.title.replace(' Estimator', '');
-    queryParams.push(`contact.contact_primary_service_requested=${encodeURIComponent(primaryService)}`);
-
-    // Map Service-Specific Packages and Options
+    const serviceName = serviceNameMap[currentService.title] || currentService.title.replace(' Estimator', '');
+    
+    // Build detail items for the summary
+    let detailItems = '';
+    
     if (currentService.title === "Detailing Estimator") {
-        const pkgMap = {
-            "Standard (Entry Level)": "Standard Detail",
-            "De-Luxx (Signature)": "De-Luxx Detail",
-            "Semi Interior (Heavy Duty)": "Semi Interior (Sleeper/Day Cab)"
-        };
-        if (userAnswers['package'] && pkgMap[userAnswers['package'].label]) {
-            queryParams.push(`contact.contact_detailing_package=${encodeURIComponent(pkgMap[userAnswers['package'].label])}`);
-        }
-        
-        const addonMap = {
-            "Pet Hair Removal": "Pet Hair Removal",
-            "Heavy Odour Elimination": "Odour Elimination"
-        };
-        if (userAnswers['addons'] && addonMap[userAnswers['addons'].label]) {
-            queryParams.push(`contact.contact_additional_protection=${encodeURIComponent(addonMap[userAnswers['addons'].label])}`);
-        }
+        if (userAnswers['package']) detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Package</span><span class="text-white">${userAnswers['package'].label}</span></div>`;
+        if (userAnswers['addons'] && userAnswers['addons'].label !== "None") detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Add-on</span><span class="text-white">${userAnswers['addons'].label}</span></div>`;
     }
-    
     if (currentService.title === "Window Tinting Estimator") {
-        const cov = userAnswers['coverage'] ? userAnswers['coverage'].label : '';
-        const film = userAnswers['film_type'] ? userAnswers['film_type'].label : '';
-        let tintPref = '';
-        
-        if (cov === "Front 2 Windows" && film === "Standard Carbon") tintPref = "Standard Carbon Tint (Front Roll-Ups) - $180";
-        if (cov === "Front 2 Windows" && film === "Premium Ceramic (Heat Rejection)") tintPref = "Premium Ceramic Tint (Front Roll-Ups) - $260";
-        if (cov === "Full Vehicle" && film === "Standard Carbon") tintPref = "Full Vehicle (Carbon) - $550 to $700";
-        if (cov === "Full Vehicle" && film === "Premium Ceramic (Heat Rejection)") tintPref = "Full Vehicle (Ceramic) - $850 to $1,300";
-        
-        if (tintPref) queryParams.push(`contact.contact_window_tint_preference=${encodeURIComponent(tintPref)}`);
-        
-        if (cov === "Windshield Brow Only") queryParams.push(`contact.contact_tint_coverage_add_ons=${encodeURIComponent("Add Ceramic Windshield Brow ($90-$180)")}`);
-        if (cov === "Full Windshield") queryParams.push(`contact.contact_tint_coverage_add_ons=${encodeURIComponent("Full Windshield")}`);
+        if (userAnswers['coverage']) detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Coverage</span><span class="text-white">${userAnswers['coverage'].label}</span></div>`;
+        if (userAnswers['film_type']) detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Film</span><span class="text-white">${userAnswers['film_type'].label}</span></div>`;
     }
-    
     if (currentService.title === "Ceramic Coating Estimator") {
-        const cPkgMap = {
-            "1-Year Coating": "Standard Coat (1-Layer)",
-            "5-Year Coating": "Elite Coat (2-Layer)",
-            "9-Year Coating": "Graphene Elite (Multi-Layer / 7-Year)"
-        };
-        if (userAnswers['package'] && cPkgMap[userAnswers['package'].label]) {
-            queryParams.push(`contact.contact_ceramic_package=${encodeURIComponent(cPkgMap[userAnswers['package'].label])}`);
-        }
+        if (userAnswers['package']) detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Package</span><span class="text-white">${userAnswers['package'].label}</span></div>`;
+        if (userAnswers['paint_condition']) detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Paint Condition</span><span class="text-white">${userAnswers['paint_condition'].label}</span></div>`;
     }
-    
     if (currentService.title === "Paint Protection Film Estimator") {
-        const pPkgMap = {
-            "Front Bumper Only": "Partial Front",
-            "Partial Front Clip": "Partial Front",
-            "Full Front Clip": "Full Front (Recommended)",
-            "Full Body Protection": "Full Vehicle"
-        };
-        if (userAnswers['coverage'] && pPkgMap[userAnswers['coverage'].label]) {
-            queryParams.push(`contact.contact_ppf_package=${encodeURIComponent(pPkgMap[userAnswers['coverage'].label])}`);
-        }
+        if (userAnswers['coverage']) detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Coverage</span><span class="text-white">${userAnswers['coverage'].label}</span></div>`;
     }
-    
     if (currentService.title === "Custom Lighting Estimator") {
-        const lMap = {
-            "Custom Headlight Build": "Morimoto Headlight/Taillight Assemblies",
-            "Rock Lights (Underglow)": "Off-Road & Auxiliary (Baja Designs / BMC)",
-            "Wheel Rings": "Off-Road & Auxiliary (Baja Designs / BMC)",
-            "Cab Lights / Interior": "Accent & Replacement Bulbs (Diode Dynamics)"
-        };
-        if (userAnswers['project_type'] && lMap[userAnswers['project_type'].label]) {
-            queryParams.push(`contact.contact_lighting_upgrades=${encodeURIComponent(lMap[userAnswers['project_type'].label])}`);
-        }
+        if (userAnswers['project_type']) detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Project</span><span class="text-white">${userAnswers['project_type'].label}</span></div>`;
     }
-
-    const queryString = queryParams.join('&');
     
-    // Build a params object for postMessage relay
-    const paramsObj = {};
-    queryParams.forEach(p => {
-        const [key, val] = p.split('=');
-        paramsObj[key] = decodeURIComponent(val);
-    });
+    const price = currentService.calculate(userAnswers);
     
-    // Update parent URL so form_embed.js can read them
-    const newUrl = window.location.pathname + '?' + queryString;
-    window.history.replaceState({}, '', newUrl);
-    
-    // Replace the chat window with the booking widget
+    // Replace the chat window with summary + booking widget
     const body = document.getElementById('estimator-body');
     body.innerHTML = `
-        <div class="flex-grow w-full h-full flex flex-col message-enter">
-            <div class="mb-4 text-center">
-                <h3 class="font-bold text-white uppercase tracking-widest text-sm">Secure Booking</h3>
-                <p class="text-xs text-zinc-500">Complete your details below</p>
+        <div class="flex flex-col gap-4 message-enter p-1" style="height: 100%; overflow-y: auto;">
+            <!-- Service Summary Card -->
+            <div class="rounded-xl border border-labBlue/30 bg-gradient-to-b from-labBlue/10 to-transparent p-4 flex-shrink-0">
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-2 h-2 rounded-full bg-labBlue animate-pulse"></div>
+                    <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-labBlue">Your Selections</span>
+                </div>
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between">
+                        <span class="text-zinc-500">Vehicle</span>
+                        <span class="text-white font-semibold">${vehicle}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-zinc-500">Size</span>
+                        <span class="text-white">${vehicleSize}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-zinc-500">Service</span>
+                        <span class="text-labBlue font-semibold">${serviceName}</span>
+                    </div>
+                    ${detailItems}
+                    <div class="border-t border-zinc-800 pt-2 mt-2 flex justify-between">
+                        <span class="text-zinc-400 font-semibold">Estimate</span>
+                        <span class="text-white font-extrabold text-base">$${price.toFixed(2)}</span>
+                    </div>
+                </div>
+                <p class="text-[10px] text-zinc-600 mt-3 leading-relaxed">Please reference this info when filling out the booking form below. Select the matching service & options.</p>
             </div>
-            <div class="w-full flex-grow rounded-xl overflow-hidden border border-edge bg-[#0D0D12] relative custom-scrollbar" id="ghl-iframe-container" style="min-height: 500px; overflow-y: auto;">
+            
+            <!-- Booking Form -->
+            <div class="flex-grow rounded-xl overflow-hidden border border-edge bg-[#0D0D12] relative" style="min-height: 600px;">
                 <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 text-zinc-600" id="ghl-loading-spinner">
                     <svg class="w-8 h-8 animate-spin text-labBlue" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span class="text-xs font-mono uppercase tracking-widest">Loading Form...</span>
+                    <span class="text-xs font-mono uppercase tracking-widest">Loading Booking...</span>
                 </div>
+                <iframe src="https://api.leadconnectorhq.com/widget/booking/uCWyqHn7e5TTX1838aZi" 
+                    style="width: 100%; height: 100%; min-height: 800px; border: none; position: relative; z-index: 10;" 
+                    scrolling="yes" 
+                    id="ghl-booking-iframe"
+                    onload="document.getElementById('ghl-loading-spinner').style.display='none';">
+                </iframe>
             </div>
         </div>
     `;
-
-    const container = document.getElementById('ghl-iframe-container');
-    const iframeSrc = 'https://api.leadconnectorhq.com/widget/booking/uCWyqHn7e5TTX1838aZi?' + queryString;
     
-    // Set up postMessage listener BEFORE creating the iframe
-    // This ensures we catch the GHL widget's "fetch-query-params" request
-    const messageHandler = function(event) {
-        if (!event.data || !Array.isArray(event.data)) return;
-        const action = event.data[0];
-        
-        if (action === 'fetch-query-params') {
-            // Respond with the query params, mimicking form_embed.js behavior
-            const iframe = document.getElementById('ghl-booking-iframe');
-            if (iframe && iframe.contentWindow) {
-                iframe.contentWindow.postMessage(
-                    ['query-params', paramsObj, window.location.href, document.referrer, 'uCWyqHn7e5TTX1838aZi'],
-                    '*'
-                );
-            }
-        }
-        
-        if (action === 'iframeLoaded') {
-            // Hide the loading spinner
-            const spinner = document.getElementById('ghl-loading-spinner');
-            if (spinner) spinner.style.display = 'none';
-        }
-    };
-    window.addEventListener('message', messageHandler);
-    
-    // Create the iframe element properly
-    const iframe = document.createElement('iframe');
-    iframe.src = iframeSrc;
-    iframe.id = 'ghl-booking-iframe';
-    iframe.style.cssText = 'width: 100%; height: 100%; min-height: 800px; border: none; position: relative; z-index: 10;';
-    iframe.scrolling = 'yes';
-    iframe.onload = function() {
-        const spinner = document.getElementById('ghl-loading-spinner');
-        if (spinner) spinner.style.display = 'none';
-    };
-    container.appendChild(iframe);
-    
-    // Also load form_embed.js as backup (it will handle iframeResizer etc.)
+    // Load form_embed.js for proper iframe resizing
     const script = document.createElement('script');
     script.src = 'https://link.msgsndr.com/js/form_embed.js';
     script.type = 'text/javascript';
