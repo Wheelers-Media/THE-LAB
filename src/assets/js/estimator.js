@@ -3,8 +3,18 @@ const estimatorConfig = {
         title: "Detailing Estimator",
         steps: [
             {
-                id: 'vehicle_info',
-                question: "What vehicle are you looking to service? (Year, Make, Model)",
+                id: 'vehicle_year',
+                question: "What year is your vehicle?",
+                type: 'text'
+            },
+            {
+                id: 'vehicle_make',
+                question: "What make is your vehicle? (e.g. Ford, Chevy, Ram)",
+                type: 'text'
+            },
+            {
+                id: 'vehicle_model',
+                question: "What model is your vehicle? (e.g. F-350, Silverado 2500)",
                 type: 'text'
             },
             {
@@ -46,8 +56,18 @@ const estimatorConfig = {
         title: "Window Tinting Estimator",
         steps: [
             {
-                id: 'vehicle_info',
-                question: "What vehicle are you looking to service? (Year, Make, Model)",
+                id: 'vehicle_year',
+                question: "What year is your vehicle?",
+                type: 'text'
+            },
+            {
+                id: 'vehicle_make',
+                question: "What make is your vehicle? (e.g. Ford, Chevy, Ram)",
+                type: 'text'
+            },
+            {
+                id: 'vehicle_model',
+                question: "What model is your vehicle? (e.g. F-350, Silverado 2500)",
                 type: 'text'
             },
             {
@@ -77,8 +97,18 @@ const estimatorConfig = {
         title: "Ceramic Coating Estimator",
         steps: [
             {
-                id: 'vehicle_info',
-                question: "What vehicle are you looking to service? (Year, Make, Model)",
+                id: 'vehicle_year',
+                question: "What year is your vehicle?",
+                type: 'text'
+            },
+            {
+                id: 'vehicle_make',
+                question: "What make is your vehicle? (e.g. Ford, Chevy, Ram)",
+                type: 'text'
+            },
+            {
+                id: 'vehicle_model',
+                question: "What model is your vehicle? (e.g. F-350, Silverado 2500)",
                 type: 'text'
             },
             {
@@ -117,8 +147,18 @@ const estimatorConfig = {
         title: "Paint Protection Film Estimator",
         steps: [
             {
-                id: 'vehicle_info',
-                question: "What vehicle are you looking to service? (Year, Make, Model)",
+                id: 'vehicle_year',
+                question: "What year is your vehicle?",
+                type: 'text'
+            },
+            {
+                id: 'vehicle_make',
+                question: "What make is your vehicle? (e.g. Ford, Chevy, Ram)",
+                type: 'text'
+            },
+            {
+                id: 'vehicle_model',
+                question: "What model is your vehicle? (e.g. F-350, Silverado 2500)",
                 type: 'text'
             },
             {
@@ -140,8 +180,18 @@ const estimatorConfig = {
         title: "Custom Lighting Estimator",
         steps: [
             {
-                id: 'vehicle_info',
-                question: "What vehicle are you looking to service? (Year, Make, Model)",
+                id: 'vehicle_year',
+                question: "What year is your vehicle?",
+                type: 'text'
+            },
+            {
+                id: 'vehicle_make',
+                question: "What make is your vehicle? (e.g. Ford, Chevy, Ram)",
+                type: 'text'
+            },
+            {
+                id: 'vehicle_model',
+                question: "What model is your vehicle? (e.g. F-350, Silverado 2500)",
                 type: 'text'
             },
             {
@@ -456,20 +506,45 @@ function finishEstimation() {
 }
 
 function loadBookingIframe() {
-    // Build a summary of their AI selections
-    let summary = `AI Estimate Details:\n`;
-    summary += `Service: ${currentService.title.replace(' Estimator', '')}\n`;
-    
-    const price = currentService.calculate(userAnswers);
-    summary += `Estimated Price: $${price.toFixed(2)}\n\n`;
-    
-    summary += `Customer Selections:\n`;
-    for (const [stepId, answer] of Object.entries(userAnswers)) {
-        summary += `- ${answer.label}\n`;
+    let queryParams = [];
+
+    // Map Vehicle Info
+    if (userAnswers['vehicle_year']) queryParams.push(`contact.contact_vehicle_year=${encodeURIComponent(userAnswers['vehicle_year'].label)}`);
+    if (userAnswers['vehicle_make']) queryParams.push(`contact.contact_vehicle_make=${encodeURIComponent(userAnswers['vehicle_make'].label)}`);
+    if (userAnswers['vehicle_model']) queryParams.push(`contact.contact_vehicle_model=${encodeURIComponent(userAnswers['vehicle_model'].label)}`);
+    if (userAnswers['vehicle_size']) queryParams.push(`contact.vehicle_type=${encodeURIComponent(userAnswers['vehicle_size'].label)}`);
+
+    // Map Primary Service
+    const serviceNameMap = {
+        "Detailing Estimator": "Detailing",
+        "Window Tinting Estimator": "Window Tinting",
+        "Ceramic Coating Estimator": "Ceramic Coating",
+        "Paint Protection Film Estimator": "Paint Protection Film",
+        "Custom Lighting Estimator": "Custom Lighting"
+    };
+    const primaryService = serviceNameMap[currentService.title] || currentService.title.replace(' Estimator', '');
+    queryParams.push(`contact.contact_primary_service_requested=${encodeURIComponent(primaryService)}`);
+
+    // Map Service-Specific Packages and Options
+    if (currentService.title === "Detailing Estimator") {
+        if (userAnswers['package']) queryParams.push(`contact.contact_detailing_package=${encodeURIComponent(userAnswers['package'].label)}`);
+        if (userAnswers['addons'] && userAnswers['addons'].label !== "None") queryParams.push(`contact.contact_additional_protection=${encodeURIComponent(userAnswers['addons'].label)}`);
     }
-    
-    // URL encode the summary text
-    const encodedNotes = encodeURIComponent(summary);
+    if (currentService.title === "Window Tinting Estimator") {
+        if (userAnswers['coverage']) queryParams.push(`contact.contact_tint_coverage_add_ons=${encodeURIComponent(userAnswers['coverage'].label)}`);
+        if (userAnswers['film_type']) queryParams.push(`contact.contact_window_tint_preference=${encodeURIComponent(userAnswers['film_type'].label)}`);
+    }
+    if (currentService.title === "Ceramic Coating Estimator") {
+        if (userAnswers['package']) queryParams.push(`contact.contact_ceramic_package=${encodeURIComponent(userAnswers['package'].label)}`);
+    }
+    if (currentService.title === "Paint Protection Film Estimator") {
+        if (userAnswers['coverage']) queryParams.push(`contact.contact_ppf_package=${encodeURIComponent(userAnswers['coverage'].label)}`);
+    }
+    if (currentService.title === "Custom Lighting Estimator") {
+        if (userAnswers['project_type']) queryParams.push(`contact.contact_lighting_upgrades=${encodeURIComponent(userAnswers['project_type'].label)}`);
+    }
+
+    const queryString = queryParams.join('&');
     
     // Replace the chat window with the booking widget
     const body = document.getElementById('estimator-body');
@@ -487,7 +562,7 @@ function loadBookingIframe() {
                     </svg>
                     <span class="text-xs font-mono uppercase tracking-widest">Loading Form...</span>
                 </div>
-                <iframe src="https://api.leadconnectorhq.com/widget/booking/uCWyqHn7e5TTX1838aZi?notes=${encodedNotes}" style="width: 100%; height: 100%; min-height: 800px; border:none; position: relative; z-index: 10;" scrolling="yes" id="uCWyqHn7e5TTX1838aZi_1781140829325" onload="this.previousElementSibling.style.display='none';"></iframe>
+                <iframe src="https://api.leadconnectorhq.com/widget/booking/uCWyqHn7e5TTX1838aZi?${queryString}" style="width: 100%; height: 100%; min-height: 800px; border:none; position: relative; z-index: 10;" scrolling="yes" id="uCWyqHn7e5TTX1838aZi_1781140829325" onload="this.previousElementSibling.style.display='none';"></iframe>
                 <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
             </div>
         </div>
