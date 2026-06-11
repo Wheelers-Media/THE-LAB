@@ -512,14 +512,26 @@ function loadBookingIframe() {
     if (userAnswers['vehicle_year']) queryParams.push(`contact.contact_vehicle_year=${encodeURIComponent(userAnswers['vehicle_year'].label)}`);
     if (userAnswers['vehicle_make']) queryParams.push(`contact.contact_vehicle_make=${encodeURIComponent(userAnswers['vehicle_make'].label)}`);
     if (userAnswers['vehicle_model']) queryParams.push(`contact.contact_vehicle_model=${encodeURIComponent(userAnswers['vehicle_model'].label)}`);
-    if (userAnswers['vehicle_size']) queryParams.push(`contact.vehicle_type=${encodeURIComponent(userAnswers['vehicle_size'].label)}`);
+    
+    // Map Vehicle Size
+    if (userAnswers['vehicle_size']) {
+        const sizeMap = {
+            "Car / Sedan": "Car",
+            "Small SUV / Truck": "SUV",
+            "Large SUV / Minivan": "Large SUV",
+            "Large SUV / Rig": "Large SUV",
+            "Semi Truck": "Off-Road"
+        };
+        const size = sizeMap[userAnswers['vehicle_size'].label];
+        if (size) queryParams.push(`contact.vehicle_type=${encodeURIComponent(size)}`);
+    }
 
     // Map Primary Service
     const serviceNameMap = {
-        "Detailing Estimator": "Detailing",
+        "Detailing Estimator": "Premium Detailing",
         "Window Tinting Estimator": "Window Tinting",
         "Ceramic Coating Estimator": "Ceramic Coating",
-        "Paint Protection Film Estimator": "Paint Protection Film",
+        "Paint Protection Film Estimator": "Paint Protection Film (PPF)",
         "Custom Lighting Estimator": "Custom Lighting"
     };
     const primaryService = serviceNameMap[currentService.title] || currentService.title.replace(' Estimator', '');
@@ -527,21 +539,73 @@ function loadBookingIframe() {
 
     // Map Service-Specific Packages and Options
     if (currentService.title === "Detailing Estimator") {
-        if (userAnswers['package']) queryParams.push(`contact.contact_detailing_package=${encodeURIComponent(userAnswers['package'].label)}`);
-        if (userAnswers['addons'] && userAnswers['addons'].label !== "None") queryParams.push(`contact.contact_additional_protection=${encodeURIComponent(userAnswers['addons'].label)}`);
+        const pkgMap = {
+            "Standard (Entry Level)": "Standard Detail",
+            "De-Luxx (Signature)": "De-Luxx Detail",
+            "Semi Interior (Heavy Duty)": "Semi Interior (Sleeper/Day Cab)"
+        };
+        if (userAnswers['package'] && pkgMap[userAnswers['package'].label]) {
+            queryParams.push(`contact.contact_detailing_package=${encodeURIComponent(pkgMap[userAnswers['package'].label])}`);
+        }
+        
+        const addonMap = {
+            "Pet Hair Removal": "Pet Hair Removal",
+            "Heavy Odour Elimination": "Odour Elimination"
+        };
+        if (userAnswers['addons'] && addonMap[userAnswers['addons'].label]) {
+            queryParams.push(`contact.contact_additional_protection=${encodeURIComponent(addonMap[userAnswers['addons'].label])}`);
+        }
     }
+    
     if (currentService.title === "Window Tinting Estimator") {
-        if (userAnswers['coverage']) queryParams.push(`contact.contact_tint_coverage_add_ons=${encodeURIComponent(userAnswers['coverage'].label)}`);
-        if (userAnswers['film_type']) queryParams.push(`contact.contact_window_tint_preference=${encodeURIComponent(userAnswers['film_type'].label)}`);
+        const cov = userAnswers['coverage'] ? userAnswers['coverage'].label : '';
+        const film = userAnswers['film_type'] ? userAnswers['film_type'].label : '';
+        let tintPref = '';
+        
+        if (cov === "Front 2 Windows" && film === "Standard Carbon") tintPref = "Standard Carbon Tint (Front Roll-Ups) - $180";
+        if (cov === "Front 2 Windows" && film === "Premium Ceramic (Heat Rejection)") tintPref = "Premium Ceramic Tint (Front Roll-Ups) - $260";
+        if (cov === "Full Vehicle" && film === "Standard Carbon") tintPref = "Full Vehicle (Carbon) - $550 to $700";
+        if (cov === "Full Vehicle" && film === "Premium Ceramic (Heat Rejection)") tintPref = "Full Vehicle (Ceramic) - $850 to $1,300";
+        
+        if (tintPref) queryParams.push(`contact.contact_window_tint_preference=${encodeURIComponent(tintPref)}`);
+        
+        if (cov === "Windshield Brow Only") queryParams.push(`contact.contact_tint_coverage_add_ons=${encodeURIComponent("Add Ceramic Windshield Brow ($90-$180)")}`);
+        if (cov === "Full Windshield") queryParams.push(`contact.contact_tint_coverage_add_ons=${encodeURIComponent("Full Windshield")}`);
     }
+    
     if (currentService.title === "Ceramic Coating Estimator") {
-        if (userAnswers['package']) queryParams.push(`contact.contact_ceramic_package=${encodeURIComponent(userAnswers['package'].label)}`);
+        const cPkgMap = {
+            "1-Year Coating": "Standard Coat (1-Layer)",
+            "5-Year Coating": "Elite Coat (2-Layer)",
+            "9-Year Coating": "Graphene Elite (Multi-Layer / 7-Year)"
+        };
+        if (userAnswers['package'] && cPkgMap[userAnswers['package'].label]) {
+            queryParams.push(`contact.contact_ceramic_package=${encodeURIComponent(cPkgMap[userAnswers['package'].label])}`);
+        }
     }
+    
     if (currentService.title === "Paint Protection Film Estimator") {
-        if (userAnswers['coverage']) queryParams.push(`contact.contact_ppf_package=${encodeURIComponent(userAnswers['coverage'].label)}`);
+        const pPkgMap = {
+            "Front Bumper Only": "Partial Front",
+            "Partial Front Clip": "Partial Front",
+            "Full Front Clip": "Full Front (Recommended)",
+            "Full Body Protection": "Full Vehicle"
+        };
+        if (userAnswers['coverage'] && pPkgMap[userAnswers['coverage'].label]) {
+            queryParams.push(`contact.contact_ppf_package=${encodeURIComponent(pPkgMap[userAnswers['coverage'].label])}`);
+        }
     }
+    
     if (currentService.title === "Custom Lighting Estimator") {
-        if (userAnswers['project_type']) queryParams.push(`contact.contact_lighting_upgrades=${encodeURIComponent(userAnswers['project_type'].label)}`);
+        const lMap = {
+            "Custom Headlight Build": "Morimoto Headlight/Taillight Assemblies",
+            "Rock Lights (Underglow)": "Off-Road & Auxiliary (Baja Designs / BMC)",
+            "Wheel Rings": "Off-Road & Auxiliary (Baja Designs / BMC)",
+            "Cab Lights / Interior": "Accent & Replacement Bulbs (Diode Dynamics)"
+        };
+        if (userAnswers['project_type'] && lMap[userAnswers['project_type'].label]) {
+            queryParams.push(`contact.contact_lighting_upgrades=${encodeURIComponent(lMap[userAnswers['project_type'].label])}`);
+        }
     }
 
     const queryString = queryParams.join('&');
