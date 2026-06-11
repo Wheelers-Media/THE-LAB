@@ -172,16 +172,41 @@
                 <div class="overflow-hidden rounded-2xl border border-edge mb-8" style="background:#0D0D12;">
                     <div class="relative min-h-[320px] md:min-h-[420px] overflow-hidden">
                         <img src="/assets/CHOOSE-YOUR-SHADE.png" alt="Choose Your Shade" class="absolute inset-0 w-full h-full object-cover z-0">
+                        <div id="tint-simulator-overlay" class="absolute inset-0 transition-colors duration-700 z-10" style="background:rgba(0,0,0,0.82);"></div>
                         <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent z-10"></div>
                         <div class="relative z-20 p-8 md:p-12 flex flex-col justify-end min-h-[320px] md:min-h-[420px]">
                             <p class="text-xs font-mono text-labBlue uppercase tracking-[0.3em] mb-4">Window Tinting Solutions</p>
                             <h2 class="font-heading font-extrabold text-4xl md:text-6xl text-white uppercase leading-none mb-8 max-w-3xl">CHOOSE YOUR SHADE.</h2>
-                            <div class="grid grid-cols-2 md:grid-cols-4 border border-white/10 rounded-xl overflow-hidden max-w-4xl">
-                                <div class="min-h-[132px] p-5 flex flex-col justify-between" style="background:rgba(0,0,0,0.95);"><span class="h-px w-10 bg-white/80"></span><div><p class="font-heading font-extrabold text-3xl text-white">5%</p><p class="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Limo Dark</p></div></div>
-                                <div class="min-h-[132px] p-5 flex flex-col justify-between" style="background:rgba(0,0,0,0.82);"><span class="h-px w-10 bg-white/70"></span><div><p class="font-heading font-extrabold text-3xl text-white">18%</p><p class="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Popular Privacy</p></div></div>
-                                <div class="min-h-[132px] p-5 flex flex-col justify-between" style="background:rgba(0,0,0,0.75);"><span class="h-px w-10 bg-white/70"></span><div><p class="font-heading font-extrabold text-3xl text-white">25%</p><p class="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Balanced Smoke</p></div></div>
-                                <div class="min-h-[132px] p-5 flex flex-col justify-between" style="background:rgba(0,0,0,0.65);"><span class="h-px w-10 bg-white/80"></span><div><p class="font-heading font-extrabold text-3xl text-white">35%</p><p class="text-[10px] text-zinc-300 uppercase tracking-widest mt-1">Light Smoke</p></div></div>
+                            <div class="grid grid-cols-2 md:grid-cols-4 border border-white/10 rounded-xl overflow-hidden max-w-4xl" id="shade-buttons">
+                                <button onclick="setTintLevel(this, 0.95)" class="shade-btn min-h-[132px] p-5 flex flex-col justify-between text-left transition-all border-b-2 md:border-b-0 md:border-r-2 border-transparent hover:bg-white/5" style="background:rgba(0,0,0,0.95);">
+                                    <span class="h-px w-10 bg-white/80"></span>
+                                    <div><p class="font-heading font-extrabold text-3xl text-white">5%</p><p class="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Limo Dark</p></div>
+                                </button>
+                                <button onclick="setTintLevel(this, 0.82)" class="shade-btn min-h-[132px] p-5 flex flex-col justify-between text-left transition-all border-b-2 md:border-b-0 md:border-r-2 border-labBlue bg-white/5" style="background:rgba(0,0,0,0.82);">
+                                    <span class="h-px w-10 bg-white/70"></span>
+                                    <div><p class="font-heading font-extrabold text-3xl text-white">18%</p><p class="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Popular Privacy</p></div>
+                                </button>
+                                <button onclick="setTintLevel(this, 0.75)" class="shade-btn min-h-[132px] p-5 flex flex-col justify-between text-left transition-all border-b-2 md:border-b-0 md:border-r-2 border-transparent hover:bg-white/5" style="background:rgba(0,0,0,0.75);">
+                                    <span class="h-px w-10 bg-white/70"></span>
+                                    <div><p class="font-heading font-extrabold text-3xl text-white">25%</p><p class="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Balanced Smoke</p></div>
+                                </button>
+                                <button onclick="setTintLevel(this, 0.65)" class="shade-btn min-h-[132px] p-5 flex flex-col justify-between text-left transition-all border-b-2 md:border-b-0 md:border-r-2 border-transparent hover:bg-white/5" style="background:rgba(0,0,0,0.65);">
+                                    <span class="h-px w-10 bg-white/80"></span>
+                                    <div><p class="font-heading font-extrabold text-3xl text-white">35%</p><p class="text-[10px] text-zinc-300 uppercase tracking-widest mt-1">Light Smoke</p></div>
+                                </button>
                             </div>
+                        </div>
+                        <script>
+                            function setTintLevel(btn, opacity) {
+                                document.getElementById('tint-simulator-overlay').style.backgroundColor = `rgba(0,0,0,${opacity})`;
+                                document.querySelectorAll('.shade-btn').forEach(b => {
+                                    b.classList.remove('border-labBlue', 'bg-white/5');
+                                    b.classList.add('border-transparent');
+                                });
+                                btn.classList.remove('border-transparent');
+                                btn.classList.add('border-labBlue', 'bg-white/5');
+                            }
+                        </script>
                         </div>
                     </div>
                 </div>
