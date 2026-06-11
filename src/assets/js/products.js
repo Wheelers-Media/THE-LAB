@@ -205,6 +205,61 @@ function classifyMakes(title, tags) {
     return Array.from(makes);
 }
 
+// ── Model classifier ────────────────────────────────────────────
+function classifyModels(title, tags) {
+    const t = title.toLowerCase();
+    const tagStr = tags.join(" ").toLowerCase();
+    const models = new Set();
+
+    // Ford
+    if (t.includes("f250") || t.includes("f-250")) models.add("F-250");
+    if (t.includes("f350") || t.includes("f-350")) models.add("F-350");
+    if (t.includes("f450") || t.includes("f-450")) models.add("F-450");
+    if (t.includes("f550") || t.includes("f-550")) models.add("F-550");
+    if (t.includes("f150") || t.includes("f-150")) models.add("F-150");
+    if (t.includes("super duty") || t.includes("superduty") || tagStr.includes("superduty")) {
+        models.add("F-250");
+        models.add("F-350");
+    }
+    if (t.includes("expedition")) models.add("Expedition");
+
+    // Ram
+    if (t.includes("2500") && (t.includes("ram") || tagStr.includes("ram") || tagStr.includes("cummins") || t.includes("cummins"))) models.add("2500");
+    if (t.includes("3500") && (t.includes("ram") || tagStr.includes("ram") || tagStr.includes("cummins") || t.includes("cummins"))) models.add("3500");
+
+    // GM
+    if (t.includes("silverado")) {
+        if (t.includes("1500")) models.add("Silverado 1500");
+        if (t.includes("2500")) models.add("Silverado 2500HD");
+        if (t.includes("3500")) models.add("Silverado 3500HD");
+        if (!t.includes("1500") && !t.includes("2500") && !t.includes("3500")) {
+            models.add("Silverado 2500HD");
+            models.add("Silverado 3500HD");
+        }
+    }
+    if (t.includes("sierra")) {
+        if (t.includes("1500")) models.add("Sierra 1500");
+        if (t.includes("2500")) models.add("Sierra 2500HD");
+        if (t.includes("3500")) models.add("Sierra 3500HD");
+        if (!t.includes("1500") && !t.includes("2500") && !t.includes("3500")) {
+            models.add("Sierra 2500HD");
+            models.add("Sierra 3500HD");
+        }
+    }
+    if (t.includes("colorado")) models.add("Colorado");
+    if (t.includes("canyon")) models.add("Canyon");
+
+    // Jeep
+    if (t.includes("grand cherokee")) models.add("Grand Cherokee");
+    if (t.includes("gladiator")) models.add("Gladiator");
+
+    // Nissan
+    if (t.includes("titan xd") || t.includes("titan")) models.add("Titan XD");
+
+    if (models.size === 0) models.add("Universal");
+    return Array.from(models);
+}
+
 // ── Engine classifier ───────────────────────────────────────────
 function classifyEngine(title, tags) {
     const t = title.toLowerCase();
@@ -249,7 +304,7 @@ function classifyBrand(title, vendor) {
     if (t.includes("baja designs")) return "Baja Designs";
     if (v.includes("napa")) return "NAPA";
     if (v.includes("s360")) return "S360 / AMDP";
-    if (v === "the lab") return "The Lab";
+    if (v === "the lab") return "Aftermarket";
 
     return vendor || "Other";
 }
@@ -342,6 +397,7 @@ window.initShopifyCatalog = async function () {
 
             const years = extractYears(node.title);
             const makes = classifyMakes(node.title, node.tags);
+            const models = classifyModels(node.title, node.tags);
             const engine = classifyEngine(node.title, node.tags);
             const category = classifyCategory(node.title, node.tags);
             const brand = classifyBrand(node.title, node.vendor);
@@ -361,6 +417,7 @@ window.initShopifyCatalog = async function () {
                 description: node.description || "",
                 descriptionHtml: node.descriptionHtml || "",
                 makes: makes,
+                models: models,
                 category: category,
                 engine: engine,
                 brand: brand,

@@ -332,7 +332,12 @@ function populateSidebarFilters() {
             const makeMatch = p.makes.includes(vMake) || p.makes.includes("Universal");
             const engMatch = enginesMatch(activeVehicle.engine, p.engine);
             const yearMatch = activeVehicle.year >= p.years[0] && activeVehicle.year <= p.years[1];
-            return makeMatch && engMatch && yearMatch;
+            let modelMatch = true;
+            if (activeVehicle.model) {
+                const pModels = p.models || [];
+                modelMatch = pModels.includes(activeVehicle.model) || pModels.includes("Universal") || pModels.length === 0;
+            }
+            return makeMatch && engMatch && yearMatch && modelMatch;
         });
     }
 
@@ -613,15 +618,36 @@ function renderProducts() {
         // Year
         let yearMatch = !activeFilters.year || (activeFilters.year >= p.years[0] && activeFilters.year <= p.years[1]);
         
+        let modelMatch = true;
+        
         // STRICT OVERRIDE: If a vehicle is pinned in the session
         if (activeVehicle) {
             const vMake = activeVehicle.make;
             makeMatch = p.makes.includes(vMake) || p.makes.includes("Universal");
             engMatch = enginesMatch(activeVehicle.engine, p.engine);
             yearMatch = activeVehicle.year >= p.years[0] && activeVehicle.year <= p.years[1];
+            if (activeVehicle.model) {
+                const pModels = p.models || [];
+                modelMatch = pModels.includes(activeVehicle.model) || pModels.includes("Universal") || pModels.length === 0;
+            }
         }
 
-        return searchMatch && makeMatch && catMatch && engMatch && brandMatch && yearMatch;
+        return searchMatch && makeMatch && catMatch && engMatch && brandMatch && yearMatch && modelMatch;
+    });
+
+    // Sort products: Specific Fitment first, Universal second
+    filtered.sort((a, b) => {
+        const aIsUniversal = a.makes.includes("Universal") || a.engine === "Universal" || (a.models && a.models.includes("Universal"));
+        const bIsUniversal = b.makes.includes("Universal") || b.engine === "Universal" || (b.models && b.models.includes("Universal"));
+        
+        if (aIsUniversal && !bIsUniversal) return 1;
+        if (!aIsUniversal && bIsUniversal) return -1;
+        
+        // Secondary sort: Popular first
+        if (a.isPopular && !b.isPopular) return -1;
+        if (!a.isPopular && b.isPopular) return 1;
+        
+        return 0;
     });
 
     // Update product count
