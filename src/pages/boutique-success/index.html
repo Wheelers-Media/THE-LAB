@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed | THE LAB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { void: '#000000', midnight: '#0D0D12', edge: '#1E1E28', signal: '#FFFFFF', labBlue: '#0066FF', labCyan: '#00E5FF' },
+                    fontFamily: { heading: ['Manrope', 'sans-serif'], body: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #000000; font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-void text-zinc-400 antialiased h-screen flex flex-col justify-center items-center relative overflow-hidden">
+    <!-- Grid Background for Premium Aesthetic -->
+    <div class="absolute inset-0 pointer-events-none opacity-20">
+        <div class="absolute inset-0" style="background-image: linear-gradient(rgba(0,102,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,102,255,0.1) 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(circle at center, black, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);"></div>
+    </div>
+
+    <!-- Content Container -->
+    <div class="z-10 max-w-2xl w-full px-6 flex flex-col items-center text-center">
+        <!-- Logo -->
+        <div class="mb-12">
+            <img src="../../assets/logo.jpg" alt="THE LAB Logo" class="h-16 object-contain mix-blend-screen opacity-90">
+        </div>
+
+        <!-- Headers -->
+        <h1 class="text-4xl md:text-5xl font-heading font-extrabold text-signal uppercase tracking-tight mb-4">
+            YOUR BAY IS RESERVED.
+        </h1>
+        <p class="text-labBlue tracking-[0.2em] uppercase text-xs md:text-sm font-semibold mb-8">
+            Where grit meets luxury.
+        </p>
+
+        <!-- Body Text -->
+        <p class="text-zinc-300 text-lg leading-relaxed mb-10 max-w-xl">
+            Your service request and drop-off slot have been successfully confirmed. Our team has received your vehicle details and is preparing for your arrival.
+        </p>
+
+        <!-- Next Steps Panel -->
+        <div class="bg-midnight border border-edge rounded-2xl p-8 mb-12 w-full text-left shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+            <h3 class="text-signal font-heading font-bold text-lg mb-4 border-b border-edge pb-2">What Happens Next:</h3>
+            <ul class="space-y-4 text-sm text-zinc-400">
+                <li class="flex items-start gap-3">
+                    <span class="text-labBlue font-bold mt-0.5">1.</span>
+                    <p>You will receive an automated SMS reminder the night before your appointment at exactly 8:00 PM.</p>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-labBlue font-bold mt-0.5">2.</span>
+                    <p><strong class="text-zinc-300">Preparation:</strong> To ensure we can dive straight into our multi-stage process, please remove all personal belongings from the cabin, center console, and trunk prior to drop-off.</p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- CTA Button -->
+        <a href="/boutique" class="group relative inline-flex items-center justify-center px-8 py-4 font-heading font-bold text-signal uppercase tracking-widest text-sm border border-white/20 rounded-xl overflow-hidden transition-all duration-300 hover:border-white/50 hover:bg-white/5">
+            <span class="relative z-10">RETURN TO THE BOUTIQUE</span>
+        </a>
+    </div>
+</body>
+</html>

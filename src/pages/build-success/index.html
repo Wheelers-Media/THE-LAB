@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Request Secured | THE LAB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { void: '#000000', midnight: '#0D0D12', edge: '#1E1E28', signal: '#FFFFFF', labBlue: '#0066FF', labCyan: '#00E5FF' },
+                    fontFamily: { heading: ['Manrope', 'sans-serif'], body: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #000000; font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-void text-zinc-400 antialiased h-screen flex flex-col justify-center items-center relative overflow-hidden">
+    <!-- Grid Background for Premium Aesthetic -->
+    <div class="absolute inset-0 pointer-events-none opacity-20">
+        <div class="absolute inset-0" style="background-image: linear-gradient(rgba(0,229,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,255,0.1) 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(circle at center, black, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);"></div>
+    </div>
+
+    <!-- Content Container -->
+    <div class="z-10 max-w-2xl w-full px-6 flex flex-col items-center text-center">
+        <!-- Logo -->
+        <div class="mb-10">
+            <img src="../../assets/logo.jpg" alt="THE LAB Logo" class="h-16 object-contain mix-blend-screen opacity-90">
+        </div>
+
+        <!-- Headers -->
+        <h1 class="text-4xl md:text-5xl font-heading font-extrabold text-signal uppercase tracking-tight mb-4">
+            BUILD REQUEST SECURED.
+        </h1>
+        <p class="text-labCyan tracking-[0.2em] uppercase text-xs md:text-sm font-semibold mb-8">
+            Where grit meets luxury.
+        </p>
+
+        <!-- Body Text -->
+        <p class="text-zinc-300 text-lg leading-relaxed mb-8 max-w-xl">
+            Your performance and accessory request has been securely transmitted to our master technicians.
+        </p>
+
+        <!-- Next Steps Panel -->
+        <div class="bg-midnight border border-edge rounded-2xl p-8 mb-10 w-full text-left shadow-[0_0_30px_rgba(0,0,0,0.5)] flex flex-col">
+            <h3 class="text-signal font-heading font-bold text-lg mb-4 border-b border-edge pb-2">What Happens Next:</h3>
+            <ul class="space-y-4 text-sm text-zinc-300 flex-grow mb-6">
+                <li class="flex items-start gap-3">
+                    <div class="w-1.5 h-1.5 rounded-full bg-labCyan mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(0,229,255,0.8)]"></div>
+                    <p>Eric is personally reviewing your vehicle specifications, desired horsepower goals, and accessory requests.</p>
+                </li>
+                <li class="flex items-start gap-3">
+                    <div class="w-1.5 h-1.5 rounded-full bg-labCyan mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(0,229,255,0.8)]"></div>
+                    <p>We are currently checking hardware availability with our authorized partners (Gridiron, EZ LYNK, AMDP, Morimoto, etc.).</p>
+                </li>
+                <li class="flex items-start gap-3">
+                    <div class="w-1.5 h-1.5 rounded-full bg-labCyan mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(0,229,255,0.8)]"></div>
+                    <p>Eric will reach out to you directly via phone or text shortly to confirm fitment, finalize your build sheet, and coordinate your official installation date.</p>
+                </li>
+            </ul>
+            
+            <!-- LEGAL DISCLAIMER -->
+            <div class="mt-auto border-t border-edge pt-4">
+                <p class="text-[10px] text-red-900/80 leading-snug">
+                    <strong class="text-red-800">WARNING:</strong> Certain performance products are designed and intended strictly for Off-Road and Sanctioned Racing Use Only. They are not legal for use on pollution-controlled vehicles driven on public roads or highways. The purchaser assumes all legal liability for compliance with federal and provincial emissions regulations, including the Clean Air Act. THE LAB does not advise on or authorize the illegal bypass of automotive emissions infrastructure.
+                </p>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <a href="/parts" class="group relative inline-flex items-center justify-center px-8 py-4 font-heading font-bold text-signal uppercase tracking-widest text-sm bg-labBlue rounded-xl overflow-hidden transition-all duration-300 hover:bg-labBlue/80 shadow-[0_0_20px_rgba(0,102,255,0.4)] hover:shadow-[0_0_30px_rgba(0,102,255,0.6)] text-white">
+            <span class="relative z-10">RETURN TO THE PARTS STORE</span>
+        </a>
+    </div>
+</body>
+</html>
