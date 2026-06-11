@@ -9,12 +9,12 @@ const estimatorConfig = {
             },
             {
                 id: 'vehicle_make',
-                question: "What make is your vehicle? (e.g. Ford, Chevy, Ram)",
+                question: "What make is your vehicle?",
                 type: 'text'
             },
             {
                 id: 'vehicle_model',
-                question: "What model is your vehicle? (e.g. F-350, Silverado 2500)",
+                question: "What model is your vehicle?",
                 type: 'text'
             },
             {
@@ -62,12 +62,12 @@ const estimatorConfig = {
             },
             {
                 id: 'vehicle_make',
-                question: "What make is your vehicle? (e.g. Ford, Chevy, Ram)",
+                question: "What make is your vehicle?",
                 type: 'text'
             },
             {
                 id: 'vehicle_model',
-                question: "What model is your vehicle? (e.g. F-350, Silverado 2500)",
+                question: "What model is your vehicle?",
                 type: 'text'
             },
             {
@@ -103,12 +103,12 @@ const estimatorConfig = {
             },
             {
                 id: 'vehicle_make',
-                question: "What make is your vehicle? (e.g. Ford, Chevy, Ram)",
+                question: "What make is your vehicle?",
                 type: 'text'
             },
             {
                 id: 'vehicle_model',
-                question: "What model is your vehicle? (e.g. F-350, Silverado 2500)",
+                question: "What model is your vehicle?",
                 type: 'text'
             },
             {
@@ -153,12 +153,12 @@ const estimatorConfig = {
             },
             {
                 id: 'vehicle_make',
-                question: "What make is your vehicle? (e.g. Ford, Chevy, Ram)",
+                question: "What make is your vehicle?",
                 type: 'text'
             },
             {
                 id: 'vehicle_model',
-                question: "What model is your vehicle? (e.g. F-350, Silverado 2500)",
+                question: "What model is your vehicle?",
                 type: 'text'
             },
             {
@@ -186,12 +186,12 @@ const estimatorConfig = {
             },
             {
                 id: 'vehicle_make',
-                question: "What make is your vehicle? (e.g. Ford, Chevy, Ram)",
+                question: "What make is your vehicle?",
                 type: 'text'
             },
             {
                 id: 'vehicle_model',
-                question: "What model is your vehicle? (e.g. F-350, Silverado 2500)",
+                question: "What model is your vehicle?",
                 type: 'text'
             },
             {
@@ -391,9 +391,15 @@ function renderStep() {
         
         if (step.type === 'text') {
             const optsContainerId = 'opts-' + Date.now();
+            
+            let placeholder = 'Type your answer...';
+            if (step.id === 'vehicle_year') placeholder = 'e.g. 2019';
+            if (step.id === 'vehicle_make') placeholder = 'e.g. Ford, Chevy, Ram';
+            if (step.id === 'vehicle_model') placeholder = 'e.g. F-350, Silverado 2500';
+
             const html = `
                 <div id="${optsContainerId}" class="flex flex-col gap-3 ml-11 message-enter">
-                    <input type="text" id="text-input-${optsContainerId}" placeholder="e.g. 2024 Ford F-350" class="w-full bg-[#0D0D12] text-white text-sm px-4 py-3 rounded-xl border border-edge focus:border-labBlue focus:outline-none focus:ring-1 focus:ring-labBlue transition-all">
+                    <input type="text" id="text-input-${optsContainerId}" placeholder="${placeholder}" class="w-full bg-[#0D0D12] text-white text-sm px-4 py-3 rounded-xl border border-edge focus:border-labBlue focus:outline-none focus:ring-1 focus:ring-labBlue transition-all">
                     <button onclick="handleTextSubmit('${optsContainerId}')" class="w-full bg-labBlue text-white font-bold py-3 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all">
                         Submit
                     </button>
