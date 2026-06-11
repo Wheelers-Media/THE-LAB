@@ -831,7 +831,7 @@ function initPDP() {
                                 <li>
                                     <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-2 border-b border-edge pb-2">${make}</h4>
                                     <ul class="pl-4 space-y-1">
-                                        <li class="text-zinc-400 text-sm flex items-center gap-2">
+                                        <li class="text-zinc-400 text-sm flex items-center gap-2" data-min-year="${product.years[0]}" data-max-year="${product.years[1]}">
                                             <div class="w-1.5 h-1.5 rounded-full bg-labBlue"></div>
                                             ${product.years[0]} - ${product.years[1] === 2026 ? 'Present' : product.years[1]} ${make} ${product.engine !== 'Universal' ? product.engine : 'All Engines'}
                                         </li>
@@ -893,11 +893,39 @@ function initPDP() {
     const fitmentSearch = document.getElementById('fitment-search');
     if (fitmentSearch) {
         fitmentSearch.addEventListener('input', (e) => {
-            const q = e.target.value.toLowerCase();
-            document.querySelectorAll('#fitment-list li').forEach(li => {
-                if (!li.querySelector('h4')) { // Don't hide the section headers, handle children
-                    const text = li.textContent.toLowerCase();
-                    li.style.display = text.includes(q) ? 'flex' : 'none';
+            const q = e.target.value.toLowerCase().trim();
+            const yearMatch = q.match(/\b(19\d{2}|20\d{2})\b/);
+            const searchYear = yearMatch ? parseInt(yearMatch[1]) : null;
+            const textQuery = q.replace(/\b(19\d{2}|20\d{2})\b/g, '').trim().split(/\s+/);
+
+            document.querySelectorAll('#fitment-list > li').forEach(makeLi => {
+                if (makeLi.querySelector('h4')) {
+                    let hasVisibleChild = false;
+                    makeLi.querySelectorAll('ul > li').forEach(childLi => {
+                        const minYear = parseInt(childLi.getAttribute('data-min-year'));
+                        const maxYear = parseInt(childLi.getAttribute('data-max-year'));
+                        const text = childLi.textContent.toLowerCase();
+                        
+                        let matchesYear = true;
+                        if (searchYear) {
+                            matchesYear = searchYear >= minYear && searchYear <= maxYear;
+                        }
+                        
+                        let matchesText = true;
+                        if (textQuery.length > 0 && textQuery[0] !== '') {
+                            matchesText = textQuery.every(term => text.includes(term));
+                        }
+                        
+                        if (matchesYear && matchesText) {
+                            childLi.style.display = 'flex';
+                            hasVisibleChild = true;
+                        } else {
+                            childLi.style.display = 'none';
+                        }
+                    });
+                    makeLi.style.display = hasVisibleChild ? 'block' : 'none';
+                } else if (makeLi.textContent.includes('Universal Fitment')) {
+                    makeLi.style.display = q === '' ? 'block' : 'none'; 
                 }
             });
         });
