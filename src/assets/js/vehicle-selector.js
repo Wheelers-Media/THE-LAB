@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Duramax': '/assets/gm-logo.png',
         'Powerstroke': '/assets/ford-logo.png',
         'Half-Ton': '/assets/half-ton.png',
-        'CF Moto': 'https://placehold.co/100x100/0D0D12/1E1E28?text=CF+MOTO',
-        'Kenworth': 'https://placehold.co/100x100/0D0D12/1E1E28?text=KENWORTH'
+        'CF Moto': '/assets/cfmoto-logo.png',
+        'Kenworth': '/assets/Kenworth-logo.png'
     };
 
     // 1. Initialize UI on Load
