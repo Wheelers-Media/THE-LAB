@@ -3,6 +3,11 @@ const estimatorConfig = {
         title: "Detailing Estimator",
         steps: [
             {
+                id: 'vehicle_info',
+                question: "What vehicle are you looking to service? (Year, Make, Model)",
+                type: 'text'
+            },
+            {
                 id: 'vehicle_size',
                 question: "What size is your vehicle?",
                 options: [
@@ -41,6 +46,11 @@ const estimatorConfig = {
         title: "Window Tinting Estimator",
         steps: [
             {
+                id: 'vehicle_info',
+                question: "What vehicle are you looking to service? (Year, Make, Model)",
+                type: 'text'
+            },
+            {
                 id: 'coverage',
                 question: "What coverage are you looking for?",
                 options: [
@@ -66,6 +76,11 @@ const estimatorConfig = {
     coatings: {
         title: "Ceramic Coating Estimator",
         steps: [
+            {
+                id: 'vehicle_info',
+                question: "What vehicle are you looking to service? (Year, Make, Model)",
+                type: 'text'
+            },
             {
                 id: 'package',
                 question: "Which coating package are you interested in?",
@@ -102,6 +117,11 @@ const estimatorConfig = {
         title: "Paint Protection Film Estimator",
         steps: [
             {
+                id: 'vehicle_info',
+                question: "What vehicle are you looking to service? (Year, Make, Model)",
+                type: 'text'
+            },
+            {
                 id: 'coverage',
                 question: "What areas do you want protected?",
                 options: [
@@ -119,6 +139,11 @@ const estimatorConfig = {
     lighting: {
         title: "Custom Lighting Estimator",
         steps: [
+            {
+                id: 'vehicle_info',
+                question: "What vehicle are you looking to service? (Year, Make, Model)",
+                type: 'text'
+            },
             {
                 id: 'project_type',
                 question: "What type of lighting project?",
@@ -314,29 +339,75 @@ function renderStep() {
         removeTypingIndicator(typingId);
         addBotMessage(step.question);
         
-        // render options
-        const optionsHtml = step.options.map((opt, idx) => `
-            <button onclick="handleOptionSelect(${idx})" class="w-full text-left p-4 rounded-xl border border-edge bg-black hover:border-labBlue hover:bg-labBlue/10 transition-all text-sm text-zinc-300 hover:text-white flex justify-between items-center group">
-                <span>${opt.label}</span>
-                <svg class="w-4 h-4 text-zinc-600 group-hover:text-labBlue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            </button>
-        `).join('');
-        
-        const optsContainerId = 'opts-' + Date.now();
-        const html = `
-            <div id="${optsContainerId}" class="flex flex-col gap-2 ml-11 message-enter">
-                ${optionsHtml}
-            </div>
-        `;
-        
-        const body = document.getElementById('estimator-body');
-        body.insertAdjacentHTML('beforeend', html);
-        body.scrollTop = body.scrollHeight;
-        
-        // save container id to remove it after selection
-        step._optsContainerId = optsContainerId;
+        if (step.type === 'text') {
+            const optsContainerId = 'opts-' + Date.now();
+            const html = `
+                <div id="${optsContainerId}" class="flex flex-col gap-3 ml-11 message-enter">
+                    <input type="text" id="text-input-${optsContainerId}" placeholder="e.g. 2024 Ford F-350" class="w-full bg-[#0D0D12] text-white text-sm px-4 py-3 rounded-xl border border-edge focus:border-labBlue focus:outline-none focus:ring-1 focus:ring-labBlue transition-all">
+                    <button onclick="handleTextSubmit('${optsContainerId}')" class="w-full bg-labBlue text-white font-bold py-3 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all">
+                        Submit
+                    </button>
+                </div>
+            `;
+            const body = document.getElementById('estimator-body');
+            body.insertAdjacentHTML('beforeend', html);
+            body.scrollTop = body.scrollHeight;
+            
+            step._optsContainerId = optsContainerId;
+            
+            // Add enter key support
+            document.getElementById(`text-input-${optsContainerId}`).addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') handleTextSubmit(optsContainerId);
+            });
+            document.getElementById(`text-input-${optsContainerId}`).focus();
+
+        } else {
+            // render options
+            const optionsHtml = step.options.map((opt, idx) => `
+                <button onclick="handleOptionSelect(${idx})" class="w-full text-left p-4 rounded-xl border border-edge bg-black hover:border-labBlue hover:bg-labBlue/10 transition-all text-sm text-zinc-300 hover:text-white flex justify-between items-center group">
+                    <span>${opt.label}</span>
+                    <svg class="w-4 h-4 text-zinc-600 group-hover:text-labBlue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+            `).join('');
+            
+            const optsContainerId = 'opts-' + Date.now();
+            const html = `
+                <div id="${optsContainerId}" class="flex flex-col gap-2 ml-11 message-enter">
+                    ${optionsHtml}
+                </div>
+            `;
+            
+            const body = document.getElementById('estimator-body');
+            body.insertAdjacentHTML('beforeend', html);
+            body.scrollTop = body.scrollHeight;
+            
+            // save container id to remove it after selection
+            step._optsContainerId = optsContainerId;
+        }
         
     }, 1000);
+}
+
+function handleTextSubmit(containerId) {
+    const input = document.getElementById(`text-input-${containerId}`);
+    if (!input || !input.value.trim()) return;
+    
+    const step = currentService.steps[currentStepIndex];
+    const val = input.value.trim();
+    
+    const container = document.getElementById(containerId);
+    if(container) container.remove();
+    
+    addUserMessage(val);
+    userAnswers[step.id] = { label: val };
+    
+    currentStepIndex++;
+    
+    const typingId = showTypingIndicator();
+    setTimeout(() => {
+        removeTypingIndicator(typingId);
+        renderStep();
+    }, 600);
 }
 
 function handleOptionSelect(optionIndex) {
@@ -374,7 +445,7 @@ function finishEstimation() {
         const ctaHtml = `
             <div class="ml-11 mt-2 message-enter">
                 <button onclick="loadBookingIframe()" class="w-full bg-white text-black font-extrabold py-4 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-                    Continue to Booking →
+                    Book This Service
                 </button>
             </div>
         `;
@@ -400,8 +471,27 @@ function loadBookingIframe() {
     // URL encode the summary text
     const encodedNotes = encodeURIComponent(summary);
     
-    // Redirect to the contact page booking widget, passing the summary as the notes parameter
-    window.location.href = `/contact/?notes=${encodedNotes}`;
+    // Replace the chat window with the booking widget
+    const body = document.getElementById('estimator-body');
+    body.innerHTML = `
+        <div class="flex-grow w-full h-full flex flex-col message-enter">
+            <div class="mb-4 text-center">
+                <h3 class="font-bold text-white uppercase tracking-widest text-sm">Secure Booking</h3>
+                <p class="text-xs text-zinc-500">Complete your details below</p>
+            </div>
+            <div class="w-full flex-grow rounded-xl overflow-hidden border border-edge bg-[#0D0D12] relative custom-scrollbar" style="min-height: 500px; overflow-y: auto;">
+                <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 text-zinc-600">
+                    <svg class="w-8 h-8 animate-spin text-labBlue" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-xs font-mono uppercase tracking-widest">Loading Form...</span>
+                </div>
+                <iframe src="https://api.leadconnectorhq.com/widget/booking/uCWyqHn7e5TTX1838aZi?notes=${encodedNotes}" style="width: 100%; height: 100%; min-height: 800px; border:none; position: relative; z-index: 10;" scrolling="yes" id="uCWyqHn7e5TTX1838aZi_1781140829325" onload="this.previousElementSibling.style.display='none';"></iframe>
+                <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+            </div>
+        </div>
+    `;
 }
 
 // Global exposure
