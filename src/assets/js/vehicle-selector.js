@@ -59,10 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             '2018-2019 Terrain 1.6L',
             '2014-2019 Chevrolet Cruze 1.6L'
         ],
-        'CF Moto': [
-            '2015-2021 ZForce 800/1000',
-            '2015-2021 UForce 800/1000'
-        ],
+
         'Kenworth': [
             '2021-2026 PACCAR MX-13 / Cummins X15'
         ]
@@ -74,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Duramax': '/assets/gm-logo.png',
         'Powerstroke': '/assets/ford-logo.png',
         'Half-Ton': '/assets/half-ton.png',
-        'CF Moto': '/assets/cfmoto-logo.png',
+
         'Kenworth': '/assets/Kenworth-logo.png'
     };
 

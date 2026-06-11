@@ -505,7 +505,7 @@ function initStore() {
             'CCV': 'CCV Upgrades',
             'Exhaust': 'Exhaust Systems',
             'Tuning': 'Tuning & Electronics',
-            'Accessories': 'Accessories'
+            'Accessories': 'Bumpers & Armor'
         };
         const mapped = catMap[urlCategory] || urlCategory;
         activeFilters.categories.push(mapped);
