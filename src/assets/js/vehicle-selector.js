@@ -115,6 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (iconSvg) iconSvg.style.display = 'none';
             
             imgEl.src = logoMap[make] || '';
+            if (make === 'Half-Ton') {
+                imgEl.classList.add('brightness-0', 'invert');
+            } else {
+                imgEl.classList.remove('brightness-0', 'invert');
+            }
             imgEl.onerror = () => {
                 imgEl.style.display = 'none';
                 if (iconSvg) iconSvg.style.display = 'block';
@@ -277,10 +282,35 @@ document.addEventListener('DOMContentLoaded', () => {
             yearVal = parseInt(yearPlusMatch[1]);
         }
         
+        // Infer the specific vehicle model based on make and engine selection
+        let modelVal = "";
+        const engLower = engineSelect.value.toLowerCase();
+        if (makeVal === "Ram") {
+            if (engLower.includes("ecodiesel")) modelVal = "Ram 1500";
+            else if (engLower.includes("cummins")) modelVal = "2500";
+        } else if (makeVal === "Ford") {
+            if (engLower.includes("expedition")) modelVal = "Expedition";
+            else if (engLower.includes("3.0l powerstroke") || engLower.includes("3.0l") || engLower.includes("f-150") || engLower.includes("f150")) modelVal = "F-150";
+            else modelVal = "F-250";
+        } else if (makeVal === "Chevy") {
+            if (engLower.includes("2.8l") || engLower.includes("lwn")) modelVal = "Colorado";
+            else if (engLower.includes("3.0l") || engLower.includes("lm2") || engLower.includes("lz0")) modelVal = "Silverado 1500";
+            else if (engLower.includes("cruze")) modelVal = "Cruze";
+            else if (engLower.includes("equinox")) modelVal = "Equinox";
+            else modelVal = "Silverado 2500HD";
+        } else if (makeVal === "GMC") {
+            if (engLower.includes("2.8l") || engLower.includes("lwn")) modelVal = "Canyon";
+            else if (engLower.includes("3.0l") || engLower.includes("lm2") || engLower.includes("lz0")) modelVal = "Sierra 1500";
+            else if (engLower.includes("terrain")) modelVal = "Terrain";
+            else modelVal = "Sierra 2500HD";
+        } else if (makeVal === "Nissan") {
+            modelVal = "Titan XD";
+        }
+
         sessionStorage.setItem('lab_active_vehicle', JSON.stringify({
             year: yearVal,
             make: makeVal,
-            model: "",
+            model: modelVal,
             engine: engineSelect.value
         }));
         

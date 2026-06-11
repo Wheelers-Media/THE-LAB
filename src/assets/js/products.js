@@ -228,7 +228,9 @@ function classifyModels(title, tags) {
     if (t.includes("3500") && (t.includes("ram") || tagStr.includes("ram") || tagStr.includes("cummins") || t.includes("cummins"))) models.add("3500");
 
     // GM
-    if (t.includes("silverado")) {
+    const isChevy = t.includes("chevy") || t.includes("chevrolet");
+    const isGMC = t.includes("gmc");
+    if (t.includes("silverado") || (isChevy && (t.includes("1500") || t.includes("2500") || t.includes("3500")))) {
         if (t.includes("1500")) models.add("Silverado 1500");
         if (t.includes("2500")) models.add("Silverado 2500HD");
         if (t.includes("3500")) models.add("Silverado 3500HD");
@@ -237,7 +239,7 @@ function classifyModels(title, tags) {
             models.add("Silverado 3500HD");
         }
     }
-    if (t.includes("sierra")) {
+    if (t.includes("sierra") || (isGMC && (t.includes("1500") || t.includes("2500") || t.includes("3500")))) {
         if (t.includes("1500")) models.add("Sierra 1500");
         if (t.includes("2500")) models.add("Sierra 2500HD");
         if (t.includes("3500")) models.add("Sierra 3500HD");

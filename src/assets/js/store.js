@@ -686,7 +686,7 @@ function renderProducts() {
     grid.innerHTML = filtered.map(p => {
         let productUrl = `/store/product/?id=${p.id}`;
         if (activeVehicle) {
-            productUrl += `&vmake=${encodeURIComponent(activeVehicle.make)}&vengine=${encodeURIComponent(activeVehicle.engine)}&vyear=${activeVehicle.year}`;
+            productUrl += `&vmake=${encodeURIComponent(activeVehicle.make)}&vengine=${encodeURIComponent(activeVehicle.engine)}&vyear=${activeVehicle.year}&vmodel=${encodeURIComponent(activeVehicle.model)}`;
         }
         return `
         <div class="group relative bg-void border border-edge rounded-xl overflow-hidden hover:border-labBlue/50 transition-all">
@@ -735,6 +735,7 @@ function initPDP() {
     const vmake = params.get("vmake");
     const vengine = params.get("vengine");
     const vyear = params.get("vyear");
+    const vmodel = params.get("vmodel");
 
     const product = window.storeCatalog.find(p => p.id === id);
     const container = document.getElementById("pdp-container");
@@ -749,7 +750,54 @@ function initPDP() {
 
     let fitmentBadge = "";
     if (vmake && vengine && vyear) {
-        fitmentBadge = `<div class="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 text-green-500 font-bold uppercase tracking-widest text-[10px] px-3 py-1.5 rounded-lg mb-4"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Guaranteed Fitment for ${vyear} ${vmake} ${vengine}</div>`;
+        // Normalize GMC to Chevy where compatible
+        const normalizedMake = vmake === "GMC" ? "Chevy" : vmake;
+        const productMakesNormalized = product.makes.map(m => m === "GMC" ? "Chevy" : m);
+        const makeMatch = product.makes.includes("Universal") || productMakesNormalized.includes(normalizedMake);
+        
+        const parsedYear = parseInt(vyear);
+        const yearMatch = parsedYear >= product.years[0] && parsedYear <= product.years[1];
+        
+        const engMatch = enginesMatch(vengine, product.engine);
+        
+        let modelMatch = true;
+        let inferredModel = vmodel;
+        if (!inferredModel) {
+            const engLower = vengine.toLowerCase();
+            if (vmake === "Ram") {
+                if (engLower.includes("ecodiesel")) inferredModel = "Ram 1500";
+                else if (engLower.includes("cummins")) inferredModel = "2500";
+            } else if (vmake === "Ford") {
+                if (engLower.includes("expedition")) inferredModel = "Expedition";
+                else if (engLower.includes("3.0l powerstroke") || engLower.includes("3.0l") || engLower.includes("f-150") || engLower.includes("f150")) inferredModel = "F-150";
+                else inferredModel = "F-250";
+            } else if (vmake === "Chevy") {
+                if (engLower.includes("2.8l") || engLower.includes("lwn")) inferredModel = "Colorado";
+                else if (engLower.includes("3.0l") || engLower.includes("lm2") || engLower.includes("lz0")) inferredModel = "Silverado 1500";
+                else if (engLower.includes("cruze")) inferredModel = "Cruze";
+                else if (engLower.includes("equinox")) inferredModel = "Equinox";
+                else inferredModel = "Silverado 2500HD";
+            } else if (vmake === "GMC") {
+                if (engLower.includes("2.8l") || engLower.includes("lwn")) inferredModel = "Canyon";
+                else if (engLower.includes("3.0l") || engLower.includes("lm2") || engLower.includes("lz0")) inferredModel = "Sierra 1500";
+                else if (engLower.includes("terrain")) inferredModel = "Terrain";
+                else inferredModel = "Sierra 2500HD";
+            } else if (vmake === "Nissan") {
+                inferredModel = "Titan XD";
+            }
+        }
+        
+        if (inferredModel && product.models && product.models.length > 0 && !product.models.includes("Universal")) {
+            modelMatch = product.models.includes(inferredModel);
+        }
+        
+        const fits = makeMatch && yearMatch && engMatch && modelMatch;
+        
+        if (fits) {
+            fitmentBadge = `<div class="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 text-green-500 font-bold uppercase tracking-widest text-[10px] px-3 py-1.5 rounded-lg mb-4"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Guaranteed Fitment for ${vyear} ${vmake} ${vengine}</div>`;
+        } else {
+            fitmentBadge = `<div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-500 font-bold uppercase tracking-widest text-[10px] px-3 py-1.5 rounded-lg mb-4"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Does Not Fit Your ${vyear} ${vmake} ${vengine}</div>`;
+        }
     }
 
     // Shop Pay Installments Logic
