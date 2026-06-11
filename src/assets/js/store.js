@@ -498,19 +498,25 @@ function initStore() {
         const cb = document.getElementById(`filter-make-${urlMake.replace(/[\s\/&.]+/g, '-')}`);
         if (cb) cb.checked = true;
     }
-    if (urlCategory && !activeFilters.categories.includes(urlCategory)) {
+    if (urlCategory) {
         // Map old URL category names to new ones
         const catMap = {
             'EGR': 'EGR Upgrades',
             'CCV': 'CCV Upgrades',
             'Exhaust': 'Exhaust Systems',
             'Tuning': 'Tuning & Electronics',
-            'Accessories': 'Bumpers & Armor'
+            'Accessories': ['Bumpers & Armor', 'Accessories']
         };
-        const mapped = catMap[urlCategory] || urlCategory;
-        activeFilters.categories.push(mapped);
-        const cb = document.getElementById(`filter-category-${mapped.replace(/[\s\/&.]+/g, '-')}`);
-        if (cb) cb.checked = true;
+        const mapped = catMap[urlCategory] || [urlCategory];
+        const categoriesToSelect = Array.isArray(mapped) ? mapped : [mapped];
+        
+        categoriesToSelect.forEach(cat => {
+            if (!activeFilters.categories.includes(cat)) {
+                activeFilters.categories.push(cat);
+            }
+            const cb = document.getElementById(`filter-category-${cat.replace(/[\s\/&.]+/g, '-')}`);
+            if (cb) cb.checked = true;
+        });
     }
 
     // 5. Wire up all sidebar checkboxes (dynamically generated)
