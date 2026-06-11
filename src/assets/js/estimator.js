@@ -551,7 +551,7 @@ function loadBookingIframe() {
     // Replace the chat window with summary + booking widget
     const body = document.getElementById('estimator-body');
     body.innerHTML = `
-        <div class="flex flex-col gap-4 message-enter p-1" style="height: 100%; overflow-y: auto;">
+        <div class="flex flex-col gap-4 message-enter p-1">
             <!-- Service Summary Card -->
             <div class="rounded-xl border border-labBlue/30 bg-gradient-to-b from-labBlue/10 to-transparent p-4 flex-shrink-0">
                 <div class="flex items-center gap-2 mb-3">
@@ -581,8 +581,8 @@ function loadBookingIframe() {
             </div>
             
             <!-- Booking Form -->
-            <div class="flex-grow rounded-xl overflow-hidden border border-edge bg-[#0D0D12] relative" style="min-height: 600px;">
-                <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 text-zinc-600" id="ghl-loading-spinner">
+            <div class="rounded-xl overflow-hidden border border-edge bg-[#0D0D12] relative">
+                <div class="flex flex-col items-center justify-center gap-3 text-zinc-600 py-8" id="ghl-loading-spinner">
                     <svg class="w-8 h-8 animate-spin text-labBlue" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -590,8 +590,8 @@ function loadBookingIframe() {
                     <span class="text-xs font-mono uppercase tracking-widest">Loading Booking...</span>
                 </div>
                 <iframe src="https://api.leadconnectorhq.com/widget/booking/uCWyqHn7e5TTX1838aZi" 
-                    style="width: 100%; height: 100%; min-height: 800px; border: none; position: relative; z-index: 10;" 
-                    scrolling="yes" 
+                    style="width: 100%; height: 1200px; border: none;" 
+                    scrolling="no" 
                     id="ghl-booking-iframe"
                     onload="document.getElementById('ghl-loading-spinner').style.display='none';">
                 </iframe>
