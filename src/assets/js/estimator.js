@@ -610,6 +610,10 @@ function loadBookingIframe() {
 
     const queryString = queryParams.join('&');
     
+    // Update parent URL to ensure form_embed.js catches the params
+    const newUrl = window.location.pathname + '?' + queryString + (window.location.hash || '');
+    window.history.replaceState({}, '', newUrl);
+    
     // Replace the chat window with the booking widget
     const body = document.getElementById('estimator-body');
     body.innerHTML = `
@@ -618,7 +622,7 @@ function loadBookingIframe() {
                 <h3 class="font-bold text-white uppercase tracking-widest text-sm">Secure Booking</h3>
                 <p class="text-xs text-zinc-500">Complete your details below</p>
             </div>
-            <div class="w-full flex-grow rounded-xl overflow-hidden border border-edge bg-[#0D0D12] relative custom-scrollbar" style="min-height: 500px; overflow-y: auto;">
+            <div class="w-full flex-grow rounded-xl overflow-hidden border border-edge bg-[#0D0D12] relative custom-scrollbar" id="ghl-iframe-container" style="min-height: 500px; overflow-y: auto;">
                 <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 text-zinc-600">
                     <svg class="w-8 h-8 animate-spin text-labBlue" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -627,10 +631,15 @@ function loadBookingIframe() {
                     <span class="text-xs font-mono uppercase tracking-widest">Loading Form...</span>
                 </div>
                 <iframe src="https://api.leadconnectorhq.com/widget/booking/uCWyqHn7e5TTX1838aZi?${queryString}" style="width: 100%; height: 100%; min-height: 800px; border:none; position: relative; z-index: 10;" scrolling="yes" id="uCWyqHn7e5TTX1838aZi_1781140829325" onload="this.previousElementSibling.style.display='none';"></iframe>
-                <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
             </div>
         </div>
     `;
+
+    // Explicitly append the embed script so it executes
+    const script = document.createElement('script');
+    script.src = "https://link.msgsndr.com/js/form_embed.js";
+    script.type = "text/javascript";
+    document.getElementById('ghl-iframe-container').appendChild(script);
 }
 
 // Global exposure
