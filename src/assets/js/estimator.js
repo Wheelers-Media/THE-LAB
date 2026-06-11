@@ -44,9 +44,10 @@ const estimatorConfig = {
                 id: 'coverage',
                 question: "What coverage are you looking for?",
                 options: [
-                    { label: "Front 2 Windows", basePrice: 150 },
-                    { label: "Full Vehicle", basePrice: 350 },
-                    { label: "Windshield Brow Only", basePrice: 80 }
+                    { label: "Front 2 Windows", basePrice: 180 },
+                    { label: "Full Vehicle", basePrice: 550 },
+                    { label: "Windshield Brow Only", basePrice: 90 },
+                    { label: "Full Windshield", basePrice: 180 }
                 ]
             },
             {
@@ -66,12 +67,21 @@ const estimatorConfig = {
         title: "Ceramic Coating Estimator",
         steps: [
             {
+                id: 'package',
+                question: "Which coating package are you interested in?",
+                options: [
+                    { label: "1-Year Coating", basePrice: 800 },
+                    { label: "5-Year Coating", basePrice: 1400 },
+                    { label: "9-Year Coating", basePrice: 2200 }
+                ]
+            },
+            {
                 id: 'vehicle_size',
                 question: "What size is your vehicle?",
                 options: [
-                    { label: "Car / Sedan", basePrice: 800 },
-                    { label: "Small SUV / Truck", basePrice: 1000 },
-                    { label: "Large SUV / Rig", basePrice: 1200 }
+                    { label: "Car / Sedan", multiplier: 1 },
+                    { label: "Small SUV / Truck", multiplier: 1.2 },
+                    { label: "Large SUV / Rig", multiplier: 1.5 }
                 ]
             },
             {
@@ -85,7 +95,7 @@ const estimatorConfig = {
             }
         ],
         calculate: (answers) => {
-            return answers.vehicle_size.basePrice + answers.paint_condition.addPrice;
+            return (answers.package.basePrice * answers.vehicle_size.multiplier) + answers.paint_condition.addPrice;
         }
     },
     ppf: {
