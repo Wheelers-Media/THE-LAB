@@ -199,9 +199,13 @@
                         <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Interior Deep Extraction</li>
                         <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Maintenance Wash Packages</li>
                     </ul>
-                    <div class="flex flex-col sm:flex-row gap-4 mt-auto">
+                    <div class="flex flex-col sm:flex-row flex-wrap gap-4 mt-auto">
                         <a href="/boutique/detailing/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-6 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">View Detailing Packages</a>
                         <a href="/boutique/detailing/#maintenance" class="inline-flex items-center justify-center border border-edge text-zinc-400 font-extrabold py-4 px-6 rounded-lg hover:border-white/20 hover:text-white active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">View Maintenance Plans</a>
+                        <button onclick="openEstimator('detailing')" class="inline-flex items-center justify-center bg-labBlue text-white font-extrabold py-4 px-6 rounded-lg hover:bg-blue-500 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px] shadow-oled-blue gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            AI Estimate
+                        </button>
                     </div>
                 </div>
             </div>
@@ -225,8 +229,12 @@
                         <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Extreme Gloss & Slickness</li>
                         <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Effortless Washing</li>
                     </ul>
-                    <div class="mt-auto">
+                    <div class="flex flex-col sm:flex-row flex-wrap gap-4 mt-auto">
                         <a href="/boutique/coatings/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-8 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">Explore Coatings</a>
+                        <button onclick="openEstimator('coatings')" class="inline-flex items-center justify-center bg-labBlue text-white font-extrabold py-4 px-8 rounded-lg hover:bg-blue-500 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px] shadow-oled-blue gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            AI Estimate
+                        </button>
                     </div>
                 </div>
             </div>
@@ -250,8 +258,12 @@
                         <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 99% UV Blockage</li>
                         <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Flawless Lifetime Install</li>
                     </ul>
-                    <div class="mt-auto">
+                    <div class="flex flex-col sm:flex-row flex-wrap gap-4 mt-auto">
                         <a href="/boutique/tinting/" class="inline-flex items-center justify-center border border-edge bg-[#0D0D12] text-white font-extrabold py-4 px-8 rounded-lg hover:border-white/40 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">View Tint Pricing</a>
+                        <button onclick="openEstimator('tinting')" class="inline-flex items-center justify-center bg-labBlue text-white font-extrabold py-4 px-8 rounded-lg hover:bg-blue-500 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px] shadow-oled-blue gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            AI Estimate
+                        </button>
                     </div>
                 </div>
             </div>
@@ -275,8 +287,12 @@
                         <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> High Gloss or Stealth Matte Finish</li>
                         <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Custom Patterns & Bulk Installs</li>
                     </ul>
-                    <div class="mt-auto">
+                    <div class="flex flex-col sm:flex-row flex-wrap gap-4 mt-auto">
                         <a href="/boutique/ppf/" class="inline-flex items-center justify-center border border-edge bg-[#0D0D12] text-white font-extrabold py-4 px-8 rounded-lg hover:border-white/40 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">Explore PPF</a>
+                        <button onclick="openEstimator('ppf')" class="inline-flex items-center justify-center bg-labBlue text-white font-extrabold py-4 px-8 rounded-lg hover:bg-blue-500 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px] shadow-oled-blue gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            AI Estimate
+                        </button>
                     </div>
                 </div>
             </div>
@@ -300,8 +316,12 @@
                         <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Off-Road Light Bars & Pods</li>
                         <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Starlight Headliner Installations</li>
                     </ul>
-                    <div class="mt-auto">
+                    <div class="flex flex-col sm:flex-row flex-wrap gap-4 mt-auto">
                         <a href="/boutique/lighting/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-8 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">Explore Custom Lighting</a>
+                        <button onclick="openEstimator('lighting')" class="inline-flex items-center justify-center bg-labBlue text-white font-extrabold py-4 px-8 rounded-lg hover:bg-blue-500 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px] shadow-oled-blue gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            AI Estimate
+                        </button>
                     </div>
                 </div>
             </div>
@@ -959,5 +979,6 @@
 
 
     <script src="/assets/js/global-banner.js"></script>
+    <script src="/assets/js/estimator.js"></script>
 </body>
 </html>
