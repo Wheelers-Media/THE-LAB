@@ -499,23 +499,20 @@ function initStore() {
         if (cb) cb.checked = true;
     }
     if (urlCategory) {
-        // Map old URL category names to new ones
         const catMap = {
-            'EGR': 'EGR Upgrades',
-            'CCV': 'CCV Upgrades',
-            'Exhaust': 'Exhaust Systems',
-            'Tuning': 'Tuning & Electronics',
+            'EGR': ['EGR Upgrades'],
+            'CCV': ['CCV Upgrades'],
+            'Exhaust': ['Exhaust Systems'],
+            'Tuning': ['Tuning & Electronics'],
             'Accessories': ['Bumpers & Armor', 'Accessories']
         };
-        const mapped = catMap[urlCategory] || [urlCategory];
-        const categoriesToSelect = Array.isArray(mapped) ? mapped : [mapped];
-        
-        categoriesToSelect.forEach(cat => {
-            if (!activeFilters.categories.includes(cat)) {
-                activeFilters.categories.push(cat);
+        const mappedCats = catMap[urlCategory] || [urlCategory];
+        mappedCats.forEach(mapped => {
+            if (!activeFilters.categories.includes(mapped)) {
+                activeFilters.categories.push(mapped);
+                const cb = document.getElementById(`filter-category-${mapped.replace(/[\s\/&.]+/g, '-')}`);
+                if (cb) cb.checked = true;
             }
-            const cb = document.getElementById(`filter-category-${cat.replace(/[\s\/&.]+/g, '-')}`);
-            if (cb) cb.checked = true;
         });
     }
 
