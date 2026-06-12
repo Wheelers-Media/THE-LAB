@@ -3,42 +3,31 @@ const estimatorConfig = {
         title: "Detailing Estimator",
         steps: [
             {
-                id: 'vehicle_year',
-                question: "What year is your vehicle?",
+                id: 'vehicle_info',
+                question: "What is the year, make, and model of your vehicle?",
+                placeholder: "e.g., 2019 Ford F-350",
                 type: 'text'
-            },
-            {
-                id: 'vehicle_make',
-                question: "What make is your vehicle?",
-                type: 'text'
-            },
-            {
-                id: 'vehicle_model',
-                question: "What model is your vehicle?",
-                type: 'text'
-            },
-            {
-                id: 'vehicle_size',
-                question: "What size is your vehicle?",
-                options: [
-                    { label: "Car / Sedan", value: 1 },
-                    { label: "Small SUV / Truck", value: 1.2 },
-                    { label: "Large SUV / Minivan", value: 1.5 },
-                    { label: "Semi Truck", value: 2.5 }
-                ]
             },
             {
                 id: 'package',
                 question: "Which package are you interested in?",
                 options: [
-                    { label: "Standard (Entry Level)", basePrice: 149 },
-                    { label: "De-Luxx (Signature)", basePrice: 279 },
-                    { label: "Semi Interior (Heavy Duty)", basePrice: 500 }
+                    { id: 'standard', label: "Standard (Entry Level)" },
+                    { id: 'deluxx', label: "De-Luxx (Signature)" },
+                    { id: 'semi', label: "Semi Interior (Heavy Duty)" }
+                ]
+            },
+            {
+                id: 'vehicle_size',
+                question: "What is your vehicle size or type?",
+                options: [
+                    { label: "Small SUV / Truck / Small Sleeper", value: "small" },
+                    { label: "Large SUV / Van / Full-Size Sleeper", value: "large" }
                 ]
             },
             {
                 id: 'addons',
-                question: "Any specific add-ons needed? (Select one)",
+                question: "Any specific add-ons needed?",
                 options: [
                     { label: "None", addPrice: 0 },
                     { label: "Pet Hair Removal", addPrice: 50 },
@@ -47,7 +36,16 @@ const estimatorConfig = {
             }
         ],
         calculate: (answers) => {
-            let base = answers.package.basePrice * answers.vehicle_size.value;
+            const pkg = answers.package.id;
+            const size = answers.vehicle_size.value;
+            let base = 0;
+            if (pkg === 'standard') {
+                base = size === 'small' ? 149 : 169;
+            } else if (pkg === 'deluxx') {
+                base = size === 'small' ? 279 : 329;
+            } else if (pkg === 'semi') {
+                base = size === 'small' ? 500 : 600;
+            }
             base += answers.addons.addPrice;
             return base;
         }
@@ -56,75 +54,92 @@ const estimatorConfig = {
         title: "Window Tinting Estimator",
         steps: [
             {
-                id: 'vehicle_year',
-                question: "What year is your vehicle?",
+                id: 'vehicle_info',
+                question: "What is the year, make, and model of your vehicle?",
+                placeholder: "e.g., 2019 Ford F-350",
                 type: 'text'
             },
             {
-                id: 'vehicle_make',
-                question: "What make is your vehicle?",
-                type: 'text'
-            },
-            {
-                id: 'vehicle_model',
-                question: "What model is your vehicle?",
-                type: 'text'
+                id: 'vehicle_style',
+                question: "What style of vehicle do you have?",
+                options: [
+                    { label: "Sedan / Coupe", value: "sedan" },
+                    { label: "Crew Cab Truck", value: "truck" },
+                    { label: "SUV / Crossover", value: "suv" }
+                ]
             },
             {
                 id: 'coverage',
                 question: "What coverage are you looking for?",
                 options: [
-                    { label: "Front 2 Windows", basePrice: 180 },
-                    { label: "Full Vehicle", basePrice: 550 },
-                    { label: "Windshield Brow Only", basePrice: 90 },
-                    { label: "Full Windshield", basePrice: 180 }
+                    { label: "Front 2 Windows", value: "front2" },
+                    { label: "Full Vehicle (All Side & Rear Windows)", value: "full_vehicle" },
+                    { label: "Windshield Brow Only", value: "brow" },
+                    { label: "Full Windshield", value: "windshield" },
+                    { label: "Standard Sunroof", value: "sunroof" }
                 ]
             },
             {
                 id: 'film_type',
                 question: "Which film type do you prefer?",
                 options: [
-                    { label: "Standard Carbon", multiplier: 1 },
-                    { label: "Premium Ceramic (Heat Rejection)", multiplier: 1.5 }
+                    { label: "Standard Carbon", value: "carbon" },
+                    { label: "Premium Ceramic (IR Heat Rejection)", value: "ceramic" }
                 ]
             }
         ],
         calculate: (answers) => {
-            return answers.coverage.basePrice * answers.film_type.multiplier;
+            const style = answers.vehicle_style.value;
+            const coverage = answers.coverage.value;
+            const film = answers.film_type.value;
+            
+            if (film === 'carbon') {
+                if (coverage === 'front2') return 180;
+                if (coverage === 'brow') return 90;
+                if (coverage === 'windshield') return 280;
+                if (coverage === 'sunroof') return 100;
+                if (coverage === 'full_vehicle') {
+                    if (style === 'sedan') return 500;
+                    if (style === 'truck') return 625;
+                    if (style === 'suv') return 700;
+                }
+            } else if (film === 'ceramic') {
+                if (coverage === 'front2') return 260;
+                if (coverage === 'brow') return 130;
+                if (coverage === 'windshield') return 300;
+                if (coverage === 'sunroof') return 150;
+                if (coverage === 'full_vehicle') {
+                    if (style === 'sedan') return 700;
+                    if (style === 'truck') return 825;
+                    if (style === 'suv') return 900;
+                }
+            }
+            return 0;
         }
     },
     coatings: {
         title: "Ceramic Coating Estimator",
         steps: [
             {
-                id: 'vehicle_year',
-                question: "What year is your vehicle?",
-                type: 'text'
-            },
-            {
-                id: 'vehicle_make',
-                question: "What make is your vehicle?",
-                type: 'text'
-            },
-            {
-                id: 'vehicle_model',
-                question: "What model is your vehicle?",
+                id: 'vehicle_info',
+                question: "What is the year, make, and model of your vehicle?",
+                placeholder: "e.g., 2019 Ford F-350",
                 type: 'text'
             },
             {
                 id: 'package',
                 question: "Which coating package are you interested in?",
                 options: [
-                    { label: "1-Year Coating", basePrice: 800 },
-                    { label: "5-Year Coating", basePrice: 1400 },
-                    { label: "9-Year Coating", basePrice: 2200 }
+                    { label: "Standard Coat (2-Year Durability)", basePrice: 800 },
+                    { label: "Elite Coat (5-Year Durability)", basePrice: 1400 },
+                    { label: "Graphene Elite (7+ Year Durability)", basePrice: 2200 }
                 ]
             },
             {
                 id: 'vehicle_size',
                 question: "What size is your vehicle?",
                 options: [
-                    { label: "Car / Sedan", multiplier: 1 },
+                    { label: "Car / Sedan", multiplier: 1.0 },
                     { label: "Small SUV / Truck", multiplier: 1.2 },
                     { label: "Large SUV / Rig", multiplier: 1.5 }
                 ]
@@ -147,19 +162,19 @@ const estimatorConfig = {
         title: "Paint Protection Film Estimator",
         steps: [
             {
-                id: 'vehicle_year',
-                question: "What year is your vehicle?",
+                id: 'vehicle_info',
+                question: "What is the year, make, and model of your vehicle?",
+                placeholder: "e.g., 2019 Ford F-350",
                 type: 'text'
             },
             {
-                id: 'vehicle_make',
-                question: "What make is your vehicle?",
-                type: 'text'
-            },
-            {
-                id: 'vehicle_model',
-                question: "What model is your vehicle?",
-                type: 'text'
+                id: 'vehicle_size',
+                question: "What size is your vehicle?",
+                options: [
+                    { label: "Car / Sedan", multiplier: 1.0 },
+                    { label: "Small SUV / Truck", multiplier: 1.15 },
+                    { label: "Large SUV / Rig", multiplier: 1.3 }
+                ]
             },
             {
                 id: 'coverage',
@@ -173,35 +188,30 @@ const estimatorConfig = {
             }
         ],
         calculate: (answers) => {
-            return answers.coverage.basePrice;
+            return answers.coverage.basePrice * answers.vehicle_size.multiplier;
         }
     },
     lighting: {
         title: "Custom Lighting Estimator",
         steps: [
             {
-                id: 'vehicle_year',
-                question: "What year is your vehicle?",
-                type: 'text'
-            },
-            {
-                id: 'vehicle_make',
-                question: "What make is your vehicle?",
-                type: 'text'
-            },
-            {
-                id: 'vehicle_model',
-                question: "What model is your vehicle?",
+                id: 'vehicle_info',
+                question: "What is the year, make, and model of your vehicle?",
+                placeholder: "e.g., 2019 Ford F-350",
                 type: 'text'
             },
             {
                 id: 'project_type',
                 question: "What type of lighting project?",
                 options: [
-                    { label: "Custom Headlight Build", basePrice: 1200 },
-                    { label: "Rock Lights (Underglow)", basePrice: 600 },
-                    { label: "Wheel Rings", basePrice: 400 },
-                    { label: "Cab Lights / Interior", basePrice: 300 }
+                    { label: "Morimoto XB LED Headlights", basePrice: 1800 },
+                    { label: "Fog Light Upgrade (Morimoto 4Banger)", basePrice: 550 },
+                    { label: "Off-Road Light Bar / Pods & Switch Panel", basePrice: 1200 },
+                    { label: "Ditch Lights & Pods", basePrice: 450 },
+                    { label: "LED Accent / Bulb Upgrades", basePrice: 150 },
+                    { label: "Custom Retrofit (Demon Eyes & Halos)", basePrice: 1400 },
+                    { label: "Starlight Headliner (Standard - 500 Stars)", basePrice: 1800 },
+                    { label: "Starlight Headliner (Premium - 1000 Stars + Twinkle)", basePrice: 2800 }
                 ]
             }
         ],
@@ -391,16 +401,12 @@ function renderStep() {
         
         if (step.type === 'text') {
             const optsContainerId = 'opts-' + Date.now();
-            
-            let placeholder = 'Type your answer...';
-            if (step.id === 'vehicle_year') placeholder = 'e.g. 2019';
-            if (step.id === 'vehicle_make') placeholder = 'e.g. Ford, Chevy, Ram';
-            if (step.id === 'vehicle_model') placeholder = 'e.g. F-350, Silverado 2500';
+            const placeholder = step.placeholder || 'Type your answer...';
 
             const html = `
                 <div id="${optsContainerId}" class="flex flex-col gap-3 ml-11 message-enter">
-                    <input type="text" id="text-input-${optsContainerId}" placeholder="${placeholder}" class="w-full bg-[#0D0D12] text-white text-sm px-4 py-3 rounded-xl border border-edge focus:border-labBlue focus:outline-none focus:ring-1 focus:ring-labBlue transition-all">
-                    <button onclick="handleTextSubmit('${optsContainerId}')" class="w-full bg-labBlue text-white font-bold py-3 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all">
+                    <input type="text" id="text-input-${optsContainerId}" placeholder="${placeholder}" class="w-full bg-[#0D0D12] text-white text-sm px-4 py-3 rounded-xl border border-edge focus:border-labBlue focus:outline-none focus:ring-1 focus:ring-labBlue transition-all min-h-[48px]">
+                    <button onclick="handleTextSubmit('${optsContainerId}')" class="w-full bg-labBlue text-white font-bold py-3.5 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all min-h-[48px]">
                         Submit
                     </button>
                 </div>
@@ -420,7 +426,7 @@ function renderStep() {
         } else {
             // render options
             const optionsHtml = step.options.map((opt, idx) => `
-                <button onclick="handleOptionSelect(${idx})" class="w-full text-left p-4 rounded-xl border border-edge bg-black hover:border-labBlue hover:bg-labBlue/10 transition-all text-sm text-zinc-300 hover:text-white flex justify-between items-center group">
+                <button onclick="handleOptionSelect(${idx})" class="w-full text-left py-4 px-5 rounded-xl border border-edge bg-black hover:border-labBlue hover:bg-labBlue/10 transition-all text-sm text-zinc-300 hover:text-white flex justify-between items-center group min-h-[48px]">
                     <span>${opt.label}</span>
                     <svg class="w-4 h-4 text-zinc-600 group-hover:text-labBlue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </button>
@@ -500,7 +506,7 @@ function finishEstimation() {
         const body = document.getElementById('estimator-body');
         const ctaHtml = `
             <div class="ml-11 mt-2 message-enter">
-                <button onclick="loadBookingIframe()" class="w-full bg-white text-black font-extrabold py-4 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                <button onclick="loadBookingIframe()" class="w-full bg-white text-black font-extrabold py-4 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] min-h-[48px]">
                     Book This Service
                 </button>
             </div>
@@ -513,13 +519,8 @@ function finishEstimation() {
 
 function loadBookingIframe() {
     // Build summary of user's estimator selections
-    const vehicle = [
-        userAnswers['vehicle_year']?.label,
-        userAnswers['vehicle_make']?.label,
-        userAnswers['vehicle_model']?.label
-    ].filter(Boolean).join(' ');
-    
-    const vehicleSize = userAnswers['vehicle_size']?.label || '';
+    const vehicle = userAnswers['vehicle_info']?.label || '';
+    const vehicleSize = userAnswers['vehicle_size']?.label || userAnswers['vehicle_style']?.label || '';
     
     const serviceNameMap = {
         "Detailing Estimator": "Premium Detailing",
@@ -570,7 +571,7 @@ function loadBookingIframe() {
                         <span class="text-white font-semibold">${vehicle}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-zinc-500">Size</span>
+                        <span class="text-zinc-500">Size / Style</span>
                         <span class="text-white">${vehicleSize}</span>
                     </div>
                     <div class="flex justify-between">
