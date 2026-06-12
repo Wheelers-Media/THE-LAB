@@ -470,6 +470,7 @@ function initStore() {
     const params = new URLSearchParams(window.location.search);
     const urlMake = params.get("make");
     const urlCategory = params.get("category");
+    const urlBrand = params.get("brand");
 
     // 3. Pre-check from active vehicle
     if (activeVehicle) {
@@ -514,6 +515,11 @@ function initStore() {
                 if (cb) cb.checked = true;
             }
         });
+    }
+    if (urlBrand && !activeFilters.brands.includes(urlBrand)) {
+        activeFilters.brands.push(urlBrand);
+        const cb = document.getElementById(`filter-brand-${urlBrand.replace(/[\s\/&.]+/g, '-')}`);
+        if (cb) cb.checked = true;
     }
 
     // 5. Wire up all sidebar checkboxes (dynamically generated)
