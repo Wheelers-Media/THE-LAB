@@ -110,7 +110,7 @@ const estimatorConfig = {
                 if (coverage === 'sunroof') return 150;
                 if (coverage === 'full_vehicle') {
                     if (style === 'sedan') return 700;
-                    if (style === 'truck') return 825;
+                    if (style === 'truck') return 850;
                     if (style === 'suv') return 900;
                 }
             }
@@ -139,9 +139,9 @@ const estimatorConfig = {
                 id: 'vehicle_size',
                 question: "What size is your vehicle?",
                 options: [
-                    { label: "Car / Sedan", multiplier: 1.0 },
-                    { label: "Small SUV / Truck", multiplier: 1.2 },
-                    { label: "Large SUV / Rig", multiplier: 1.5 }
+                    { label: "Car / Sedan" },
+                    { label: "Small SUV / Truck" },
+                    { label: "Large SUV / Rig" }
                 ]
             },
             {
@@ -155,7 +155,7 @@ const estimatorConfig = {
             }
         ],
         calculate: (answers) => {
-            return (answers.package.basePrice * answers.vehicle_size.multiplier) + answers.paint_condition.addPrice;
+            return answers.package.basePrice + answers.paint_condition.addPrice;
         }
     },
     ppf: {
@@ -171,9 +171,9 @@ const estimatorConfig = {
                 id: 'vehicle_size',
                 question: "What size is your vehicle?",
                 options: [
-                    { label: "Car / Sedan", multiplier: 1.0 },
-                    { label: "Small SUV / Truck", multiplier: 1.15 },
-                    { label: "Large SUV / Rig", multiplier: 1.3 }
+                    { label: "Car / Sedan" },
+                    { label: "Small SUV / Truck" },
+                    { label: "Large SUV / Rig" }
                 ]
             },
             {
@@ -188,7 +188,7 @@ const estimatorConfig = {
             }
         ],
         calculate: (answers) => {
-            return answers.coverage.basePrice * answers.vehicle_size.multiplier;
+            return answers.coverage.basePrice;
         }
     },
     lighting: {
