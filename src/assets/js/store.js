@@ -722,7 +722,7 @@ function renderProducts() {
                 <h3 class="text-white font-bold leading-tight mb-2 min-h-[40px] line-clamp-2"><a href="${productUrl}" class="hover:text-labBlue transition-colors">${p.name}</a></h3>
                 <div class="text-[10px] text-zinc-600 font-mono mb-4">${p.makes.filter(m => m !== 'Universal').join(', ') || 'Universal Fit'}${p.engine !== 'Universal' ? ' • ' + p.engine : ''}</div>
                 <div class="flex items-center justify-between">
-                    <span class="text-lg font-extrabold text-white">$${p.price.toFixed(2)}</span>
+                    <span class="text-lg font-extrabold text-white" data-price-cad="${p.price}">$${p.price.toFixed(2)} CAD</span>
                     ${p.category === 'Tuning & Electronics' 
                         ? `<a href="${productUrl}" title="Configure VIN" class="bg-edge hover:bg-labBlue text-white p-2.5 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -744,6 +744,11 @@ function renderProducts() {
             const y = gridContainer.getBoundingClientRect().top + window.scrollY - 120;
             window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
         }
+    }
+    
+    // Apply currency format to newly rendered prices
+    if (window.setCurrency) {
+        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
     }
 }
 
@@ -842,7 +847,7 @@ function initPDP() {
                     <h1 class="text-3xl md:text-4xl font-heading font-extrabold text-white leading-tight mb-4">${product.name}</h1>
                     ${fitmentBadge}
                     <div class="mb-8">
-                        <p class="text-2xl font-extrabold text-white">$${product.price.toFixed(2)} CAD</p>
+                        <p class="text-2xl font-extrabold text-white" data-price-cad="${product.price}">$${product.price.toFixed(2)} CAD</p>
                         ${shopPayMessaging ? `
                         <div class="flex items-center gap-2 mt-3 text-[13px] text-zinc-300 bg-[#1a1a24] border border-edge rounded-lg py-2 px-3 inline-flex">
                             <span>${shopPayMessaging}</span>
@@ -881,7 +886,7 @@ function initPDP() {
                                             <p class="text-sm font-bold text-white leading-tight">${variant.title}</p>
                                         </div>
                                     </div>
-                                    <span class="text-labBlue font-extrabold text-sm font-mono flex-shrink-0">$${parseFloat(variant.price).toFixed(2)}</span>
+                                    <span class="text-labBlue font-extrabold text-sm font-mono flex-shrink-0" data-price-cad="${variant.price}">$${parseFloat(variant.price).toFixed(2)} CAD</span>
                                 </button>
                                 `).join('')}
                             </div>
@@ -1185,7 +1190,13 @@ function initPDP() {
 
                 // Live-update the price display
                 const priceEl = document.querySelector('#pdp-container .text-2xl.font-extrabold');
-                if (priceEl) priceEl.textContent = `$${selectedVariant.price.toFixed(2)} CAD`;
+                if (priceEl) {
+                    priceEl.dataset.priceCad = selectedVariant.price;
+                    priceEl.textContent = `$${selectedVariant.price.toFixed(2)} CAD`;
+                    if (window.setCurrency) {
+                        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
+                    }
+                }
 
                 // Clear error
                 const lvlErr = document.getElementById('pdp-tune-level-error');
@@ -1385,5 +1396,10 @@ function initPDP() {
                 }
             });
         });
+    }
+
+    // Apply currency format to newly rendered PDP elements
+    if (window.setCurrency) {
+        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
     }
 }
