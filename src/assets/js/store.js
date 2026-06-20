@@ -1086,13 +1086,13 @@ function initPDP() {
                 </div>
 
                 <!-- Shipping Accordion -->
-                <div class="bg-[#000000] border border-[#1E1E28] rounded-xl overflow-hidden mt-6 mb-8">
-                    <button class="pdp-accordion-btn w-full flex items-center justify-between p-5 text-left group transition-all" data-target="pdp-shipping">
+                <div class="border-b border-edge">
+                    <button class="pdp-accordion-btn w-full flex items-center justify-between py-6 text-left group transition-all" data-target="pdp-shipping">
                         <span class="text-lg font-heading font-extrabold text-[#FFFFFF] uppercase tracking-wider group-hover:text-[#00E5FF] transition-colors duration-300">Shipping & Returns</span>
-                        <svg class="w-6 h-6 text-[#A0A0AB] group-hover:text-[#00E5FF] transform transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        <svg class="w-5 h-5 text-[#A0A0AB] group-hover:text-[#00E5FF] transform transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div id="pdp-shipping" class="hidden">
-                        <div class="p-5 bg-[#0D0D12] border-t border-[#1E1E28] font-body text-[#A0A0AB] space-y-6 text-sm leading-relaxed">
+                        <div class="pb-6 font-body text-[#A0A0AB] space-y-6 text-sm leading-relaxed">
                             ${(() => {
                                 const t = product.tags || [];
                                 const lowerT = t.map(x => x.toLowerCase().trim());

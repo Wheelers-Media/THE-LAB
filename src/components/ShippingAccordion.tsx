@@ -24,17 +24,17 @@ export default function ShippingAccordion({ productTags = [] }: ShippingAccordio
   );
 
   return (
-    <div className="bg-[#000000] w-full border border-[#1E1E28] rounded-xl overflow-hidden">
+    <div className="border-b border-[#1E1E28]">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-5 text-left group transition-all"
+        className="w-full flex items-center justify-between py-6 text-left group transition-all"
         aria-expanded={isOpen}
       >
-        <span className={`font-heading font-extrabold text-lg tracking-wider uppercase transition-colors duration-300 ${isOpen ? 'text-[#0066FF]' : 'text-[#FFFFFF] group-hover:text-[#00E5FF]'}`}>
+        <span className={`text-lg font-heading font-extrabold uppercase tracking-wider transition-colors duration-300 ${isOpen ? 'text-[#0066FF]' : 'text-white group-hover:text-[#00E5FF]'}`}>
           Shipping & Returns
         </span>
         <svg 
-          className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#0066FF]' : 'text-[#A0A0AB] group-hover:text-[#00E5FF]'}`} 
+          className={`w-5 h-5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#0066FF]' : 'text-zinc-500 group-hover:text-[#00E5FF]'}`} 
           fill="none" 
           viewBox="0 0 24 24" 
           stroke="currentColor"
@@ -47,7 +47,7 @@ export default function ShippingAccordion({ productTags = [] }: ShippingAccordio
         className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
       >
         <div className="overflow-hidden">
-          <div className="p-5 bg-[#0D0D12] border-t border-[#1E1E28] font-body text-[#A0A0AB] space-y-6 text-sm leading-relaxed">
+          <div className="pb-6 font-body text-[#A0A0AB] space-y-6 text-sm leading-relaxed">
             
             {/* Shipping Rates Section */}
             <div className="space-y-2">
