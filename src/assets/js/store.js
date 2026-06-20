@@ -27,18 +27,31 @@ function saveCart() {
     updateCartUI();
 }
 
-function addToCart(productId, quantity = 1, customAttributes = {}) {
+function addToCart(productId, quantity = 1, customAttributes = {}, variantOverride = null) {
     const product = window.storeCatalog.find(p => p.id === productId);
     if (!product) return;
 
+    // Use override if provided (e.g., specific tune level variant), else default
+    const resolvedVariantId = variantOverride?.id || product.variantId;
+    const resolvedPrice    = variantOverride?.price !== undefined ? variantOverride.price : product.price;
+    const resolvedTitle    = variantOverride?.title ? `${product.name} — ${variantOverride.title}` : product.name;
+
     const attrKey = Object.keys(customAttributes).length > 0 ? btoa(JSON.stringify(customAttributes)) : "default";
-    const cartItemId = productId + "_" + attrKey;
+    const cartItemId = resolvedVariantId + "_" + attrKey;
 
     const existing = cart.find(item => item.cartItemId === cartItemId);
     if (existing) {
         existing.quantity += quantity;
     } else {
-        cart.push({ ...product, quantity, customAttributes, cartItemId });
+        cart.push({
+            ...product,
+            name: resolvedTitle,
+            variantId: resolvedVariantId,
+            price: resolvedPrice,
+            quantity,
+            customAttributes,
+            cartItemId
+        });
     }
     saveCart();
     openCart();
@@ -844,7 +857,40 @@ function initPDP() {
                     <!-- ═══════════════════════════════════════════════════════ -->
                     <div class="space-y-5 mb-6">
 
-                        <!-- 2A. TRANSMISSION STRATEGY DROPDOWN -->
+                        <!-- 2.0 POWER / TUNE LEVEL SELECTOR (Shopify Variants) -->
+                        ${product.variants && product.variants.filter(v => v.title && v.title !== 'Default Title').length > 0 ? `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-tune-level-wrap">
+                            <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">
+                                Power Level
+                                <span class="text-red-500 ml-1" aria-label="required">*</span>
+                            </label>
+                            <div class="space-y-2" role="radiogroup" aria-label="Select tune power level">
+                                ${product.variants.filter(v => v.available !== false).map((variant, i) => `
+                                <button type="button"
+                                    class="pdp-tune-card w-full flex items-center justify-between gap-4 p-4 rounded-lg border border-[#1E1E28] text-left transition-all duration-200 hover:border-labBlue/50 hover:bg-labBlue/5 focus:outline-none focus:ring-2 focus:ring-labBlue min-h-[56px]"
+                                    data-variant-id="${variant.id}"
+                                    data-variant-price="${variant.price}"
+                                    data-variant-title="${variant.title.replace(/"/g, '&quot;')}"
+                                    aria-pressed="false"
+                                    role="radio">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-5 h-5 rounded-full border-2 border-[#1E1E28] bg-[#000000] flex items-center justify-center flex-shrink-0 tune-radio-indicator">
+                                            <div class="w-2.5 h-2.5 rounded-full bg-labCyan opacity-0 tune-radio-dot transition-opacity"></div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-white leading-tight">${variant.title}</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-labBlue font-extrabold text-sm font-mono flex-shrink-0">$${parseFloat(variant.price).toFixed(2)}</span>
+                                </button>
+                                `).join('')}
+                            </div>
+                            <p id="pdp-tune-level-error" class="text-red-500 text-[10px] font-bold uppercase tracking-wider mt-2 hidden" role="alert">
+                                ✕ Please select a power level before adding to cart.
+                            </p>
+                        </div>
+                        ` : ''}
+
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-transmission-wrap">
                             <label for="pdp-transmission" class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">
                                 Transmission Strategy
@@ -1066,8 +1112,53 @@ function initPDP() {
         </div>
     `;
 
-    // ── MANDATE 2: Radio button custom styling ──────────────────────────────
+    // ── MANDATE 2: Power Level selector interactivity ───────────────────────
     if (product.category === 'Tuning & Electronics') {
+        const tuneCards = document.querySelectorAll('.pdp-tune-card');
+        let selectedVariant = null;
+
+        tuneCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Deselect all
+                tuneCards.forEach(c => {
+                    c.style.borderColor = '#1E1E28';
+                    c.style.backgroundColor = '';
+                    c.setAttribute('aria-pressed', 'false');
+                    const dot = c.querySelector('.tune-radio-dot');
+                    const ring = c.querySelector('.tune-radio-indicator');
+                    if (dot) dot.classList.add('opacity-0');
+                    if (ring) ring.style.borderColor = '#1E1E28';
+                });
+                // Select this card
+                card.style.borderColor = 'rgba(0,229,255,0.5)';
+                card.style.backgroundColor = 'rgba(0,229,255,0.04)';
+                card.setAttribute('aria-pressed', 'true');
+                const dot = card.querySelector('.tune-radio-dot');
+                const ring = card.querySelector('.tune-radio-indicator');
+                if (dot) dot.classList.remove('opacity-0');
+                if (ring) ring.style.borderColor = '#00E5FF';
+
+                // Update selected variant state
+                selectedVariant = {
+                    id:    card.dataset.variantId,
+                    price: parseFloat(card.dataset.variantPrice),
+                    title: card.dataset.variantTitle
+                };
+
+                // Live-update the price display
+                const priceEl = document.querySelector('#pdp-container .text-2xl.font-extrabold');
+                if (priceEl) priceEl.textContent = `$${selectedVariant.price.toFixed(2)} CAD`;
+
+                // Clear error
+                const lvlErr = document.getElementById('pdp-tune-level-error');
+                if (lvlErr) lvlErr.classList.add('hidden');
+            });
+        });
+
+        // Auto-select first available variant if only one exists
+        if (tuneCards.length === 1) tuneCards[0].click();
+
+        // Radio button custom styling (hardware)
         document.querySelectorAll('input[name="pdp-hardware"]').forEach(radio => {
             radio.addEventListener('change', () => {
                 // Reset all radio visuals
@@ -1120,6 +1211,30 @@ function initPDP() {
         let validationFailed = false;
 
         if (isTuning) {
+            // — Power Level / Tune Level check (Variants) —
+            const tuneCards = document.querySelectorAll('.pdp-tune-card');
+            const hasVariants = tuneCards.length > 0;
+            const selectedTuneCard = document.querySelector('.pdp-tune-card[aria-pressed="true"]');
+
+            if (hasVariants && !selectedTuneCard) {
+                const lvlErr = document.getElementById('pdp-tune-level-error');
+                if (lvlErr) lvlErr.classList.remove('hidden');
+                const wrap = document.getElementById('pdp-tune-level-wrap');
+                if (wrap) {
+                    wrap.style.borderColor = 'rgba(239,68,68,0.6)';
+                    wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    setTimeout(() => { if (wrap && !selectedTuneCard) wrap.style.borderColor = '#1E1E28'; }, 1500);
+                }
+                validationFailed = true;
+            }
+
+            // Build variantOverride from selected tune card
+            const variantOverride = selectedTuneCard ? {
+                id:    selectedTuneCard.dataset.variantId,
+                price: parseFloat(selectedTuneCard.dataset.variantPrice),
+                title: selectedTuneCard.dataset.variantTitle
+            } : null;
+
             // — Compliance gate check (Mandate 3) —
             const compliance = document.getElementById("pdp-compliance-check");
             if (!compliance || !compliance.checked) {
@@ -1168,7 +1283,7 @@ function initPDP() {
 
             if (validationFailed) return;
 
-            addToCart(product.id, 1, customAttributes);
+            addToCart(product.id, 1, customAttributes, variantOverride);
         } else {
             addToCart(product.id);
         }
