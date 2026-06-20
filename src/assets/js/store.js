@@ -517,7 +517,7 @@ function initStore() {
     const params = new URLSearchParams(window.location.search);
     const urlMake = params.get("make");
     let urlCategory = params.get("category");
-    if (window.isTuningPortal) urlCategory = "Tuning";
+    if (window.isTuningPortal) urlCategory = "Tuning & Electronics";
     let urlBrand = params.get("brand");
     const urlPlatform = params.get("platform");
 
@@ -685,13 +685,23 @@ function renderProducts() {
         
         // STRICT OVERRIDE: If a vehicle is pinned in the session
         if (activeVehicle) {
-            const vMake = activeVehicle.make === "GMC" ? "Chevy" : activeVehicle.make;
-            makeMatch = p.makes.includes(vMake) || p.makes.includes("Universal");
+            makeMatch = p.makes.includes(activeVehicle.make) || p.makes.includes("Universal");
+            if (activeVehicle.make === "GMC" || activeVehicle.make === "Chevy") {
+                makeMatch = makeMatch || p.makes.includes("GMC") || p.makes.includes("Chevy");
+            }
             engMatch = enginesMatch(activeVehicle.engine, p.engine);
             yearMatch = activeVehicle.year >= p.years[0] && activeVehicle.year <= p.years[1];
             if (activeVehicle.model) {
                 const pModels = p.models || [];
                 modelMatch = pModels.includes(activeVehicle.model) || pModels.includes("Universal") || pModels.length === 0;
+                
+                if (!modelMatch) {
+                    if (activeVehicle.model.includes("Sierra")) {
+                        modelMatch = pModels.includes(activeVehicle.model.replace("Sierra", "Silverado"));
+                    } else if (activeVehicle.model.includes("Silverado")) {
+                        modelMatch = pModels.includes(activeVehicle.model.replace("Silverado", "Sierra"));
+                    }
+                }
             }
         }
 
