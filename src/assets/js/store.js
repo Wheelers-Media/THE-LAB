@@ -839,17 +839,160 @@ function initPDP() {
                     </div>
 
                     ${product.category === 'Tuning & Electronics' ? `
-                    <div class="mb-8 bg-[#1a1a24] p-5 border border-edge rounded-xl relative overflow-hidden">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-labBlue"></div>
-                        <label for="pdp-vin-input" class="block text-white font-extrabold uppercase tracking-widest text-xs mb-2">Vehicle Identification Number (VIN) <span class="text-red-500">*</span></label>
-                        <p class="text-[11px] text-zinc-400 mb-3 uppercase tracking-wider">A 17-digit VIN is strictly required to configure this tuning product.</p>
-                        <input type="text" id="pdp-vin-input" maxlength="17" placeholder="ENTER 17-DIGIT VIN" class="w-full bg-void border border-edge rounded-lg p-4 text-white focus:outline-none focus:border-labBlue transition-colors font-mono uppercase text-sm tracking-widest">
-                        <p id="pdp-vin-error" class="text-red-500 text-xs mt-2 hidden font-bold">Please enter a valid 17-digit VIN.</p>
+                    <!-- ═══════════════════════════════════════════════════════ -->
+                    <!-- MANDATE 2: OLED VARIANT INPUT LOGIC                     -->
+                    <!-- ═══════════════════════════════════════════════════════ -->
+                    <div class="space-y-5 mb-6">
+
+                        <!-- 2A. TRANSMISSION STRATEGY DROPDOWN -->
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-transmission-wrap">
+                            <label for="pdp-transmission" class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">
+                                Transmission Strategy
+                            </label>
+                            <div class="relative">
+                                <select id="pdp-transmission"
+                                    aria-label="Select transmission strategy"
+                                    class="w-full appearance-none bg-[#000000] border border-[#1E1E28] text-white rounded-lg p-4 pr-10 text-sm font-semibold min-h-[48px] outline-none cursor-pointer transition-all duration-200"
+                                    style="box-shadow:none;"
+                                    onfocus="this.style.borderColor='#0066FF';this.style.boxShadow='0 0 0 2px rgba(0,102,255,0.2), 0 0 16px rgba(0,102,255,0.12)'"
+                                    onblur="this.style.borderColor='#1E1E28';this.style.boxShadow='none'">
+                                    <option value="">Select Shift Strategy</option>
+                                    <option value="Standard">Standard Shift Points — Factory Timing</option>
+                                    <option value="Raised">Raised Shift Points — Performance Oriented</option>
+                                    <option value="High">High Shift Points — Maximum Power Band</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                </div>
+                            </div>
+                            <p class="text-[10px] text-zinc-600 mt-2 uppercase tracking-wider">Determines when your transmission changes gears under load.</p>
+                        </div>
+
+                        <!-- 2B. HARDWARE REQUIREMENT RADIO BUTTONS -->
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-hardware-wrap">
+                            <fieldset>
+                                <legend class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Hardware Requirement</legend>
+                                <div class="space-y-3">
+
+                                    <!-- Option 1: Need the Device -->
+                                    <label for="hw-need" class="flex items-start gap-4 p-4 rounded-lg border border-[#1E1E28] cursor-pointer transition-all duration-200 hover:border-[#0066FF]/50 hover:bg-labBlue/5 group"
+                                        id="hw-need-label">
+                                        <div class="relative flex-shrink-0 mt-0.5">
+                                            <input type="radio" id="hw-need" name="pdp-hardware" value="need_device"
+                                                class="sr-only peer" aria-describedby="hw-need-desc">
+                                            <div class="w-5 h-5 rounded-full border-2 border-[#1E1E28] bg-[#000000] flex items-center justify-center transition-all peer-checked:border-labCyan group-hover:border-zinc-500"
+                                                id="hw-need-indicator">
+                                                <div class="w-2.5 h-2.5 rounded-full bg-labCyan opacity-0 transition-opacity peer-checked:opacity-100" id="hw-need-dot"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-white mb-0.5">I need the EZ LYNK AutoAgent 3</p>
+                                            <p class="text-[10px] text-zinc-500 uppercase tracking-wider" id="hw-need-desc">Include hardware device with my tune order — AutoAgent 3 will be shipped with your tune files.</p>
+                                        </div>
+                                    </label>
+
+                                    <!-- Option 2: Already Own -->
+                                    <label for="hw-own" class="flex items-start gap-4 p-4 rounded-lg border border-[#1E1E28] cursor-pointer transition-all duration-200 hover:border-[#0066FF]/50 hover:bg-labBlue/5 group"
+                                        id="hw-own-label">
+                                        <div class="relative flex-shrink-0 mt-0.5">
+                                            <input type="radio" id="hw-own" name="pdp-hardware" value="own_device"
+                                                class="sr-only peer" aria-describedby="hw-own-desc">
+                                            <div class="w-5 h-5 rounded-full border-2 border-[#1E1E28] bg-[#000000] flex items-center justify-center transition-all peer-checked:border-labBlue group-hover:border-zinc-500"
+                                                id="hw-own-indicator">
+                                                <div class="w-2.5 h-2.5 rounded-full bg-labBlue opacity-0 transition-opacity peer-checked:opacity-100" id="hw-own-dot"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-white mb-0.5">I already own a device</p>
+                                            <p class="text-[10px] text-zinc-500 uppercase tracking-wider" id="hw-own-desc">Tune files only — I have my own EZ LYNK AutoAgent or HP Tuners MPVI interface.</p>
+                                        </div>
+                                    </label>
+
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <!-- 2C. VIN INPUT FIELD -->
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 relative overflow-hidden" id="pdp-vin-wrap">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-labBlue rounded-l-xl"></div>
+                            <label for="pdp-vin-input" class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1 pl-2">
+                                Vehicle Identification Number (VIN)
+                                <span class="text-red-500 ml-1" aria-label="required">*</span>
+                            </label>
+                            <p class="text-[10px] text-zinc-500 mb-3 pl-2 uppercase tracking-wider">A 17-digit VIN is strictly required to configure this tuning product.</p>
+                            <input
+                                type="text"
+                                id="pdp-vin-input"
+                                maxlength="17"
+                                minlength="17"
+                                placeholder="ENTER 17-DIGIT VIN"
+                                autocomplete="off"
+                                autocapitalize="characters"
+                                spellcheck="false"
+                                aria-required="true"
+                                aria-describedby="pdp-vin-error pdp-vin-count"
+                                class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-4 text-white outline-none font-mono uppercase text-sm tracking-widest min-h-[48px] transition-all duration-200"
+                                style="letter-spacing:0.15em;"
+                                oninput="this.value=this.value.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g,''); document.getElementById('pdp-vin-count').textContent=this.value.length+'/17';"
+                                onfocus="this.style.borderColor='#0066FF';this.style.boxShadow='0 0 0 2px rgba(0,102,255,0.2), 0 0 16px rgba(0,102,255,0.12)'"
+                                onblur="this.style.borderColor='#1E1E28';this.style.boxShadow='none'">
+                            <div class="flex items-center justify-between mt-2 pl-2">
+                                <p id="pdp-vin-error" class="text-red-500 text-[10px] font-bold uppercase tracking-wider hidden" role="alert">
+                                    ✕ Please enter a valid 17-digit VIN. Letters I, O, and Q are not valid VIN characters.
+                                </p>
+                                <span id="pdp-vin-count" class="text-[10px] text-zinc-600 font-mono ml-auto">0/17</span>
+                            </div>
+                        </div>
+
                     </div>
+                    <!-- /MANDATE 2 -->
+
+                    <!-- ═══════════════════════════════════════════════════════ -->
+                    <!-- MANDATE 3: UNSKIPPABLE COMPLIANCE GATE                  -->
+                    <!-- ═══════════════════════════════════════════════════════ -->
+                    <div id="pdp-compliance-gate"
+                         class="bg-[#0D0D12] border rounded-xl p-4 mb-5"
+                         style="border-color:rgba(127,29,29,0.5);"
+                         role="group"
+                         aria-labelledby="compliance-gate-title">
+                        <!-- Header bar -->
+                        <div class="flex items-center gap-2 mb-3">
+                            <svg class="w-4 h-4 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                            <p id="compliance-gate-title" class="text-[9px] font-black text-red-500 uppercase tracking-widest">Mandatory Compliance Acknowledgement</p>
+                        </div>
+                        <!-- Checkbox row -->
+                        <label for="pdp-compliance-check" class="flex items-start gap-3 cursor-pointer group">
+                            <div class="relative flex-shrink-0 mt-0.5">
+                                <input type="checkbox" id="pdp-compliance-check"
+                                    aria-required="true"
+                                    aria-describedby="compliance-text"
+                                    class="sr-only peer">
+                                <!-- Custom OLED checkbox -->
+                                <div class="w-5 h-5 rounded border-2 transition-all duration-200 flex items-center justify-center"
+                                     id="pdp-compliance-box"
+                                     style="border-color:rgba(239,68,68,0.6); background:#000000;">
+                                    <svg id="pdp-compliance-check-icon" class="w-3 h-3 text-white hidden" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <p id="compliance-text" class="text-[10px] text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">
+                                <strong class="text-white">MANDATORY COMPLIANCE:</strong> By checking this box, I confirm this product is for
+                                <strong class="text-red-400">Off-Road and Sanctioned Racing Use Only</strong>, and is not legal for use on
+                                pollution-controlled vehicles. I release <strong class="text-white">THE LAB</strong> from any liability regarding
+                                Clean Air Act compliance.
+                            </p>
+                        </label>
+                    </div>
+                    <!-- /MANDATE 3 -->
+
                     ` : ''}
 
                     <div class="flex gap-4">
-                        <button id="pdp-add-btn" class="flex-1 bg-labBlue hover:bg-labCyan text-white font-extrabold uppercase tracking-widest py-4 rounded-xl transition-all shadow-oled-blue hover:shadow-oled-cyan">
+                        <button id="pdp-add-btn"
+                            class="flex-1 bg-labBlue hover:bg-labCyan text-white font-extrabold uppercase tracking-widest py-4 rounded-xl transition-all shadow-oled-blue hover:shadow-oled-cyan min-h-[56px] focus:outline-none focus:ring-2 focus:ring-labBlue focus:ring-offset-2 focus:ring-offset-black">
                             Add to Cart
                         </button>
                     </div>
@@ -903,28 +1046,134 @@ function initPDP() {
                         <svg class="w-5 h-5 text-zinc-500 transform transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div id="pdp-shipping" class="pb-6 text-zinc-400 text-sm leading-relaxed hidden">
-                        <p class="mb-4">All orders ship directly from our facility or authorized distributor network. Most orders are processed and shipped within 1-2 business days.</p>
-                        <p class="mb-4"><strong>Free Shipping:</strong> Available on eligible orders over $250 CAD.</p>
-                        <p><strong>Returns:</strong> We accept returns on unused, uninstalled products in their original packaging within 30 days of delivery. Tuning products, electronic modules, and customized items are final sale.</p>
+                        <p class="mb-4">Orders process within <strong>1-2 business days</strong>. Domestic shipping typically takes <strong>3-5 business days</strong>.</p>
+                        <p class="mb-4"><strong>Free Standard Shipping:</strong> Eligible on all orders over <strong>$150 USD</strong> (or equivalent in CAD). A flat rate of <strong>$15 USD</strong> applies for orders under $150 USD.</p>
+                        <p class="mb-4"><strong>Returns:</strong> 30-day returns on unopened, unused products in original packaging. Return shipping is the customer's responsibility unless defective or due to an error.</p>
+                        <div class="mt-6 p-4 rounded-xl border border-edge/60 bg-black/40 flex flex-col sm:flex-row items-center gap-4">
+                            <img src="/assets/shipping.webp" alt="THE LAB Shipping Card" class="w-20 h-auto object-contain rounded shadow-lg border border-edge/40 flex-shrink-0" loading="lazy">
+                            <div>
+                                <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-1">Official Shipping Policy Card</h4>
+                                <p class="text-[11px] text-zinc-500 leading-normal mb-2">View the complete terms, destinations, and local pickup instructions.</p>
+                                <a href="/shipping/" class="inline-flex items-center gap-1 text-[11px] text-labBlue hover:text-white transition-colors font-bold uppercase tracking-wider">
+                                    Full Policy Page
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     `;
 
-    document.getElementById("pdp-add-btn").addEventListener("click", () => {
-        if (product.category === 'Tuning & Electronics') {
-            const vin = document.getElementById("pdp-vin-input").value.trim().toUpperCase();
-            if (vin.length !== 17) {
-                document.getElementById("pdp-vin-error").classList.remove("hidden");
-                return;
+    // ── MANDATE 2: Radio button custom styling ──────────────────────────────
+    if (product.category === 'Tuning & Electronics') {
+        document.querySelectorAll('input[name="pdp-hardware"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                // Reset all radio visuals
+                document.querySelectorAll('input[name="pdp-hardware"]').forEach(r => {
+                    const label = r.closest('label');
+                    const indicator = label.querySelector('[id$="-indicator"]');
+                    const dot = label.querySelector('[id$="-dot"]');
+                    if (indicator) { indicator.style.borderColor = '#1E1E28'; }
+                    if (dot) dot.classList.add('opacity-0');
+                    if (label) label.style.borderColor = '#1E1E28';
+                });
+                // Apply active state
+                const activeLabel = radio.closest('label');
+                const activeDot = activeLabel.querySelector('[id$="-dot"]');
+                const activeIndicator = activeLabel.querySelector('[id$="-indicator"]');
+                const isNeed = radio.id === 'hw-need';
+                if (activeIndicator) activeIndicator.style.borderColor = isNeed ? '#00E5FF' : '#0066FF';
+                if (activeDot) activeDot.classList.remove('opacity-0');
+                if (activeLabel) activeLabel.style.borderColor = isNeed ? 'rgba(0,229,255,0.4)' : 'rgba(0,102,255,0.4)';
+            });
+        });
+    }
+
+    // ── MANDATE 3: Compliance checkbox custom styling ───────────────────────
+    const complianceCheck = document.getElementById('pdp-compliance-check');
+    const complianceBox   = document.getElementById('pdp-compliance-box');
+    const complianceIcon  = document.getElementById('pdp-compliance-check-icon');
+    const complianceGate  = document.getElementById('pdp-compliance-gate');
+
+    if (complianceCheck && complianceBox) {
+        complianceCheck.addEventListener('change', () => {
+            if (complianceCheck.checked) {
+                complianceBox.style.backgroundColor = '#0066FF';
+                complianceBox.style.borderColor = '#0066FF';
+                complianceIcon.classList.remove('hidden');
+                complianceGate.style.borderColor = 'rgba(0,102,255,0.3)';
+            } else {
+                complianceBox.style.backgroundColor = '#000000';
+                complianceBox.style.borderColor = 'rgba(239,68,68,0.6)';
+                complianceIcon.classList.add('hidden');
+                complianceGate.style.borderColor = 'rgba(127,29,29,0.5)';
             }
-            document.getElementById("pdp-vin-error").classList.add("hidden");
-            addToCart(product.id, 1, { "VIN": vin });
+        });
+    }
+
+    // ── Add to Cart — full validation gate ──────────────────────────────────
+    document.getElementById("pdp-add-btn").addEventListener("click", () => {
+        const isTuning = product.category === 'Tuning & Electronics';
+        const customAttributes = {};
+        let validationFailed = false;
+
+        if (isTuning) {
+            // — Compliance gate check (Mandate 3) —
+            const compliance = document.getElementById("pdp-compliance-check");
+            if (!compliance || !compliance.checked) {
+                const gate = document.getElementById('pdp-compliance-gate');
+                if (gate) {
+                    gate.style.borderColor = 'rgba(239,68,68,0.8)';
+                    gate.style.boxShadow = '0 0 0 2px rgba(239,68,68,0.2)';
+                    gate.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Flash effect
+                    setTimeout(() => {
+                        if (gate && compliance && !compliance.checked) {
+                            gate.style.boxShadow = 'none';
+                        }
+                    }, 1500);
+                }
+                validationFailed = true;
+            }
+
+            // — VIN check (Mandate 2C) —
+            const vin = document.getElementById("pdp-vin-input");
+            const vinError = document.getElementById("pdp-vin-error");
+            const vinVal = vin ? vin.value.trim().toUpperCase() : '';
+            if (vinVal.length !== 17) {
+                if (vinError) vinError.classList.remove("hidden");
+                if (vin) { vin.style.borderColor = '#ef4444'; vin.style.boxShadow = '0 0 0 2px rgba(239,68,68,0.2)'; }
+                validationFailed = true;
+            } else {
+                if (vinError) vinError.classList.add("hidden");
+                if (vin) { vin.style.borderColor = '#1E1E28'; vin.style.boxShadow = 'none'; }
+                customAttributes["VIN"] = vinVal;
+            }
+
+            // — Transmission strategy (Mandate 2A) —
+            const transmission = document.getElementById("pdp-transmission");
+            if (transmission && transmission.value) {
+                customAttributes["Transmission Strategy"] = transmission.options[transmission.selectedIndex].text;
+            }
+
+            // — Hardware requirement (Mandate 2B) —
+            const hardware = document.querySelector('input[name="pdp-hardware"]:checked');
+            if (hardware) {
+                customAttributes["Hardware"] = hardware.value === 'need_device'
+                    ? 'EZ LYNK AutoAgent 3 Required'
+                    : 'Customer Owns Device';
+            }
+
+            if (validationFailed) return;
+
+            addToCart(product.id, 1, customAttributes);
         } else {
             addToCart(product.id);
         }
     });
+
 
     // Accordion Logic
     document.querySelectorAll('.pdp-accordion-btn').forEach(btn => {
