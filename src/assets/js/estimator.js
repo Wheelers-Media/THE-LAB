@@ -5,49 +5,55 @@ const estimatorConfig = {
             {
                 id: 'vehicle_info',
                 question: "What is the year, make, and model of your vehicle?",
-                placeholder: "e.g., 2019 Ford F-350",
+                placeholder: "e.g., 2022 Ford F-150",
                 type: 'text'
             },
             {
-                id: 'package',
-                question: "Which package are you interested in?",
+                id: 'focus',
+                question: "What's your focus for this visit?",
                 options: [
-                    { id: 'standard', label: "Standard (Entry Level)" },
-                    { id: 'deluxx', label: "De-Luxx (Signature)" },
-                    { id: 'semi', label: "Semi Interior (Heavy Duty)" }
+                    { id: 'interior', label: "Interior Focus — Deep clean inside" },
+                    { id: 'exterior', label: "Exterior Focus — Paint, wheels, protection" },
+                    { id: 'complete', label: "Complete Transformation — Full In & Out" }
+                ]
+            },
+            {
+                id: 'tier',
+                question: "Which tier are you looking at?",
+                options: [
+                    { id: 'standard', label: "Standard — Essential clean" },
+                    { id: 'deluxx',   label: "De-Luxx / Signature — Full restoration" }
                 ]
             },
             {
                 id: 'vehicle_size',
-                question: "What is your vehicle size or type?",
+                question: "What is the size of your vehicle?",
                 options: [
-                    { label: "Small SUV / Truck / Small Sleeper", value: "small" },
-                    { label: "Large SUV / Van / Full-Size Sleeper", value: "large" }
+                    { label: "Small — 5 or 6 Seat SUV / Truck", value: "small" },
+                    { label: "Large — 7 or 8 Seat SUV / Van",   value: "large" }
                 ]
             },
             {
                 id: 'addons',
                 question: "Any specific add-ons needed?",
                 options: [
-                    { label: "None", addPrice: 0 },
-                    { label: "Pet Hair Removal", addPrice: 50 },
-                    { label: "Heavy Odour Elimination", addPrice: 100 }
+                    { label: "None",                      addPrice: 0   },
+                    { label: "Vehicle Deodorizer",        addPrice: 70  },
+                    { label: "Heavy Odour Elimination",   addPrice: 100 }
                 ]
             }
         ],
         calculate: (answers) => {
-            const pkg = answers.package.id;
-            const size = answers.vehicle_size.value;
-            let base = 0;
-            if (pkg === 'standard') {
-                base = size === 'small' ? 149 : 169;
-            } else if (pkg === 'deluxx') {
-                base = size === 'small' ? 279 : 329;
-            } else if (pkg === 'semi') {
-                base = size === 'small' ? 500 : 600;
-            }
-            base += answers.addons.addPrice;
-            return base;
+            const focus = answers.focus.id;
+            const tier  = answers.tier.id;
+            const size  = answers.vehicle_size.value;
+            const pricing = {
+                interior: { standard: { small: 249, large: 279 }, deluxx: { small: 379, large: 429 } },
+                exterior: { standard: { small: 149, large: 179 }, deluxx: { small: 249, large: 299 } },
+                complete: { standard: { small: 329, large: 379 }, deluxx: { small: 499, large: 579 } }
+            };
+            const base = (pricing[focus] && pricing[focus][tier] && pricing[focus][tier][size]) ? pricing[focus][tier][size] : 0;
+            return base + (answers.addons.addPrice || 0);
         }
     },
     tinting: {
@@ -535,7 +541,8 @@ function loadBookingIframe() {
     let detailItems = '';
     
     if (currentService.title === "Detailing Estimator") {
-        if (userAnswers['package']) detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Package</span><span class="text-white">${userAnswers['package'].label}</span></div>`;
+        if (userAnswers['focus'])  detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Focus</span><span class="text-white">${userAnswers['focus'].label.split(' —')[0]}</span></div>`;
+        if (userAnswers['tier'])   detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Tier</span><span class="text-white">${userAnswers['tier'].label.split(' —')[0]}</span></div>`;
         if (userAnswers['addons'] && userAnswers['addons'].label !== "None") detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Add-on</span><span class="text-white">${userAnswers['addons'].label}</span></div>`;
     }
     if (currentService.title === "Window Tinting Estimator") {
