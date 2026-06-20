@@ -249,6 +249,10 @@ const V_DATA = {
 
 let activeVehicle = JSON.parse(sessionStorage.getItem('lab_active_vehicle')) || null;
 
+window.setActiveVehicle = function(vehicle) {
+    activeVehicle = vehicle;
+};
+
 /* --- ROBUST GLOBAL CURRENCY TOGGLE --- */
 window.setCurrency = function(c) {
     const r = 0.74;
@@ -677,6 +681,17 @@ function renderProducts() {
 
         // Brand
         let brandMatch = activeFilters.brands.length === 0 || activeFilters.brands.includes(p.brand);
+        
+        // If a platform is set in activeFilters but didn't match exactly, try fuzzy matching
+        if (!brandMatch && activeFilters.brands.length > 0) {
+            const bUpper = p.brand.toUpperCase();
+            if (activeFilters.brands.includes("EZ LYNK") && (bUpper.includes("EZ LYNK") || bUpper.includes("EZ-LYNK"))) {
+                brandMatch = true;
+            }
+            if (activeFilters.brands.includes("HP Tuners") && (bUpper.includes("HP TUNER") || bUpper.includes("HPTUNER"))) {
+                brandMatch = true;
+            }
+        }
 
         // Year
         let yearMatch = !activeFilters.year || (activeFilters.year >= p.years[0] && activeFilters.year <= p.years[1]);
@@ -702,6 +717,18 @@ function renderProducts() {
                         modelMatch = pModels.includes(activeVehicle.model.replace("Silverado", "Sierra"));
                     }
                 }
+            }
+        }
+
+        // Tuning Portal Exclusion Logic
+        if (window.isTuningPortal) {
+            const titleLower = p.name.toLowerCase();
+            // Exclude oddball non-tuning parts
+            if (titleLower.includes('switch') || 
+                titleLower.includes('bracket') || 
+                titleLower.includes('can bus') || 
+                titleLower.includes('def module')) {
+                return false;
             }
         }
 

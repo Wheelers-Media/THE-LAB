@@ -171,7 +171,9 @@
         sessionStorage.setItem('lab_active_vehicle', JSON.stringify(vehicle));
 
         // Push into store.js activeVehicle and re-render
-        if (typeof window.activeVehicle !== 'undefined') {
+        if (typeof window.setActiveVehicle === 'function') {
+            window.setActiveVehicle(vehicle);
+        } else if (typeof window.activeVehicle !== 'undefined') {
             window.activeVehicle = vehicle;
         }
         if (typeof window.renderProducts === 'function') {
@@ -231,7 +233,11 @@
             window.activeFilters.engines = [];
             window.activeFilters.year    = null;
         }
-        window.activeVehicle = null;
+        if (typeof window.setActiveVehicle === 'function') {
+            window.setActiveVehicle(null);
+        } else {
+            window.activeVehicle = null;
+        }
         if (typeof window.renderProducts === 'function') window.renderProducts();
 
         // Reset selects
