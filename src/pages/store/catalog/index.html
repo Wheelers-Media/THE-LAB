@@ -194,9 +194,14 @@
     <div class="border-b border-edge/60 bg-[#0A0A0F] py-3 hidden md:block">
         <div class="max-w-7xl mx-auto px-6 flex items-center gap-6">
             <!-- Search -->
-            <div class="flex-grow relative">
-                <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" id="store-search-input" placeholder="Search for parts, tuning, exhaust..." class="w-full bg-[#16161E] text-white text-sm rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-1 focus:ring-labBlue transition-all placeholder:text-zinc-600 border border-edge hover:border-zinc-700">
+            <div class="flex-grow relative flex items-center">
+                <div class="relative w-full">
+                    <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" id="store-search-input" placeholder="Search for parts, tuning, exhaust..." class="w-full bg-[#16161E] text-white text-sm rounded-lg pl-12 pr-[90px] py-3 focus:outline-none focus:ring-1 focus:ring-labBlue transition-all placeholder:text-zinc-600 border border-edge hover:border-zinc-700">
+                    <button id="store-search-btn" class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-bold text-white bg-labBlue hover:bg-labCyan px-4 py-1.5 rounded uppercase tracking-widest transition-colors focus:outline-none focus:ring-2 focus:ring-labCyan">
+                        Search
+                    </button>
+                </div>
             </div>
             
             <!-- Vehicle Selector Button -->

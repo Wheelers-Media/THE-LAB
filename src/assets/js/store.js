@@ -615,10 +615,32 @@ function initStore() {
 
     // 7. Search input
     const searchInput = document.getElementById('store-search-input');
+    const searchBtn = document.getElementById('store-search-btn');
+    
+    function triggerSearch() {
+        if (!searchInput) return;
+        activeFilters.searchQuery = searchInput.value.trim();
+        renderProducts();
+    }
+
+    if (searchBtn) {
+        searchBtn.addEventListener('click', triggerSearch);
+    }
+    
     if (searchInput) {
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                triggerSearch();
+            }
+        });
+        
+        // Allow clearing search instantly when user deletes all text
         searchInput.addEventListener('input', (e) => {
-            activeFilters.searchQuery = e.target.value.trim();
-            renderProducts();
+            if (e.target.value.trim() === '') {
+                activeFilters.searchQuery = '';
+                renderProducts();
+            }
         });
     }
 
