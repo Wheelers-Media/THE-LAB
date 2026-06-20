@@ -123,80 +123,8 @@ const estimatorConfig = {
             return 0;
         }
     },
-    coatings: {
-        title: "Ceramic Coating Estimator",
-        steps: [
-            {
-                id: 'vehicle_info',
-                question: "What is the year, make, and model of your vehicle?",
-                placeholder: "e.g., 2019 Ford F-350",
-                type: 'text'
-            },
-            {
-                id: 'package',
-                question: "Which coating package are you interested in?",
-                options: [
-                    { label: "Standard Coat (2-Year Durability)", basePrice: 800 },
-                    { label: "Elite Coat (5-Year Durability)", basePrice: 1400 },
-                    { label: "Graphene Elite (7+ Year Durability)", basePrice: 2200 }
-                ]
-            },
-            {
-                id: 'vehicle_size',
-                question: "What size is your vehicle?",
-                options: [
-                    { label: "Car / Sedan" },
-                    { label: "Small SUV / Truck" },
-                    { label: "Large SUV / Rig" }
-                ]
-            },
-            {
-                id: 'paint_condition',
-                question: "What condition is your paint currently in?",
-                options: [
-                    { label: "Brand New (Minor Prep)", addPrice: 0 },
-                    { label: "Used (Needs 1-Step Correction)", addPrice: 300 },
-                    { label: "Heavy Swirls (Needs 2-Step Correction)", addPrice: 600 }
-                ]
-            }
-        ],
-        calculate: (answers) => {
-            return answers.package.basePrice + answers.paint_condition.addPrice;
-        }
-    },
-    ppf: {
-        title: "Paint Protection Film Estimator",
-        steps: [
-            {
-                id: 'vehicle_info',
-                question: "What is the year, make, and model of your vehicle?",
-                placeholder: "e.g., 2019 Ford F-350",
-                type: 'text'
-            },
-            {
-                id: 'vehicle_size',
-                question: "What size is your vehicle?",
-                options: [
-                    { label: "Car / Sedan" },
-                    { label: "Small SUV / Truck" },
-                    { label: "Large SUV / Rig" }
-                ]
-            },
-            {
-                id: 'coverage',
-                question: "What areas do you want protected?",
-                options: [
-                    { label: "Front Bumper Only", basePrice: 500 },
-                    { label: "Partial Front Clip", basePrice: 900 },
-                    { label: "Full Front Clip", basePrice: 1800 },
-                    { label: "Full Body Protection", basePrice: 5000 }
-                ]
-            }
-        ],
-        calculate: (answers) => {
-            return answers.coverage.basePrice;
-        }
-    },
+    coatings: { comingSoon: true, title: 'Ceramic Coatings', page: '/boutique/coatings/' },
+    ppf: { comingSoon: true, title: 'Paint Protection Film', page: '/boutique/ppf/' },
     lighting: {
         title: "Custom Lighting Estimator",
         steps: [
