@@ -1086,25 +1086,63 @@ function initPDP() {
                 </div>
 
                 <!-- Shipping Accordion -->
-                <div class="border-b border-edge">
-                    <button class="pdp-accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="pdp-shipping">
-                        <span class="text-lg font-heading font-extrabold text-white uppercase tracking-wider group-hover:text-labBlue transition-colors">Shipping & Returns</span>
-                        <svg class="w-5 h-5 text-zinc-500 transform transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                <div class="bg-[#000000] border border-[#1E1E28] rounded-xl overflow-hidden mt-6 mb-8">
+                    <button class="pdp-accordion-btn w-full flex items-center justify-between p-5 text-left group transition-all" data-target="pdp-shipping">
+                        <span class="text-lg font-heading font-extrabold text-[#FFFFFF] uppercase tracking-wider group-hover:text-[#00E5FF] transition-colors duration-300">Shipping & Returns</span>
+                        <svg class="w-6 h-6 text-[#A0A0AB] group-hover:text-[#00E5FF] transform transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
-                    <div id="pdp-shipping" class="pb-6 text-zinc-400 text-sm leading-relaxed hidden">
-                        <p class="mb-4">Orders process within <strong>1-2 business days</strong>. Domestic shipping typically takes <strong>3-5 business days</strong>.</p>
-                        <p class="mb-4"><strong>Free Standard Shipping:</strong> Eligible on all orders over <strong>$150 USD</strong> (or equivalent in CAD). A flat rate of <strong>$15 USD</strong> applies for orders under $150 USD.</p>
-                        <p class="mb-4"><strong>Returns:</strong> 30-day returns on unopened, unused products in original packaging. Return shipping is the customer's responsibility unless defective or due to an error.</p>
-                        <div class="mt-6 p-4 rounded-xl border border-edge/60 bg-black/40 flex flex-col sm:flex-row items-center gap-4">
-                            <img src="/assets/shipping.webp" alt="THE LAB Shipping Card" class="w-20 h-auto object-contain rounded shadow-lg border border-edge/40 flex-shrink-0" loading="lazy">
-                            <div>
-                                <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-1">Official Shipping Policy Card</h4>
-                                <p class="text-[11px] text-zinc-500 leading-normal mb-2">View the complete terms, destinations, and local pickup instructions.</p>
-                                <a href="/shipping/" class="inline-flex items-center gap-1 text-[11px] text-labBlue hover:text-white transition-colors font-bold uppercase tracking-wider">
-                                    Full Policy Page
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                                </a>
-                            </div>
+                    <div id="pdp-shipping" class="hidden">
+                        <div class="p-5 bg-[#0D0D12] border-t border-[#1E1E28] font-body text-[#A0A0AB] space-y-6 text-sm leading-relaxed">
+                            ${(() => {
+                                const t = product.tags || [];
+                                const lowerT = t.map(x => x.toLowerCase().trim());
+                                const isOversized = lowerT.some(x => x.includes('exhaust') || x.includes('delete pipe'));
+                                const isEmissions = lowerT.some(x => ['dpf', 'def', 'egr', 'delete pipe', 'exhaust', 'tune', 'tuner', 'tuning'].some(k => x.includes(k)));
+                                
+                                let html = '<div class="space-y-2"><h4 class="text-[#FFFFFF] font-bold uppercase tracking-widest text-xs mb-3">Shipping Rates</h4>';
+                                
+                                if (isOversized) {
+                                    html += `
+                                        <div class="space-y-4">
+                                            <p class="text-[#FFFFFF] font-bold">Oversized Freight Rules Apply:</p>
+                                            <ul class="space-y-2 pl-5 list-disc marker:text-[#0066FF]">
+                                                <li><span class="text-[#FFFFFF] font-bold">Canada:</span> $80 CAD/Full System or $65 CAD/Delete Pipe <span class="italic text-xs text-[#A0A0AB]">(10+ pieces ship skid freight free)</span>.</li>
+                                                <li><span class="text-[#FFFFFF] font-bold">US:</span> $111 USD/Full System or $74 USD/Delete Pipe <span class="italic text-xs text-[#A0A0AB]">(10+ pieces: $500 USD first skid, $250 USD additional)</span>.</li>
+                                            </ul>
+                                            <p class="italic text-xs">Remote locations are subject to manual freight adjustments.</p>
+                                        </div>
+                                    `;
+                                } else {
+                                    html += `
+                                        <div class="space-y-2">
+                                            <p><span class="text-[#FFFFFF] font-bold">Canadian Orders:</span> $20 CAD flat rate (Free over $1000 CAD).</p>
+                                            <p><span class="text-[#FFFFFF] font-bold">North American Orders:</span> $37 USD flat rate.</p>
+                                            <p class="italic text-xs">Remote locations are subject to manual freight adjustments prior to fulfillment.</p>
+                                        </div>
+                                    `;
+                                }
+                                
+                                html += `</div>
+                                    <div class="bg-[#1E1E28] p-4 rounded-lg border border-[#1E1E28]/50 mt-6">
+                                        <p class="text-[#FFFFFF] text-xs leading-relaxed">
+                                            <span class="font-bold text-[#0066FF] uppercase tracking-wider block mb-1">International Duties</span>
+                                            Shipments outside of Canada may incur <span class="text-[#FFFFFF] font-bold">TARIFFS</span> and <span class="text-[#FFFFFF] font-bold">TAXES</span>. THE LAB does not collect these prior to shipping. All cross-border import duties are strictly the responsibility of the consumer.
+                                        </p>
+                                    </div>
+                                `;
+                                
+                                if (isEmissions) {
+                                    html += `
+                                        <div class="pt-4 border-t border-[#1E1E28]">
+                                            <p class="italic text-[#A0A0AB] text-[11px] leading-relaxed">
+                                                NOTICE: These products are for Off-Road and Sanctioned Racing Use Only. They are not legal for use on pollution-controlled vehicles. The purchaser assumes all legal liability for Clean Air Act compliance. THE LAB does not advise on or authorize the illegal bypass of emissions testing.
+                                            </p>
+                                        </div>
+                                    `;
+                                }
+                                
+                                return html;
+                            })()}
                         </div>
                     </div>
                 </div>
