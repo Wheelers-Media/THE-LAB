@@ -43,81 +43,7 @@
         }
         ::selection { background: #0066FF; color: #fff; }
 
-        /* ── Vehicle Selector Modal ── */
-        .vs-make-btn .vs-make-icon { opacity: 0.4; transition: all 0.3s ease; }
-        .vs-make-btn:hover .vs-make-icon { opacity: 1; }
-        .vs-make-btn.selected-make { border-color: #0066FF; background-color: rgba(0,102,255,0.1); box-shadow: 0 0 0 2px rgba(0,102,255,0.5); }
-        .vs-make-btn.selected-make .vs-make-icon { opacity: 1; }
-        .vs-make-btn.selected-make .vs-make-text { color: #0066FF; }
 
-        /* ── BUILD YOUR TUNE GATEWAY ── */
-        /* Custom OLED selects — reject all browser defaults */
-        .byt-select {
-            appearance: none; -webkit-appearance: none;
-            background-color: #000000;
-            border: 1px solid #1E1E28;
-            color: #ffffff;
-            border-radius: 0.75rem;
-            padding: 1rem 3rem 1rem 1rem;
-            font-size: 0.875rem;
-            font-family: 'Inter', sans-serif;
-            width: 100%;
-            min-height: 48px;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-        }
-        .byt-select:focus {
-            border-color: #0066FF;
-            box-shadow: 0 0 0 2px rgba(0,102,255,0.25), 0 0 16px rgba(0,102,255,0.15);
-        }
-        .byt-select:disabled { opacity: 0.3; cursor: not-allowed; }
-        .byt-select option { background: #0D0D12; color: #ffffff; }
-        .byt-select-wrap { position: relative; }
-        .byt-select-wrap::after {
-            content: '';
-            position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
-            width: 0; height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 5px solid #4b5563;
-            pointer-events: none;
-        }
-        /* Platform split card */
-        .platform-card { transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; }
-        .platform-card:hover { transform: translateY(-4px); }
-        .platform-card.platform-ezlynk:hover { border-color: rgba(0,229,255,0.6); box-shadow: 0 0 32px rgba(0,229,255,0.12); }
-        .platform-card.platform-hptuners:hover { border-color: rgba(0,102,255,0.6); box-shadow: 0 0 32px rgba(0,102,255,0.12); }
-        /* Scan-line title animation */
-        @keyframes scan {
-            0%   { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-        .byt-title-accent {
-            background: linear-gradient(90deg, transparent 0%, #00E5FF 40%, #0066FF 60%, transparent 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: scan 4s linear infinite;
-        }
-        /* Step progress indicator */
-        .byt-step-dot {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: #1E1E28;
-            transition: background 0.3s, box-shadow 0.3s;
-        }
-        .byt-step-dot.active {
-            background: #0066FF;
-            box-shadow: 0 0 8px rgba(0,102,255,0.6);
-        }
-        .byt-step-dot.done {
-            background: #00E5FF;
-        }
-        /* Gateway collapse/expand */
-        #byt-gateway-body { transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s; overflow: hidden; }
-        /* Platform cards hidden until vehicle confirmed */
-        #byt-platform-split { transition: opacity 0.4s, transform 0.4s; }
     </style>
 </head>
 <body class="bg-void text-zinc-400 antialiased">
@@ -183,7 +109,7 @@
                                             <a href="/store/catalog/?category=EGR" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>EGR Solutions</a>
                                             <a href="/store/catalog/?category=Exhaust" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Exhaust Systems</a>
                                             <a href="/store/catalog/?category=CCV" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>CCV Solutions</a>
-                                            <a href="/store/catalog/?category=Tuning" class="flex items-center gap-2 px-4 py-2.5 text-xs text-labBlue font-bold hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Custom Tuning</a>
+                                            <a href="/store/tuning/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-labBlue font-bold hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Custom Tuning</a>
                                             <a href="/store/catalog/?category=Accessories" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Bumpers &amp; Accessories</a>
                                         </div>
                                     </div>
@@ -233,7 +159,7 @@
                         <a href="/store/catalog/?category=EGR" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">EGR Solutions</a>
                         <a href="/store/catalog/?category=Exhaust" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">Exhaust Systems</a>
                         <a href="/store/catalog/?category=CCV" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">CCV Solutions</a>
-                        <a href="/store/catalog/?category=Tuning" class="block py-3 text-xs text-labBlue font-bold hover:text-labCyan transition-colors">Custom Tuning</a>
+                        <a href="/store/tuning/" class="block py-3 text-xs text-labBlue font-bold hover:text-labCyan transition-colors">Custom Tuning</a>
                     </div>
                 </div>
 
@@ -291,173 +217,7 @@
 
     <main>
 
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- MANDATE 1: "BUILD YOUR TUNE" — YMM GUIDED TUNING GATEWAY          -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="byt-gateway" class="border-b border-edge/60" style="background:linear-gradient(180deg,#050508 0%,#000000 100%);">
-        <div class="max-w-7xl mx-auto px-6 py-5">
 
-            <!-- Collapsed Header Row (always visible) -->
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div class="flex items-center gap-4">
-                    <!-- Step dots -->
-                    <div class="flex items-center gap-1.5" id="byt-step-dots" aria-hidden="true">
-                        <div class="byt-step-dot active" id="byt-dot-1"></div>
-                        <div class="w-5 h-px bg-edge"></div>
-                        <div class="byt-step-dot" id="byt-dot-2"></div>
-                        <div class="w-5 h-px bg-edge"></div>
-                        <div class="byt-step-dot" id="byt-dot-3"></div>
-                        <div class="w-5 h-px bg-edge"></div>
-                        <div class="byt-step-dot" id="byt-dot-4"></div>
-                    </div>
-                    <div>
-                        <p class="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-0.5">Guided Tuning Experience</p>
-                        <h2 class="font-heading font-extrabold text-white text-lg leading-none">
-                            Build Your <span class="byt-title-accent">Tune</span>
-                        </h2>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3">
-                    <div id="byt-vehicle-pill" class="hidden items-center gap-2 bg-labBlue/10 border border-labBlue/30 rounded-lg px-3 py-1.5">
-                        <svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <span id="byt-vehicle-pill-text" class="text-[10px] font-bold text-labBlue uppercase tracking-widest">No Vehicle</span>
-                    </div>
-                    <button id="byt-toggle" aria-expanded="true" aria-controls="byt-gateway-body" class="flex items-center gap-2 text-[10px] font-bold text-zinc-400 hover:text-white uppercase tracking-widest border border-edge hover:border-zinc-500 rounded-lg px-4 py-2.5 transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-labBlue">
-                        <span id="byt-toggle-label">Collapse</span>
-                        <svg id="byt-toggle-icon" class="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Expandable Body -->
-            <div id="byt-gateway-body" style="max-height:900px; opacity:1;">
-                <div class="pt-6 pb-2">
-
-                    <!-- Step selectors grid -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                        <!-- Year -->
-                        <div>
-                            <label for="byt-year" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
-                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-labBlue text-[8px] font-black text-white mr-1">1</span>Year
-                            </label>
-                            <div class="byt-select-wrap">
-                                <select id="byt-year" class="byt-select" aria-label="Select vehicle year">
-                                    <option value="">Select Year</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- Make -->
-                        <div>
-                            <label for="byt-make" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
-                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-edge text-[8px] font-black text-zinc-400 mr-1" id="byt-step2-badge">2</span>Make
-                            </label>
-                            <div class="byt-select-wrap">
-                                <select id="byt-make" class="byt-select" disabled aria-label="Select vehicle make">
-                                    <option value="">Select Make</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- Model -->
-                        <div>
-                            <label for="byt-model" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
-                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-edge text-[8px] font-black text-zinc-400 mr-1" id="byt-step3-badge">3</span>Model
-                            </label>
-                            <div class="byt-select-wrap">
-                                <select id="byt-model" class="byt-select" disabled aria-label="Select vehicle model">
-                                    <option value="">Select Model</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!-- Engine -->
-                        <div>
-                            <label for="byt-engine" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
-                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-edge text-[8px] font-black text-zinc-400 mr-1" id="byt-step4-badge">4</span>Engine
-                            </label>
-                            <div class="byt-select-wrap">
-                                <select id="byt-engine" class="byt-select" disabled aria-label="Select engine">
-                                    <option value="">Select Engine</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Action Row -->
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
-                        <button id="byt-find" disabled class="inline-flex items-center gap-2 bg-labBlue text-white font-extrabold uppercase tracking-widest py-3 px-6 rounded-xl transition-all min-h-[48px] opacity-30 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-labBlue focus:ring-offset-2 focus:ring-offset-black" aria-label="Filter parts for selected vehicle">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            Find My Parts
-                        </button>
-                        <button id="byt-clear" class="hidden text-[10px] font-bold text-zinc-400 hover:text-red-400 uppercase tracking-widest border border-edge hover:border-red-900/50 rounded-lg px-4 py-2.5 transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-red-900" aria-label="Clear vehicle selection">
-                            × Clear Vehicle
-                        </button>
-                        <p class="text-[10px] text-zinc-600 uppercase tracking-wider">Compatible parts filter automatically. <a href="/contact/" class="text-zinc-500 hover:text-white transition-colors">Can't find your truck?</a></p>
-                    </div>
-
-                    <!-- ─────────────────────────────────────────────────── -->
-                    <!-- PLATFORM SPLIT — shown after vehicle is selected   -->
-                    <!-- ─────────────────────────────────────────────────── -->
-                    <div id="byt-platform-split" class="hidden" role="region" aria-label="Choose your tuning platform">
-                        <div class="h-px bg-edge mb-6"></div>
-                        <div class="flex items-center gap-3 mb-4">
-                            <p class="text-[9px] font-mono text-labCyan uppercase tracking-widest">Choose Your Tuning Hardware Path</p>
-                            <div class="flex-1 h-px bg-edge/60"></div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                            <!-- EZ LYNK AutoAgent Card -->
-                            <a href="/store/catalog/?category=Tuning&platform=ezlynk"
-                               id="byt-card-ezlynk"
-                               class="platform-card platform-ezlynk block bg-midnight border border-edge rounded-2xl p-6 focus:outline-none focus:ring-2 focus:ring-labCyan"
-                               aria-label="Shop EZ LYNK AutoAgent tuning hardware">
-                                <div class="flex items-start justify-between mb-4">
-                                    <img src="/assets/EZ-Lynk-Logo.png" alt="EZ LYNK" class="h-7 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                                    <span class="text-[8px] font-bold bg-labCyan/10 text-labCyan border border-labCyan/20 rounded px-2 py-0.5 uppercase tracking-wider">Wireless OTA</span>
-                                </div>
-                                <h3 class="font-heading font-extrabold text-white text-lg mb-1 uppercase">EZ LYNK AutoAgent 3</h3>
-                                <p class="text-xs text-zinc-400 mb-4 leading-relaxed">Wireless, cloud-connected tuning with over-the-air file delivery. Plug-and-play setup. Ideal for frequent tune updates and remote diagnostics.</p>
-                                <ul class="space-y-1.5 mb-5">
-                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labCyan flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Wireless OTA tune delivery</li>
-                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labCyan flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Cloud AutoAgent platform</li>
-                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labCyan flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Real-time data logging</li>
-                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labCyan flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>AMDP-certified tune files</li>
-                                </ul>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Powered by AMDP</span>
-                                    <span class="flex items-center gap-1 text-[10px] font-bold text-labCyan uppercase tracking-widest">Shop EZ LYNK <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
-                                </div>
-                            </a>
-
-                            <!-- HP Tuners Card -->
-                            <a href="/store/catalog/?category=Tuning&platform=hptuners"
-                               id="byt-card-hptuners"
-                               class="platform-card platform-hptuners block bg-midnight border border-edge rounded-2xl p-6 focus:outline-none focus:ring-2 focus:ring-labBlue"
-                               aria-label="Shop HP Tuners tuning hardware">
-                                <div class="flex items-start justify-between mb-4">
-                                    <img src="/assets/HPTuners-Logo.png" alt="HP Tuners" class="h-7 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
-                                    <span class="text-[8px] font-bold bg-labBlue/10 text-labBlue border border-labBlue/20 rounded px-2 py-0.5 uppercase tracking-wider">Pro-Grade</span>
-                                </div>
-                                <h3 class="font-heading font-extrabold text-white text-lg mb-1 uppercase">HP Tuners Platform</h3>
-                                <p class="text-xs text-zinc-400 mb-4 leading-relaxed">Industry-standard professional tuning interface. Full ECM/TCM access for advanced calibrators who need deep parameter control and no-compromise data.</p>
-                                <ul class="space-y-1.5 mb-5">
-                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Full ECM/TCM parameter access</li>
-                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Pro-grade scanner interface</li>
-                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>VCM credits system</li>
-                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Supports custom datalog channels</li>
-                                </ul>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Industry Standard</span>
-                                    <span class="flex items-center gap-1 text-[10px] font-bold text-labBlue uppercase tracking-widest">Shop HP Tuners <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
-                                </div>
-                            </a>
-
-                        </div><!-- /grid -->
-                    </div><!-- /#byt-platform-split -->
-
-                </div>
-            </div><!-- /#byt-gateway-body -->
-        </div>
-    </section>
-    <!-- /BUILD YOUR TUNE GATEWAY -->
 
     <section class="py-12 px-6">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
@@ -603,7 +363,7 @@
                     <li><a href="/store/catalog/?category=EGR" class="hover:text-labCyan transition-colors block">EGR Solutions</a></li>
                     <li><a href="/store/catalog/?category=Exhaust" class="hover:text-labCyan transition-colors block">Exhaust Systems</a></li>
                     <li><a href="/store/catalog/?category=CCV" class="hover:text-labCyan transition-colors block">CCV Solutions</a></li>
-                    <li><a href="/store/catalog/?category=Tuning" class="hover:text-labCyan transition-colors block">Custom Tuning</a></li>
+                    <li><a href="/store/tuning/" class="hover:text-labCyan transition-colors block">Custom Tuning</a></li>
                     <li><a href="/store/catalog/" class="hover:text-labCyan transition-colors block">All Performance Parts</a></li>
                 </ul>
             </div>

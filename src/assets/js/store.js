@@ -130,7 +130,7 @@ function updateCartUI() {
 
     if (cart.length === 0) {
         itemsContainer.innerHTML = `<p class="text-zinc-500 text-center mt-10">Your cart is empty.</p>`;
-        document.getElementById("cart-subtotal").textContent = "$0.00 CAD";
+        document.getElementById("cart-subtotal").innerHTML = `<span data-price-cad="0.00">$0.00 CAD</span>`;
         return;
     }
 
@@ -147,7 +147,7 @@ function updateCartUI() {
                 <div class="flex-1">
                     <h3 class="text-white text-xs font-bold leading-tight mb-1 line-clamp-2">${item.name}</h3>
                     ${attrHtml}
-                    <p class="text-labBlue text-xs font-mono font-bold mt-1">$${item.price.toFixed(2)} CAD</p>
+                    <p class="text-labBlue text-xs font-mono font-bold mt-1" data-price-cad="${item.price}">$${item.price.toFixed(2)} CAD</p>
                     <div class="flex items-center gap-3 mt-2">
                         <button onclick="updateQuantity('${item.cartItemId}', -1)" class="text-zinc-400 hover:text-white px-2 py-1 bg-edge rounded">-</button>
                         <span class="text-white text-xs font-bold">${item.quantity}</span>
@@ -158,7 +158,12 @@ function updateCartUI() {
         `;
     }).join("");
 
-    document.getElementById("cart-subtotal").textContent = `$${subtotal.toFixed(2)} CAD`;
+    document.getElementById("cart-subtotal").innerHTML = `<span data-price-cad="${subtotal.toFixed(2)}">$${subtotal.toFixed(2)} CAD</span>`;
+    
+    // Apply currency format to cart items
+    if (window.setCurrency) {
+        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
+    }
 }
 
 function handleCheckout() {
@@ -482,7 +487,8 @@ function initStore() {
     // 2. Read URL params
     const params = new URLSearchParams(window.location.search);
     const urlMake = params.get("make");
-    const urlCategory = params.get("category");
+    let urlCategory = params.get("category");
+    if (window.isTuningPortal) urlCategory = "Tuning";
     const urlBrand = params.get("brand");
 
     // 3. Pre-check from active vehicle

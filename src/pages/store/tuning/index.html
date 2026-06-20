@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Parts Store | THE LAB Performance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#000000',
+                        midnight: '#0D0D12',
+                        edge: '#1E1E28',
+                        signal: '#FFFFFF',
+                        labBlue: '#0066FF',
+                        labCyan: '#00E5FF',
+                    },
+                    fontFamily: {
+                        heading: ['Manrope', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'oled-blue': '0 0 20px rgba(0, 102, 255, 0.4)',
+                        'oled-cyan': '0 0 20px rgba(0, 229, 255, 0.3)',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #000000; font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(13,13,18,0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .grid-bg {
+            background-image: linear-gradient(rgba(0,102,255,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,102,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        ::selection { background: #0066FF; color: #fff; }
+
+        /* ── Vehicle Selector Modal ── */
+        .vs-make-btn .vs-make-icon { opacity: 0.4; transition: all 0.3s ease; }
+        .vs-make-btn:hover .vs-make-icon { opacity: 1; }
+        .vs-make-btn.selected-make { border-color: #0066FF; background-color: rgba(0,102,255,0.1); box-shadow: 0 0 0 2px rgba(0,102,255,0.5); }
+        .vs-make-btn.selected-make .vs-make-icon { opacity: 1; }
+        .vs-make-btn.selected-make .vs-make-text { color: #0066FF; }
+
+        /* ── BUILD YOUR TUNE GATEWAY ── */
+        /* Custom OLED selects — reject all browser defaults */
+        .byt-select {
+            appearance: none; -webkit-appearance: none;
+            background-color: #000000;
+            border: 1px solid #1E1E28;
+            color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1rem 3rem 1rem 1rem;
+            font-size: 0.875rem;
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            min-height: 48px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .byt-select:focus {
+            border-color: #0066FF;
+            box-shadow: 0 0 0 2px rgba(0,102,255,0.25), 0 0 16px rgba(0,102,255,0.15);
+        }
+        .byt-select:disabled { opacity: 0.3; cursor: not-allowed; }
+        .byt-select option { background: #0D0D12; color: #ffffff; }
+        .byt-select-wrap { position: relative; }
+        .byt-select-wrap::after {
+            content: '';
+            position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+            width: 0; height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #4b5563;
+            pointer-events: none;
+        }
+        /* Platform split card */
+        .platform-card { transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; }
+        .platform-card:hover { transform: translateY(-4px); }
+        .platform-card.platform-ezlynk:hover { border-color: rgba(0,229,255,0.6); box-shadow: 0 0 32px rgba(0,229,255,0.12); }
+        .platform-card.platform-hptuners:hover { border-color: rgba(0,102,255,0.6); box-shadow: 0 0 32px rgba(0,102,255,0.12); }
+        /* Scan-line title animation */
+        @keyframes scan {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .byt-title-accent {
+            background: linear-gradient(90deg, transparent 0%, #00E5FF 40%, #0066FF 60%, transparent 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: scan 4s linear infinite;
+        }
+        /* Step progress indicator */
+        .byt-step-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: #1E1E28;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .byt-step-dot.active {
+            background: #0066FF;
+            box-shadow: 0 0 8px rgba(0,102,255,0.6);
+        }
+        .byt-step-dot.done {
+            background: #00E5FF;
+        }
+        /* Gateway collapse/expand */
+        #byt-gateway-body { transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s; overflow: hidden; }
+        /* Platform cards hidden until vehicle confirmed */
+        #byt-platform-split { transition: opacity 0.4s, transform 0.4s; }
+    </style>
+</head>
+<body class="bg-void text-zinc-400 antialiased">
+
+    <!-- --- COMPLIANCE BANNER --- -->
+    <div class="bg-red-900/20 border-b border-red-900 text-center py-2 px-4 z-50 relative">
+        <p class="text-red-500 text-xs font-bold uppercase tracking-widest">Warning: Off-Road &amp; Sanctioned Racing Use Only. Not legal for use on pollution-controlled vehicles.</p>
+    </div>
+
+    <!-- --- GLOBAL HEADER --- -->
+    <div class="sticky top-0 z-50">
+    <div class="border-b border-edge/60" style="background:rgba(0,0,0,0.97);">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-8">
+            <span class="text-[10px] text-zinc-600 font-mono uppercase tracking-wider hidden sm:block">THE LAB &nbsp;-&nbsp; Fort St. John, BC</span>
+            <div class="flex items-center gap-2 ml-auto">
+                <span class="text-[10px] text-zinc-600 font-mono uppercase tracking-wider">Currency:</span>
+                <button id="btn-cad" onclick="setCurrency('CAD')" class="text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all">CAD</button>
+                <button id="btn-usd" onclick="setCurrency('USD')" class="text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all">USD</button>
+            </div>
+        </div>
+    </div>
+    <header class="border-b border-edge relative z-50" style="background:rgba(0,0,0,0.97); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="/" class="flex items-center p-1 rounded focus:outline-none focus:ring-2 focus:ring-labBlue flex-shrink-0">
+                    <img src="/assets/LAB-LOGO.png" alt="THE LAB" class="h-9 md:h-11 w-auto object-contain">
+                </a>
+                <!-- Desktop nav -->
+                <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
+                    <div class="relative group">
+                        <a href="/boutique/" class="text-xs font-bold text-zinc-400 hover:text-white transition-colors uppercase tracking-[0.2em] flex items-center gap-1.5 py-2 focus:outline-none">The Boutique <svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></a>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 min-w-[200px] z-50">
+                            <div class="rounded-xl border border-edge overflow-hidden" style="background:#0D0D12; box-shadow:0 24px 64px rgba(0,0,0,0.9);">
+                                <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Fort St. John, BC</span></div>
+                                <div class="py-1">
+                                    <a href="/boutique/tinting/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Window Tinting</a>
+                                    <a href="/boutique/coatings/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Ceramic Coatings</a>
+                                    <a href="/boutique/detailing/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Premium Detailing</a>
+                                    <a href="/boutique/ppf/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Paint Protection Film</a>
+                                    <a href="/boutique/lighting/" class="block px-4 py-2.5 text-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">Custom Lighting</a>
+                                    <div class="mx-4 my-1 h-px bg-edge"></div>
+                                    <a href="/contact/" class="flex items-center justify-between px-4 py-2.5 text-xs text-white font-bold hover:bg-white/5 transition-colors">Book Service <span class="text-labBlue ml-1">?</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <a href="/store/" class="text-xs font-bold text-white uppercase tracking-[0.2em] flex items-center gap-1.5 py-2 focus:outline-none">The Parts Store <svg class="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></a>
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50" style="min-width:440px;">
+                            <div class="rounded-xl border border-edge overflow-hidden" style="background:#0D0D12; box-shadow:0 24px 64px rgba(0,0,0,0.9);">
+                                <div class="grid grid-cols-2 divide-x divide-edge">
+                                    <div>
+                                        <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Shop by Make</span></div>
+                                        <div class="py-1">
+                                            <a href="/store/catalog/?make=Ford" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Ford / Powerstroke</a>
+                                            <a href="/store/catalog/?make=Ram" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Ram / Cummins</a>
+                                            <a href="/store/catalog/?make=Chevy" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Chevy / Duramax</a>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="px-4 py-2.5 border-b border-edge"><span class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em]">Shop by Category</span></div>
+                                        <div class="py-1">
+                                            <a href="/store/catalog/?category=EGR" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>EGR Solutions</a>
+                                            <a href="/store/catalog/?category=Exhaust" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Exhaust Systems</a>
+                                            <a href="/store/catalog/?category=CCV" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>CCV Solutions</a>
+                                            <a href="/store/tuning/" class="flex items-center gap-2 px-4 py-2.5 text-xs text-labBlue font-bold hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue flex-shrink-0"></span>Custom Tuning</a>
+                                            <a href="/store/catalog/?category=Accessories" class="flex items-center gap-2 px-4 py-2.5 text-xs text-zinc-400 hover:text-labBlue hover:bg-labBlue/5 transition-colors"><span class="w-1.5 h-1.5 rounded-full bg-labBlue/40 flex-shrink-0"></span>Bumpers &amp; Accessories</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t border-edge px-4 py-2.5"><a href="/store/catalog/" class="text-xs text-labBlue font-bold hover:text-labCyan transition-colors">View All Parts ?</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="flex items-center gap-2">
+                    <a href="https://xr6pmx-y0.myshopify.com/account" aria-label="Account" class="relative p-2 text-zinc-400 hover:text-white transition-colors rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-labBlue">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    </a>
+                    <button id="cart-btn" aria-label="Cart" class="relative p-2 text-zinc-400 hover:text-white transition-colors rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-labBlue">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        <span id="cart-count" class="absolute -top-0.5 -right-0.5 bg-labBlue text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold leading-none hidden">0</span>
+                    </button>
+                    <a href="/contact/" class="hidden md:inline-flex bg-white text-black font-extrabold py-2 px-5 rounded-lg hover:bg-zinc-200 transition-all uppercase tracking-widest text-xs">Book Now</a>
+                    <button id="mob-btn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-labBlue text-white">
+                        <svg id="ham-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg id="x-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile drawer -->
+        <div id="mob-menu" class="hidden md:hidden border-t border-edge" style="background:#000;">
+            <nav class="px-6 py-6 space-y-1">
+                <!-- The Boutique Section -->
+                <div class="py-1">
+                    <a href="/boutique/" class="block py-3 text-sm font-extrabold text-white uppercase tracking-[0.15em] hover:text-white transition-colors">The Boutique</a>
+                    <div class="pl-4 space-y-1 border-l border-edge/40 ml-1">
+                        <a href="/boutique/tinting/" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">Window Tinting</a>
+                        <a href="/boutique/coatings/" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">Ceramic Coatings</a>
+                        <a href="/boutique/detailing/" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">Premium Detailing</a>
+                        <a href="/boutique/ppf/" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">Paint Protection Film</a>
+                        <a href="/boutique/lighting/" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">Custom Lighting</a>
+                    </div>
+                </div>
+
+                <div class="h-px bg-edge my-3"></div>
+
+                <!-- The Parts Store Section -->
+                <div class="py-1">
+                    <a href="/store/" class="block py-3 text-sm font-extrabold text-white uppercase tracking-[0.15em] hover:text-white transition-colors">The Parts Store</a>
+                    <div class="pl-4 space-y-1 border-l border-edge/40 ml-1">
+                        <a href="/store/catalog/?category=EGR" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">EGR Solutions</a>
+                        <a href="/store/catalog/?category=Exhaust" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">Exhaust Systems</a>
+                        <a href="/store/catalog/?category=CCV" class="block py-3 text-xs text-zinc-400 hover:text-white transition-colors">CCV Solutions</a>
+                        <a href="/store/tuning/" class="block py-3 text-xs text-labBlue font-bold hover:text-labCyan transition-colors">Custom Tuning</a>
+                    </div>
+                </div>
+
+                <div class="h-px bg-edge my-3"></div>
+
+                <!-- Mobile Vehicle Selector Trigger -->
+                <div class="py-2">
+                    <button id="vehicle-selector-trigger-mob" class="w-full flex items-center gap-3 hover:bg-white/5 p-3 rounded-xl transition-colors text-left border border-edge/60 group min-h-[48px] focus:outline-none focus:ring-2 focus:ring-labBlue">
+                        <!-- Truck Icon -->
+                        <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 7h-3V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h1.18a3 3 0 005.64 0h2.36a3 3 0 005.64 0H21v-4.67C21 8.88 19 7 19 7zM9 16a1 1 0 11-2 0 1 1 0 012 0zm8 0a1 1 0 11-2 0 1 1 0 012 0zm3-4h-5V9h2.67l2.33 3z"/>
+                        </svg>
+                        <div class="flex flex-col">
+                            <div id="vs-greeting-mob" class="text-[10px] text-labBlue font-bold uppercase tracking-wider">Hello,</div>
+                            <div id="vs-label-mob" class="text-xs text-white font-extrabold uppercase tracking-widest whitespace-nowrap">Select your truck</div>
+                        </div>
+                    </button>
+                </div>
+                <div class="h-px bg-edge my-3"></div>
+
+                <a href="/contact/" class="block bg-white text-black font-extrabold py-4 text-center rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all min-h-[48px] flex items-center justify-center">Book Now</a>
+            </nav>
+        </div>
+        <script>
+            (function(){var b=document.getElementById('mob-btn'),m=document.getElementById('mob-menu'),h=document.getElementById('ham-icon'),x=document.getElementById('x-icon');if(!b||!m)return;b.addEventListener('click',function(){var o=!m.classList.contains('hidden');m.classList.toggle('hidden',o);h.classList.toggle('hidden',!o);x.classList.toggle('hidden',o);b.setAttribute('aria-expanded',String(!o));});})();
+            window.setCurrency=function(c){var r=0.74,ac='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all',ic='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all';var cb=document.getElementById('btn-cad'),ub=document.getElementById('btn-usd');if(cb)cb.className=(c==='CAD')?ac:ic;if(ub)ub.className=(c==='USD')?ac:ic;localStorage.setItem('theLab_currency',c);document.querySelectorAll('[data-price-cad]').forEach(function(el){var cad=parseFloat(el.getAttribute('data-price-cad'));el.textContent=c==='USD'?'$'+(cad*r).toFixed(2)+' USD':'$'+cad.toFixed(2)+' CAD';});document.querySelectorAll('[data-price-from-cad]').forEach(function(el){var cad=parseFloat(el.getAttribute('data-price-from-cad'));el.textContent=c==='USD'?'From $'+(cad*r).toFixed(2)+' USD':'From $'+cad.toFixed(2)+' CAD';});};
+            setTimeout(function(){window.setCurrency(localStorage.getItem('theLab_currency')||'CAD');},0);
+        </script>
+    </header>
+
+    <!-- Store Search & Vehicle Selector Row -->
+    <div class="border-b border-edge/60 bg-[#0A0A0F] py-3 hidden md:block">
+        <div class="max-w-7xl mx-auto px-6 flex items-center gap-6">
+            <!-- Search -->
+            <div class="flex-grow relative">
+                <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="text" id="store-search-input" placeholder="Search for parts, tuning, exhaust..." class="w-full bg-[#16161E] text-white text-sm rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-1 focus:ring-labBlue transition-all placeholder:text-zinc-600 border border-edge hover:border-zinc-700">
+            </div>
+            
+            <!-- Vehicle Selector Button -->
+            <button id="vehicle-selector-trigger" class="flex items-center gap-3 hover:bg-white/5 p-2 rounded-lg transition-colors text-left border border-transparent hover:border-edge group">
+                <!-- Truck Icon -->
+                <svg class="w-8 h-8 text-zinc-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 7h-3V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h1.18a3 3 0 005.64 0h2.36a3 3 0 005.64 0H21v-4.67C21 8.88 19 7 19 7zM9 16a1 1 0 11-2 0 1 1 0 012 0zm8 0a1 1 0 11-2 0 1 1 0 012 0zm3-4h-5V9h2.67l2.33 3z"/>
+                </svg>
+                <div class="flex flex-col">
+                    <div id="vs-greeting" class="text-[10px] text-labBlue font-bold uppercase tracking-wider">Hello,</div>
+                    <div id="vs-label" class="text-xs text-white font-extrabold uppercase tracking-widest whitespace-nowrap">Select your truck</div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+    <main>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MANDATE 1: "BUILD YOUR TUNE" — YMM GUIDED TUNING GATEWAY          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="byt-gateway" class="border-b border-edge/60" style="background:linear-gradient(180deg,#050508 0%,#000000 100%);">
+        <div class="max-w-7xl mx-auto px-6 py-5">
+
+            <!-- Collapsed Header Row (always visible) -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <!-- Step dots -->
+                    <div class="flex items-center gap-1.5" id="byt-step-dots" aria-hidden="true">
+                        <div class="byt-step-dot active" id="byt-dot-1"></div>
+                        <div class="w-5 h-px bg-edge"></div>
+                        <div class="byt-step-dot" id="byt-dot-2"></div>
+                        <div class="w-5 h-px bg-edge"></div>
+                        <div class="byt-step-dot" id="byt-dot-3"></div>
+                        <div class="w-5 h-px bg-edge"></div>
+                        <div class="byt-step-dot" id="byt-dot-4"></div>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-0.5">Guided Tuning Experience</p>
+                        <h2 class="font-heading font-extrabold text-white text-lg leading-none">
+                            Build Your <span class="byt-title-accent">Tune</span>
+                        </h2>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div id="byt-vehicle-pill" class="hidden items-center gap-2 bg-labBlue/10 border border-labBlue/30 rounded-lg px-3 py-1.5">
+                        <svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span id="byt-vehicle-pill-text" class="text-[10px] font-bold text-labBlue uppercase tracking-widest">No Vehicle</span>
+                    </div>
+                    <button id="byt-toggle" aria-expanded="true" aria-controls="byt-gateway-body" class="flex items-center gap-2 text-[10px] font-bold text-zinc-400 hover:text-white uppercase tracking-widest border border-edge hover:border-zinc-500 rounded-lg px-4 py-2.5 transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-labBlue">
+                        <span id="byt-toggle-label">Collapse</span>
+                        <svg id="byt-toggle-icon" class="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Expandable Body -->
+            <div id="byt-gateway-body" style="max-height:900px; opacity:1;">
+                <div class="pt-6 pb-2">
+
+                    <!-- Step selectors grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Year -->
+                        <div>
+                            <label for="byt-year" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
+                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-labBlue text-[8px] font-black text-white mr-1">1</span>Year
+                            </label>
+                            <div class="byt-select-wrap">
+                                <select id="byt-year" class="byt-select" aria-label="Select vehicle year">
+                                    <option value="">Select Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Make -->
+                        <div>
+                            <label for="byt-make" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
+                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-edge text-[8px] font-black text-zinc-400 mr-1" id="byt-step2-badge">2</span>Make
+                            </label>
+                            <div class="byt-select-wrap">
+                                <select id="byt-make" class="byt-select" disabled aria-label="Select vehicle make">
+                                    <option value="">Select Make</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Model -->
+                        <div>
+                            <label for="byt-model" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
+                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-edge text-[8px] font-black text-zinc-400 mr-1" id="byt-step3-badge">3</span>Model
+                            </label>
+                            <div class="byt-select-wrap">
+                                <select id="byt-model" class="byt-select" disabled aria-label="Select vehicle model">
+                                    <option value="">Select Model</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Engine -->
+                        <div>
+                            <label for="byt-engine" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
+                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-edge text-[8px] font-black text-zinc-400 mr-1" id="byt-step4-badge">4</span>Engine
+                            </label>
+                            <div class="byt-select-wrap">
+                                <select id="byt-engine" class="byt-select" disabled aria-label="Select engine">
+                                    <option value="">Select Engine</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Row -->
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
+                        <button id="byt-find" disabled class="inline-flex items-center gap-2 bg-labBlue text-white font-extrabold uppercase tracking-widest py-3 px-6 rounded-xl transition-all min-h-[48px] opacity-30 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-labBlue focus:ring-offset-2 focus:ring-offset-black" aria-label="Filter parts for selected vehicle">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Find My Parts
+                        </button>
+                        <button id="byt-clear" class="hidden text-[10px] font-bold text-zinc-400 hover:text-red-400 uppercase tracking-widest border border-edge hover:border-red-900/50 rounded-lg px-4 py-2.5 transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-red-900" aria-label="Clear vehicle selection">
+                            × Clear Vehicle
+                        </button>
+                        <p class="text-[10px] text-zinc-600 uppercase tracking-wider">Compatible parts filter automatically. <a href="/contact/" class="text-zinc-500 hover:text-white transition-colors">Can't find your truck?</a></p>
+                    </div>
+
+                    <!-- ─────────────────────────────────────────────────── -->
+                    <!-- PLATFORM SPLIT — shown after vehicle is selected   -->
+                    <!-- ─────────────────────────────────────────────────── -->
+                    <div id="byt-platform-split" class="hidden" role="region" aria-label="Choose your tuning platform">
+                        <div class="h-px bg-edge mb-6"></div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <p class="text-[9px] font-mono text-labCyan uppercase tracking-widest">Choose Your Tuning Hardware Path</p>
+                            <div class="flex-1 h-px bg-edge/60"></div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                            <!-- EZ LYNK AutoAgent Card -->
+                            <a href="/store/tuning/?platform=ezlynk"
+                               id="byt-card-ezlynk"
+                               class="platform-card platform-ezlynk block bg-midnight border border-edge rounded-2xl p-6 focus:outline-none focus:ring-2 focus:ring-labCyan"
+                               aria-label="Shop EZ LYNK AutoAgent tuning hardware">
+                                <div class="flex items-start justify-between mb-4">
+                                    <img src="/assets/EZ-Lynk-Logo.png" alt="EZ LYNK" class="h-7 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                                    <span class="text-[8px] font-bold bg-labCyan/10 text-labCyan border border-labCyan/20 rounded px-2 py-0.5 uppercase tracking-wider">Wireless OTA</span>
+                                </div>
+                                <h3 class="font-heading font-extrabold text-white text-lg mb-1 uppercase">EZ LYNK AutoAgent 3</h3>
+                                <p class="text-xs text-zinc-400 mb-4 leading-relaxed">Wireless, cloud-connected tuning with over-the-air file delivery. Plug-and-play setup. Ideal for frequent tune updates and remote diagnostics.</p>
+                                <ul class="space-y-1.5 mb-5">
+                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labCyan flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Wireless OTA tune delivery</li>
+                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labCyan flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Cloud AutoAgent platform</li>
+                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labCyan flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Real-time data logging</li>
+                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labCyan flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>AMDP-certified tune files</li>
+                                </ul>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Powered by AMDP</span>
+                                    <span class="flex items-center gap-1 text-[10px] font-bold text-labCyan uppercase tracking-widest">Shop EZ LYNK <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+                                </div>
+                            </a>
+
+                            <!-- HP Tuners Card -->
+                            <a href="/store/tuning/?platform=hptuners"
+                               id="byt-card-hptuners"
+                               class="platform-card platform-hptuners block bg-midnight border border-edge rounded-2xl p-6 focus:outline-none focus:ring-2 focus:ring-labBlue"
+                               aria-label="Shop HP Tuners tuning hardware">
+                                <div class="flex items-start justify-between mb-4">
+                                    <img src="/assets/HPTuners-Logo.png" alt="HP Tuners" class="h-7 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                                    <span class="text-[8px] font-bold bg-labBlue/10 text-labBlue border border-labBlue/20 rounded px-2 py-0.5 uppercase tracking-wider">Pro-Grade</span>
+                                </div>
+                                <h3 class="font-heading font-extrabold text-white text-lg mb-1 uppercase">HP Tuners Platform</h3>
+                                <p class="text-xs text-zinc-400 mb-4 leading-relaxed">Industry-standard professional tuning interface. Full ECM/TCM access for advanced calibrators who need deep parameter control and no-compromise data.</p>
+                                <ul class="space-y-1.5 mb-5">
+                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Full ECM/TCM parameter access</li>
+                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Pro-grade scanner interface</li>
+                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>VCM credits system</li>
+                                    <li class="flex items-center gap-2 text-xs text-zinc-300"><svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Supports custom datalog channels</li>
+                                </ul>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Industry Standard</span>
+                                    <span class="flex items-center gap-1 text-[10px] font-bold text-labBlue uppercase tracking-widest">Shop HP Tuners <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></span>
+                                </div>
+                            </a>
+
+                        </div><!-- /grid -->
+                    </div><!-- /#byt-platform-split -->
+
+                </div>
+            </div><!-- /#byt-gateway-body -->
+        </div>
+    </section>
+    <!-- /BUILD YOUR TUNE GATEWAY -->
+
+    <section class="py-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+            <!-- Sidebar removed for guided tuning -->
+
+            <!-- Product Grid -->
+            <div class="flex-1">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center gap-4">
+                        <h1 class="text-3xl font-heading font-extrabold text-white uppercase">Tuning Packages</h1>
+                        <span data-product-count class="text-xs font-mono text-zinc-500 bg-edge px-3 py-1 rounded-full hidden sm:inline-block">Loading...</span>
+                    </div>
+                    <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest hidden sm:block">Custom Hardware & Software</span>
+                </div>
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Javascript populates products here -->
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+    <!-- GLOBAL FOOTER -->
+<footer class="bg-void border-t border-edge pt-14 pb-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-6">
+        
+        <!-- Main Footer Links Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-14">
+            
+            <!-- Column 1: Brand & Connect -->
+            <div class="flex flex-col">
+                <a href="/" class="mb-5 inline-block">
+                    <img src="/assets/LAB-LOGO.png" alt="THE LAB" class="h-9 object-contain">
+                </a>
+                <address class="not-italic text-zinc-500 text-sm mb-1 leading-relaxed">
+                    10219 95 Ave<br>Fort St. John, BC &nbsp;V1J 5J5
+                </address>
+                <a href="https://maps.google.com/?q=10219+95+Ave+Fort+Saint+John+BC" target="_blank" rel="noopener noreferrer" class="text-xs text-labBlue hover:text-labCyan transition-colors block mb-4">Get Directions →</a>
+                <a href="tel:+12502619502" class="text-xs text-zinc-400 hover:text-white transition-colors block mb-1">(250) 261-9502</a>
+                <p class="text-xs text-zinc-600 mb-5">Mon-Fri &nbsp;9 a.m.-5 p.m.</p>
+
+                <!-- Social icons -->
+                <div class="flex items-center gap-3">
+                    <a href="https://www.facebook.com/TheLABfsj" target="_blank" rel="noopener noreferrer" aria-label="THE LAB on Facebook" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/thelabfsj/" target="_blank" rel="noopener noreferrer" aria-label="THE LAB on Instagram" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@wheeler7eric" target="_blank" rel="noopener noreferrer" aria-label="THE LAB on TikTok" class="w-9 h-9 rounded-lg border border-edge flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-500 transition-all">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05A6.34 6.34 0 0 0 3 15.3a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.93a8.29 8.29 0 0 0 4.84 1.54V7.02a4.85 4.85 0 0 1-1.07-.33z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Column 2: The Boutique -->
+            <div>
+                <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">The Boutique</h4>
+                <ul class="space-y-3 text-sm text-zinc-400">
+                    <li><a href="/boutique/detailing/" class="hover:text-white transition-colors block">Premium Detailing</a></li>
+                    <li><a href="/boutique/coatings/" class="hover:text-white transition-colors block">Ceramic Coatings</a></li>
+                    <li><a href="/boutique/tinting/" class="hover:text-white transition-colors block">Window Tinting</a></li>
+                    <li><a href="/boutique/ppf/" class="hover:text-white transition-colors block">Paint Protection Film</a></li>
+                    <li><a href="/boutique/lighting/" class="hover:text-white transition-colors block">Custom Lighting</a></li>
+                    <li><a href="/contact/" class="hover:text-white transition-colors block">Book a Service</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: The Parts Store -->
+            <div>
+                <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">The Parts Store</h4>
+                <ul class="space-y-3 text-sm text-zinc-400">
+                    <li><a href="/store/catalog/?category=EGR" class="hover:text-labCyan transition-colors block">EGR Solutions</a></li>
+                    <li><a href="/store/catalog/?category=Exhaust" class="hover:text-labCyan transition-colors block">Exhaust Systems</a></li>
+                    <li><a href="/store/catalog/?category=CCV" class="hover:text-labCyan transition-colors block">CCV Solutions</a></li>
+                    <li><a href="/store/tuning/" class="hover:text-labCyan transition-colors block">Custom Tuning</a></li>
+                    <li><a href="/store/catalog/" class="hover:text-labCyan transition-colors block">All Performance Parts</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Information -->
+            <div>
+                <h4 class="text-white font-heading font-extrabold tracking-widest uppercase mb-5 text-xs">Information</h4>
+                <ul class="space-y-3 text-sm text-zinc-400">
+                    <li><a href="/about/" class="hover:text-white transition-colors block">About Us</a></li>
+                    <li><a href="/contact/" class="hover:text-white transition-colors block">Contact Us</a></li>
+                    <li><a href="/shipping/" class="hover:text-white transition-colors block">Shipping &amp; Returns</a></li>
+                    <li><a href="/terms/" class="hover:text-white transition-colors block">Terms of Service</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+                                <!-- Trust Signals (Partner Logos) -->
+        <div class="mb-12 border-t border-edge pt-10">
+            <div class="flex flex-wrap justify-center gap-x-8 gap-y-6 items-center">
+                <!-- DIESELR -->
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="DIESELR" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/DIESELR-Logo.png" alt="DIESELR" class="h-8 w-auto object-contain">
+                </a>
+                <!-- AMDP -->
+                <a href="https://amdieselperformance.ca/" target="_blank" rel="noopener noreferrer" aria-label="AMDP" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/AMDP-Logo.png" alt="AMDP" class="h-9 w-auto object-contain">
+                </a>
+                <!-- EZ LYNK -->
+                <a href="https://www.ezlynk.com/" target="_blank" rel="noopener noreferrer" aria-label="EZ LYNK" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/EZ-Lynk-Logo.png" alt="EZ LYNK" class="h-10 w-auto object-contain">
+                </a>
+                <!-- HP Tuners -->
+                <a href="https://www.hptuners.com/" target="_blank" rel="noopener noreferrer" aria-label="HP Tuners" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/HPTuners-Logo.png" alt="HP Tuners" class="h-8 w-auto object-contain">
+                </a>
+                <!-- GDP -->
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GDP" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/GDP.png" alt="GDP" class="h-8 w-auto object-contain">
+                </a>
+                <!-- SD -->
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="SD" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/speed-demon.png" alt="Speed Demon" class="h-10 w-auto object-contain">
+                </a>
+                <!-- POLAR DIESEL -->
+                <a href="https://polardiesel.ca/" target="_blank" rel="noopener noreferrer" aria-label="Polar Diesel" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/Polar-Diesel-Logo.webp" alt="Polar Diesel" class="h-12 w-auto object-contain">
+                </a>
+                <!-- GRIDIRON BUMPER -->
+                <a href="https://gridironmfg.ca/" target="_blank" rel="noopener noreferrer" aria-label="Gridiron Bumper" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/GRIDIRON-logo.webp" alt="Gridiron Bumper" class="h-10 w-auto object-contain">
+                </a>
+                <!-- MORIMOTO -->
+                <a href="https://www.morimotohid.com/" target="_blank" rel="noopener noreferrer" aria-label="Morimoto" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/MORIMOTO-Logo.png" alt="MORIMOTO" class="h-8 w-auto object-contain">
+                </a>
+                <!-- Diode Dynamics -->
+                <a href="https://www.diodedynamics.com/" target="_blank" rel="noopener noreferrer" aria-label="Diode Dynamics" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/DIODE DYNAMICS.png" alt="Diode Dynamics" class="h-6 w-auto object-contain">
+                </a>
+                <!-- Baja Designs -->
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Baja Designs" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/baja-designs-inc-logo-vector (1).png" alt="Baja Designs" class="h-8 w-auto object-contain">
+                </a>
+                <!-- BMC LIGHTS -->
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="BMC LIGHTS" class="min-w-[48px] min-h-[48px] flex items-center justify-center p-2 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+                    <img src="/assets/bmc-lights.png" alt="BMC Lights" class="h-8 w-auto object-contain">
+                </a>
+            </div>
+        </div>
+
+        <!-- Global Compliance Mandate -->
+        <div class="border-t border-edge pt-8">
+            <p class="text-[10px] leading-relaxed text-zinc-600 font-medium text-center uppercase tracking-wide mb-4 opacity-80">
+                Certain products are for Off-Road and Sanctioned Racing Use Only. The purchaser assumes all legal liability for Clean Air Act compliance. Luxx Automotive Boutique Inc. does not advise on or authorize the illegal bypass of emissions testing.
+            </p>
+            <p class="text-[10px] text-center text-zinc-700 uppercase tracking-widest font-bold">
+                &copy; 2026 Luxx Automotive Boutique Inc. All Rights Reserved.
+            </p>
+        </div>
+
+    </div>
+</footer>
+
+
+
+
+
+
+    
+
+    <!-- Vehicle Selector Modal -->
+    <div id="vehicle-selector-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
+        <div class="bg-[#12121A] border border-edge rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-edge flex items-start justify-between">
+                <div>
+                    <h2 class="font-heading font-extrabold text-xl text-white uppercase tracking-tight">Personalized Part Navigation</h2>
+                    <p class="text-sm text-zinc-400 mt-1">Choose your truck and we'll only show you part categories for your selection on this browser.</p>
+                </div>
+                <button id="close-vs-modal" class="text-zinc-500 hover:text-white transition-colors w-12 h-12 flex items-center justify-center rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-labBlue" aria-label="Close modal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto">
+                <!-- Step 1 -->
+                <div class="mb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xs font-bold text-white uppercase tracking-widest">Step 1 - Select Make</h3>
+                        <button id="vs-reset" class="text-xs text-zinc-400 hover:text-white border border-edge hover:border-zinc-500 rounded-lg px-4 py-3 uppercase tracking-wider transition-all flex items-center justify-center gap-2 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-labBlue">
+                            Reset
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6" id="vs-make-grid">
+                        <button data-make="Cummins" class="vs-make-btn flex flex-col items-center justify-center p-8 border border-edge rounded-xl bg-[#0D0D12] transition-all group">
+                            <img src="/assets/ram-logo.png" alt="Cummins" class="h-16 w-auto mb-4 object-contain vs-make-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="hidden text-zinc-500 mb-2">Ram</span>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest transition-colors vs-make-text group-hover:text-white">Cummins</span>
+                        </button>
+                        <button data-make="Duramax" class="vs-make-btn flex flex-col items-center justify-center p-8 border border-edge rounded-xl bg-[#0D0D12] transition-all group">
+                            <img src="/assets/gm-logo.png" alt="Duramax" class="h-16 w-auto mb-4 object-contain vs-make-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="hidden text-zinc-500 mb-2">GM</span>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest transition-colors vs-make-text group-hover:text-white">Duramax</span>
+                        </button>
+                        <button data-make="Powerstroke" class="vs-make-btn flex flex-col items-center justify-center p-8 border border-edge rounded-xl bg-[#0D0D12] transition-all group">
+                            <img src="/assets/ford-logo.png" alt="Powerstroke" class="h-16 w-auto mb-4 object-contain vs-make-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="hidden text-zinc-500 mb-2">Ford</span>
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest transition-colors vs-make-text group-hover:text-white">Powerstroke</span>
+                        </button>
+                        <button data-make="Half-Ton" class="vs-make-btn flex flex-col items-center justify-center p-8 border border-edge rounded-xl bg-[#0D0D12] transition-all group">
+                            <img src="/assets/half-ton.png" alt="Half-Ton" class="h-16 w-auto mb-4 object-contain vs-make-icon brightness-0 invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest transition-colors vs-make-text group-hover:text-white">Half-Ton</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div id="vs-step-2" class="opacity-30 pointer-events-none transition-all duration-300">
+                    <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Step 2 - Select Engine</h3>
+                    <div class="relative w-full md:w-1/2 mb-8">
+                        <select id="vs-engine-select" class="w-full appearance-none bg-[#000000] border border-edge rounded-xl p-4 pr-12 text-sm text-white focus:outline-none focus:border-labBlue focus:ring-2 focus:ring-labBlue/50 shadow-oled-blue transition-all cursor-pointer min-h-[48px]">
+                            <option value="">Select Engine</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-3">
+                        <button id="vs-submit" disabled class="bg-zinc-700 text-zinc-400 font-bold px-6 py-3.5 rounded-xl text-sm transition-all uppercase tracking-wider cursor-not-allowed min-h-[48px] focus:outline-none focus:ring-2 focus:ring-labBlue">Select Truck</button>
+                        <button id="vs-cancel" class="border border-edge text-white font-bold px-6 py-3.5 rounded-xl text-sm hover:bg-white/5 transition-all uppercase tracking-wider min-h-[48px] focus:outline-none focus:ring-2 focus:ring-labBlue">Cancel</button>
+                    </div>
+                    
+                    <p class="text-xs text-zinc-400 mt-6">Can't find your vehicle? <a href="/contact/" class="text-white hover:underline">Contact us</a> to order parts directly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.isTuningPortal = true;
+    </script>
+    <script src="/assets/js/vehicle-selector.js"></script>
+    <script src="/assets/js/products.js"></script>
+    <script src="/assets/js/store.js"></script>
+    <script src="/assets/js/guided-tuning.js"></script>
+    <script src="/assets/js/global-banner.js"></script>
+</body>
+</html>

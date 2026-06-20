@@ -198,8 +198,8 @@
         const params = `&vmake=${encodeURIComponent(vehicle.make)}&vengine=${encodeURIComponent(vehicle.engine)}&vyear=${vehicle.year}&vmodel=${encodeURIComponent(vehicle.model)}`;
         const ezCard = document.getElementById('byt-card-ezlynk');
         const hpCard = document.getElementById('byt-card-hptuners');
-        if (ezCard) ezCard.href = `/store/catalog/?category=Tuning&platform=ezlynk${params}`;
-        if (hpCard) hpCard.href = `/store/catalog/?category=Tuning&platform=hptuners${params}`;
+        if (ezCard) ezCard.href = `/store/tuning/?platform=ezlynk${params}`;
+        if (hpCard) hpCard.href = `/store/tuning/?platform=hptuners${params}`;
 
         // Reveal the platform split
         showPlatformSplit();

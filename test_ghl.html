@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head><title>GHL Pre-fill Test</title></head>
+<body style="background:#111;color:#fff;font-family:monospace;padding:20px;">
+<h2>GHL Booking Widget Pre-fill Test</h2>
+
+<div id="log" style="background:#000;padding:15px;border:1px solid #333;max-height:400px;overflow-y:auto;margin-bottom:20px;"></div>
+
+<div id="iframe-container" style="width:100%;height:700px;border:1px solid #333;">
+</div>
+
+<script>
+function log(msg) {
+    const d = document.getElementById('log');
+    const line = document.createElement('div');
+    line.style.marginBottom = '4px';
+    line.textContent = `[${new Date().toISOString().substr(11,12)}] ${msg}`;
+    d.appendChild(line);
+    d.scrollTop = d.scrollHeight;
+    console.log(msg);
+}
+
+// Test params - simulating what the estimator would build
+const params = {
+    'contact.contact_vehicle_year': '2024',
+    'contact.contact_vehicle_make': 'Ford',
+    'contact.contact_vehicle_model': 'F-350',
+    'contact.vehicle_type': 'SUV',
+    'contact.contact_primary_service_requested': 'Premium Detailing',
+    'contact.contact_detailing_package': 'Standard Detail'
+};
+
+// Build query string
+const queryString = Object.entries(params).map(([k,v]) => `${k}=${encodeURIComponent(v)}`).join('&');
+log('Query string: ' + queryString);
+
+// Update parent URL
+const newUrl = window.location.pathname + '?' + queryString;
+window.history.replaceState({}, '', newUrl);
+log('Parent URL updated to: ' + window.location.href);
+log('window.location.search = ' + window.location.search);
+
+// Listen for ALL postMessages
+window.addEventListener('message', function(event) {
+    if (event.data && Array.isArray(event.data)) {
+        log('📨 RECEIVED postMessage: action="' + event.data[0] + '" data=' + JSON.stringify(event.data).substring(0, 300));
+        
+        if (event.data[0] === 'fetch-query-params') {
+            log('🎯 GHL widget requested query params! Responding...');
+            
+            const iframe = document.getElementById('ghl-test-iframe');
+            if (iframe && iframe.contentWindow) {
+                const response = ['query-params', params, window.location.href, document.referrer, 'uCWyqHn7e5TTX1838aZi'];
+                iframe.contentWindow.postMessage(response, '*');
+                log('✅ Sent query-params response: ' + JSON.stringify(response).substring(0, 300));
+            } else {
+                log('❌ Could not find iframe to respond to');
+            }
+        }
+    } else if (event.data && typeof event.data === 'object') {
+        log('📨 RECEIVED postMessage (object): ' + JSON.stringify(event.data).substring(0, 300));
+    } else if (typeof event.data === 'string' && event.data.length < 200) {
+        log('📨 RECEIVED postMessage (string): ' + event.data);
+    }
+});
+
+log('Message listener set up, creating iframe...');
+
+// Create iframe
+const container = document.getElementById('iframe-container');
+const iframe = document.createElement('iframe');
+iframe.src = 'https://api.leadconnectorhq.com/widget/booking/uCWyqHn7e5TTX1838aZi?' + queryString;
+iframe.id = 'ghl-test-iframe';
+iframe.style.cssText = 'width:100%;height:100%;border:none;';
+iframe.scrolling = 'yes';
+iframe.onload = function() {
+    log('🔵 Iframe onload fired');
+};
+container.appendChild(iframe);
+log('Iframe created with src: ' + iframe.src.substring(0, 150) + '...');
+
+// Also load form_embed.js after a short delay
+setTimeout(() => {
+    log('Loading form_embed.js...');
+    const script = document.createElement('script');
+    script.src = 'https://link.msgsndr.com/js/form_embed.js';
+    script.type = 'text/javascript';
+    script.onload = () => log('✅ form_embed.js loaded');
+    script.onerror = (e) => log('❌ form_embed.js failed to load: ' + e);
+    document.body.appendChild(script);
+}, 500);
+</script>
+</body>
+</html>

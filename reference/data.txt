@@ -1,0 +1,67 @@
+I already have the picklist data from the custom fields pull. Here's the complete options reference: 
+Exact Picklist Option Values (pass these verbatim in URL params) 
+Field Label 
+Query Key 
+Exact Accepted Values 
+Vehicle Type 
+contact.vehicle_type 
+Car | Sports | Crossover | SUV | Large SUV | Pick-Up | Van | Off-Road 
+Vehicle Category 
+contact.contact_vehicle_cate
+gory 
+Standard Car | Van | SUV | Truck | Side-by-Side (SxS) / Off-Road 
+Primary Service 
+Requested 
+contact.contact_primary_ser
+vice_requested 
+Premium Detailing | Paint Protection Film (PPF) | Ceramic Coating | Window 
+Tinting | Custom Lighting | Custom Tuning 
+Detailing Package 
+contact.contact_detailing_pa
+ckage 
+Standard Detail | De-Luxx Detail | Semi Interior (Sleeper/Day Cab) | Bi-Weekly 
+Maintenance Wash | Monthly Maintenance Detail 
+
+Additional Protection 
+contact.contact_additional_p
+rotection 
+Add Ceramic Windshield Brow - $90-$180 | Add Panoramic Sunroof Ceramic Tint - 
+$180-$400 | Pet Hair Removal | Odour Elimination | Headlight Restoration | Engine 
+Bay Detail | Ceramic Coating Upgrade 
+Ceramic Coating 
+Package 
+contact.contact_ceramic_pa
+ckage 
+Standard Coat (1-Layer) | Elite Coat (2-Layer) | Graphene Elite (Multi-Layer / 
+7-Year) 
+PPF Coverage Level 
+contact.contact_ppf_packag
+e 
+Partial Front | Full Front (Recommended) | Full Vehicle 
+Window Tint 
+Preference 
+contact.contact_window_tint
+_preference 
+Standard Carbon Tint (Front Roll-Ups) - $180 | Premium Ceramic Tint (Front 
+Roll-Ups) - $260 | Full Vehicle (Carbon) - $550 to $700 | Full Vehicle (Ceramic) - 
+$850 to $1,300 
+Tint Shade 
+Preference 
+contact.contact_tint_shade_p
+reference 
+5% (Limo) | 18 | 25 | 35 | Not sure yet - need a recommendation 
+Tint Add-Ons & Glass 
+Coverage 
+contact.contact_tint_coverag
+e_add_ons 
+Add Ceramic Windshield Brow ($90-$180) | Add Panoramic Sunroof Ceramic Tint 
+($180-$400) | Full Windshield | Rear Glass Standard 
+
+Custom Lighting 
+Upgrades 
+contact.contact_lighting_upg
+rades 
+Morimoto Headlight/Taillight Assemblies | Off-Road & Auxiliary (Baja Designs / 
+BMC) | Accent & Replacement Bulbs (Diode Dynamics) | Starlight Headliner 
+Installation 
+ 

@@ -1,0 +1,135 @@
+The Boutique Service Appointment — Field Query Keys 
+Field Label 
+Query Key (URL Parameter) 
+Field Type 
+Category 
+First Name 
+first_name 
+TEXT 
+Standard 
+Last Name 
+last_name 
+TEXT 
+Standard 
+Full Name 
+full_name 
+TEXT 
+Standard 
+Email 
+email 
+EMAIL 
+Standard 
+Phone 
+phone 
+PHONE 
+Standard 
+Vehicle Year 
+contact.contact_vehicle_year 
+TEXT 
+Custom — Vehicle 
+Info 
+Vehicle Make 
+contact.contact_vehicle_make 
+TEXT 
+Custom — Vehicle 
+Info 
+Vehicle Model 
+contact.contact_vehicle_model 
+TEXT 
+Custom — Vehicle 
+Info 
+Vehicle Category 
+contact.contact_vehicle_category 
+MULTIPLE_OP
+TIONS 
+Custom — Vehicle 
+Info 
+
+Vehicle Type 
+contact.vehicle_type 
+MULTIPLE_OP
+TIONS 
+Custom — Vehicle 
+Info 
+Primary Service 
+Requested 
+contact.contact_primary_service_
+requested 
+SINGLE_OPTI
+ONS 
+Custom — Service 
+Detailing Package 
+contact.contact_detailing_packag
+e 
+SINGLE_OPTI
+ONS 
+Custom — Service 
+Additional Protection 
+contact.contact_additional_protec
+tion 
+MULTIPLE_OP
+TIONS 
+Custom — Service 
+Ceramic Coating 
+Package 
+contact.contact_ceramic_packag
+e 
+SINGLE_OPTI
+ONS 
+Custom — Service 
+PPF Coverage Level 
+contact.contact_ppf_package 
+SINGLE_OPTI
+ONS 
+Custom — Service 
+Window Tint Preference 
+contact.contact_window_tint_pref
+erence 
+RADIO 
+Custom — Service 
+Tint Shade Preference 
+contact.contact_tint_shade_prefer
+ence 
+SINGLE_OPTI
+ONS 
+Custom — Service 
+Tint Add-Ons & Glass 
+Coverage 
+contact.contact_tint_coverage_ad
+d_ons 
+MULTIPLE_OP
+TIONS 
+Custom — Service 
+
+None
+Custom Lighting 
+Upgrades 
+contact.contact_lighting_upgrade
+s 
+MULTIPLE_OP
+TIONS 
+Custom — Service 
+Here's everything your VSCode AI needs! Here's a quick breakdown: 
+ 
+🔑 How to Use These in the URL 
+Append them as query parameters to your booking widget iframe URL. For example: 
+ 
+?contact.contact_vehicle_year=2022&contact.contact_vehicle_make=Ford&conta
+ct.contact_primary_service_requested=Window+Tinting 
+ 
+ 
+⚠️ Important Notes for Your Dev 
+Situation 
+What to do 
+Multi-select fields 
+Separate values with commas or pass multiple params with 
+the same key 
+Single-select / Radio fields 
+Pass the value exactly as it appears in the picklist options 
+
+Standard fields (name, email, 
+phone) 
+Use the short key — no contact. prefix 
+Spaces in values 
+URL-encode them (+ or %20) 
+ 
