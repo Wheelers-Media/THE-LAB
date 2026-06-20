@@ -262,17 +262,7 @@
             window.setCurrency=function(c){var r=0.74,ac='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all',ic='text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all';var cb=document.getElementById('btn-cad'),ub=document.getElementById('btn-usd');if(cb)cb.className=(c==='CAD')?ac:ic;if(ub)ub.className=(c==='USD')?ac:ic;localStorage.setItem('theLab_currency',c);document.querySelectorAll('[data-price-cad]').forEach(function(el){var cad=parseFloat(el.getAttribute('data-price-cad'));el.textContent=c==='USD'?'$'+(cad*r).toFixed(2)+' USD':'$'+cad.toFixed(2)+' CAD';});document.querySelectorAll('[data-price-from-cad]').forEach(function(el){var cad=parseFloat(el.getAttribute('data-price-from-cad'));el.textContent=c==='USD'?'From $'+(cad*r).toFixed(2)+' USD':'From $'+cad.toFixed(2)+' CAD';});};
             setTimeout(function(){window.setCurrency(localStorage.getItem('theLab_currency')||'CAD');},0);
         </script>
-    </header>
-
-    <!-- Store Search & Vehicle Selector Row -->
-    <div class="border-b border-edge/60 bg-[#0A0A0F] py-3 hidden md:block">
-        <div class="max-w-7xl mx-auto px-6 flex items-center gap-6">
-            <!-- Search -->
-            <div class="flex-grow relative">
-                <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" id="store-search-input" placeholder="Search for parts, tuning, exhaust..." class="w-full bg-[#16161E] text-white text-sm rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-1 focus:ring-labBlue transition-all placeholder:text-zinc-600 border border-edge hover:border-zinc-700">
-            </div>
-            
+    </header> 
             <!-- Vehicle Selector Button -->
             <button id="vehicle-selector-trigger" class="flex items-center gap-3 hover:bg-white/5 p-2 rounded-lg transition-colors text-left border border-transparent hover:border-edge group">
                 <!-- Truck Icon -->

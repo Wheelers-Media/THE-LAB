@@ -249,6 +249,36 @@ const V_DATA = {
 
 let activeVehicle = JSON.parse(sessionStorage.getItem('lab_active_vehicle')) || null;
 
+/* --- ROBUST GLOBAL CURRENCY TOGGLE --- */
+window.setCurrency = function(c) {
+    const r = 0.74;
+    const ac = 'text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all';
+    const ic = 'text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all';
+    
+    document.querySelectorAll('#btn-cad').forEach(cb => cb.className = (c === 'CAD') ? ac : ic);
+    document.querySelectorAll('#btn-usd').forEach(ub => ub.className = (c === 'USD') ? ac : ic);
+    
+    localStorage.setItem('theLab_currency', c);
+    
+    document.querySelectorAll('[data-price-cad]').forEach(function(el) {
+        const cad = parseFloat(el.getAttribute('data-price-cad'));
+        if (!isNaN(cad)) {
+            el.textContent = c === 'USD' ? '$' + (cad * r).toFixed(2) + ' USD' : '$' + cad.toFixed(2) + ' CAD';
+        }
+    });
+    
+    document.querySelectorAll('[data-price-from-cad]').forEach(function(el) {
+        const cad = parseFloat(el.getAttribute('data-price-from-cad'));
+        if (!isNaN(cad)) {
+            el.textContent = c === 'USD' ? 'From $' + (cad * r).toFixed(2) + ' USD' : 'From $' + cad.toFixed(2) + ' CAD';
+        }
+    });
+    
+    if (typeof updateCartUI === 'function') {
+        updateCartUI();
+    }
+};
+
 function initVehicleSelector() {
     const hero = document.getElementById("vehicle-selector-hero");
     const sYear = document.getElementById("vs-year");
@@ -484,12 +514,17 @@ function initStore() {
     populateSidebarFilters();
     initAccordions();
 
-    // 2. Read URL params
     const params = new URLSearchParams(window.location.search);
     const urlMake = params.get("make");
     let urlCategory = params.get("category");
     if (window.isTuningPortal) urlCategory = "Tuning";
-    const urlBrand = params.get("brand");
+    let urlBrand = params.get("brand");
+    const urlPlatform = params.get("platform");
+
+    if (urlPlatform) {
+        if (urlPlatform.toLowerCase() === 'ezlynk') urlBrand = "EZ LYNK";
+        if (urlPlatform.toLowerCase() === 'hptuners') urlBrand = "HP Tuners";
+    }
 
     // 3. Pre-check from active vehicle
     if (activeVehicle) {
@@ -650,7 +685,7 @@ function renderProducts() {
         
         // STRICT OVERRIDE: If a vehicle is pinned in the session
         if (activeVehicle) {
-            const vMake = activeVehicle.make;
+            const vMake = activeVehicle.make === "GMC" ? "Chevy" : activeVehicle.make;
             makeMatch = p.makes.includes(vMake) || p.makes.includes("Universal");
             engMatch = enginesMatch(activeVehicle.engine, p.engine);
             yearMatch = activeVehicle.year >= p.years[0] && activeVehicle.year <= p.years[1];
@@ -746,9 +781,11 @@ function renderProducts() {
     if (!window.isInitialRender) {
         const gridContainer = grid.parentElement;
         if (gridContainer) {
-            // Offset by ~120px to account for the sticky header
-            const y = gridContainer.getBoundingClientRect().top + window.scrollY - 120;
-            window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+            // Wait slightly for any other layout shifts
+            setTimeout(() => {
+                const y = gridContainer.getBoundingClientRect().top + window.scrollY - 120;
+                window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+            }, 50);
         }
     }
     

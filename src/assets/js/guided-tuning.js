@@ -183,6 +183,18 @@
             }
             window.activeVehicle = vehicle;
             window.renderProducts();
+            
+            // Scroll down to the products
+            const productGridSection = document.getElementById('product-grid');
+            if (productGridSection) {
+                const headerOffset = 100;
+                const elementPosition = productGridSection.parentElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
         }
 
         // Update UI state
