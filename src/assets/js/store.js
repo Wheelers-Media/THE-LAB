@@ -1223,8 +1223,8 @@ function initPDP() {
 
     // Tuning Platform Logic
     const pTitleLower = product.name.toLowerCase();
-    const isTransmissionTuning = pTitleLower.includes('transmission tune') || pTitleLower.includes('tcm tune') || (product.variants && product.variants.some(v => v.title.toLowerCase().includes('transmission tuning')));
-    const isTunePackage = pTitleLower.includes('support package') || pTitleLower.includes('tune') || pTitleLower.includes('tuning') || pTitleLower.includes('sotf') || (product.variants && product.variants.some(v => v.title.toLowerCase().includes('tune')));
+    const isTransmissionTuning = pTitleLower.includes('transmission tune') || pTitleLower.includes('tcm tune') || (product.variants && product.variants.some(v => v.title && v.title.toLowerCase().includes('transmission tuning')));
+    const isTunePackage = pTitleLower.includes('support package') || pTitleLower.includes('tune') || pTitleLower.includes('tuning') || pTitleLower.includes('sotf') || (product.variants && product.variants.some(v => v.title && v.title.toLowerCase().includes('tune')));
     const isCredit = pTitleLower.includes('credit');
     const isHardwareDevice = pTitleLower.includes('autoagent') || pTitleLower.includes('mpvi') || isCredit || pTitleLower.includes('autocal') || pTitleLower.includes('x4') || pTitleLower.includes('bdx') || pTitleLower.includes('commander');
     
@@ -1236,7 +1236,7 @@ function initPDP() {
     const isGDP = product.vendor?.toUpperCase().includes('GDP') || pTitleLower.includes('commander');
     
     const showHardwareBlock = product.category === 'Tuning & Electronics' && isTunePackage && !isHardwareDevice && (isEZ || isHP || isMM3 || isEFILive || isSCT || isGDP);
-    const isSOTF = pTitleLower.includes('sotf') || (product.variants && product.variants.some(v => v.title.toLowerCase().includes('sotf')));
+    const isSOTF = pTitleLower.includes('sotf') || (product.variants && product.variants.some(v => v.title && v.title.toLowerCase().includes('sotf')));
     const isCummins2018Plus = (product.makes.includes('Ram') || product.makes.includes('Dodge')) && product.years[1] >= 2018 && pTitleLower.includes('cummins') && product.category === 'Tuning & Electronics';
     
     // Hardware IDs for Auto-AddToCart
