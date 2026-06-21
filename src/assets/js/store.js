@@ -286,6 +286,24 @@ function handleCheckout() {
     window.createShopifyCheckout(cart);
 }
 
+// Global Image Zoom Logic (Amazon Style)
+window.zoomFollow = function(e, el) {
+    const img = el.querySelector('img');
+    if (!img) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    img.style.transformOrigin = `${x}% ${y}%`;
+    img.style.transform = 'scale(2)'; // 2x Zoom level
+};
+
+window.zoomReset = function(el) {
+    const img = el.querySelector('img');
+    if (!img) return;
+    img.style.transformOrigin = 'center center';
+    img.style.transform = 'scale(1)';
+};
+
 /* --- STORE GRID & FILTER LOGIC --- */
 let activeFilters = {
     makes: [],
@@ -935,9 +953,9 @@ function renderProducts() {
         return `
         <div class="group relative bg-void border border-edge rounded-xl overflow-hidden hover:border-labBlue/50 transition-all flex flex-col">
             <!-- IMAGE FIRST -->
-            <a href="${productUrl}" class="block bg-[#0D0D12] relative flex-shrink-0 overflow-hidden" style="aspect-ratio:4/3;">
+            <a href="${productUrl}" class="block bg-[#0D0D12] relative flex-shrink-0 overflow-hidden" style="aspect-ratio:4/3; cursor: crosshair;" onmousemove="window.zoomFollow(event, this)" onmouseleave="window.zoomReset(this)">
                 ${p.isPopular ? '<span class="absolute top-2 right-2 bg-labBlue text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider z-10">Popular</span>' : ''}
-                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-200 pointer-events-none" loading="lazy">
             </a>
             <!-- TITLE + PRICE BELOW IMAGE -->
             <div class="p-4 flex flex-col flex-1">
@@ -1092,8 +1110,8 @@ function initPDP() {
             <!-- Top Config Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
                 <!-- Left: Image -->
-                <div class="bg-[#111115] border border-edge rounded-2xl overflow-hidden flex items-center justify-center lg:sticky lg:top-24 group" style="aspect-ratio:1;">
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="bg-[#111115] border border-edge rounded-2xl overflow-hidden flex items-center justify-center lg:sticky lg:top-24" style="aspect-ratio:1; cursor: crosshair;" onmousemove="window.zoomFollow(event, this)" onmouseleave="window.zoomReset(this)">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-200 pointer-events-none">
                 </div>
                 
                 <!-- Right: Config & Cart -->
