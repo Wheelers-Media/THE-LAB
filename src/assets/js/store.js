@@ -501,7 +501,46 @@ function initVehicleSelector() {
             engine: sEngine.value
         };
         sessionStorage.setItem('lab_active_vehicle', JSON.stringify(vehicle));
-        window.location.href = './catalog/';
+        
+        if (window.location.pathname.includes('/catalog')) {
+            window.activeVehicle = vehicle;
+            if (typeof populateSidebarFilters === 'function') populateSidebarFilters();
+            
+            // Re-apply checked states
+            document.querySelectorAll('.store-filter').forEach(cb => {
+                const type = cb.dataset.type;
+                const val = cb.value;
+                if (type === 'make' && activeFilters.makes.includes(val)) cb.checked = true;
+                if (type === 'category' && activeFilters.categories.includes(val)) cb.checked = true;
+                if (type === 'engine' && activeFilters.engines.includes(val)) cb.checked = true;
+                if (type === 'brand' && activeFilters.brands.includes(val)) cb.checked = true;
+            });
+            
+            // Re-bind listeners for newly rendered checkboxes
+            document.querySelectorAll('.store-filter').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const val = e.target.value;
+                    const type = e.target.dataset.type;
+                    if (type === 'make') {
+                        if (e.target.checked) { if (!activeFilters.makes.includes(val)) activeFilters.makes.push(val); }
+                        else activeFilters.makes = activeFilters.makes.filter(m => m !== val);
+                    } else if (type === 'category') {
+                        if (e.target.checked) { if (!activeFilters.categories.includes(val)) activeFilters.categories.push(val); }
+                        else activeFilters.categories = activeFilters.categories.filter(c => c !== val);
+                    } else if (type === 'engine') {
+                        if (e.target.checked) { if (!activeFilters.engines.includes(val)) activeFilters.engines.push(val); }
+                        else activeFilters.engines = activeFilters.engines.filter(x => x !== val);
+                    } else if (type === 'brand') {
+                        if (e.target.checked) { if (!activeFilters.brands.includes(val)) activeFilters.brands.push(val); }
+                        else activeFilters.brands = activeFilters.brands.filter(b => b !== val);
+                    }
+                    renderProducts();
+                });
+            });
+            if (typeof renderProducts === 'function') renderProducts();
+        } else {
+            window.location.href = '/store/catalog/';
+        }
     });
 }
 
@@ -1074,17 +1113,7 @@ function renderProducts() {
         </div>
     `}).join("");
 
-    // Scroll to top of grid on filter change
-    if (!window.isInitialRender) {
-        const gridContainer = grid.parentElement;
-        if (gridContainer) {
-            // Wait slightly for any other layout shifts
-            setTimeout(() => {
-                const y = gridContainer.getBoundingClientRect().top + window.scrollY - 120;
-                window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
-            }, 50);
-        }
-    }
+    // Scroll jump removed as requested by user
     
     // Apply currency format to newly rendered prices
     if (window.setCurrency) {
