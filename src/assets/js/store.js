@@ -1463,6 +1463,11 @@ function initPDP() {
     document.querySelectorAll('.upsell-checkbox').forEach(cb => {
         cb.addEventListener('change', updateTotalPrice);
     });
+    
+    // Listen to hardware radios
+    document.querySelectorAll('input[name="pdp-hardware"]').forEach(radio => {
+        radio.addEventListener('change', updateTotalPrice);
+    });
 
     if (product.category === 'Tuning & Electronics') {
         const tuneCards = document.querySelectorAll('.pdp-tune-card');

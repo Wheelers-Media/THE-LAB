@@ -215,8 +215,7 @@
         if (ezCard) ezCard.href = `/store/tuning/?platform=ezlynk${params}`;
         if (hpCard) hpCard.href = `/store/tuning/?platform=hptuners${params}`;
 
-        // Reveal the platform split
-        showPlatformSplit();
+        // Platform split section removed as requested
 
         // Update document title
         document.title = `Parts for ${vehicle.year} ${vehicle.make} ${vehicle.engine} | THE LAB`;
