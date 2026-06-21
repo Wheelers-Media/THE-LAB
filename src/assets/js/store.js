@@ -315,11 +315,6 @@ let activeFilters = {
     sortBy: "featured"
 };
 
-window.applySort = function(val) {
-    activeFilters.sortBy = val;
-    renderStoreGrid();
-};
-
 window.toggleFilters = function() {
     const sidebar = document.querySelector('aside.w-full.md\\:w-72');
     const toggleBtn = document.getElementById('toggle-filters-btn');
@@ -1220,12 +1215,10 @@ function initPDP() {
                     </div>
                     <div class="mb-6 lg:mb-8">
                         <p class="text-2xl font-extrabold text-white" data-price-cad="${product.price}">$${product.price.toFixed(2)} CAD</p>
-                        ${shopPayMessaging ? `
-                        <div class="flex items-center gap-2 mt-3 text-[13px] text-zinc-300 bg-[#1a1a24] border border-edge rounded-lg py-2 px-3 inline-flex">
-                            <span data-affirm-cad-total="${product.price}">${shopPayMessaging}</span>
+                        <div id="pdp-affirm-container" class="flex items-center gap-2 mt-3 text-[13px] text-zinc-300 bg-[#1a1a24] border border-edge rounded-lg py-2 px-3 inline-flex ${product.price >= 50 && product.price <= 30000 ? '' : 'hidden'}">
+                            <span data-affirm-cad-total="${product.price}">${shopPayMessaging || 'Calculating...'}</span>
                             <img src="/assets/affirm-logo.png" alt="Affirm" class="h-4 w-auto object-contain flex-shrink-0">
                         </div>
-                        ` : ''}
                     </div>
 
                     ${product.category === 'Tuning & Electronics' ? `
@@ -1688,8 +1681,16 @@ function initPDP() {
             priceEl.dataset.priceCad = total;
             priceEl.textContent = `$${total.toFixed(2)} CAD`;
             
+            const affirmContainer = document.getElementById('pdp-affirm-container');
             const affirmEl = document.querySelector('#pdp-container [data-affirm-cad-total]');
-            if(affirmEl) affirmEl.setAttribute('data-affirm-cad-total', total);
+            if (affirmContainer && affirmEl) {
+                affirmEl.setAttribute('data-affirm-cad-total', total);
+                if (total >= 50 && total <= 30000) {
+                    affirmContainer.classList.remove('hidden');
+                } else {
+                    affirmContainer.classList.add('hidden');
+                }
+            }
 
             if (window.setCurrency) {
                 window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
