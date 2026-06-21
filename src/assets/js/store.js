@@ -288,9 +288,8 @@ window.setCurrency = function(c) {
         }
     });
     
-    if (typeof updateCartUI === 'function') {
-        updateCartUI();
-    }
+    // Removed updateCartUI() call to prevent infinite loop.
+    // setCurrency already updates [data-price-cad] elements, which the cart uses.
 };
 
 function initVehicleSelector() {
