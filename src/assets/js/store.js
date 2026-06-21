@@ -84,23 +84,24 @@ function updateQuantity(cartItemId, delta) {
 function initCart() {
     // Inject Cart Flyout DOM
     const flyoutHTML = `
-        <div id="cart-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden opacity-0 transition-opacity"></div>
-        <div id="cart-flyout" class="fixed top-0 right-0 h-full w-full max-w-md bg-midnight border-l border-edge shadow-2xl z-[101] transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div id="cart-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden opacity-0 transition-opacity"></div>
+        <div id="cart-flyout" class="fixed top-0 right-0 h-full w-full max-w-md bg-midnight border-l border-edge shadow-2xl z-[201] transform translate-x-full transition-transform duration-300 flex flex-col">
             <div class="p-6 border-b border-edge flex items-center justify-between">
                 <h2 class="text-white font-heading font-bold text-lg uppercase tracking-widest">Your Cart</h2>
-                <button onclick="closeCart()" class="text-zinc-400 hover:text-white p-2">
+                <button onclick="closeCart()" class="text-zinc-400 hover:text-white p-2 min-w-[44px] min-h-[44px] flex items-center justify-center">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
             <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6"></div>
-            <div class="p-6 border-t border-edge bg-void">
+            <div class="p-6 border-t border-edge bg-void pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] md:pb-6">
                 <div class="flex justify-between text-white font-bold mb-4">
                     <span>Subtotal</span>
                     <span id="cart-subtotal">$0.00</span>
                 </div>
-                <button onclick="handleCheckout()" class="block w-full text-center bg-labBlue text-white font-extrabold uppercase tracking-widest py-4 rounded hover:bg-labCyan transition-colors">
-                    Checkout Securely
+                <button onclick="handleCheckout()" class="block w-full text-center bg-labBlue text-white font-extrabold uppercase tracking-widest py-4 rounded-xl hover:bg-labCyan transition-colors min-h-[56px] text-sm">
+                    Checkout Securely →
                 </button>
+                <p class="text-center text-zinc-600 text-[10px] mt-3 uppercase tracking-wider">Secure checkout via Shopify</p>
             </div>
         </div>
     `;
@@ -914,36 +915,35 @@ function renderProducts() {
         }
         return `
         <div class="group relative bg-void border border-edge rounded-xl overflow-hidden hover:border-labBlue/50 transition-all flex flex-col">
-            <!-- TITLE ABOVE IMAGE (Amazon-style) -->
-            <div class="px-4 pt-4 pb-3 border-b border-edge/40">
+            <!-- IMAGE FIRST -->
+            <a href="${productUrl}" class="block bg-[#0D0D12] relative flex-shrink-0" style="aspect-ratio:4/3;">
+                ${p.isPopular ? '<span class="absolute top-2 right-2 bg-labBlue text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider z-10">Popular</span>' : ''}
+                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" loading="lazy">
+            </a>
+            <!-- TITLE + PRICE BELOW IMAGE -->
+            <div class="p-4 flex flex-col flex-1">
                 <div class="flex items-center gap-2 mb-1.5 flex-wrap">
                     <span class="text-[10px] font-mono text-labBlue uppercase tracking-widest">${p.brand}</span>
                     <span class="text-[10px] text-zinc-700">•</span>
                     <span class="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">${p.category}</span>
-                    ${p.isPopular ? '<span class="text-[9px] font-bold bg-labBlue text-white px-1.5 py-0.5 rounded uppercase tracking-wider ml-auto">Popular</span>' : ''}
                 </div>
-                <h3 class="text-white font-bold text-sm leading-snug line-clamp-2 min-h-[36px]"><a href="${productUrl}" class="hover:text-labBlue transition-colors">${p.name}</a></h3>
-                <div class="text-[10px] text-zinc-600 font-mono mt-1 leading-relaxed">${p.makes.filter(m => m !== 'Universal').join(', ') || 'Universal Fit'}${p.engine !== 'Universal' ? ' • ' + p.engine : ''}</div>
-            </div>
-            <!-- PRODUCT IMAGE -->
-            <a href="${productUrl}" class="block bg-[#0D0D12] relative flex-shrink-0" style="aspect-ratio:4/3;">
-                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" loading="lazy">
-            </a>
-            <!-- PRICE + CTA -->
-            <div class="p-4 flex items-center justify-between mt-auto">
-                <div>
-                    <span class="text-base font-extrabold text-white" data-price-cad="${p.price}">$${p.price.toFixed(2)} CAD</span>
-                    ${cardFitment ? `<div class="mt-1">${cardFitment}</div>` : ''}
+                <h3 class="text-white font-bold text-sm leading-snug line-clamp-2 mb-1 flex-1"><a href="${productUrl}" class="hover:text-labBlue transition-colors">${p.name}</a></h3>
+                <div class="text-[10px] text-zinc-600 font-mono mb-3 leading-relaxed">${p.makes.filter(m => m !== 'Universal').join(', ') || 'Universal Fit'}${p.engine !== 'Universal' ? ' • ' + p.engine : ''}</div>
+                <div class="flex items-center justify-between mt-auto">
+                    <div>
+                        <span class="text-base font-extrabold text-white" data-price-cad="${p.price}">$${p.price.toFixed(2)} CAD</span>
+                        ${cardFitment ? `<div class="mt-1">${cardFitment}</div>` : ''}
+                    </div>
+                    ${p.category === 'Tuning & Electronics' 
+                        ? `<a href="${productUrl}" title="Configure Tune" class="bg-labBlue/10 hover:bg-labBlue text-labBlue hover:text-white border border-labBlue/30 hover:border-labBlue text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-lg transition-all min-h-[44px] flex items-center gap-2">
+                               Configure
+                               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                           </a>`
+                        : `<button onclick="addToCart('${p.id}')" class="bg-edge hover:bg-labBlue text-white p-2.5 rounded-lg transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center">
+                               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                           </button>`
+                    }
                 </div>
-                ${p.category === 'Tuning & Electronics' 
-                    ? `<a href="${productUrl}" title="Configure Tune" class="bg-labBlue/10 hover:bg-labBlue text-labBlue hover:text-white border border-labBlue/30 hover:border-labBlue text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-lg transition-all min-h-[44px] flex items-center gap-2">
-                           Configure
-                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                       </a>`
-                    : `<button onclick="addToCart('${p.id}')" class="bg-edge hover:bg-labBlue text-white p-2.5 rounded-lg transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center">
-                           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                       </button>`
-                }
             </div>
         </div>
     `}).join("");
@@ -1069,13 +1069,7 @@ function initPDP() {
     const hwHP_ID = 'gid://shopify/ProductVariant/42912449265758'; // Wait, let me just add MPVI4 logic directly if we have the ID, else we just add standard device
     // Since we don't have MPVI4 ID, we will just add the base product, or we can fetch it dynamically from storeCatalog later.
     container.innerHTML = `
-        <div class="max-w-6xl mx-auto py-8 px-4 md:py-12 md:px-6">
-            <!-- MOBILE: Title + fitment ALWAYS shown first (Amazon-style) -->
-            <div class="mb-4 lg:hidden">
-                <div class="text-xs font-mono text-labBlue uppercase tracking-widest mb-2">${product.makes.filter(m => m !== 'Universal').join(", ") || 'Universal Fit'} &bull; ${product.category}</div>
-                <h1 class="text-2xl font-heading font-extrabold text-white leading-tight mb-3">${product.name}</h1>
-                ${fitmentBadge}
-            </div>
+        <div class="max-w-6xl mx-auto py-12 px-6">
             <!-- Top Config Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
                 <!-- Left: Image -->
