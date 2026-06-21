@@ -1,5 +1,5 @@
 <!--
-    GLOBAL HEADER COMPONENT — THE LAB
+    GLOBAL HEADER COMPONENT - THE LAB
     ─────────────────────────────────────────────────────────────────────────────
     SHOPIFY INTEGRATION NOTES:
     • Currency toggle  → replace with Shopify multi-currency / localization API
@@ -41,7 +41,7 @@
                     <img src="/assets/logo.jpg" alt="THE LAB" class="h-9 md:h-11 w-auto object-contain">
                 </a>
 
-                <!-- Desktop Navigation — hidden on mobile -->
+                <!-- Desktop Navigation - hidden on mobile -->
                 <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
 
                     <!-- The Boutique dropdown -->
@@ -127,7 +127,7 @@
                 <!-- Right side: Cart + Book Now + Mobile Hamburger -->
                 <div class="flex items-center gap-2">
 
-                    <!-- Cart button — Shopify: replace count with {{ cart.item_count }} -->
+                    <!-- Cart button - Shopify: replace count with {{ cart.item_count }} -->
                     <button id="cart-btn" aria-label="Cart" class="relative p-2 text-zinc-400 hover:text-white transition-colors rounded-lg hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-labBlue">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                         <span id="cart-count" class="absolute -top-0.5 -right-0.5 bg-labBlue text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold leading-none hidden">0</span>
@@ -136,7 +136,7 @@
                     <!-- Desktop CTA -->
                     <a href="/contact/" class="hidden md:inline-flex bg-white text-black font-extrabold py-2 px-5 rounded-lg hover:bg-zinc-200 transition-all uppercase tracking-widest text-xs">Book Now</a>
 
-                    <!-- Mobile hamburger — ONLY on mobile -->
+                    <!-- Mobile hamburger - ONLY on mobile -->
                     <button id="mob-btn" aria-label="Toggle menu" aria-expanded="false"
                         class="md:hidden w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-labBlue text-white">
                         <svg id="ham-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>

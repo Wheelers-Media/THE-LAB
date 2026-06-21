@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-// THE LAB — Shopify Storefront Integration & Product Classifier
+// THE LAB - Shopify Storefront Integration & Product Classifier
 // ═══════════════════════════════════════════════════════════════════
 const SHOPIFY_TOKEN = "661b1009a0d85bfadfce9c52fcb3d87f";
 const STORE_URL = "https://xr6pmx-y0.myshopify.com/api/2024-01/graphql.json";

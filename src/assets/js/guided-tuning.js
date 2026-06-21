@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// THE LAB — MANDATE 1: "BUILD YOUR TUNE" YMM GUIDED TUNING GATEWAY
+// THE LAB - MANDATE 1: "BUILD YOUR TUNE" YMM GUIDED TUNING GATEWAY
 // Wires the inline Year/Make/Model/Engine selectors to the live store filter,
 // drives step-dot progress, and reveals the EZ LYNK vs HP Tuners split cards.
 // ═══════════════════════════════════════════════════════════════════════════
@@ -200,7 +200,7 @@
         }
 
         // Update UI state
-        const pillText = `${vehicle.year} ${vehicle.make} ${vehicle.model} — ${vehicle.engine}`;
+        const pillText = `${vehicle.year} ${vehicle.make} ${vehicle.model} - ${vehicle.engine}`;
         elVehiclePillText.textContent = pillText;
         elVehiclePill.classList.remove('hidden');
         elVehiclePill.classList.add('inline-flex');
@@ -330,7 +330,7 @@
             elFind.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Find My Parts`;
 
             // Show pill + clear
-            const pillText = `${v.year} ${v.make} ${v.model} — ${v.engine}`;
+            const pillText = `${v.year} ${v.make} ${v.model} - ${v.engine}`;
             elVehiclePillText.textContent = pillText;
             elVehiclePill.classList.remove('hidden');
             elVehiclePill.classList.add('inline-flex');

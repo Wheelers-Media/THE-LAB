@@ -34,7 +34,7 @@ function addToCart(productId, quantity = 1, customAttributes = {}, variantOverri
     // Use override if provided (e.g., specific tune level variant), else default
     const resolvedVariantId = variantOverride?.id || product.variantId;
     const resolvedPrice    = variantOverride?.price !== undefined ? variantOverride.price : product.price;
-    const resolvedTitle    = variantOverride?.title ? `${product.name} — ${variantOverride.title}` : product.name;
+    const resolvedTitle    = variantOverride?.title ? `${product.name} - ${variantOverride.title}` : product.name;
 
     // Encode custom attributes safely supporting Unicode (like em-dash)
     const encodeUnicodeBase64 = (str) => {
@@ -1211,6 +1211,15 @@ function initPDP() {
                     <div class="hidden lg:block">
                         <div class="text-xs font-mono text-labBlue uppercase tracking-widest mb-4">${product.makes.filter(m => m !== 'Universal').join(", ") || 'Universal Fit'} &bull; ${product.category}</div>
                         <h1 class="text-3xl md:text-4xl font-heading font-extrabold text-white leading-tight mb-4">${product.name}</h1>
+                        
+                        ${pTitleLower.includes('tune') || pTitleLower.includes('tuning') || pTitleLower.includes('delete') || pTitleLower.includes('off-road') || pTitleLower.includes('race') || pTitleLower.includes('sotf') || pTitleLower.includes('package') || pTitleLower.includes('ez lynk') || pTitleLower.includes('hp tuners') || pTitleLower.includes('efi live') || pTitleLower.includes('mm3') ? `
+                        <div class="mb-6 flex items-start gap-2 border-l-4 border-red-600 pl-3 py-1 bg-red-900/10">
+                            <svg class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                            <p class="text-[10px] text-zinc-400 font-bold uppercase tracking-widest leading-relaxed">
+                                <strong class="text-red-500">Legal Disclaimer:</strong> Intended for Off-Road / Competition Racing Use Only. Not legal for use on public highways or street-registered vehicles.
+                            </p>
+                        </div>
+                        ` : ''}
                         ${fitmentBadge}
                     </div>
                     <div class="mb-6 lg:mb-8">
@@ -1274,9 +1283,9 @@ function initPDP() {
                                     onfocus="this.style.borderColor='#0066FF';this.style.boxShadow='0 0 0 2px rgba(0,102,255,0.2), 0 0 16px rgba(0,102,255,0.12)'"
                                     onblur="this.style.borderColor='#1E1E28';this.style.boxShadow='none'">
                                     <option value="">Select Shift Strategy</option>
-                                    <option value="Standard">Standard Shift Points — Factory Timing</option>
-                                    <option value="Raised">Raised Shift Points — Performance Oriented</option>
-                                    <option value="High">High Shift Points — Maximum Power Band</option>
+                                    <option value="Standard">Standard Shift Points - Factory Timing</option>
+                                    <option value="Raised">Raised Shift Points - Performance Oriented</option>
+                                    <option value="High">High Shift Points - Maximum Power Band</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-500">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -1288,7 +1297,7 @@ function initPDP() {
 
                         <!-- 2B. HARDWARE REQUIREMENT RADIO BUTTONS -->
                         ${showHardwareBlock ? `
-                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-hardware-wrap" data-hw-ez="${hwEZ_ID}" data-hw-hp="${hwHP_ID}" data-is-hp="${isHP}" data-is-ez="${isEZ}">
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-hardware-wrap" data-hw-ez="${hwEZ_ID}" data-hw-hp="${hwHP_ID}" data-hw-efi="${hwEFI_ID}" data-is-hp="${isHP}" data-is-ez="${isEZ}" data-is-efi="${isEFILive}">
                             <fieldset>
                                 <legend class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Hardware Requirement</legend>
                                 <div class="space-y-3">
@@ -1327,7 +1336,7 @@ function initPDP() {
                                         </div>
                                         <div>
                                             <p class="text-sm font-bold text-white mb-0.5">I already own a device</p>
-                                            <p class="text-[10px] text-zinc-500 uppercase tracking-wider" id="hw-own-desc">Tune files only — I have my own ${isHP ? 'HP Tuners' : isMM3 ? 'MM3' : isEFILive ? 'EFI Live' : isSCT ? 'SCT' : isGDP ? 'GDP' : 'EZ LYNK'} interface.</p>
+                                            <p class="text-[10px] text-zinc-500 uppercase tracking-wider" id="hw-own-desc">Tune files only - I have my own ${isHP ? 'HP Tuners' : isMM3 ? 'MM3' : isEFILive ? 'EFI Live' : isSCT ? 'SCT' : isGDP ? 'GDP' : 'EZ LYNK'} interface.</p>
                                         </div>
                                     </label>
 
@@ -1424,6 +1433,7 @@ function initPDP() {
                             
                             <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">STOCK.MM3 File Upload <span class="text-red-500 ml-1">*</span></label>
                             <input type="file" id="pdp-mm3-file" accept=".mm3" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-zinc-400 text-sm mb-3" aria-required="true">
+                            <p class="text-[10px] text-zinc-500 mb-3 uppercase tracking-wider">Note: You will receive email instructions on how to submit your STOCK.MM3 file after purchase.</p>
                             
                             <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">Vehicle Modifications</label>
                             <textarea id="pdp-mods-input" rows="2" placeholder="Injectors, Turbo..." class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-body text-sm resize-y"></textarea>
@@ -1811,14 +1821,14 @@ function initPDP() {
         });
     }
 
-    // ── Add to Cart — full validation gate ──────────────────────────────────
+    // ── Add to Cart - full validation gate ──────────────────────────────────
     document.getElementById("pdp-add-btn").addEventListener("click", () => {
         const isTuning = product.category === 'Tuning & Electronics';
         const customAttributes = {};
         let validationFailed = false;
 
         if (isTuning) {
-            // — Power Level / Tune Level check (Variants) —
+            // - Power Level / Tune Level check (Variants) -
             const tuneCards = document.querySelectorAll('.pdp-tune-card');
             const hasVariants = tuneCards.length > 0;
             const selectedTuneCard = document.querySelector('.pdp-tune-card[aria-pressed="true"]');
@@ -1842,7 +1852,7 @@ function initPDP() {
                 title: selectedTuneCard.dataset.variantTitle
             } : null;
 
-            // — Compliance gate check (Mandate 3) —
+            // - Compliance gate check (Mandate 3) -
             const compliance = document.getElementById("pdp-compliance-check");
             if (!compliance || !compliance.checked) {
                 const gate = document.getElementById('pdp-compliance-gate');
@@ -1860,7 +1870,7 @@ function initPDP() {
                 validationFailed = true;
             }
 
-            // — VIN check (Mandate 2C) —
+            // - VIN check (Mandate 2C) -
             const vinWrap = document.getElementById("pdp-vin-wrap");
             if (vinWrap) {
                 const vin = document.getElementById("pdp-vin-input");
@@ -1877,7 +1887,7 @@ function initPDP() {
                 }
             }
 
-            // — SCT Strategy Codes —
+            // - SCT Strategy Codes -
             const sctWrap = document.getElementById("pdp-sct-wrap");
             if (sctWrap) {
                 const ecu = document.getElementById("pdp-sct-ecu");
@@ -1894,7 +1904,7 @@ function initPDP() {
                 }
             }
 
-            // — GDP Serial Numbers —
+            // - GDP Serial Numbers -
             const gdpWrap = document.getElementById("pdp-gdp-wrap");
             if (gdpWrap) {
                 const ecu = document.getElementById("pdp-gdp-ecu");
@@ -1911,7 +1921,7 @@ function initPDP() {
                 }
             }
 
-            // — EFI Live Device & Auth —
+            // - EFI Live Device & Auth -
             const efiWrap = document.getElementById("pdp-efi-wrap");
             if (efiWrap) {
                 const serial = document.getElementById("pdp-efi-serial");
@@ -1933,7 +1943,7 @@ function initPDP() {
                 }
             }
 
-            // — GDP / HP Tuners Credits Serial —
+            // - GDP / HP Tuners Credits Serial -
             const creditWrap = document.getElementById("pdp-credit-wrap");
             if (creditWrap) {
                 const serial = document.getElementById("pdp-credit-serial");
@@ -1946,13 +1956,13 @@ function initPDP() {
                 }
             }
 
-            // — Transmission strategy (Mandate 2A) —
+            // - Transmission strategy (Mandate 2A) -
             const transmission = document.getElementById("pdp-transmission");
             if (transmission && transmission.value) {
                 customAttributes["Transmission Strategy"] = transmission.options[transmission.selectedIndex].text;
             }
 
-            // — Hardware requirement (Mandate 2B) —
+            // - Hardware requirement (Mandate 2B) -
             const hardware = document.querySelector('input[name="pdp-hardware"]:checked');
             let hwToAdd = null;
             if (hardware) {
@@ -1979,7 +1989,7 @@ function initPDP() {
                 }
             }
 
-            // — Device Serial Number (Optional, for own device) —
+            // - Device Serial Number (Optional, for own device) -
             const serialWrap = document.getElementById("pdp-serial-wrap");
             if (serialWrap && !serialWrap.classList.contains("hidden")) {
                 const serialInput = document.getElementById("pdp-serial-input");
@@ -1988,7 +1998,7 @@ function initPDP() {
                 }
             }
 
-            // — Vehicle Modifications —
+            // - Vehicle Modifications -
             const modsWrap = document.getElementById("pdp-mods-wrap");
             if (modsWrap) {
                 const modsInput = document.getElementById("pdp-mods-input");
@@ -1999,7 +2009,7 @@ function initPDP() {
                 }
             }
             
-            // — Upsell Checkboxes —
+            // - Upsell Checkboxes -
             const checkedUpsells = [];
             document.querySelectorAll('.upsell-checkbox:checked').forEach(cb => {
                 checkedUpsells.push(cb.dataset.name);

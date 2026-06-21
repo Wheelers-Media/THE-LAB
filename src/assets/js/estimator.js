@@ -12,25 +12,25 @@ const estimatorConfig = {
                 id: 'focus',
                 question: "What's your focus for this visit?",
                 options: [
-                    { id: 'interior', label: "Interior Focus — Deep clean inside" },
-                    { id: 'exterior', label: "Exterior Focus — Paint, wheels, protection" },
-                    { id: 'complete', label: "Complete Transformation — Full In & Out" }
+                    { id: 'interior', label: "Interior Focus - Deep clean inside" },
+                    { id: 'exterior', label: "Exterior Focus - Paint, wheels, protection" },
+                    { id: 'complete', label: "Complete Transformation - Full In & Out" }
                 ]
             },
             {
                 id: 'tier',
                 question: "Which tier are you looking at?",
                 options: [
-                    { id: 'standard', label: "Standard — Essential clean" },
-                    { id: 'deluxx',   label: "De-Luxx / Signature — Full restoration" }
+                    { id: 'standard', label: "Standard - Essential clean" },
+                    { id: 'deluxx',   label: "De-Luxx / Signature - Full restoration" }
                 ]
             },
             {
                 id: 'vehicle_size',
                 question: "What is the size of your vehicle?",
                 options: [
-                    { label: "Small — 5 or 6 Seat SUV / Truck", value: "small" },
-                    { label: "Large — 7 or 8 Seat SUV / Van",   value: "large" }
+                    { label: "Small - 5 or 6 Seat SUV / Truck", value: "small" },
+                    { label: "Large - 7 or 8 Seat SUV / Van",   value: "large" }
                 ]
             },
             {
@@ -469,8 +469,8 @@ function loadBookingIframe() {
     let detailItems = '';
     
     if (currentService.title === "Detailing Estimator") {
-        if (userAnswers['focus'])  detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Focus</span><span class="text-white">${userAnswers['focus'].label.split(' —')[0]}</span></div>`;
-        if (userAnswers['tier'])   detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Tier</span><span class="text-white">${userAnswers['tier'].label.split(' —')[0]}</span></div>`;
+        if (userAnswers['focus'])  detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Focus</span><span class="text-white">${userAnswers['focus'].label.split(' -')[0]}</span></div>`;
+        if (userAnswers['tier'])   detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Tier</span><span class="text-white">${userAnswers['tier'].label.split(' -')[0]}</span></div>`;
         if (userAnswers['addons'] && userAnswers['addons'].label !== "None") detailItems += `<div class="flex justify-between"><span class="text-zinc-500">Add-on</span><span class="text-white">${userAnswers['addons'].label}</span></div>`;
     }
     if (currentService.title === "Window Tinting Estimator") {
