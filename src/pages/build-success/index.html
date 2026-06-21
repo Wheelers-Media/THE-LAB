@@ -224,14 +224,15 @@ function renderSearchSuggestions(query) {
 function toggleGlobalSearch() {
     const el = document.getElementById('global-search-overlay');
     if (!el) return;
-    if (el.style.display === 'none' || el.style.display === '') {
+    if (el.classList.contains('hidden') || el.style.display === 'none' || el.style.display === '') {
+        el.classList.remove('hidden');
         el.style.display = 'flex';
         el.style.flexDirection = 'column';
         setTimeout(() => { el.classList.remove('opacity-0'); document.getElementById('global-search-input')?.focus(); }, 10);
         document.body.style.overflow = 'hidden';
     } else {
         el.classList.add('opacity-0');
-        setTimeout(() => { el.style.display = 'none'; document.body.style.overflow = ''; }, 300);
+        setTimeout(() => { el.classList.add('hidden'); el.style.display = 'none'; document.body.style.overflow = ''; }, 300);
     }
 }
 document.getElementById('global-search-submit')?.addEventListener('click', () => {

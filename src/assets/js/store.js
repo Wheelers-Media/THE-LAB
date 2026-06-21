@@ -427,6 +427,21 @@ window.setCurrency = function(c) {
         }
     });
     
+    document.querySelectorAll('[data-affirm-cad-total]').forEach(function(el) {
+        const cad = parseFloat(el.getAttribute('data-affirm-cad-total'));
+        if (!isNaN(cad)) {
+            if (cad >= 50 && cad < 1000) {
+                el.innerHTML = c === 'USD' 
+                    ? 'Pay in 4 interest-free installments of <strong>$' + ((cad / 4) * r).toFixed(2) + ' USD</strong> with' 
+                    : 'Pay in 4 interest-free installments of <strong>$' + (cad / 4).toFixed(2) + ' CAD</strong> with';
+            } else if (cad >= 1000) {
+                el.innerHTML = c === 'USD' 
+                    ? 'Pay in monthly installments as low as <strong>$' + ((cad / 24) * r).toFixed(2) + ' USD/mo</strong> with' 
+                    : 'Pay in monthly installments as low as <strong>$' + (cad / 24).toFixed(2) + ' CAD/mo</strong> with';
+            }
+        }
+    });
+    
     // Removed updateCartUI() call to prevent infinite loop.
     // setCurrency already updates [data-price-cad] elements, which the cart uses.
 };
@@ -501,6 +516,9 @@ function initVehicleSelector() {
             engine: sEngine.value
         };
         sessionStorage.setItem('lab_active_vehicle', JSON.stringify(vehicle));
+        
+        const modal = document.getElementById('vehicle-selector-modal');
+        if (modal) modal.classList.add('hidden');
         
         if (window.location.pathname.includes('/catalog')) {
             window.activeVehicle = vehicle;
