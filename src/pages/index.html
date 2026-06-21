@@ -528,6 +528,19 @@
             </div>
         </div>
 
+        
+        <!-- Official Payment Methods -->
+        <div class="mb-8 flex justify-center items-center gap-2 flex-wrap">
+            <img src="/assets/payment-icons/amex.svg" alt="American Express" class="h-6 w-auto rounded opacity-70 hover:opacity-100 transition-opacity">
+            <img src="/assets/payment-icons/apple_pay.svg" alt="Apple Pay" class="h-6 w-auto rounded opacity-70 hover:opacity-100 transition-opacity">
+            <img src="/assets/payment-icons/diners_club.svg" alt="Diners Club" class="h-6 w-auto rounded opacity-70 hover:opacity-100 transition-opacity">
+            <img src="/assets/payment-icons/discover.svg" alt="Discover" class="h-6 w-auto rounded opacity-70 hover:opacity-100 transition-opacity">
+            <img src="/assets/payment-icons/google_pay.svg" alt="Google Pay" class="h-6 w-auto rounded opacity-70 hover:opacity-100 transition-opacity">
+            <img src="/assets/payment-icons/mastercard.svg" alt="Mastercard" class="h-6 w-auto rounded opacity-70 hover:opacity-100 transition-opacity">
+            <img src="/assets/payment-icons/shop_pay.svg" alt="Shop Pay" class="h-6 w-auto rounded opacity-70 hover:opacity-100 transition-opacity">
+            <img src="/assets/payment-icons/visa.svg" alt="Visa" class="h-6 w-auto rounded opacity-70 hover:opacity-100 transition-opacity">
+        </div>
+
         <!-- Global Compliance Mandate -->
         <div class="border-t border-edge pt-8">
             <p class="text-[10px] leading-relaxed text-zinc-600 font-medium text-center uppercase tracking-wide mb-4 opacity-80">
@@ -675,14 +688,15 @@ function renderSearchSuggestions(query) {
 function toggleGlobalSearch() {
     const el = document.getElementById('global-search-overlay');
     if (!el) return;
-    if (el.style.display === 'none' || el.style.display === '') {
+    if (el.classList.contains('hidden') || el.style.display === 'none' || el.style.display === '') {
+        el.classList.remove('hidden');
         el.style.display = 'flex';
         el.style.flexDirection = 'column';
         setTimeout(() => { el.classList.remove('opacity-0'); document.getElementById('global-search-input')?.focus(); }, 10);
         document.body.style.overflow = 'hidden';
     } else {
         el.classList.add('opacity-0');
-        setTimeout(() => { el.style.display = 'none'; document.body.style.overflow = ''; }, 300);
+        setTimeout(() => { el.classList.add('hidden'); el.style.display = 'none'; document.body.style.overflow = ''; }, 300);
     }
 }
 document.getElementById('global-search-submit')?.addEventListener('click', () => {
