@@ -992,9 +992,9 @@ function renderProducts() {
         return `
         <div class="group relative bg-void border border-edge rounded-xl overflow-hidden hover:border-labBlue/50 transition-all flex flex-col">
             <!-- IMAGE FIRST -->
-            <a href="${productUrl}" class="block bg-[#0D0D12] relative flex-shrink-0 overflow-hidden" style="aspect-ratio:4/3; cursor: crosshair;" onmousemove="window.zoomFollow(event, this)" onmouseleave="window.zoomReset(this)">
+            <a href="${productUrl}" class="block bg-[#0D0D12] relative flex-shrink-0 overflow-hidden" style="aspect-ratio:4/3;">
                 ${p.isPopular ? '<span class="absolute top-2 right-2 bg-labBlue text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider z-10">Popular</span>' : ''}
-                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-200 pointer-events-none" loading="lazy">
+                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 pointer-events-none" loading="lazy">
             </a>
             <!-- TITLE + PRICE BELOW IMAGE -->
             <div class="p-4 flex flex-col flex-1">
