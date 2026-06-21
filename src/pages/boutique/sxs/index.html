@@ -44,7 +44,7 @@
         ::selection { background:#0066FF; color:#fff; }
     </style>
 </head>
-<body class="bg-void text-zinc-400 antialiased">
+<body class="bg-void text-zinc-400 antialiased overflow-x-hidden pb-[72px] md:pb-0">
 
     <!-- ═══ GLOBAL HEADER ═══ -->
     <div class="sticky top-0 z-50">
@@ -113,7 +113,7 @@
                 </nav>
                 <div class="flex items-center gap-2">
                     <a href="/contact/" class="hidden md:inline-flex bg-white text-black font-extrabold py-2 px-5 rounded-lg hover:bg-zinc-200 transition-all uppercase tracking-widest text-xs">Book Now</a>
-                    <button id="mob-btn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-labBlue text-white">
+                    <button id="mob-btn" aria-label="Toggle menu" aria-expanded="false" class="md:hidden w-12 h-12 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-labBlue text-white">
                         <svg id="ham-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                         <svg id="x-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
@@ -482,6 +482,77 @@
 
 
     <script src="/assets/js/global-banner.js"></script>
+
+<!-- GLOBAL SEARCH OVERLAY -->
+<div id="global-search-overlay" class="fixed inset-0 z-[200] hidden bg-black/95 backdrop-blur-xl flex flex-col transition-all opacity-0">
+    <div class="px-6 py-6 border-b border-edge/60 flex items-center justify-between">
+        <div class="relative flex-1 max-w-2xl mx-auto flex items-center">
+            <svg class="w-6 h-6 absolute left-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="global-search-input" placeholder="Search for parts, tunes, exhausts..." class="w-full bg-[#16161E] text-white text-lg rounded-xl pl-14 pr-20 py-4 focus:outline-none focus:ring-2 focus:ring-labBlue transition-all placeholder:text-zinc-600 border border-edge">
+            <button id="global-search-submit" class="absolute right-3 bg-labBlue text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-lg hover:bg-labCyan transition-colors">Go</button>
+        </div>
+        <button onclick="toggleGlobalSearch()" class="ml-4 w-12 h-12 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors flex-shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+</div>
+
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-[150] bg-[#0A0A0F]/95 backdrop-blur-xl border-t border-edge flex items-center justify-around pb-safe pt-2 px-2 shadow-[0_-10px_40px_rgba(0,0,0,0.8)]">
+    <a href="/" class="flex flex-col items-center justify-center p-2 w-16 h-14 text-zinc-500 hover:text-white transition-colors active:scale-95">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span class="text-[9px] font-bold uppercase tracking-wider">Home</span>
+    </a>
+    <a href="/store/" class="flex flex-col items-center justify-center p-2 w-16 h-14 text-zinc-500 hover:text-white transition-colors active:scale-95">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        <span class="text-[9px] font-bold uppercase tracking-wider">Shop</span>
+    </a>
+    <button onclick="toggleGlobalSearch()" class="flex flex-col items-center justify-center p-2 w-16 h-14 text-labBlue hover:text-labCyan transition-colors active:scale-95">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <span class="text-[9px] font-bold uppercase tracking-wider">Search</span>
+    </button>
+    <button onclick="typeof toggleCart === 'function' && toggleCart()" class="flex flex-col items-center justify-center p-2 w-16 h-14 text-zinc-500 hover:text-white transition-colors active:scale-95 relative">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        <span class="text-[9px] font-bold uppercase tracking-wider">Cart</span>
+        <span id="bottom-nav-cart-badge" class="absolute top-1 right-2 w-3.5 h-3.5 bg-labBlue text-white text-[8px] font-extrabold rounded-full flex items-center justify-center leading-none hidden">0</span>
+    </button>
+    <a href="/contact/" class="flex flex-col items-center justify-center p-2 w-16 h-14 text-zinc-500 hover:text-white transition-colors active:scale-95">
+        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        <span class="text-[9px] font-bold uppercase tracking-wider">Chat</span>
+    </a>
+</nav>
+
+<style>
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .pb-safe { padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)); }
+}
+</style>
+<script>
+function toggleGlobalSearch() {
+    const el = document.getElementById('global-search-overlay');
+    if (!el) return;
+    if (el.classList.contains('hidden')) {
+        el.classList.remove('hidden');
+        setTimeout(() => { el.classList.remove('opacity-0'); document.getElementById('global-search-input')?.focus(); }, 10);
+        document.body.style.overflow = 'hidden';
+    } else {
+        el.classList.add('opacity-0');
+        setTimeout(() => { el.classList.add('hidden'); document.body.style.overflow = ''; }, 300);
+    }
+}
+document.getElementById('global-search-submit')?.addEventListener('click', () => {
+    const query = document.getElementById('global-search-input').value;
+    if (query) window.location.href = '/store/catalog/?search=' + encodeURIComponent(query);
+});
+document.getElementById('global-search-input')?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        const query = e.target.value;
+        if (query) window.location.href = '/store/catalog/?search=' + encodeURIComponent(query);
+    }
+});
+</script>
+
 </body>
 </html>
 

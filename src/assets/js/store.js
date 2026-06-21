@@ -129,11 +129,17 @@ function closeCart() {
 
 function updateCartUI() {
     const countBadge = document.getElementById("cart-count");
-    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const bottomBadge = document.getElementById("bottom-nav-cart-badge");
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    
     if (countBadge) {
-        countBadge.textContent = count;
-        countBadge.classList.toggle("hidden", count === 0);
+        countBadge.textContent = totalItems;
+        countBadge.classList.toggle("hidden", totalItems === 0);
     }
+    if (bottomBadge) {
+        bottomBadge.textContent = totalItems;
+        bottomBadge.classList.toggle("hidden", totalItems === 0);
+    } 
 
     const itemsContainer = document.getElementById("cart-items");
     if (!itemsContainer) return;
