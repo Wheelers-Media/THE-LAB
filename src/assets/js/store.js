@@ -236,6 +236,9 @@ function getCartUpsells() {
         });
     }
 
+    const isExhaustCart = cart.some(item => item.category === 'Exhaust Systems' || item.name.toLowerCase().includes('exhaust'));
+    const isEGRCart = cart.some(item => item.name.toLowerCase().includes('egr') || item.category === 'Hard Parts');
+
     let upsells = [];
     
     if (isTuningCart) {
@@ -246,12 +249,28 @@ function getCartUpsells() {
         // Priority 2: Exhausts
         const exhausts = candidates.filter(p => p.category === 'Exhaust Systems' || p.name.toLowerCase().includes('exhaust'));
         upsells = upsells.concat(exhausts.slice(0, 3 - upsells.length));
+
+        // Priority 3: EGR
+        const egrs = candidates.filter(p => p.name.toLowerCase().includes('egr'));
+        upsells = upsells.concat(egrs.slice(0, 3 - upsells.length));
+    } else if (isExhaustCart) {
+        const tunes = candidates.filter(p => p.category === 'Tuning & Electronics' || p.name.toLowerCase().includes('tune'));
+        upsells = upsells.concat(tunes.slice(0, 3 - upsells.length));
+
+        const cts3 = candidates.find(p => p.name.includes('CTS3'));
+        if (cts3 && upsells.length < 3) { upsells.push(cts3); candidates = candidates.filter(p => p.id !== cts3.id); }
+    } else if (isEGRCart) {
+        const tunes = candidates.filter(p => p.category === 'Tuning & Electronics' || p.name.toLowerCase().includes('tune'));
+        upsells = upsells.concat(tunes.slice(0, 3 - upsells.length));
+
+        const exhausts = candidates.filter(p => p.category === 'Exhaust Systems' || p.name.toLowerCase().includes('exhaust'));
+        upsells = upsells.concat(exhausts.slice(0, 3 - upsells.length));
     }
     
-    // Fallback: If still under 3, pick from same category as first item
+    // Fallback: If still under 3, pick from outside the category (smarter fallback)
     if (upsells.length < 3) {
         const firstCategory = cart[0].category;
-        const related = candidates.filter(p => p.category === firstCategory);
+        const related = candidates.filter(p => p.category !== firstCategory);
         upsells = upsells.concat(related.slice(0, 3 - upsells.length));
     }
     
@@ -916,9 +935,9 @@ function renderProducts() {
         return `
         <div class="group relative bg-void border border-edge rounded-xl overflow-hidden hover:border-labBlue/50 transition-all flex flex-col">
             <!-- IMAGE FIRST -->
-            <a href="${productUrl}" class="block bg-[#0D0D12] relative flex-shrink-0" style="aspect-ratio:4/3;">
+            <a href="${productUrl}" class="block bg-[#0D0D12] relative flex-shrink-0 overflow-hidden" style="aspect-ratio:4/3;">
                 ${p.isPopular ? '<span class="absolute top-2 right-2 bg-labBlue text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider z-10">Popular</span>' : ''}
-                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
             </a>
             <!-- TITLE + PRICE BELOW IMAGE -->
             <div class="p-4 flex flex-col flex-1">
@@ -1062,7 +1081,7 @@ function initPDP() {
     
     const showHardwareBlock = product.category === 'Tuning & Electronics' && isTunePackage && !isHardwareDevice && (isEZ || isHP || isMM3 || isEFILive || isSCT || isGDP);
     const isSOTF = pTitleLower.includes('sotf') || (product.variants && product.variants.some(v => v.title.toLowerCase().includes('sotf')));
-    const isCummins2018Plus = (product.makes.includes('Ram') || product.makes.includes('Dodge')) && product.years[1] >= 2018 && pTitleLower.includes('cummins');
+    const isCummins2018Plus = (product.makes.includes('Ram') || product.makes.includes('Dodge')) && product.years[1] >= 2018 && pTitleLower.includes('cummins') && product.category === 'Tuning & Electronics';
     
     // Hardware IDs for Auto-AddToCart
     const hwEZ_ID = 'gid://shopify/ProductVariant/42912460537950'; // EZ LYNK AutoAgent 3
@@ -1073,8 +1092,8 @@ function initPDP() {
             <!-- Top Config Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
                 <!-- Left: Image -->
-                <div class="bg-[#111115] border border-edge rounded-2xl p-6 flex items-center justify-center lg:sticky lg:top-24" style="aspect-ratio:1;">
-                    <img src="${product.image}" alt="${product.name}" class="max-w-full max-h-full object-contain">
+                <div class="bg-[#111115] border border-edge rounded-2xl overflow-hidden flex items-center justify-center lg:sticky lg:top-24 group" style="aspect-ratio:1;">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
                 
                 <!-- Right: Config & Cart -->
@@ -1089,7 +1108,7 @@ function initPDP() {
                         <p class="text-2xl font-extrabold text-white" data-price-cad="${product.price}">$${product.price.toFixed(2)} CAD</p>
                         ${shopPayMessaging ? `
                         <div class="flex items-center gap-2 mt-3 text-[13px] text-zinc-300 bg-[#1a1a24] border border-edge rounded-lg py-2 px-3 inline-flex">
-                            <span>${shopPayMessaging}</span>
+                            <span data-affirm-cad-total="${product.price}">${shopPayMessaging}</span>
                             <img src="/assets/affirm-logo.png" alt="Affirm" class="h-4 w-auto object-contain flex-shrink-0">
                         </div>
                         ` : ''}
@@ -1554,6 +1573,10 @@ function initPDP() {
         if (priceEl) {
             priceEl.dataset.priceCad = total;
             priceEl.textContent = `$${total.toFixed(2)} CAD`;
+            
+            const affirmEl = document.querySelector('#pdp-container [data-affirm-cad-total]');
+            if(affirmEl) affirmEl.setAttribute('data-affirm-cad-total', total);
+
             if (window.setCurrency) {
                 window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
             }
