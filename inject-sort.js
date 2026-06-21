@@ -52,7 +52,9 @@ const tuningReplace = `<div class="flex flex-col sm:flex-row sm:items-center jus
                 </div>`;
 
 if (catalogRegex.test(catalogHTML)) {
-    catalogHTML = catalogHTML.replace(catalogRegex, catalogReplace);
+    // Reset lastIndex because test() advances it
+    catalogRegex.lastIndex = 0;
+    catalogHTML = catalogHTML.replace(catalogRegex, () => catalogReplace);
     fs.writeFileSync(catalogPath, catalogHTML, 'utf8');
     console.log('Updated catalog');
 } else {
@@ -60,7 +62,8 @@ if (catalogRegex.test(catalogHTML)) {
 }
 
 if (tuningRegex.test(tuningHTML)) {
-    tuningHTML = tuningHTML.replace(tuningRegex, tuningReplace);
+    tuningRegex.lastIndex = 0;
+    tuningHTML = tuningHTML.replace(tuningRegex, () => tuningReplace);
     fs.writeFileSync(tuningPath, tuningHTML, 'utf8');
     console.log('Updated tuning');
 } else {
