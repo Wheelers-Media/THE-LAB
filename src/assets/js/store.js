@@ -1495,6 +1495,23 @@ function initPDP() {
                         </div>
                         ` : ''}
 
+                        <!-- 2F. TRANSMISSION TUNING: SHIFT POINTS -->
+                        ${isTransmissionTuning ? `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-tcm-feel-wrap">
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                                Shift Points / Desired Feel <span class="text-red-500 ml-1">*</span>
+                            </label>
+                            <select id="pdp-tcm-feel" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-1 appearance-none" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: .65em auto; cursor:pointer;" aria-required="true">
+                                <option value="" disabled selected>Select Desired Feel</option>
+                                <option value="Stock Plus (Smooth)">Stock Plus (Smooth & Daily Driven)</option>
+                                <option value="Tow / Haul (Firm)">Tow / Haul (Firm Shifts, Holds Gears Longer)</option>
+                                <option value="Street / Sport (Aggressive)">Street / Sport (Aggressive & Quick Shifts)</option>
+                                <option value="Race / Competition (Max Pressure)">Race / Competition (Max Pressure, Hard Shifts)</option>
+                            </select>
+                            <p class="text-[10px] text-zinc-500 mt-2 uppercase tracking-wider">Select the shift strategy that best matches your driving style.</p>
+                        </div>
+                        ` : ''}
+
 
                     </div>
                     <!-- /MANDATE 2 -->
@@ -2007,6 +2024,18 @@ function initPDP() {
             const transmission = document.getElementById("pdp-transmission");
             if (transmission && transmission.value) {
                 customAttributes["Transmission Strategy"] = transmission.options[transmission.selectedIndex].text;
+            }
+
+            // - TCM Shift Points / Desired Feel -
+            const tcmFeel = document.getElementById("pdp-tcm-feel");
+            if (tcmFeel) {
+                if (tcmFeel.value === "") {
+                    tcmFeel.style.borderColor = '#ef4444';
+                    validationFailed = true;
+                } else {
+                    tcmFeel.style.borderColor = '#1E1E28';
+                    customAttributes["Shift Points / Desired Feel"] = tcmFeel.options[tcmFeel.selectedIndex].text;
+                }
             }
 
             // - Hardware requirement (Mandate 2B) -
