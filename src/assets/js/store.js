@@ -901,31 +901,49 @@ function renderProducts() {
         if (activeVehicle) {
             productUrl += `&vmake=${encodeURIComponent(activeVehicle.make)}&vengine=${encodeURIComponent(activeVehicle.engine)}&vyear=${activeVehicle.year}&vmodel=${encodeURIComponent(activeVehicle.model)}`;
         }
+        // Fitment badge for cards (compact)
+        let cardFitment = '';
+        if (activeVehicle) {
+            const makeMatch = p.makes.includes(activeVehicle.make) || p.makes.includes('Universal');
+            const yearOk = activeVehicle.year >= p.years[0] && activeVehicle.year <= p.years[1];
+            const engOk = enginesMatch(activeVehicle.engine, p.engine);
+            const fits = makeMatch && yearOk && engOk;
+            cardFitment = fits
+                ? `<span class="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded">✓ Fits Your Truck</span>`
+                : `<span class="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-red-400 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded">✗ May Not Fit</span>`;
+        }
         return `
-        <div class="group relative bg-void border border-edge rounded-xl overflow-hidden hover:border-labBlue/50 transition-all">
-            <a href="${productUrl}" class="block aspect-video bg-[#111115] relative">
-                ${p.isPopular ? '<span class="absolute top-2 right-2 bg-labBlue text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider z-10">Popular</span>' : ''}
+        <div class="group relative bg-void border border-edge rounded-xl overflow-hidden hover:border-labBlue/50 transition-all flex flex-col">
+            <!-- TITLE ABOVE IMAGE (Amazon-style) -->
+            <div class="px-4 pt-4 pb-3 border-b border-edge/40">
+                <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <span class="text-[10px] font-mono text-labBlue uppercase tracking-widest">${p.brand}</span>
+                    <span class="text-[10px] text-zinc-700">•</span>
+                    <span class="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">${p.category}</span>
+                    ${p.isPopular ? '<span class="text-[9px] font-bold bg-labBlue text-white px-1.5 py-0.5 rounded uppercase tracking-wider ml-auto">Popular</span>' : ''}
+                </div>
+                <h3 class="text-white font-bold text-sm leading-snug line-clamp-2 min-h-[36px]"><a href="${productUrl}" class="hover:text-labBlue transition-colors">${p.name}</a></h3>
+                <div class="text-[10px] text-zinc-600 font-mono mt-1 leading-relaxed">${p.makes.filter(m => m !== 'Universal').join(', ') || 'Universal Fit'}${p.engine !== 'Universal' ? ' • ' + p.engine : ''}</div>
+            </div>
+            <!-- PRODUCT IMAGE -->
+            <a href="${productUrl}" class="block bg-[#0D0D12] relative flex-shrink-0" style="aspect-ratio:4/3;">
                 <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" loading="lazy">
             </a>
-            <div class="p-6">
-                <div class="flex items-center gap-2 mb-2 flex-wrap">
-                    <span class="text-[10px] font-mono text-labBlue uppercase tracking-widest">${p.brand}</span>
-                    <span class="text-[10px] text-zinc-600">•</span>
-                    <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">${p.category}</span>
+            <!-- PRICE + CTA -->
+            <div class="p-4 flex items-center justify-between mt-auto">
+                <div>
+                    <span class="text-base font-extrabold text-white" data-price-cad="${p.price}">$${p.price.toFixed(2)} CAD</span>
+                    ${cardFitment ? `<div class="mt-1">${cardFitment}</div>` : ''}
                 </div>
-                <h3 class="text-white font-bold leading-tight mb-2 min-h-[40px] line-clamp-2"><a href="${productUrl}" class="hover:text-labBlue transition-colors">${p.name}</a></h3>
-                <div class="text-[10px] text-zinc-600 font-mono mb-4">${p.makes.filter(m => m !== 'Universal').join(', ') || 'Universal Fit'}${p.engine !== 'Universal' ? ' • ' + p.engine : ''}</div>
-                <div class="flex items-center justify-between">
-                    <span class="text-lg font-extrabold text-white" data-price-cad="${p.price}">$${p.price.toFixed(2)} CAD</span>
-                    ${p.category === 'Tuning & Electronics' 
-                        ? `<a href="${productUrl}" title="Configure VIN" class="bg-edge hover:bg-labBlue text-white p-2.5 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                           </a>`
-                        : `<button onclick="addToCart('${p.id}')" class="bg-edge hover:bg-labBlue text-white p-2.5 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                           </button>`
-                    }
-                </div>
+                ${p.category === 'Tuning & Electronics' 
+                    ? `<a href="${productUrl}" title="Configure Tune" class="bg-labBlue/10 hover:bg-labBlue text-labBlue hover:text-white border border-labBlue/30 hover:border-labBlue text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-lg transition-all min-h-[44px] flex items-center gap-2">
+                           Configure
+                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                       </a>`
+                    : `<button onclick="addToCart('${p.id}')" class="bg-edge hover:bg-labBlue text-white p-2.5 rounded-lg transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center">
+                           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                       </button>`
+                }
             </div>
         </div>
     `}).join("");
@@ -1051,20 +1069,29 @@ function initPDP() {
     const hwHP_ID = 'gid://shopify/ProductVariant/42912449265758'; // Wait, let me just add MPVI4 logic directly if we have the ID, else we just add standard device
     // Since we don't have MPVI4 ID, we will just add the base product, or we can fetch it dynamically from storeCatalog later.
     container.innerHTML = `
-        <div class="max-w-6xl mx-auto py-12 px-6">
+        <div class="max-w-6xl mx-auto py-8 px-4 md:py-12 md:px-6">
+            <!-- MOBILE: Title + fitment ALWAYS shown first (Amazon-style) -->
+            <div class="mb-4 lg:hidden">
+                <div class="text-xs font-mono text-labBlue uppercase tracking-widest mb-2">${product.makes.filter(m => m !== 'Universal').join(", ") || 'Universal Fit'} &bull; ${product.category}</div>
+                <h1 class="text-2xl font-heading font-extrabold text-white leading-tight mb-3">${product.name}</h1>
+                ${fitmentBadge}
+            </div>
             <!-- Top Config Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
                 <!-- Left: Image -->
-                <div class="bg-[#111115] border border-edge rounded-2xl p-8 aspect-square flex items-center justify-center lg:sticky lg:top-24">
+                <div class="bg-[#111115] border border-edge rounded-2xl p-6 flex items-center justify-center lg:sticky lg:top-24" style="aspect-ratio:1;">
                     <img src="${product.image}" alt="${product.name}" class="max-w-full max-h-full object-contain">
                 </div>
                 
                 <!-- Right: Config & Cart -->
-                <div class="flex flex-col justify-start pt-4">
-                    <div class="text-xs font-mono text-labBlue uppercase tracking-widest mb-4">${product.makes.filter(m => m !== 'Universal').join(", ") || 'Universal Fit'} &bull; ${product.category}</div>
-                    <h1 class="text-3xl md:text-4xl font-heading font-extrabold text-white leading-tight mb-4">${product.name}</h1>
-                    ${fitmentBadge}
-                    <div class="mb-8">
+                <div class="flex flex-col justify-start">
+                    <!-- Desktop only title -->
+                    <div class="hidden lg:block">
+                        <div class="text-xs font-mono text-labBlue uppercase tracking-widest mb-4">${product.makes.filter(m => m !== 'Universal').join(", ") || 'Universal Fit'} &bull; ${product.category}</div>
+                        <h1 class="text-3xl md:text-4xl font-heading font-extrabold text-white leading-tight mb-4">${product.name}</h1>
+                        ${fitmentBadge}
+                    </div>
+                    <div class="mb-6 lg:mb-8">
                         <p class="text-2xl font-extrabold text-white" data-price-cad="${product.price}">$${product.price.toFixed(2)} CAD</p>
                         ${shopPayMessaging ? `
                         <div class="flex items-center gap-2 mt-3 text-[13px] text-zinc-300 bg-[#1a1a24] border border-edge rounded-lg py-2 px-3 inline-flex">
