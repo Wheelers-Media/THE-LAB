@@ -42,6 +42,43 @@
             background-size: 40px 40px;
         }
         ::selection { background: #0066FF; color: #fff; }
+
+        /* Shopify Description Formatting */
+        #pdp-desc ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        #pdp-desc ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: #A0A0AB;
+            font-size: 0.875rem; /* 14px */
+            line-height: 1.6;
+        }
+        #pdp-desc ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #0066FF;
+            font-weight: bold;
+            font-size: 1.2rem;
+            top: -0.2rem;
+        }
+        #pdp-desc strong {
+            color: #FFFFFF;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+        #pdp-desc p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
     </style>
 </head>
 <body class="bg-void text-zinc-400 antialiased">
@@ -348,7 +385,7 @@
     </script>
 
     <script src="/assets/js/products.js"></script>
-    <script src="/assets/js/store.js"></script>
+    <script src="/assets/js/store.js?v=2"></script>
     <script src="/assets/js/global-banner.js"></script>
 </body>
 </html>

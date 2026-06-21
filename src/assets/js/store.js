@@ -36,7 +36,17 @@ function addToCart(productId, quantity = 1, customAttributes = {}, variantOverri
     const resolvedPrice    = variantOverride?.price !== undefined ? variantOverride.price : product.price;
     const resolvedTitle    = variantOverride?.title ? `${product.name} — ${variantOverride.title}` : product.name;
 
-    const attrKey = Object.keys(customAttributes).length > 0 ? btoa(JSON.stringify(customAttributes)) : "default";
+    // Encode custom attributes safely supporting Unicode (like em-dash)
+    const encodeUnicodeBase64 = (str) => {
+        try {
+            return btoa(unescape(encodeURIComponent(str)));
+        } catch (e) {
+            // Fallback for modern environments if unescape is somehow removed
+            return btoa(String.fromCharCode(...new TextEncoder().encode(str)));
+        }
+    };
+
+    const attrKey = Object.keys(customAttributes).length > 0 ? encodeUnicodeBase64(JSON.stringify(customAttributes)) : "default";
     const cartItemId = resolvedVariantId + "_" + attrKey;
 
     const existing = cart.find(item => item.cartItemId === cartItemId);
@@ -528,6 +538,10 @@ function initStore() {
     if (urlPlatform) {
         if (urlPlatform.toLowerCase() === 'ezlynk') urlBrand = "EZ LYNK";
         if (urlPlatform.toLowerCase() === 'hptuners') urlBrand = "HP Tuners";
+        if (urlPlatform.toLowerCase() === 'mm3') urlBrand = "MM3";
+        if (urlPlatform.toLowerCase() === 'efilive') urlBrand = "EFI Live";
+        if (urlPlatform.toLowerCase() === 'sct') urlBrand = "SCT";
+        if (urlPlatform.toLowerCase() === 'gdp') urlBrand = "GDP Products";
     }
 
     // 3. Pre-check from active vehicle
@@ -934,6 +948,28 @@ function initPDP() {
         shopPayMessaging = `Pay in monthly installments as low as <strong>$${(product.price / 24).toFixed(2)}/mo</strong> with`;
     }
 
+    // Tuning Platform Logic
+    const pTitleLower = product.name.toLowerCase();
+    const isTransmissionTuning = pTitleLower.includes('transmission tune') || pTitleLower.includes('tcm tune') || (product.variants && product.variants.some(v => v.title.toLowerCase().includes('transmission tuning')));
+    const isTunePackage = pTitleLower.includes('support package') || pTitleLower.includes('tune') || pTitleLower.includes('tuning') || pTitleLower.includes('sotf') || (product.variants && product.variants.some(v => v.title.toLowerCase().includes('tune')));
+    const isCredit = pTitleLower.includes('credit');
+    const isHardwareDevice = pTitleLower.includes('autoagent') || pTitleLower.includes('mpvi') || isCredit || pTitleLower.includes('autocal') || pTitleLower.includes('x4') || pTitleLower.includes('bdx') || pTitleLower.includes('commander');
+    
+    const isEZ = product.vendor?.toUpperCase().includes('EZ LYNK') || pTitleLower.includes('ez lynk');
+    const isHP = product.vendor?.toUpperCase().includes('HP TUNER') || pTitleLower.includes('hp tuner');
+    const isMM3 = product.vendor?.toUpperCase().includes('MM3') || pTitleLower.includes('mm3');
+    const isEFILive = product.vendor?.toUpperCase().includes('EFI LIVE') || pTitleLower.includes('efi live') || pTitleLower.includes('autocal');
+    const isSCT = product.vendor?.toUpperCase().includes('SCT') || product.vendor?.toUpperCase().includes('BULLY DOG') || pTitleLower.includes('sct') || pTitleLower.includes('bully dog');
+    const isGDP = product.vendor?.toUpperCase().includes('GDP') || pTitleLower.includes('commander');
+    
+    const showHardwareBlock = product.category === 'Tuning & Electronics' && isTunePackage && !isHardwareDevice && (isEZ || isHP || isMM3 || isEFILive || isSCT || isGDP);
+    const isSOTF = pTitleLower.includes('sotf') || (product.variants && product.variants.some(v => v.title.toLowerCase().includes('sotf')));
+    const isCummins2018Plus = (product.makes.includes('Ram') || product.makes.includes('Dodge')) && product.years[1] >= 2018 && pTitleLower.includes('cummins');
+    
+    // Hardware IDs for Auto-AddToCart
+    const hwEZ_ID = 'gid://shopify/ProductVariant/42912460537950'; // EZ LYNK AutoAgent 3
+    const hwHP_ID = 'gid://shopify/ProductVariant/42912449265758'; // Wait, let me just add MPVI4 logic directly if we have the ID, else we just add standard device
+    // Since we don't have MPVI4 ID, we will just add the base product, or we can fetch it dynamically from storeCatalog later.
     container.innerHTML = `
         <div class="max-w-6xl mx-auto py-12 px-6">
             <!-- Top Config Section -->
@@ -998,6 +1034,7 @@ function initPDP() {
                         </div>
                         ` : ''}
 
+                        ${isTransmissionTuning ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-transmission-wrap">
                             <label for="pdp-transmission" class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">
                                 Transmission Strategy
@@ -1020,9 +1057,11 @@ function initPDP() {
                             </div>
                             <p class="text-[10px] text-zinc-600 mt-2 uppercase tracking-wider">Determines when your transmission changes gears under load.</p>
                         </div>
+                        ` : ''}
 
                         <!-- 2B. HARDWARE REQUIREMENT RADIO BUTTONS -->
-                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-hardware-wrap">
+                        ${showHardwareBlock ? `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-hardware-wrap" data-hw-ez="${hwEZ_ID}" data-hw-hp="${hwHP_ID}" data-is-hp="${isHP}" data-is-ez="${isEZ}">
                             <fieldset>
                                 <legend class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Hardware Requirement</legend>
                                 <div class="space-y-3">
@@ -1039,8 +1078,12 @@ function initPDP() {
                                             </div>
                                         </div>
                                         <div>
-                                            <p class="text-sm font-bold text-white mb-0.5">I need the EZ LYNK AutoAgent 3</p>
-                                            <p class="text-[10px] text-zinc-500 uppercase tracking-wider" id="hw-need-desc">Include hardware device with my tune order — AutoAgent 3 will be shipped with your tune files.</p>
+                                            <p class="text-sm font-bold text-white mb-0.5">
+                                                ${isHP ? 'I need the HP Tuners Interface' : isMM3 ? 'I need the MM3 Display' : isEFILive ? 'I need the EFI Live AutoCal' : isSCT ? 'I need an SCT Device' : isGDP ? 'I need the GDP Commander' : 'I need the EZ LYNK AutoAgent 3'}
+                                            </p>
+                                            <p class="text-[10px] text-zinc-500 uppercase tracking-wider" id="hw-need-desc">
+                                                ${isHP ? 'Include the MPVI interface with my tune order. Universal Credits are required to flash.' : isMM3 ? 'Include MM3 hardware device with my tune order.' : 'Include hardware device with my tune order.'}
+                                            </p>
                                         </div>
                                     </label>
 
@@ -1057,16 +1100,42 @@ function initPDP() {
                                         </div>
                                         <div>
                                             <p class="text-sm font-bold text-white mb-0.5">I already own a device</p>
-                                            <p class="text-[10px] text-zinc-500 uppercase tracking-wider" id="hw-own-desc">Tune files only — I have my own EZ LYNK AutoAgent or HP Tuners MPVI interface.</p>
+                                            <p class="text-[10px] text-zinc-500 uppercase tracking-wider" id="hw-own-desc">Tune files only — I have my own ${isHP ? 'HP Tuners' : isMM3 ? 'MM3' : isEFILive ? 'EFI Live' : isSCT ? 'SCT' : isGDP ? 'GDP' : 'EZ LYNK'} interface.</p>
                                         </div>
                                     </label>
 
                                 </div>
                             </fieldset>
                         </div>
+                        ` : ''}
 
-                        <!-- 2C. VIN INPUT FIELD -->
-                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 relative overflow-hidden" id="pdp-vin-wrap">
+                        <!-- 2C. PRIMARY IDENTIFIER INPUT -->
+                        ${isSCT ? `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-sct-wrap">
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                                ECU Strategy Code <span class="text-red-500 ml-1">*</span>
+                            </label>
+                            <input type="text" id="pdp-sct-ecu" placeholder="e.g. VXA1234" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-3" aria-required="true">
+                            
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                                TCU Strategy Code <span class="text-zinc-500 ml-1 font-normal lowercase">(Optional)</span>
+                            </label>
+                            <input type="text" id="pdp-sct-tcu" placeholder="If applicable" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm">
+                        </div>
+                        ` : isGDP && !isCredit ? `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-gdp-wrap">
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                                ECU Serial Number <span class="text-red-500 ml-1">*</span>
+                            </label>
+                            <input type="text" id="pdp-gdp-ecu" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-3" aria-required="true">
+                            
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                                TCU Serial Number <span class="text-zinc-500 ml-1 font-normal lowercase">(Must start with '59')</span>
+                            </label>
+                            <input type="text" id="pdp-gdp-tcu" placeholder="59..." class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm">
+                        </div>
+                        ` : (isEZ || isMM3 || isTunePackage) ? `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 relative overflow-hidden mt-5" id="pdp-vin-wrap">
                             <div class="absolute top-0 left-0 w-1 h-full bg-labBlue rounded-l-xl"></div>
                             <label for="pdp-vin-input" class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1 pl-2">
                                 Vehicle Identification Number (VIN)
@@ -1083,19 +1152,65 @@ function initPDP() {
                                 autocapitalize="characters"
                                 spellcheck="false"
                                 aria-required="true"
-                                aria-describedby="pdp-vin-error pdp-vin-count"
                                 class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-4 text-white outline-none font-mono uppercase text-sm tracking-widest min-h-[48px] transition-all duration-200"
                                 style="letter-spacing:0.15em;"
-                                oninput="this.value=this.value.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g,''); document.getElementById('pdp-vin-count').textContent=this.value.length+'/17';"
-                                onfocus="this.style.borderColor='#0066FF';this.style.boxShadow='0 0 0 2px rgba(0,102,255,0.2), 0 0 16px rgba(0,102,255,0.12)'"
-                                onblur="this.style.borderColor='#1E1E28';this.style.boxShadow='none'">
-                            <div class="flex items-center justify-between mt-2 pl-2">
-                                <p id="pdp-vin-error" class="text-red-500 text-[10px] font-bold uppercase tracking-wider hidden" role="alert">
-                                    ✕ Please enter a valid 17-digit VIN. Letters I, O, and Q are not valid VIN characters.
-                                </p>
-                                <span id="pdp-vin-count" class="text-[10px] text-zinc-600 font-mono ml-auto">0/17</span>
-                            </div>
+                                oninput="this.value=this.value.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g,'');">
                         </div>
+                        ` : ''}
+
+                        <!-- 2D. SECONDARY AUTHENTICATION / SERIALS -->
+                        ${isEFILive ? `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-efi-wrap">
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                                Device Serial Number <span class="text-red-500 ml-1">*</span>
+                            </label>
+                            <input type="text" id="pdp-efi-serial" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-3" aria-required="true">
+                            
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                                Authentication Code (20 Chars) <span class="text-red-500 ml-1">*</span>
+                            </label>
+                            <input type="text" id="pdp-efi-auth" maxlength="20" placeholder="e.g. ABC123DEF456GHI789JK" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm" aria-required="true">
+                        </div>
+                        ` : isCredit ? `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-credit-wrap">
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                                Device Serial Number <span class="text-red-500 ml-1">*</span>
+                            </label>
+                            <input type="text" id="pdp-credit-serial" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-3" aria-required="true">
+                        </div>
+                        ` : `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 relative overflow-hidden hidden mt-5" id="pdp-serial-wrap">
+                            <label for="pdp-serial-input" class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                                Device Serial Number
+                                <span class="text-zinc-500 ml-1 font-normal lowercase tracking-normal">(Optional)</span>
+                            </label>
+                            <p class="text-[10px] text-zinc-500 mb-3 uppercase tracking-wider">Link this tune to your existing hardware device.</p>
+                            <input type="text" id="pdp-serial-input" placeholder="e.g. 1234567890" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm transition-all duration-200">
+                        </div>
+                        `}
+
+                        <!-- 2E. VEHICLE MODIFICATIONS / TIRE SIZE -->
+                        ${isMM3 ? `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-mm3-mods-wrap">
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">Tire Size <span class="text-red-500 ml-1">*</span></label>
+                            <input type="text" id="pdp-mm3-tire" placeholder="e.g. 35x12.50R20" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-3" aria-required="true">
+                            
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">STOCK.MM3 File Upload <span class="text-red-500 ml-1">*</span></label>
+                            <input type="file" id="pdp-mm3-file" accept=".mm3" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-zinc-400 text-sm mb-3" aria-required="true">
+                            
+                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">Vehicle Modifications</label>
+                            <textarea id="pdp-mods-input" rows="2" placeholder="Injectors, Turbo..." class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-body text-sm resize-y"></textarea>
+                        </div>
+                        ` : isEZ || isTunePackage ? `
+                        <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-mods-wrap">
+                            <label for="pdp-mods-input" class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                                Vehicle Modifications
+                            </label>
+                            <p class="text-[10px] text-zinc-500 mb-3 uppercase tracking-wider">List all performance modifications (e.g., Injectors, Turbo, Exhaust) so our tuners can build your file accurately.</p>
+                            <textarea id="pdp-mods-input" rows="3" placeholder="Stock Turbo, 100% over Injectors, etc..." class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-body text-sm resize-y"></textarea>
+                        </div>
+                        ` : ''}
+
 
                     </div>
                     <!-- /MANDATE 2 -->
@@ -1141,6 +1256,45 @@ function initPDP() {
                     </div>
                     <!-- /MANDATE 3 -->
 
+                    ` : ''}
+
+                    <!-- ═══════════════════════════════════════════════════════ -->
+                    <!-- CROSS-SELLS                                             -->
+                    <!-- ═══════════════════════════════════════════════════════ -->
+                    ${isSOTF ? `
+                    <div class="mb-5 bg-[#111115] border border-[#1E1E28] rounded-xl p-4 flex items-center justify-between hover:border-[#0066FF]/50 transition-colors">
+                        <label for="upsell-sotf" class="flex items-center gap-3 cursor-pointer flex-1">
+                            <div class="relative flex-shrink-0">
+                                <input type="checkbox" id="upsell-sotf" class="sr-only peer upsell-checkbox" data-price="65.00" data-name="SOTF Switch & Bracket">
+                                <div class="w-5 h-5 rounded border-2 border-[#1E1E28] bg-[#000000] peer-checked:border-[#0066FF] peer-checked:bg-[#0066FF] flex items-center justify-center transition-all">
+                                    <svg class="w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-white mb-0.5">Add SOTF Switch & Bracket</p>
+                                <p class="text-[10px] text-zinc-500 uppercase tracking-wider">Required to change power levels on the fly.</p>
+                            </div>
+                        </label>
+                        <span class="text-sm font-bold text-[#0066FF]">+$65.00</span>
+                    </div>
+                    ` : ''}
+
+                    ${isCummins2018Plus ? `
+                    <div class="mb-5 bg-[#111115] border border-[#1E1E28] rounded-xl p-4 flex items-center justify-between hover:border-[#0066FF]/50 transition-colors">
+                        <label for="upsell-sgm" class="flex items-center gap-3 cursor-pointer flex-1">
+                            <div class="relative flex-shrink-0">
+                                <input type="checkbox" id="upsell-sgm" class="sr-only peer upsell-checkbox" data-price="70.00" data-name="Cummins SGM Bypass Cable">
+                                <div class="w-5 h-5 rounded border-2 border-[#1E1E28] bg-[#000000] peer-checked:border-[#0066FF] peer-checked:bg-[#0066FF] flex items-center justify-center transition-all">
+                                    <svg class="w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-white mb-0.5">Add Security Bypass Cable</p>
+                                <p class="text-[10px] text-zinc-500 uppercase tracking-wider">Mandatory for flashing 2018+ Cummins.</p>
+                            </div>
+                        </label>
+                        <span class="text-sm font-bold text-[#0066FF]">+$70.00</span>
+                    </div>
                     ` : ''}
 
                     <div class="flex gap-4">
@@ -1258,10 +1412,61 @@ function initPDP() {
     `;
 
     // ── MANDATE 2: Power Level selector interactivity ───────────────────────
+    let selectedVariant = null;
+    
+    // Helper to calculate total price
+    const updateTotalPrice = () => {
+        let basePrice = product.price;
+        if (selectedVariant) basePrice = selectedVariant.price;
+        
+        let hwPrice = 0;
+        const hardware = document.querySelector('input[name="pdp-hardware"]:checked');
+        if (hardware && hardware.value === 'need_device') {
+            const hwWrap = document.getElementById('pdp-hardware-wrap');
+            if (hwWrap) {
+                const isEZ = hwWrap.dataset.isEz === 'true';
+                const isHP = hwWrap.dataset.isHp === 'true';
+                let hwProduct = null;
+                const searchId = isEZ ? hwWrap.dataset.hwEz : (isHP ? hwWrap.dataset.hwHp : null);
+                if (searchId) {
+                    hwProduct = window.storeCatalog.find(p => p.variants && p.variants.some(v => v.id === searchId));
+                }
+                
+                // Fallback to name search if variant not found
+                if (!hwProduct) {
+                    if (isEZ) hwProduct = window.storeCatalog.find(p => p.name.toLowerCase().includes('autoagent') && p.name.toLowerCase().includes('3'));
+                    if (isHP) hwProduct = window.storeCatalog.find(p => p.name.toLowerCase().includes('mpvi'));
+                }
+                
+                if (hwProduct) hwPrice = hwProduct.price;
+            }
+        }
+        
+        let upsellPrice = 0;
+        document.querySelectorAll('.upsell-checkbox:checked').forEach(cb => {
+            upsellPrice += parseFloat(cb.dataset.price || 0);
+        });
+        
+        const total = basePrice + hwPrice + upsellPrice;
+        
+        const priceEl = document.querySelector('#pdp-container .text-2xl.font-extrabold');
+        if (priceEl) {
+            priceEl.dataset.priceCad = total;
+            priceEl.textContent = `$${total.toFixed(2)} CAD`;
+            if (window.setCurrency) {
+                window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
+            }
+        }
+    };
+    
+    // Listen to upsell checkboxes
+    document.querySelectorAll('.upsell-checkbox').forEach(cb => {
+        cb.addEventListener('change', updateTotalPrice);
+    });
+
     if (product.category === 'Tuning & Electronics') {
         const tuneCards = document.querySelectorAll('.pdp-tune-card');
-        let selectedVariant = null;
-
+        
         tuneCards.forEach(card => {
             card.addEventListener('click', () => {
                 // Deselect all
@@ -1290,15 +1495,7 @@ function initPDP() {
                     title: card.dataset.variantTitle
                 };
 
-                // Live-update the price display
-                const priceEl = document.querySelector('#pdp-container .text-2xl.font-extrabold');
-                if (priceEl) {
-                    priceEl.dataset.priceCad = selectedVariant.price;
-                    priceEl.textContent = `$${selectedVariant.price.toFixed(2)} CAD`;
-                    if (window.setCurrency) {
-                        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
-                    }
-                }
+                updateTotalPrice();
 
                 // Clear error
                 const lvlErr = document.getElementById('pdp-tune-level-error');
@@ -1326,9 +1523,24 @@ function initPDP() {
                 const activeDot = activeLabel.querySelector('[id$="-dot"]');
                 const activeIndicator = activeLabel.querySelector('[id$="-indicator"]');
                 const isNeed = radio.id === 'hw-need';
+                const isOwn = radio.id === 'hw-own';
                 if (activeIndicator) activeIndicator.style.borderColor = isNeed ? '#00E5FF' : '#0066FF';
                 if (activeDot) activeDot.classList.remove('opacity-0');
                 if (activeLabel) activeLabel.style.borderColor = isNeed ? 'rgba(0,229,255,0.4)' : 'rgba(0,102,255,0.4)';
+                
+                // Toggle Serial Number input visibility
+                const serialWrap = document.getElementById('pdp-serial-wrap');
+                if (serialWrap) {
+                    if (isOwn) {
+                        serialWrap.classList.remove('hidden');
+                    } else {
+                        serialWrap.classList.add('hidden');
+                        const serialInput = document.getElementById('pdp-serial-input');
+                        if (serialInput) serialInput.value = '';
+                    }
+                }
+
+                updateTotalPrice();
             });
         });
     }
@@ -1405,17 +1617,89 @@ function initPDP() {
             }
 
             // — VIN check (Mandate 2C) —
-            const vin = document.getElementById("pdp-vin-input");
-            const vinError = document.getElementById("pdp-vin-error");
-            const vinVal = vin ? vin.value.trim().toUpperCase() : '';
-            if (vinVal.length !== 17) {
-                if (vinError) vinError.classList.remove("hidden");
-                if (vin) { vin.style.borderColor = '#ef4444'; vin.style.boxShadow = '0 0 0 2px rgba(239,68,68,0.2)'; }
-                validationFailed = true;
-            } else {
-                if (vinError) vinError.classList.add("hidden");
-                if (vin) { vin.style.borderColor = '#1E1E28'; vin.style.boxShadow = 'none'; }
-                customAttributes["VIN"] = vinVal;
+            const vinWrap = document.getElementById("pdp-vin-wrap");
+            if (vinWrap) {
+                const vin = document.getElementById("pdp-vin-input");
+                const vinError = document.getElementById("pdp-vin-error");
+                const vinVal = vin ? vin.value.trim().toUpperCase() : '';
+                if (vinVal.length !== 17) {
+                    if (vinError) vinError.classList.remove("hidden");
+                    if (vin) { vin.style.borderColor = '#ef4444'; vin.style.boxShadow = '0 0 0 2px rgba(239,68,68,0.2)'; }
+                    validationFailed = true;
+                } else {
+                    if (vinError) vinError.classList.add("hidden");
+                    if (vin) { vin.style.borderColor = '#1E1E28'; vin.style.boxShadow = 'none'; }
+                    customAttributes["VIN"] = vinVal;
+                }
+            }
+
+            // — SCT Strategy Codes —
+            const sctWrap = document.getElementById("pdp-sct-wrap");
+            if (sctWrap) {
+                const ecu = document.getElementById("pdp-sct-ecu");
+                if (ecu && ecu.value.trim() === "") {
+                    ecu.style.borderColor = '#ef4444';
+                    validationFailed = true;
+                } else if (ecu) {
+                    ecu.style.borderColor = '#1E1E28';
+                    customAttributes["ECU Strategy Code"] = ecu.value.trim().toUpperCase();
+                }
+                const tcu = document.getElementById("pdp-sct-tcu");
+                if (tcu && tcu.value.trim() !== "") {
+                    customAttributes["TCU Strategy Code"] = tcu.value.trim().toUpperCase();
+                }
+            }
+
+            // — GDP Serial Numbers —
+            const gdpWrap = document.getElementById("pdp-gdp-wrap");
+            if (gdpWrap) {
+                const ecu = document.getElementById("pdp-gdp-ecu");
+                if (ecu && ecu.value.trim() === "") {
+                    ecu.style.borderColor = '#ef4444';
+                    validationFailed = true;
+                } else if (ecu) {
+                    ecu.style.borderColor = '#1E1E28';
+                    customAttributes["ECU Serial Number"] = ecu.value.trim().toUpperCase();
+                }
+                const tcu = document.getElementById("pdp-gdp-tcu");
+                if (tcu && tcu.value.trim() !== "") {
+                    customAttributes["TCU Serial Number"] = tcu.value.trim().toUpperCase();
+                }
+            }
+
+            // — EFI Live Device & Auth —
+            const efiWrap = document.getElementById("pdp-efi-wrap");
+            if (efiWrap) {
+                const serial = document.getElementById("pdp-efi-serial");
+                const auth = document.getElementById("pdp-efi-auth");
+                if (serial && serial.value.trim() === "") {
+                    serial.style.borderColor = '#ef4444';
+                    validationFailed = true;
+                } else if (serial) {
+                    serial.style.borderColor = '#1E1E28';
+                    customAttributes["Device Serial Number"] = serial.value.trim().toUpperCase();
+                }
+                
+                if (auth && auth.value.trim().length !== 20) {
+                    auth.style.borderColor = '#ef4444';
+                    validationFailed = true;
+                } else if (auth) {
+                    auth.style.borderColor = '#1E1E28';
+                    customAttributes["Authentication Code"] = auth.value.trim().toUpperCase();
+                }
+            }
+
+            // — GDP / HP Tuners Credits Serial —
+            const creditWrap = document.getElementById("pdp-credit-wrap");
+            if (creditWrap) {
+                const serial = document.getElementById("pdp-credit-serial");
+                if (serial && serial.value.trim() === "") {
+                    serial.style.borderColor = '#ef4444';
+                    validationFailed = true;
+                } else if (serial) {
+                    serial.style.borderColor = '#1E1E28';
+                    customAttributes["Device Serial Number"] = serial.value.trim().toUpperCase();
+                }
             }
 
             // — Transmission strategy (Mandate 2A) —
@@ -1426,15 +1710,70 @@ function initPDP() {
 
             // — Hardware requirement (Mandate 2B) —
             const hardware = document.querySelector('input[name="pdp-hardware"]:checked');
+            let hwToAdd = null;
             if (hardware) {
-                customAttributes["Hardware"] = hardware.value === 'need_device'
-                    ? 'EZ LYNK AutoAgent 3 Required'
-                    : 'Customer Owns Device';
+                const isNeed = hardware.value === 'need_device';
+                if (isNeed) {
+                    const hwWrap = document.getElementById('pdp-hardware-wrap');
+                    if (hwWrap) {
+                        const isEZ = hwWrap.dataset.isEz === 'true';
+                        const isHP = hwWrap.dataset.isHp === 'true';
+                        
+                        const searchId = isEZ ? hwWrap.dataset.hwEz : (isHP ? hwWrap.dataset.hwHp : null);
+                        if (searchId) {
+                            hwToAdd = window.storeCatalog.find(p => p.variants && p.variants.some(v => v.id === searchId));
+                        }
+                        
+                        if (!hwToAdd) {
+                            if (isEZ) hwToAdd = window.storeCatalog.find(p => p.name.toLowerCase().includes('autoagent') && p.name.toLowerCase().includes('3'));
+                            if (isHP) hwToAdd = window.storeCatalog.find(p => p.name.toLowerCase().includes('mpvi'));
+                        }
+                    }
+                    customAttributes["Hardware"] = hwWrap.dataset.isHp === 'true' ? 'HP Tuners MPVI Required' : 'EZ LYNK AutoAgent 3 Required';
+                } else {
+                    customAttributes["Hardware"] = 'Customer Owns Device';
+                }
+            }
+
+            // — Device Serial Number (Optional, for own device) —
+            const serialWrap = document.getElementById("pdp-serial-wrap");
+            if (serialWrap && !serialWrap.classList.contains("hidden")) {
+                const serialInput = document.getElementById("pdp-serial-input");
+                if (serialInput && serialInput.value.trim() !== "") {
+                    customAttributes["Device Serial Number"] = serialInput.value.trim().toUpperCase();
+                }
+            }
+
+            // — Vehicle Modifications —
+            const modsWrap = document.getElementById("pdp-mods-wrap");
+            if (modsWrap) {
+                const modsInput = document.getElementById("pdp-mods-input");
+                if (modsInput && modsInput.value.trim() !== "") {
+                    customAttributes["Vehicle Modifications"] = modsInput.value.trim();
+                } else {
+                    customAttributes["Vehicle Modifications"] = "None/Stock";
+                }
+            }
+            
+            // — Upsell Checkboxes —
+            const checkedUpsells = [];
+            document.querySelectorAll('.upsell-checkbox:checked').forEach(cb => {
+                checkedUpsells.push(cb.dataset.name);
+            });
+            if (checkedUpsells.length > 0) {
+                customAttributes["Added Upgrades"] = checkedUpsells.join(', ');
             }
 
             if (validationFailed) return;
 
             addToCart(product.id, 1, customAttributes, variantOverride);
+            
+            // Add hardware to cart seamlessly
+            if (hwToAdd) {
+                setTimeout(() => {
+                    addToCart(hwToAdd.id, 1, { "Add-On To": product.name });
+                }, 300);
+            }
         } else {
             addToCart(product.id);
         }
