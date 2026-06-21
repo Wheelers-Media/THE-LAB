@@ -311,7 +311,32 @@ let activeFilters = {
     engines: [],
     brands: [],
     year: null,
-    searchQuery: ""
+    searchQuery: "",
+    sortBy: "featured"
+};
+
+window.applySort = function(val) {
+    activeFilters.sortBy = val;
+    renderStoreGrid();
+};
+
+window.toggleFilters = function() {
+    const sidebar = document.querySelector('aside.w-full.md\\:w-72');
+    const toggleBtn = document.getElementById('toggle-filters-btn');
+    const toggleText = document.getElementById('toggle-filters-text');
+    const gridDiv = document.getElementById('product-grid');
+    
+    if (sidebar) {
+        if (sidebar.classList.contains('hidden')) {
+            sidebar.classList.remove('hidden');
+            if (toggleText) toggleText.textContent = 'Hide Filters';
+            if (gridDiv) gridDiv.classList.replace('lg:grid-cols-4', 'lg:grid-cols-3');
+        } else {
+            sidebar.classList.add('hidden');
+            if (toggleText) toggleText.textContent = 'Show Filters';
+            if (gridDiv) gridDiv.classList.replace('lg:grid-cols-3', 'lg:grid-cols-4');
+        }
+    }
 };
 
 // Helper for matching selected vehicle/dropdown engines to product engine specifications
@@ -889,17 +914,31 @@ function renderProducts() {
         return searchMatch && makeMatch && catMatch && engMatch && brandMatch && yearMatch && modelMatch;
     });
 
-    // Sort products: Specific Fitment first, Universal second
+    // Sort products
     filtered.sort((a, b) => {
-        const aIsUniversal = a.makes.includes("Universal") || a.engine === "Universal" || (a.models && a.models.includes("Universal"));
-        const bIsUniversal = b.makes.includes("Universal") || b.engine === "Universal" || (b.models && b.models.includes("Universal"));
+        // ALWAYS put Universal parts last if activeVehicle is set
+        if (activeVehicle) {
+            const aIsUniversal = a.makes.includes("Universal") || a.engine === "Universal" || (a.models && a.models.includes("Universal"));
+            const bIsUniversal = b.makes.includes("Universal") || b.engine === "Universal" || (b.models && b.models.includes("Universal"));
+            if (aIsUniversal && !bIsUniversal) return 1;
+            if (!aIsUniversal && bIsUniversal) return -1;
+        }
         
-        if (aIsUniversal && !bIsUniversal) return 1;
-        if (!aIsUniversal && bIsUniversal) return -1;
+        const sortBy = activeFilters.sortBy || 'featured';
         
-        // Secondary sort: Popular first
-        if (a.isPopular && !b.isPopular) return -1;
-        if (!a.isPopular && b.isPopular) return 1;
+        if (sortBy === 'featured') {
+            if (a.isPopular && !b.isPopular) return -1;
+            if (!a.isPopular && b.isPopular) return 1;
+            return 0;
+        } else if (sortBy === 'price-low') {
+            return a.price - b.price;
+        } else if (sortBy === 'price-high') {
+            return b.price - a.price;
+        } else if (sortBy === 'name-asc') {
+            return a.name.localeCompare(b.name);
+        } else if (sortBy === 'name-desc') {
+            return b.name.localeCompare(a.name);
+        }
         
         return 0;
     });
