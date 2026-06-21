@@ -1774,35 +1774,33 @@ function initPDP() {
             addToCart(product.id, 1, customAttributes, variantOverride);
             
             // Add hardware to cart synchronously and robustly
-            if (hwToAdd && hwToAdd.id) {
-                let hwVariantOverride = null;
-                // Try to find the exact variant if searchId was used
-                const hwWrap = document.getElementById('pdp-hardware-wrap');
-                if (hwWrap) {
-                    const isEZ = hwWrap.dataset.isEz === 'true';
-                    const isHP = hwWrap.dataset.isHp === 'true';
-                    const searchId = isEZ ? hwWrap.dataset.hwEz : (isHP ? hwWrap.dataset.hwHp : null);
-                    if (searchId && hwToAdd.variants) {
-                        const exactVariant = hwToAdd.variants.find(v => v.id === searchId);
-                        if (exactVariant) {
-                            hwVariantOverride = {
-                                id: exactVariant.id,
-                                price: exactVariant.price,
-                                title: exactVariant.title
-                            };
+            try {
+                if (hwToAdd && hwToAdd.id) {
+                    let hwVariantOverride = null;
+                    const hwWrap = document.getElementById('pdp-hardware-wrap');
+                    if (hwWrap) {
+                        const isEZ = hwWrap.dataset.isEz === 'true';
+                        const isHP = hwWrap.dataset.isHp === 'true';
+                        const searchId = isEZ ? hwWrap.dataset.hwEz : (isHP ? hwWrap.dataset.hwHp : null);
+                        if (searchId && hwToAdd.variants) {
+                            const exactVariant = hwToAdd.variants.find(v => v.id === searchId);
+                            if (exactVariant) {
+                                hwVariantOverride = { id: exactVariant.id, price: exactVariant.price, title: exactVariant.title };
+                            }
                         }
                     }
+                    if (!hwVariantOverride && hwToAdd.variants && hwToAdd.variants.length > 0) {
+                        hwVariantOverride = { id: hwToAdd.variants[0].id, price: hwToAdd.variants[0].price, title: hwToAdd.variants[0].title };
+                    }
+                    addToCart(hwToAdd.id, 1, { "Add-On To": product.name }, hwVariantOverride);
+                } else {
+                    if (document.querySelector('input[name="pdp-hardware"]:checked')?.value === 'need_device') {
+                        console.error("[THE LAB] hwToAdd is null but device was requested!");
+                        alert("Debug Info: The device was checked but hwToAdd is null. ID not found in storeCatalog.");
+                    }
                 }
-                // Fallback to first variant if no specific variant matched
-                if (!hwVariantOverride && hwToAdd.variants && hwToAdd.variants.length > 0) {
-                    hwVariantOverride = {
-                        id: hwToAdd.variants[0].id,
-                        price: hwToAdd.variants[0].price,
-                        title: hwToAdd.variants[0].title
-                    };
-                }
-
-                addToCart(hwToAdd.id, 1, { "Add-On To": product.name }, hwVariantOverride);
+            } catch (err) {
+                alert("Debug Error in Hardware cart logic: " + err.message);
             }
         } else {
             addToCart(product.id);
