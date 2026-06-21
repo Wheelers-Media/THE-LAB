@@ -168,12 +168,87 @@ function updateCartUI() {
         `;
     }).join("");
 
+    // Append Upsells (Customers Also Purchased)
+    const upsells = getCartUpsells();
+    if (upsells.length > 0) {
+        itemsContainer.innerHTML += `
+            <div class="mt-8 border-t border-edge pt-6">
+                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Customers Also Purchased</h4>
+                <div class="space-y-4">
+                    ${upsells.map(u => `
+                        <div class="flex gap-3 items-center bg-[#0D0D12] p-3 rounded-lg border border-edge/50">
+                            <img src="${u.image}" alt="${u.name}" class="w-12 h-12 object-cover rounded bg-void">
+                            <div class="flex-1">
+                                <h5 class="text-white text-[10px] font-bold leading-tight line-clamp-2 uppercase tracking-wide">${u.name}</h5>
+                                <div class="text-labBlue text-xs font-mono font-bold mt-1" data-price-cad="${u.price}">$${u.price.toFixed(2)} CAD</div>
+                            </div>
+                            <button onclick="addToCart('${u.id}')" class="px-3 py-1.5 bg-labBlue/10 hover:bg-labBlue/20 text-labBlue border border-labBlue/30 hover:border-labBlue/50 text-[10px] font-bold uppercase tracking-wider rounded transition-colors min-h-[32px] min-w-[48px]">
+                                Add
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
     document.getElementById("cart-subtotal").innerHTML = `<span data-price-cad="${subtotal.toFixed(2)}">$${subtotal.toFixed(2)} CAD</span>`;
     
     // Apply currency format to cart items
     if (window.setCurrency) {
         window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
     }
+}
+
+function getCartUpsells() {
+    if (!window.storeCatalog || window.storeCatalog.length === 0 || cart.length === 0) return [];
+    
+    const cartIds = new Set(cart.map(item => item.id));
+    let candidates = window.storeCatalog.filter(p => !cartIds.has(p.id) && p.available !== false);
+    
+    const isTuningCart = cart.some(item => item.category === 'Tuning & Electronics' || item.name.toLowerCase().includes('tune'));
+    
+    // Identify target vehicle from activeVehicle or guess from cart items
+    let targetMake = window.activeVehicle ? window.activeVehicle.make : null;
+    let targetEngine = window.activeVehicle ? window.activeVehicle.engine : null;
+    
+    if (!targetMake && cart[0].makes && cart[0].makes.length > 0) {
+        targetMake = cart[0].makes[0];
+    }
+    
+    // Filter candidates by fitment if we have a target
+    if (targetMake) {
+        candidates = candidates.filter(p => {
+            if (p.makes && p.makes.length > 0 && !p.makes.includes(targetMake)) return false;
+            // Simplified engine matching
+            if (targetEngine && p.engines && p.engines.length > 0) {
+                const engMatch = p.engines.some(e => e.toLowerCase().includes(targetEngine.toLowerCase().split(' ')[0])); // e.g., "6.7L"
+                if (!engMatch) return false;
+            }
+            return true;
+        });
+    }
+
+    let upsells = [];
+    
+    if (isTuningCart) {
+        // Priority 1: Edge CTS3 Monitor
+        const cts3 = candidates.find(p => p.name.includes('CTS3'));
+        if (cts3) { upsells.push(cts3); candidates = candidates.filter(p => p.id !== cts3.id); }
+        
+        // Priority 2: Exhausts
+        const exhausts = candidates.filter(p => p.category === 'Exhaust Systems' || p.name.toLowerCase().includes('exhaust'));
+        upsells = upsells.concat(exhausts.slice(0, 3 - upsells.length));
+    }
+    
+    // Fallback: If still under 3, pick from same category as first item
+    if (upsells.length < 3) {
+        const firstCategory = cart[0].category;
+        const related = candidates.filter(p => p.category === firstCategory);
+        upsells = upsells.concat(related.slice(0, 3 - upsells.length));
+    }
+    
+    return upsells.slice(0, 3);
 }
 
 function handleCheckout() {
