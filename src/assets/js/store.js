@@ -214,63 +214,74 @@ function getCartUpsells() {
     let candidates = window.storeCatalog.filter(p => !cartIds.has(p.id) && p.available !== false);
     
     const isTuningCart = cart.some(item => item.category === 'Tuning & Electronics' || item.name.toLowerCase().includes('tune'));
-    
+    const isExhaustCart = cart.some(item => item.category === 'Exhaust Systems' || item.name.toLowerCase().includes('exhaust'));
+    const isEGRCart = cart.some(item => item.name.toLowerCase().includes('egr') || item.name.toLowerCase().includes('ccv') || item.category === 'Hard Parts');
+    const isModCart = isTuningCart || isExhaustCart || isEGRCart;
+
     // Identify target vehicle from activeVehicle or guess from cart items
     let targetMake = window.activeVehicle ? window.activeVehicle.make : null;
     let targetEngine = window.activeVehicle ? window.activeVehicle.engine : null;
     
     if (!targetMake && cart[0].makes && cart[0].makes.length > 0) {
         targetMake = cart[0].makes[0];
+        targetEngine = cart[0].engine;
     }
     
     // Filter candidates by fitment if we have a target
-    if (targetMake) {
+    if (targetMake && targetMake !== 'Universal') {
         candidates = candidates.filter(p => {
-            if (p.makes && p.makes.length > 0 && !p.makes.includes(targetMake)) return false;
-            // Simplified engine matching
-            if (targetEngine && p.engines && p.engines.length > 0) {
-                const engMatch = p.engines.some(e => e.toLowerCase().includes(targetEngine.toLowerCase().split(' ')[0])); // e.g., "6.7L"
-                if (!engMatch) return false;
+            if (p.makes && p.makes.length > 0 && !p.makes.includes('Universal') && !p.makes.includes(targetMake)) return false;
+            // Strict engine matching
+            if (targetEngine && targetEngine !== 'Universal' && p.engine && p.engine !== 'Universal') {
+                const searchVol = targetEngine.toLowerCase().split(' ')[0]; // e.g., "6.7l"
+                if (!p.engine.toLowerCase().includes(searchVol)) return false;
             }
             return true;
         });
     }
 
-    const isExhaustCart = cart.some(item => item.category === 'Exhaust Systems' || item.name.toLowerCase().includes('exhaust'));
-    const isEGRCart = cart.some(item => item.name.toLowerCase().includes('egr') || item.category === 'Hard Parts');
-
     let upsells = [];
     
-    if (isTuningCart) {
-        // Priority 1: Edge CTS3 Monitor
-        const cts3 = candidates.find(p => p.name.includes('CTS3'));
-        if (cts3) { upsells.push(cts3); candidates = candidates.filter(p => p.id !== cts3.id); }
+    if (isExhaustCart) {
+        // Buying Exhaust -> Suggest Tuning, EGR/CCV, Exhaust Tip
+        const tunes = candidates.filter(p => p.category === 'Tuning & Electronics' || p.name.toLowerCase().includes('tune'));
+        if (tunes.length > 0) upsells.push(tunes[0]);
         
-        // Priority 2: Exhausts
-        const exhausts = candidates.filter(p => p.category === 'Exhaust Systems' || p.name.toLowerCase().includes('exhaust'));
-        upsells = upsells.concat(exhausts.slice(0, 3 - upsells.length));
-
-        // Priority 3: EGR
-        const egrs = candidates.filter(p => p.name.toLowerCase().includes('egr'));
-        upsells = upsells.concat(egrs.slice(0, 3 - upsells.length));
-    } else if (isExhaustCart) {
-        const tunes = candidates.filter(p => p.category === 'Tuning & Electronics' || p.name.toLowerCase().includes('tune'));
-        upsells = upsells.concat(tunes.slice(0, 3 - upsells.length));
-
+        const egrCcv = candidates.filter(p => p.name.toLowerCase().includes('egr') || p.name.toLowerCase().includes('ccv'));
+        if (egrCcv.length > 0) upsells.push(egrCcv[0]);
+        
+        const tips = candidates.filter(p => p.name.toLowerCase().includes('tip'));
+        if (tips.length > 0) upsells.push(tips[0]);
+    } else if (isEGRCart || isTuningCart) {
+        // Buying Engine Mods or Tuning -> Suggest Tuning (if not in cart), Exhaust, and CTS3 Monitor
+        if (!isTuningCart) {
+            const tunes = candidates.filter(p => p.category === 'Tuning & Electronics' || p.name.toLowerCase().includes('tune'));
+            if (tunes.length > 0) upsells.push(tunes[0]);
+        }
+        
+        if (!isExhaustCart) {
+            const exhausts = candidates.filter(p => p.category === 'Exhaust Systems' || p.name.toLowerCase().includes('exhaust'));
+            if (exhausts.length > 0) upsells.push(exhausts[0]);
+        }
+        
         const cts3 = candidates.find(p => p.name.includes('CTS3'));
-        if (cts3 && upsells.length < 3) { upsells.push(cts3); candidates = candidates.filter(p => p.id !== cts3.id); }
-    } else if (isEGRCart) {
-        const tunes = candidates.filter(p => p.category === 'Tuning & Electronics' || p.name.toLowerCase().includes('tune'));
-        upsells = upsells.concat(tunes.slice(0, 3 - upsells.length));
+        if (cts3 && upsells.length < 3) upsells.push(cts3);
 
-        const exhausts = candidates.filter(p => p.category === 'Exhaust Systems' || p.name.toLowerCase().includes('exhaust'));
-        upsells = upsells.concat(exhausts.slice(0, 3 - upsells.length));
+        const egrs = candidates.filter(p => p.name.toLowerCase().includes('egr') || p.name.toLowerCase().includes('ccv'));
+        if (!isEGRCart && egrs.length > 0 && upsells.length < 3) upsells.push(egrs[0]);
     }
     
-    // Fallback: If still under 3, pick from outside the category (smarter fallback)
+    // Fill any remaining slots with related category items
     if (upsells.length < 3) {
         const firstCategory = cart[0].category;
-        const related = candidates.filter(p => p.category !== firstCategory);
+        const related = candidates.filter(p => p.category === firstCategory && !upsells.some(u => u.id === p.id));
+        upsells = upsells.concat(related.slice(0, 3 - upsells.length));
+    }
+
+    // Fallback: Fill remaining slots with completely different items
+    if (upsells.length < 3) {
+        const firstCategory = cart[0].category;
+        const related = candidates.filter(p => p.category !== firstCategory && !upsells.some(u => u.id === p.id));
         upsells = upsells.concat(related.slice(0, 3 - upsells.length));
     }
     
@@ -428,13 +439,17 @@ window.setCurrency = function(c) {
     });
     
     document.querySelectorAll('[data-affirm-cad-total]').forEach(function(el) {
-        const cad = parseFloat(el.getAttribute('data-affirm-cad-total'));
-        if (!isNaN(cad)) {
-            if (cad >= 50 && cad < 1000) {
+        const baseCad = parseFloat(el.getAttribute('data-affirm-cad-total'));
+        if (!isNaN(baseCad)) {
+            // Add 12% estimated tax for a more accurate payment projection (matches checkout)
+            const taxMultiplier = 1.12;
+            const cad = baseCad * taxMultiplier;
+
+            if (baseCad >= 50 && baseCad < 1000) {
                 el.innerHTML = c === 'USD' 
-                    ? 'Pay in 4 interest-free installments of <strong>$' + ((cad / 4) * r).toFixed(2) + ' USD</strong> with' 
-                    : 'Pay in 4 interest-free installments of <strong>$' + (cad / 4).toFixed(2) + ' CAD</strong> with';
-            } else if (cad >= 1000) {
+                    ? 'Pay in 4 installments of <strong>$' + ((cad / 4) * r).toFixed(2) + ' USD</strong> with' 
+                    : 'Pay in 4 installments of <strong>$' + (cad / 4).toFixed(2) + ' CAD</strong> with';
+            } else if (baseCad >= 1000) {
                 el.innerHTML = c === 'USD' 
                     ? 'Pay in monthly installments as low as <strong>$' + ((cad / 24) * r).toFixed(2) + ' USD/mo</strong> with' 
                     : 'Pay in monthly installments as low as <strong>$' + (cad / 24).toFixed(2) + ' CAD/mo</strong> with';
