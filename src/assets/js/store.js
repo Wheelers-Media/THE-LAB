@@ -823,6 +823,45 @@ function initStore() {
     window.isInitialRender = false;
 }
 
+window.applySort = function(val) {
+    activeFilters.sortBy = val;
+    renderProducts();
+};
+
+window.toggleFilters = function() {
+    const sidebar = document.querySelector('aside.w-full.md\\:w-72');
+    const toggleText = document.getElementById('toggle-filters-text');
+    if (!sidebar) return;
+
+    sidebar.classList.toggle('hidden');
+    if (toggleText) {
+        if (sidebar.classList.contains('hidden')) {
+            toggleText.textContent = 'Show Filters';
+        } else {
+            toggleText.textContent = 'Hide Filters';
+        }
+    }
+};
+
+window.zoomFollow = function(e, container) {
+    const img = container.querySelector('img');
+    if (!img) return;
+    
+    const rect = container.getBoundingClientRect();
+    const xPos = ((e.clientX - rect.left) / rect.width) * 100;
+    const yPos = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    img.style.transformOrigin = `${xPos}% ${yPos}%`;
+    img.style.transform = 'scale(2.5)';
+};
+
+window.zoomReset = function(container) {
+    const img = container.querySelector('img');
+    if (!img) return;
+    
+    img.style.transformOrigin = 'center center';
+    img.style.transform = 'scale(1)';
+};
 
 function renderProducts() {
     const grid = document.getElementById("product-grid");
@@ -1009,17 +1048,17 @@ function renderProducts() {
                     <div>
                         <span class="text-base font-extrabold text-white" data-price-cad="${p.price}">$${p.price.toFixed(2)} CAD</span>
                         ${(() => {
-                            if (p.price >= 35 && p.price <= 30000) {
+                            if (p.price >= 50 && p.price <= 30000) {
                                 let msg = "";
                                 if (p.price < 1000) {
                                     msg = `Pay in 4 interest-free installments of <strong>$${(p.price / 4).toFixed(2)}</strong> with`;
                                 } else {
-                                    msg = `Pay in monthly installments as low as <strong>$${(p.price / 12).toFixed(2)}/mo</strong> with`;
+                                    msg = `Pay in monthly installments as low as <strong>$${(p.price / 24).toFixed(2)}/mo</strong> with`;
                                 }
                                 return `
-                                <div class="flex items-center gap-1.5 mt-1.5 text-[9px] text-zinc-400">
+                                <div class="mt-1.5 text-[9px] text-zinc-400 leading-tight">
                                     <span data-affirm-cad-total="${p.price}">${msg}</span>
-                                    <img src="/assets/affirm-logo.png" alt="Affirm" class="h-2.5 w-auto object-contain flex-shrink-0 grayscale opacity-70">
+                                    <img src="/assets/affirm-logo.png" alt="Affirm" class="inline-block h-2.5 w-auto object-contain grayscale opacity-70 ml-1 translate-y-[-1px]">
                                 </div>`;
                             }
                             return '';
@@ -1132,11 +1171,11 @@ function initPDP() {
 
     // Shop Pay Installments Logic
     let shopPayMessaging = "";
-    if (product.price >= 35 && product.price <= 30000) {
+    if (product.price >= 50 && product.price <= 30000) {
         if (product.price < 1000) {
             shopPayMessaging = `Pay in 4 interest-free installments of <strong>$${(product.price / 4).toFixed(2)}</strong> with`;
         } else {
-            shopPayMessaging = `Pay in monthly installments as low as <strong>$${(product.price / 12).toFixed(2)}/mo</strong> with`;
+            shopPayMessaging = `Pay in monthly installments as low as <strong>$${(product.price / 24).toFixed(2)}/mo</strong> with`;
         }
     }
 
