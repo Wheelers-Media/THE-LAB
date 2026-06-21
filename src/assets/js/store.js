@@ -1008,6 +1008,22 @@ function renderProducts() {
                 <div class="flex items-center justify-between mt-auto">
                     <div>
                         <span class="text-base font-extrabold text-white" data-price-cad="${p.price}">$${p.price.toFixed(2)} CAD</span>
+                        ${(() => {
+                            if (p.price >= 35 && p.price <= 30000) {
+                                let msg = "";
+                                if (p.price < 1000) {
+                                    msg = `Pay in 4 interest-free installments of <strong>$${(p.price / 4).toFixed(2)}</strong> with`;
+                                } else {
+                                    msg = `Pay in monthly installments as low as <strong>$${(p.price / 12).toFixed(2)}/mo</strong> with`;
+                                }
+                                return `
+                                <div class="flex items-center gap-1.5 mt-1.5 text-[9px] text-zinc-400">
+                                    <span data-affirm-cad-total="${p.price}">${msg}</span>
+                                    <img src="/assets/affirm-logo.png" alt="Affirm" class="h-2.5 w-auto object-contain flex-shrink-0 grayscale opacity-70">
+                                </div>`;
+                            }
+                            return '';
+                        })()}
                         ${cardFitment ? `<div class="mt-1">${cardFitment}</div>` : ''}
                     </div>
                     ${p.category === 'Tuning & Electronics' 
@@ -1116,10 +1132,12 @@ function initPDP() {
 
     // Shop Pay Installments Logic
     let shopPayMessaging = "";
-    if (product.price >= 50 && product.price < 1000) {
-        shopPayMessaging = `Pay in 4 interest-free installments of <strong>$${(product.price / 4).toFixed(2)}</strong> with`;
-    } else if (product.price >= 1000) {
-        shopPayMessaging = `Pay in monthly installments as low as <strong>$${(product.price / 24).toFixed(2)}/mo</strong> with`;
+    if (product.price >= 35 && product.price <= 30000) {
+        if (product.price < 1000) {
+            shopPayMessaging = `Pay in 4 interest-free installments of <strong>$${(product.price / 4).toFixed(2)}</strong> with`;
+        } else {
+            shopPayMessaging = `Pay in monthly installments as low as <strong>$${(product.price / 12).toFixed(2)}/mo</strong> with`;
+        }
     }
 
     // Tuning Platform Logic
