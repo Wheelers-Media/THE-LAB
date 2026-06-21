@@ -1613,11 +1613,47 @@ function initPDP() {
                     </div>
                     ` : ''}
 
-                    <div class="flex gap-4">
+                    <!-- Quantity & Add to Cart Row -->
+                    <div class="flex flex-col gap-3 mt-4">
+                        <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Quantity</label>
+                        <div class="flex gap-4 items-center">
+                            <div class="flex items-center bg-[#0D0D12] border border-[#1E1E28] rounded-xl h-[56px]">
+                                <button id="pdp-qty-minus" class="w-12 h-full text-zinc-400 hover:text-white flex items-center justify-center transition-colors focus:outline-none">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                                </button>
+                                <input type="number" id="pdp-qty-input" value="1" min="1" class="w-12 h-full bg-transparent text-center text-white font-bold focus:outline-none appearance-none" style="-moz-appearance: textfield;">
+                                <button id="pdp-qty-plus" class="w-12 h-full text-zinc-400 hover:text-white flex items-center justify-center transition-colors focus:outline-none">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Main Add to Cart -->
                         <button id="pdp-add-btn"
-                            class="flex-1 bg-labBlue hover:bg-labCyan text-white font-extrabold uppercase tracking-widest py-4 rounded-xl transition-all shadow-oled-blue hover:shadow-oled-cyan min-h-[56px] focus:outline-none focus:ring-2 focus:ring-labBlue focus:ring-offset-2 focus:ring-offset-black">
+                            class="w-full bg-labBlue hover:bg-labCyan text-white font-extrabold uppercase tracking-widest py-4 rounded-xl transition-all shadow-oled-blue hover:shadow-oled-cyan min-h-[56px] focus:outline-none">
                             Add to Cart
                         </button>
+
+                        <!-- Buy with Shop (Direct Checkout) -->
+                        <button id="pdp-buy-shop-btn"
+                            class="w-full bg-[#5A31F4] hover:bg-[#4a26cc] text-white font-extrabold py-4 rounded-xl transition-all min-h-[56px] flex items-center justify-center gap-2 focus:outline-none">
+                            Buy with <img src="/assets/payment-icons/shop_pay.svg" alt="Shop Pay" class="h-6">
+                        </button>
+                        
+                        <!-- More Payment Options Link -->
+                        <div class="text-center mt-1">
+                            <button onclick="handleCheckout()" class="text-[11px] text-zinc-400 underline hover:text-white transition-colors">More payment options</button>
+                        </div>
+                    </div>
+
+                    <!-- Pickup Information Block -->
+                    <div class="mt-8 flex gap-3 text-sm">
+                        <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        <div>
+                            <p class="text-white font-medium mb-1">Pickup available at <span class="font-bold">10219 95th ave</span></p>
+                            <p class="text-zinc-400 text-[13px] mb-2">Usually ready in 5+ days</p>
+                            <a href="/contact/" class="text-[12px] text-zinc-400 underline hover:text-white transition-colors">View store information</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1900,6 +1936,30 @@ function initPDP() {
         });
     }
 
+    // ── Quantity & Buy Now Setup ────────────────────────────────────────────
+    window.isBuyNowFlow = false;
+    const qtyMinus = document.getElementById("pdp-qty-minus");
+    const qtyPlus = document.getElementById("pdp-qty-plus");
+    const qtyInput = document.getElementById("pdp-qty-input");
+    if (qtyMinus && qtyPlus && qtyInput) {
+        qtyMinus.addEventListener("click", () => {
+            let val = parseInt(qtyInput.value) || 1;
+            if (val > 1) qtyInput.value = val - 1;
+        });
+        qtyPlus.addEventListener("click", () => {
+            let val = parseInt(qtyInput.value) || 1;
+            qtyInput.value = val + 1;
+        });
+    }
+
+    const buyShopBtn = document.getElementById('pdp-buy-shop-btn');
+    if (buyShopBtn) {
+        buyShopBtn.addEventListener('click', () => {
+            window.isBuyNowFlow = true;
+            document.getElementById('pdp-add-btn').click();
+        });
+    }
+
     // ── Add to Cart - full validation gate ──────────────────────────────────
     document.getElementById("pdp-add-btn").addEventListener("click", () => {
         const isTuning = product.category === 'Tuning & Electronics';
@@ -2111,7 +2171,9 @@ function initPDP() {
 
             if (validationFailed) return;
 
-            addToCart(product.id, 1, customAttributes, variantOverride);
+            const qtyInput = document.getElementById("pdp-qty-input");
+            const qty = qtyInput ? (parseInt(qtyInput.value) || 1) : 1;
+            addToCart(product.id, qty, customAttributes, variantOverride);
             
             // Add hardware to cart synchronously and robustly
             try {
@@ -2143,7 +2205,14 @@ function initPDP() {
                 alert("Debug Error in Hardware cart logic: " + err.message);
             }
         } else {
-            addToCart(product.id);
+            const qtyInput = document.getElementById("pdp-qty-input");
+            const qty = qtyInput ? (parseInt(qtyInput.value) || 1) : 1;
+            addToCart(product.id, qty);
+        }
+
+        if (window.isBuyNowFlow) {
+            window.isBuyNowFlow = false;
+            setTimeout(() => { handleCheckout(); }, 100);
         }
     });
 
