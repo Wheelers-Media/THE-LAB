@@ -1637,7 +1637,7 @@ function initPDP() {
                         <!-- Buy with Shop (Direct Checkout) -->
                         <button id="pdp-buy-shop-btn"
                             class="w-full bg-[#5A31F4] hover:bg-[#4a26cc] text-white font-extrabold py-4 rounded-xl transition-all min-h-[56px] flex items-center justify-center gap-2 focus:outline-none">
-                            Buy with <img src="/assets/payment-icons/shop_pay.svg" alt="Shop Pay" class="h-6">
+                            Buy with <img src="/assets/payment-icons/Shop_Pay_logo.png" alt="Shop Pay" class="h-6">
                         </button>
                         
                         <!-- More Payment Options Link -->
