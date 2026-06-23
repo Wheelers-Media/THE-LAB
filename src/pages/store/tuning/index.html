@@ -34,7 +34,7 @@
         }
     </script>
     <style>
-        body { background-color: #000000; font-family: 'Inter', sans-serif; }
+        body { -webkit-overflow-scrolling: touch; background-color: #000000; font-family: 'Inter', sans-serif; }
         .glass-panel { background: rgba(13,13,18,0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
         .grid-bg {
             background-image: linear-gradient(rgba(0,102,255,0.05) 1px, transparent 1px),
@@ -115,7 +115,7 @@
             background: #00E5FF;
         }
         /* Gateway collapse/expand */
-        #byt-gateway-body { transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s; overflow: hidden; }
+        #byt-gateway-body { -webkit-overflow-scrolling: touch; transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s; overflow: hidden; }
         /* Platform cards hidden until vehicle confirmed */
         #byt-platform-split { transition: opacity 0.4s, transform 0.4s; }
     </style>
@@ -754,3 +754,4 @@ document.getElementById('global-search-input')?.addEventListener('input', (e) =>
 
 </body>
 </html>
+
