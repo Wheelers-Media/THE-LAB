@@ -30,69 +30,56 @@
     </div>
 
     <!-- Content Container -->
-    <div class="z-10 max-w-2xl w-full px-6 flex flex-col items-center text-center">
+    <div class="z-10 max-w-3xl w-full px-6 flex flex-col items-center text-center mt-12 mb-12">
         <!-- Logo -->
         <div class="mb-10">
-            <img src="../../assets/LAB-LOGO.png" alt="THE LAB Logo" class="h-16 object-contain mix-blend-screen opacity-90">
+            <img src="/assets/LAB-LOGO.png" alt="THE LAB Logo" class="h-16 object-contain">
         </div>
 
         <!-- Headers -->
-        <h1 class="text-4xl md:text-5xl font-heading font-extrabold text-signal uppercase tracking-tight mb-4">
-            BUILD REQUEST SECURED.
+        <h1 class="text-3xl md:text-5xl font-heading font-extrabold text-signal uppercase tracking-tight mb-8">
+            Build Request Received.<br/><span class="text-white">Secure Your Allocation.</span>
         </h1>
-        <p class="text-labCyan tracking-[0.2em] uppercase text-xs md:text-sm font-semibold mb-8">
-            Where grit meets luxury.
-        </p>
 
-        <!-- Body Text -->
-        <p class="text-zinc-300 text-lg leading-relaxed mb-8 max-w-xl">
-            Your performance and accessory request has been securely transmitted to our technicians.
-        </p>
-
-        <!-- Next Steps Panel -->
-        <div class="bg-midnight border border-edge rounded-2xl p-8 mb-10 w-full text-left shadow-[0_0_30px_rgba(0,0,0,0.5)] flex flex-col">
-            <h3 class="text-signal font-heading font-bold text-lg mb-4 border-b border-edge pb-2">What Happens Next:</h3>
-            <ul class="space-y-4 text-sm text-zinc-300 flex-grow mb-6">
-                <li class="flex items-start gap-3">
-                    <div class="w-1.5 h-1.5 rounded-full bg-labCyan mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(0,229,255,0.8)]"></div>
-                    <p>Our is personally reviewing your vehicle specifications, desired goals, and requests.</p>
-                </li>
-                <li class="flex items-start gap-3">
-                    <div class="w-1.5 h-1.5 rounded-full bg-labCyan mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(0,229,255,0.8)]"></div>
-                    <p>We are currently checking hardware availability with our authorized partners.</p>
-                </li>
-                <li class="flex items-start gap-3">
-                    <div class="w-1.5 h-1.5 rounded-full bg-labCyan mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(0,229,255,0.8)]"></div>
-                    <p>Our team will reach out to you directly via phone or text shortly to confirm fitment, finalize your build sheet, and coordinate your official installation date.</p>
-                </li>
-            </ul>
+        <!-- Body Text Card -->
+        <div class="bg-midnight border border-edge rounded-2xl p-8 mb-10 w-full shadow-[0_0_40px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col">
+            <!-- Subtle accent top line -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-labBlue to-transparent opacity-50"></div>
             
+            <p class="text-zinc-300 text-base md:text-lg leading-relaxed text-center font-medium mb-6">
+                Your specs have been securely transmitted to THE LAB. Our bays book up fast. To guarantee your priority spot in our build queue and lock in your technician allocation for your preferred timeline, a $50 secure deposit is required. Eric will review your specs and reach out shortly to dial in your exact build sheet and confirm your drop-off date.
+            </p>
+
+            <div class="bg-white/5 border border-white/10 rounded-xl p-4 mb-8">
+                <p class="text-white font-bold text-sm tracking-wide uppercase">100% of this deposit credits directly toward your final invoice.</p>
+            </div>
+
+            <!-- Brand Authority Panel -->
+            <div class="mb-8 border-t border-white/5 pt-6">
+                <p class="text-xs text-zinc-500 uppercase tracking-widest font-bold mb-4">Backed by the brands that matter.</p>
+                <p class="text-sm text-zinc-400">Authorized facility for EZ LYNK, HP Tuners, AMDP, and Gridiron Bumper Corp.</p>
+            </div>
+
             <!-- LEGAL DISCLAIMER -->
-            <div class="mt-auto border-t border-edge pt-4">
-                <p class="text-[10px] text-red-900/80 leading-snug">
-                    <strong class="text-red-800">WARNING:Certain performance products are designed and intended strictly for Off-Road and Sanctioned Racing Use Only. They are not legal for use on pollution-controlled vehicles driven on public roads or highways. The purchaser assumes all legal liability for compliance with federal and provincial emissions regulations, including the Clean Air Act. Luxx Automotive Boutique Inc. does not advise on or authorize the illegal bypass of automotive emissions infrastructure.
-                </p>
+            <div class="mt-auto border-t border-edge pt-6">
+                <div class="bg-red-950/30 border border-red-900/50 rounded-lg p-4 text-left">
+                    <p class="text-[10px] md:text-xs text-red-500/90 leading-relaxed font-semibold">
+                        <strong class="text-red-500 uppercase">WARNING:</strong> Certain performance products and emissions solutions are designed and intended strictly for Off-Road and Sanctioned Racing Use Only. They are not legal for use on pollution-controlled vehicles. The purchaser assumes all legal liability for compliance with the Clean Air Act.
+                    </p>
+                </div>
             </div>
         </div>
 
-        <!-- Bottom Actions -->
-        <div class="flex flex-col items-center gap-6 mt-4 w-full">
-            <a href="/parts" class="group relative inline-flex items-center justify-center px-8 py-4 font-heading font-bold text-signal uppercase tracking-widest text-sm bg-labBlue rounded-xl overflow-hidden transition-all duration-300 hover:bg-labBlue/80 shadow-[0_0_20px_rgba(0,102,255,0.4)] hover:shadow-[0_0_30px_rgba(0,102,255,0.6)] text-white">
-                <span class="relative z-10">RETURN TO THE PARTS STORE</span>
-            </a>
+        <!-- CTA -->
+        <a href="https://rebrand.ly/LAB-Deposit" target="_blank" rel="noopener noreferrer" class="bg-labBlue hover:bg-blue-600 text-signal font-heading font-extrabold text-xl md:text-2xl uppercase tracking-[0.15em] px-12 py-6 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(0,102,255,0.6)] hover:shadow-[0_0_50px_rgba(0,102,255,0.8)] hover:scale-[1.02] active:scale-[0.98] w-full max-w-md text-center mb-8 relative overflow-hidden group flex items-center justify-center gap-4 animate-[pulse_2.5s_ease-in-out_infinite]">
+            <span class="relative z-10 drop-shadow-md">SECURE YOUR BAY</span>
+            <svg class="w-7 h-7 relative z-10 group-hover:translate-x-2 transition-transform duration-300 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[150%] group-hover:animate-[shimmer_1.5s_infinite] skew-x-[-20deg]"></div>
+        </a>
 
-            <!-- Socials & Call CTA -->
-            <div class="flex flex-col items-center gap-4 mt-2 border-t border-edge pt-8 w-full max-w-sm">
-                <p class="text-sm text-zinc-400">Something you forgot to mention?<br><a href="tel:+12502619502" class="text-labCyan hover:text-white transition-colors font-semibold">Give us a call.</a></p>
-                <div class="flex items-center gap-6 mt-2">
-                    <a href="https://www.instagram.com/thelabfsj/" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-[#E1306C] transition-colors" title="Instagram">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                    </a>
-                    <a href="https://www.facebook.com/TheLABfsj" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-[#1877F2] transition-colors" title="Facebook">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    </a>
-                </div>
-            </div>
+        <!-- Socials & Call -->
+        <div class="flex flex-col items-center mt-2 w-full max-w-sm">
+            <p class="text-sm text-zinc-400">Need to adjust your specs?<br><a href="tel:+12502619502" class="text-labBlue hover:text-white transition-colors font-semibold">Give us a call.</a></p>
         </div>
     </div>
     <script src="/assets/js/global-banner.js"></script>
