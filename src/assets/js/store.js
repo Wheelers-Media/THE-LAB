@@ -1322,12 +1322,17 @@ function initPDP() {
                         <img id="pdp-main-image" src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-200 pointer-events-none">
                     </div>
                     ${product.images && product.images.length > 1 ? `
-                    <div class="flex gap-3 overflow-x-auto pb-2 custom-scrollbar">
-                        ${product.images.map(img => `
-                            <button onclick="document.getElementById('pdp-main-image').src='${img}'" class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border border-edge hover:border-labBlue transition-colors focus:outline-none focus:border-labBlue">
-                                <img src="${img}" class="w-full h-full object-cover" loading="lazy">
-                            </button>
-                        `).join('')}
+                    <div id="pdp-gallery-container" class="flex gap-3 pb-2 overflow-x-hidden relative" style="mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);">
+                        <div id="pdp-gallery-track" class="flex gap-3 transition-transform duration-500 ease-out" style="transform: translateX(0px);">
+                            ${product.images.map((img, idx) => `
+                                <button class="pdp-gallery-thumb flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-labBlue" 
+                                    data-img-src="${img}"
+                                    data-img-index="${idx}"
+                                    style="border-color: ${idx === 0 ? '#0066FF' : '#1E1E28'};">
+                                    <img src="${img}" class="w-full h-full object-cover" loading="lazy">
+                                </button>
+                            `).join('')}
+                        </div>
                     </div>
                     ` : ''}
                 </div>
@@ -1694,6 +1699,30 @@ function initPDP() {
                             <div>
                                 <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">VIN <span class="text-red-500">*</span></label>
                                 <input type="text" id="gridiron-vin" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors uppercase" placeholder="17-Digit Vehicle ID">
+                            </div>
+                            <div>
+                                <label for="gridiron-finish" class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">Bumper Finish <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <select id="gridiron-finish"
+                                        class="w-full appearance-none bg-[#0D0D12] border border-[#1E1E28] text-white rounded-lg p-3 text-sm font-semibold min-h-[48px] outline-none cursor-pointer transition-all duration-200"
+                                        style="box-shadow:none;"
+                                        onfocus="this.style.borderColor='#0066FF';this.style.boxShadow='0 0 0 2px rgba(0,102,255,0.2), 0 0 16px rgba(0,102,255,0.12)'"
+                                        onblur="this.style.borderColor='#1E1E28';this.style.boxShadow='none'">
+                                        <option value="">Select Finish Type</option>
+                                        <option value="Gloss Black">Gloss Black</option>
+                                        <option value="Matte Black">Matte Black</option>
+                                        <option value="Textured Black">Textured Black</option>
+                                        <option value="Powder Coat Black">Powder Coat Black</option>
+                                        <option value="Gloss Red">Gloss Red</option>
+                                        <option value="Matte Red">Matte Red</option>
+                                        <option value="Gloss Silver">Gloss Silver</option>
+                                        <option value="Brushed Stainless">Brushed Stainless</option>
+                                        <option value="Custom">Custom / Other</option>
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-500">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                    </div>
+                                </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
@@ -2075,6 +2104,7 @@ function initPDP() {
         if (gridironWrap) {
             const yymm = document.getElementById("gridiron-yymm");
             const vin = document.getElementById("gridiron-vin");
+            const finish = document.getElementById("gridiron-finish");
             
             // Validate required fields (Year/Make/Model and VIN)
             if (!yymm.value.trim()) {
@@ -2091,6 +2121,15 @@ function initPDP() {
             } else {
                 vin.classList.remove('border-red-500');
                 customAttributes["VIN"] = vin.value.trim().toUpperCase();
+            }
+
+            // Validate finish type
+            if (!finish.value) {
+                finish.style.borderColor = '#ef4444';
+                validationFailed = true;
+            } else {
+                finish.style.borderColor = '#1E1E28';
+                customAttributes["Bumper Finish"] = finish.value;
             }
 
             if (validationFailed) {
@@ -2424,4 +2463,44 @@ function initPDP() {
     if (window.setCurrency) {
         window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
     }
+
+    // ════════════════════════════════════════════════════════════
+    // GALLERY CAROUSEL - iPhone-style left-sliding animation
+    // ════════════════════════════════════════════════════════════
+    const galleryThumbs = document.querySelectorAll('.pdp-gallery-thumb');
+    const galleryTrack = document.getElementById('pdp-gallery-track');
+    
+    if (galleryThumbs.length > 0 && galleryTrack) {
+        galleryThumbs.forEach((thumb, index) => {
+            thumb.addEventListener('click', () => {
+                const imgSrc = thumb.dataset.imgSrc;
+                const mainImage = document.getElementById('pdp-main-image');
+                
+                if (mainImage && imgSrc) {
+                    // Update main image
+                    mainImage.src = imgSrc;
+                    
+                    // Calculate scroll position to center the clicked thumbnail
+                    const thumbWidth = 80; // w-20 = 80px
+                    const gap = 12; // gap-3 = 12px
+                    const scrollOffset = (thumbWidth + gap) * index;
+                    
+                    // Animate gallery track to show selected thumb
+                    if (galleryTrack) {
+                        galleryTrack.style.transform = `translateX(-${scrollOffset}px)`;
+                    }
+                    
+                    // Update border colors
+                    galleryThumbs.forEach((t, i) => {
+                        if (i === index) {
+                            t.style.borderColor = '#0066FF';
+                        } else {
+                            t.style.borderColor = '#1E1E28';
+                        }
+                    });
+                }
+            });
+        });
+    }
 }
+

@@ -55,6 +55,18 @@
         }
         ::selection { background: #0066FF; color: #fff; }
 
+        /* Gallery Carousel - Hide Scrollbar */
+        #pdp-gallery-container {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        #pdp-gallery-container::-webkit-scrollbar {
+            display: none;
+        }
+        #pdp-gallery-track {
+            will-change: transform;
+        }
+
         /* Shopify Description Formatting */
         #pdp-desc ul {
             list-style-type: none;
