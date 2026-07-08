@@ -1318,8 +1318,22 @@ function initPDP() {
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
                 <!-- Left: Image Gallery -->
                 <div class="lg:sticky lg:top-24 flex flex-col gap-4">
-                    <div class="bg-[#111115] border border-edge rounded-2xl overflow-hidden flex items-center justify-center" style="aspect-ratio:1; cursor: crosshair;" onmousemove="window.zoomFollow(event, this)" onmouseleave="window.zoomReset(this)">
+                    <div class="bg-[#111115] border border-edge rounded-2xl overflow-hidden flex items-center justify-center relative group" style="aspect-ratio:1; cursor: crosshair;" onmousemove="window.zoomFollow(event, this)" onmouseleave="window.zoomReset(this)">
                         <img id="pdp-main-image" src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-200 pointer-events-none">
+                        
+                        <!-- Left Arrow -->
+                        ${product.images && product.images.length > 1 ? `
+                        <button id="pdp-gallery-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all duration-200 z-10 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-labBlue" title="Previous image">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                        ` : ''}
+                        
+                        <!-- Right Arrow -->
+                        ${product.images && product.images.length > 1 ? `
+                        <button id="pdp-gallery-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all duration-200 z-10 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-labBlue" title="Next image">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                        ` : ''}
                     </div>
                     ${product.images && product.images.length > 1 ? `
                     <div id="pdp-gallery-container" class="flex gap-3 pb-2 overflow-x-hidden relative" style="mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);">
@@ -2469,38 +2483,70 @@ function initPDP() {
     // ════════════════════════════════════════════════════════════
     const galleryThumbs = document.querySelectorAll('.pdp-gallery-thumb');
     const galleryTrack = document.getElementById('pdp-gallery-track');
+    const prevBtn = document.getElementById('pdp-gallery-prev');
+    const nextBtn = document.getElementById('pdp-gallery-next');
+    
+    let currentImageIndex = 0;
+    
+    // Function to navigate to specific image index
+    const navigateToImage = (index) => {
+        if (!galleryThumbs.length) return;
+        
+        // Clamp index between 0 and total images
+        currentImageIndex = Math.max(0, Math.min(index, galleryThumbs.length - 1));
+        const thumb = galleryThumbs[currentImageIndex];
+        
+        if (thumb) {
+            const imgSrc = thumb.dataset.imgSrc;
+            const mainImage = document.getElementById('pdp-main-image');
+            
+            if (mainImage && imgSrc) {
+                // Update main image
+                mainImage.src = imgSrc;
+                
+                // Calculate scroll position to center the clicked thumbnail
+                const thumbWidth = 80; // w-20 = 80px
+                const gap = 12; // gap-3 = 12px
+                const scrollOffset = (thumbWidth + gap) * currentImageIndex;
+                
+                // Animate gallery track to show selected thumb
+                if (galleryTrack) {
+                    galleryTrack.style.transform = `translateX(-${scrollOffset}px)`;
+                }
+                
+                // Update border colors
+                galleryThumbs.forEach((t, i) => {
+                    if (i === currentImageIndex) {
+                        t.style.borderColor = '#0066FF';
+                    } else {
+                        t.style.borderColor = '#1E1E28';
+                    }
+                });
+            }
+        }
+    };
     
     if (galleryThumbs.length > 0 && galleryTrack) {
         galleryThumbs.forEach((thumb, index) => {
             thumb.addEventListener('click', () => {
-                const imgSrc = thumb.dataset.imgSrc;
-                const mainImage = document.getElementById('pdp-main-image');
-                
-                if (mainImage && imgSrc) {
-                    // Update main image
-                    mainImage.src = imgSrc;
-                    
-                    // Calculate scroll position to center the clicked thumbnail
-                    const thumbWidth = 80; // w-20 = 80px
-                    const gap = 12; // gap-3 = 12px
-                    const scrollOffset = (thumbWidth + gap) * index;
-                    
-                    // Animate gallery track to show selected thumb
-                    if (galleryTrack) {
-                        galleryTrack.style.transform = `translateX(-${scrollOffset}px)`;
-                    }
-                    
-                    // Update border colors
-                    galleryThumbs.forEach((t, i) => {
-                        if (i === index) {
-                            t.style.borderColor = '#0066FF';
-                        } else {
-                            t.style.borderColor = '#1E1E28';
-                        }
-                    });
-                }
+                navigateToImage(index);
             });
         });
+        
+        // Arrow button navigation
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigateToImage(currentImageIndex - 1);
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                navigateToImage(currentImageIndex + 1);
+            });
+        }
     }
 }
 
