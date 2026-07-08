@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -351,103 +351,7 @@
 // ═══════════════════════════════════════════════════════
 // GLOBAL SEARCH with site-wide content index
 // ═══════════════════════════════════════════════════════
-const SITE_PAGES = [
-    { title: 'Window Tinting', desc: 'Ceramic & carbon film tinting services for cars and trucks.', url: '/boutique/tinting/', tags: ['tinting', 'window', 'ceramic', 'film', 'heat', 'uv', 'boutique', 'service'] },
-    { title: 'Ceramic Coatings', desc: 'Industry-leading nano-ceramic paint protection and coating services.', url: '/boutique/coatings/', tags: ['ceramic', 'coating', 'paint', 'protection', 'nano', 'hydrophobic', 'boutique', 'service'] },
-    { title: 'Premium Detailing', desc: 'Full decontamination, paint correction, and concours-level finish restoration.', url: '/boutique/detailing/', tags: ['detailing', 'detail', 'paint', 'correction', 'polish', 'wash', 'boutique', 'service'] },
-    { title: 'Paint Protection Film (PPF)', desc: 'Self-healing TPU film invisible armor against chips and road debris.', url: '/boutique/ppf/', tags: ['ppf', 'paint', 'protection', 'film', 'clear', 'bra', 'chip', 'boutique', 'service'] },
-    { title: 'Custom Lighting', desc: 'Morimoto headlights, LED upgrades, and custom truck lighting packages.', url: '/boutique/lighting/', tags: ['lighting', 'lights', 'led', 'headlight', 'morimoto', 'diode', 'boutique', 'service'] },
-    { title: 'SxS Services', desc: 'Side-by-side and ATV detailing, wrapping, and upgrade services.', url: '/boutique/sxs/', tags: ['sxs', 'side by side', 'atv', 'utv', 'polaris', 'can-am', 'boutique'] },
-    { title: 'The Boutique', desc: 'All vehicle aesthetics and protection services - tinting, coatings, detailing, PPF, lighting.', url: '/boutique/', tags: ['boutique', 'service', 'booking', 'appointment'] },
-    { title: 'EGR Delete Kits', desc: 'EGR delete block-off kits for Powerstroke, Cummins, and Duramax diesels.', url: '/store/catalog/?category=EGR', tags: ['egr', 'delete', 'kit', 'powerstroke', 'cummins', 'duramax', 'diesel', 'parts'] },
-    { title: 'Exhaust Systems', desc: 'Mandrel-bent stainless steel DPF-back and turbo-back exhaust systems.', url: '/store/catalog/?category=Exhaust', tags: ['exhaust', 'dpf', 'turbo', 'back', 'stainless', 'diesel', 'parts', 'polar'] },
-    { title: 'CCV Solutions', desc: 'Crankcase ventilation upgrades and catch can systems for diesel trucks.', url: '/store/catalog/?category=CCV', tags: ['ccv', 'crankcase', 'catch can', 'vent', 'diesel', 'parts'] },
-    { title: 'Custom Tuning', desc: 'EZ LYNK, HP Tuners, and AMDP platform-specific diesel tuning packages.', url: '/store/tuning/', tags: ['tuning', 'tune', 'ez lynk', 'hp tuners', 'amdp', 'diesel', 'power', 'efilive'] },
-    { title: 'Bumpers & Accessories', desc: 'Gridiron steel bumpers, mud flaps, off-road lighting, and truck accessories.', url: '/store/catalog/?category=Accessories', tags: ['bumper', 'accessories', 'gridiron', 'mud flap', 'off-road', 'truck'] },
-    { title: 'Contact & Book a Service', desc: 'Book a boutique service or performance build request at THE LAB in Fort St. John.', url: '/contact/', tags: ['contact', 'book', 'booking', 'appointment', 'service', 'phone', 'call', 'email'] },
-    { title: 'About THE LAB', desc: 'Learn about THE LAB - Fort St. John\'s premium diesel and aesthetic vehicle shop.', url: '/about/', tags: ['about', 'lab', 'story', 'team', 'fort st john'] },
-    { title: 'Shipping & Returns', desc: 'Shipping policy, return policy, and order tracking information.', url: '/shipping/', tags: ['shipping', 'returns', 'policy', 'tracking', 'order'] },
-];
-
-function globalSearch(rawQuery) {
-    if (!rawQuery || !rawQuery.trim()) return;
-    const q = rawQuery.toLowerCase().trim();
-    const tokens = q.split(/\s+/);
-    
-    // Score pages
-    const scored = SITE_PAGES.map(page => {
-        let score = 0;
-        tokens.forEach(token => {
-            if (page.title.toLowerCase().includes(token)) score += 10;
-            if (page.desc.toLowerCase().includes(token)) score += 5;
-            if (page.tags.some(t => t.includes(token) || token.includes(t))) score += 8;
-        });
-        return { ...page, score };
-    }).filter(p => p.score > 0).sort((a, b) => b.score - a.score);
-    
-    if (scored.length > 0) {
-        // Best match: navigate directly
-        window.location.href = scored[0].url;
-    } else {
-        // Fall back to store catalog text search
-        window.location.href = '/store/catalog/?search=' + encodeURIComponent(rawQuery.trim());
-    }
-}
-
-function renderSearchSuggestions(query) {
-    const suggestEl = document.getElementById('global-search-suggestions');
-    if (!suggestEl) return;
-    if (!query || query.length < 2) { suggestEl.innerHTML = ''; suggestEl.classList.add('hidden'); return; }
-    
-    const q = query.toLowerCase();
-    const tokens = q.split(/\s+/);
-    const matches = SITE_PAGES.map(page => {
-        let score = 0;
-        tokens.forEach(token => {
-            if (page.title.toLowerCase().includes(token)) score += 10;
-            if (page.tags.some(t => t.includes(token) || token.includes(t))) score += 8;
-            if (page.desc.toLowerCase().includes(token)) score += 3;
-        });
-        return { ...page, score };
-    }).filter(p => p.score > 0).sort((a, b) => b.score - a.score).slice(0, 5);
-    
-    if (matches.length === 0) { suggestEl.innerHTML = ''; suggestEl.classList.add('hidden'); return; }
-    
-    suggestEl.classList.remove('hidden');
-    suggestEl.innerHTML = matches.map(m => `
-        <a href="${m.url}" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors border-b border-edge/40 last:border-0">
-            <svg class="w-4 h-4 text-zinc-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <div>
-                <div class="text-white text-sm font-bold">${m.title}</div>
-                <div class="text-zinc-500 text-xs">${m.desc}</div>
-            </div>
-        </a>
-    `).join('');
-}
-
-function toggleGlobalSearch() {
-    const el = document.getElementById('global-search-overlay');
-    if (!el) return;
-    if (el.classList.contains('hidden') || el.style.display === 'none' || el.style.display === '') {
-        el.classList.remove('hidden');
-        el.style.display = 'flex';
-        el.style.flexDirection = 'column';
-        setTimeout(() => { el.classList.remove('opacity-0'); document.getElementById('global-search-input')?.focus(); }, 10);
-        document.body.style.overflow = 'hidden';
-    } else {
-        el.classList.add('opacity-0');
-        setTimeout(() => { el.classList.add('hidden'); el.style.display = 'none'; document.body.style.overflow = ''; }, 300);
-    }
-}
-document.getElementById('global-search-submit')?.addEventListener('click', () => {
-    const query = document.getElementById('global-search-input')?.value;
-    if (query) globalSearch(query);
-});
-document.getElementById('global-search-input')?.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') globalSearch(e.target.value);
-});
-document.getElementById('global-search-input')?.addEventListener('input', (e) => {
-    renderSearchSuggestions(e.target.value);
+<script src="/assets/js/global-search.js"></script>
 });
 
 // ═══════════════════════════════════════════════════════

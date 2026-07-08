@@ -804,7 +804,15 @@ function initStore() {
         if (cb) cb.checked = true;
     }
 
-    // 5. Wire up all sidebar checkboxes (dynamically generated)
+    // 5. Read ?search= URL param (set by global search overlay fallback)
+    const urlSearch = params.get('search');
+    if (urlSearch && urlSearch.trim()) {
+        activeFilters.searchQuery = urlSearch.trim();
+        const si = document.getElementById('store-search-input');
+        if (si) si.value = urlSearch.trim();
+    }
+
+    // 6. Wire up all sidebar checkboxes (dynamically generated)
     document.querySelectorAll('.store-filter').forEach(checkbox => {
         checkbox.addEventListener('change', (e) => {
             const val = e.target.value;
@@ -827,7 +835,7 @@ function initStore() {
         });
     });
 
-    // 6. Year input
+    // 7. Year input
     const yearInput = document.getElementById('filter-year');
     if (yearInput) {
         yearInput.addEventListener('input', (e) => {
@@ -837,7 +845,7 @@ function initStore() {
         });
     }
 
-    // 7. Search input
+    // 8. Search input
     const searchInput = document.getElementById('store-search-input');
     const searchBtn = document.getElementById('store-search-btn');
     
@@ -859,20 +867,18 @@ function initStore() {
             }
         });
         
-        // Allow clearing search instantly when user deletes all text
+        // Live search: update as user types (instant results)
         searchInput.addEventListener('input', (e) => {
-            if (e.target.value.trim() === '') {
-                activeFilters.searchQuery = '';
-                renderProducts();
-            }
+            activeFilters.searchQuery = e.target.value.trim();
+            renderProducts();
         });
     }
 
-    // 8. Reset button
+    // 9. Reset button
     const resetBtn = document.getElementById('filter-reset-btn');
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
-            activeFilters = { makes: [], categories: [], engines: [], brands: [], year: null, searchQuery: "" };
+            activeFilters = { makes: [], categories: [], engines: [], brands: [], year: null, searchQuery: "", sortBy: 'featured' };
             activeVehicle = null;
             sessionStorage.removeItem('lab_active_vehicle');
             document.querySelectorAll('.store-filter').forEach(cb => cb.checked = false);
@@ -880,11 +886,15 @@ function initStore() {
             if (yi) yi.value = '';
             const si = document.getElementById('store-search-input');
             if (si) si.value = '';
+            // Also clear the URL search param without reloading
+            const newUrl = new URL(window.location.href);
+            newUrl.searchParams.delete('search');
+            window.history.replaceState({}, '', newUrl.toString());
             renderProducts();
         });
     }
 
-    // 9. Initial render
+    // 10. Initial render
     window.isInitialRender = true;
     renderProducts();
     window.isInitialRender = false;
@@ -937,14 +947,54 @@ function renderProducts() {
     // Update active chips
     updateActiveChips();
 
+    // ── Make-keyword map: if a user types a make/platform keyword,
+    //    we must restrict results to only products for that make.
+    const MAKE_KEYWORDS = {
+        duramax: ['Chevy', 'GMC'],
+        lbz: ['Chevy', 'GMC'], lly: ['Chevy', 'GMC'], lmm: ['Chevy', 'GMC'],
+        lml: ['Chevy', 'GMC'], l5p: ['Chevy', 'GMC'],
+        chevy: ['Chevy'], chevrolet: ['Chevy'], silverado: ['Chevy'],
+        gmc: ['GMC'], sierra: ['GMC'],
+        cummins: ['Ram'], ram: ['Ram'], dodge: ['Ram'],
+        powerstroke: ['Ford'], ford: ['Ford'],
+        'f-250': ['Ford'], 'f-350': ['Ford'], 'f250': ['Ford'], 'f350': ['Ford'],
+        'super duty': ['Ford'], superduty: ['Ford'],
+        ecodiesel: ['Ram', 'Jeep'],
+        sprinter: ['Mercedes'],
+        nissan: ['Nissan'], titan: ['Nissan'],
+    };
+
     const filtered = window.storeCatalog.filter(p => {
         // Search
         let searchMatch = true;
         if (activeFilters.searchQuery) {
-            const queryTokens = activeFilters.searchQuery.toLowerCase().split(/\s+/).filter(t => t.length > 0);
-            
-            // For a product to match, every word in the search query must be found *somewhere* in the product's data
-            searchMatch = queryTokens.every(token => {
+            const query = activeFilters.searchQuery.toLowerCase().trim();
+            const queryTokens = query.split(/\s+/).filter(t => t.length > 0);
+
+            // Detect if any query token is a vehicle-make keyword.
+            // If so, that token must match the product's MAKE — not just appear anywhere.
+            let impliedMakes = [];
+            const nonMakeTokens = [];
+            for (const token of queryTokens) {
+                const makeHits = MAKE_KEYWORDS[token];
+                if (makeHits) {
+                    impliedMakes = impliedMakes.concat(makeHits);
+                } else {
+                    nonMakeTokens.push(token);
+                }
+            }
+            // De-duplicate
+            impliedMakes = [...new Set(impliedMakes)];
+
+            // If the query contains vehicle-make keywords, the product must match those makes
+            let makeKeywordMatch = true;
+            if (impliedMakes.length > 0) {
+                makeKeywordMatch = p.makes.includes('Universal') ||
+                    impliedMakes.some(m => p.makes.includes(m));
+            }
+
+            // All non-make tokens must still match somewhere in the product
+            const tokenMatch = nonMakeTokens.every(token => {
                 return p.name.toLowerCase().includes(token) ||
                        p.description.toLowerCase().includes(token) ||
                        p.category.toLowerCase().includes(token) ||
@@ -953,6 +1003,8 @@ function renderProducts() {
                        p.makes.some(m => m.toLowerCase().includes(token)) ||
                        (p.tags && p.tags.some(t => t.toLowerCase().includes(token)));
             });
+
+            searchMatch = makeKeywordMatch && tokenMatch;
         }
 
         // Make
@@ -1080,7 +1132,7 @@ function renderProducts() {
     }
 
     grid.innerHTML = filtered.map(p => {
-        let productUrl = `/store/product/?id=${p.id}`;
+        let productUrl = `/store/product/?id=${encodeURIComponent(p.id)}`;
         if (activeVehicle) {
             productUrl += `&vmake=${encodeURIComponent(activeVehicle.make)}&vengine=${encodeURIComponent(activeVehicle.engine)}&vyear=${activeVehicle.year}&vmodel=${encodeURIComponent(activeVehicle.model)}`;
         }
@@ -1257,6 +1309,7 @@ function initPDP() {
     // Hardware IDs for Auto-AddToCart
     const hwEZ_ID = 'gid://shopify/ProductVariant/42912460537950'; // EZ LYNK AutoAgent 3
     const hwHP_ID = 'gid://shopify/ProductVariant/42912449265758'; // Wait, let me just add MPVI4 logic directly if we have the ID, else we just add standard device
+    const hwEFI_ID = ''; // placeholder for EFI Live ID if needed later
     // Since we don't have MPVI4 ID, we will just add the base product, or we can fetch it dynamically from storeCatalog later.
     container.innerHTML = `
         <div class="max-w-6xl mx-auto py-12 px-6">
