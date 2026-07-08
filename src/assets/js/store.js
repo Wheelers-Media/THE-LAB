@@ -1305,6 +1305,7 @@ function initPDP() {
     const showHardwareBlock = product.category === 'Tuning & Electronics' && isTunePackage && !isHardwareDevice && (isEZ || isHP || isMM3 || isEFILive || isSCT || isGDP);
     const isSOTF = pTitleLower.includes('sotf') || (product.variants && product.variants.some(v => v.title && v.title.toLowerCase().includes('sotf')));
     const isCummins2018Plus = (product.makes.includes('Ram') || product.makes.includes('Dodge')) && product.years[1] >= 2018 && pTitleLower.includes('cummins') && product.category === 'Tuning & Electronics';
+    const isGridiron = pTitleLower.includes('gridiron') || (product.vendor && product.vendor.toLowerCase().includes('gridiron'));
     
     // Hardware IDs for Auto-AddToCart
     const hwEZ_ID = 'gid://shopify/ProductVariant/42912460537950'; // EZ LYNK AutoAgent 3
@@ -1315,9 +1316,20 @@ function initPDP() {
         <div class="max-w-6xl mx-auto py-12 px-6">
             <!-- Top Config Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
-                <!-- Left: Image -->
-                <div class="bg-[#111115] border border-edge rounded-2xl overflow-hidden flex items-center justify-center lg:sticky lg:top-24" style="aspect-ratio:1; cursor: crosshair;" onmousemove="window.zoomFollow(event, this)" onmouseleave="window.zoomReset(this)">
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-200 pointer-events-none">
+                <!-- Left: Image Gallery -->
+                <div class="lg:sticky lg:top-24 flex flex-col gap-4">
+                    <div class="bg-[#111115] border border-edge rounded-2xl overflow-hidden flex items-center justify-center" style="aspect-ratio:1; cursor: crosshair;" onmousemove="window.zoomFollow(event, this)" onmouseleave="window.zoomReset(this)">
+                        <img id="pdp-main-image" src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-200 pointer-events-none">
+                    </div>
+                    ${product.images && product.images.length > 1 ? `
+                    <div class="flex gap-3 overflow-x-auto pb-2 custom-scrollbar">
+                        ${product.images.map(img => `
+                            <button onclick="document.getElementById('pdp-main-image').src='${img}'" class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border border-edge hover:border-labBlue transition-colors focus:outline-none focus:border-labBlue">
+                                <img src="${img}" class="w-full h-full object-cover" loading="lazy">
+                            </button>
+                        `).join('')}
+                    </div>
+                    ` : ''}
                 </div>
                 
                 <!-- Right: Config & Cart -->
@@ -1663,6 +1675,45 @@ function initPDP() {
                             </div>
                         </label>
                         <span class="text-sm font-bold text-[#0066FF]">+$70.00</span>
+                    </div>
+                    ` : ''}
+
+                    ${isGridiron ? `
+                    <!-- Gridiron Custom Intake Fields -->
+                    <div class="mt-6 mb-4 p-5 bg-[#000000] border border-labBlue/40 rounded-xl shadow-oled-blue relative overflow-hidden" id="pdp-gridiron-wrap">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-labBlue/10 blur-3xl rounded-full mix-blend-screen pointer-events-none"></div>
+                        <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Vehicle Build Details
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">Year / Make / Model <span class="text-red-500">*</span></label>
+                                <input type="text" id="gridiron-yymm" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" placeholder="e.g. 2022 Chevrolet Silverado 3500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">VIN <span class="text-red-500">*</span></label>
+                                <input type="text" id="gridiron-vin" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors uppercase" placeholder="17-Digit Vehicle ID">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">Main Bumper Color</label>
+                                    <input type="text" id="gridiron-color-main" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" placeholder="e.g. Gloss Black or Paint Code">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">Center Overlay Color</label>
+                                    <input type="text" id="gridiron-color-center" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" placeholder="Leave blank if standard">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">D-Ring Color</label>
+                                <input type="text" id="gridiron-color-dring" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" placeholder="e.g. Candy Red, Gloss Black">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">Additional Notes</label>
+                                <textarea id="gridiron-notes" rows="2" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" placeholder="Any specific requests or sensors?"></textarea>
+                            </div>
+                        </div>
                     </div>
                     ` : ''}
 
@@ -2019,6 +2070,45 @@ function initPDP() {
         const customAttributes = {};
         let validationFailed = false;
 
+        // Gridiron Form Capture & Validation
+        const gridironWrap = document.getElementById("pdp-gridiron-wrap");
+        if (gridironWrap) {
+            const yymm = document.getElementById("gridiron-yymm");
+            const vin = document.getElementById("gridiron-vin");
+            
+            // Validate required fields (Year/Make/Model and VIN)
+            if (!yymm.value.trim()) {
+                yymm.classList.add('border-red-500');
+                validationFailed = true;
+            } else {
+                yymm.classList.remove('border-red-500');
+                customAttributes["Vehicle"] = yymm.value.trim();
+            }
+
+            if (!vin.value.trim() || vin.value.trim().length < 11) {
+                vin.classList.add('border-red-500');
+                validationFailed = true;
+            } else {
+                vin.classList.remove('border-red-500');
+                customAttributes["VIN"] = vin.value.trim().toUpperCase();
+            }
+
+            if (validationFailed) {
+                gridironWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                // Capture optional fields
+                const colorMain = document.getElementById("gridiron-color-main").value.trim();
+                const colorCenter = document.getElementById("gridiron-color-center").value.trim();
+                const colorDring = document.getElementById("gridiron-color-dring").value.trim();
+                const notes = document.getElementById("gridiron-notes").value.trim();
+
+                if (colorMain) customAttributes["Main Bumper Color"] = colorMain;
+                if (colorCenter) customAttributes["Center Overlay Color"] = colorCenter;
+                if (colorDring) customAttributes["D-Ring Color"] = colorDring;
+                if (notes) customAttributes["Notes"] = notes;
+            }
+        }
+
         if (isTuning) {
             // - Power Level / Tune Level check (Variants) -
             const tuneCards = document.querySelectorAll('.pdp-tune-card');
@@ -2258,9 +2348,10 @@ function initPDP() {
                 alert("Debug Error in Hardware cart logic: " + err.message);
             }
         } else {
+            if (validationFailed) return;
             const qtyInput = document.getElementById("pdp-qty-input");
             const qty = qtyInput ? (parseInt(qtyInput.value) || 1) : 1;
-            addToCart(product.id, qty);
+            addToCart(product.id, qty, customAttributes);
         }
 
         if (window.isBuyNowFlow) {

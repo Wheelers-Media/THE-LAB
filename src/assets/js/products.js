@@ -354,7 +354,7 @@ window.initShopifyCatalog = async function () {
             productType
             vendor
             tags
-            images(first: 5) {
+            images(first: 10) {
               edges { node { url altText } }
             }
             variants(first: 10) {
