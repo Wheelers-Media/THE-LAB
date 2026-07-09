@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <link rel="icon" type="image/png" href="/assets/favicon.png">
@@ -389,14 +389,39 @@
                 <h2 class="font-heading font-extrabold text-3xl md:text-4xl text-white uppercase">Trusted By The Best</h2>
             </div>
             
-            <!-- GHL Reviews Widget Wrapper -->
-            <div class="w-full relative">
-                <!-- If the widget has a white background by default, this container will help it blend or stand out properly. 
-                     Make sure in GHL you select the "Dark Mode" or "Transparent" option for this widget if available! -->
+            <!-- GHL Reviews Widget Wrapper - Custom Themed -->
+            <div class="w-full relative ghl-reviews-wrapper">
                 <script type='text/javascript' src='https://reputationhub.site/reputation/assets/review-widget.js'></script>
-                <iframe class='lc_reviews_widget' src='https://reputationhub.site/reputation/widgets/review_widget/y37krAAjtGquzYQMJz5K?widgetId=6a376ce51e0d92579b0e2373' frameborder='0' scrolling='no' style='min-width: 100%; width: 100%; min-height: 400px;'></iframe>
+                <iframe class='lc_reviews_widget' src='https://reputationhub.site/reputation/widgets/review_widget/y37krAAjtGquzYQMJz5K?widgetId=6a376ce51e0d92579b0e2373&theme=dark' frameborder='0' scrolling='no' style='min-width: 100%; width: 100%; min-height: 400px; border-radius: 1rem;'></iframe>
             </div>
         </div>
+
+        <style>
+            /* GHL Widget Custom Styling */
+            .ghl-reviews-wrapper {
+                filter: contrast(1.1) brightness(0.95);
+            }
+
+            /* Override iframe background if needed */
+            .lc_reviews_widget {
+                background-color: #0D0D12 !important;
+            }
+
+            /* Ensure text visibility */
+            .ghl-reviews-wrapper ::-webkit-scrollbar {
+                width: 8px;
+            }
+            .ghl-reviews-wrapper ::-webkit-scrollbar-track {
+                background: #0D0D12;
+            }
+            .ghl-reviews-wrapper ::-webkit-scrollbar-thumb {
+                background: #0066FF;
+                border-radius: 4px;
+            }
+            .ghl-reviews-wrapper ::-webkit-scrollbar-thumb:hover {
+                background: #00E5FF;
+            }
+        </style>
     </section>
 
     <!-- ═══ CTA BAND ═══ -->
