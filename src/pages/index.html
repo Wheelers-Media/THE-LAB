@@ -397,17 +397,101 @@
         </div>
 
         <style>
-            /* GHL Widget Custom Styling */
+            /* GHL Widget Custom Styling - THE LAB Brand Colors */
             .ghl-reviews-wrapper {
-                filter: contrast(1.05) brightness(1.0);
+                /* No filters - let the widget shine naturally */
             }
 
-            /* Override iframe background if needed */
+            /* Widget Container */
             .lc_reviews_widget {
                 background-color: #0D0D12 !important;
             }
 
-            /* Ensure text visibility */
+            /* Review Cards - Background */
+            .lc_reviews_widget .lc_review_item {
+                background-color: #000000 !important;
+                border-color: #1E1E28 !important;
+            }
+
+            /* Headings & Titles - White */
+            .lc_reviews_widget .lc_review_title,
+            .lc_reviews_widget .lc_review_heading,
+            .lc_reviews_widget h3,
+            .lc_reviews_widget h4 {
+                color: #FFFFFF !important;
+            }
+
+            /* Body Text - Zinc-500 */
+            .lc_reviews_widget .lc_review_text,
+            .lc_reviews_widget .lc_review_body,
+            .lc_reviews_widget p,
+            .lc_reviews_widget .review-content {
+                color: #6b7280 !important;
+            }
+
+            /* Secondary Text (dates, metadata) - Zinc-600 */
+            .lc_reviews_widget .lc_review_date,
+            .lc_reviews_widget .lc_review_meta,
+            .lc_reviews_widget .review-date,
+            .lc_reviews_widget .review-meta,
+            .lc_reviews_widget span,
+            .lc_reviews_widget .review-author {
+                color: #4b5563 !important;
+            }
+
+            /* Stars - Lab Blue */
+            .lc_reviews_widget .lc_stars,
+            .lc_reviews_widget .star,
+            .lc_reviews_widget .lc_rating,
+            .lc_reviews_widget [class*="star"] {
+                color: #0066FF !important;
+                fill: #0066FF !important;
+            }
+
+            /* Buttons - Lab Blue Primary */
+            .lc_reviews_widget .lc_button,
+            .lc_reviews_widget button,
+            .lc_reviews_widget .btn,
+            .lc_reviews_widget [role="button"] {
+                background-color: #0066FF !important;
+                color: #FFFFFF !important;
+                border-color: #0066FF !important;
+            }
+
+            .lc_reviews_widget .lc_button:hover,
+            .lc_reviews_widget button:hover {
+                background-color: #0052CC !important;
+            }
+
+            /* Avatar Background - Edge */
+            .lc_reviews_widget .lc_avatar,
+            .lc_reviews_widget .avatar,
+            .lc_reviews_widget .lc_reviewer_avatar {
+                background-color: #1E1E28 !important;
+                border-color: #1E1E28 !important;
+            }
+
+            /* Avatar Text - Zinc-400 */
+            .lc_reviews_widget .lc_avatar_text,
+            .lc_reviews_widget .avatar-text {
+                color: #9ca3af !important;
+            }
+
+            /* Borders - Edge */
+            .lc_reviews_widget .lc_review_item,
+            .lc_reviews_widget .review-card,
+            .lc_reviews_widget [class*="border"] {
+                border-color: #1E1E28 !important;
+            }
+
+            /* AI Summary Text - Zinc-400 */
+            .lc_reviews_widget .lc_ai_summary,
+            .lc_reviews_widget .ai-summary,
+            .lc_reviews_widget .summary {
+                color: #9ca3af !important;
+            }
+
+            /* Scrollbar Styling */
             .ghl-reviews-wrapper ::-webkit-scrollbar {
                 width: 8px;
             }
@@ -420,6 +504,12 @@
             }
             .ghl-reviews-wrapper ::-webkit-scrollbar-thumb:hover {
                 background: #1E1E28;
+            }
+
+            /* Firefox Scrollbar */
+            .lc_reviews_widget {
+                scrollbar-color: #0066FF #0D0D12;
+                scrollbar-width: thin;
             }
         </style>
     </section>
