@@ -250,8 +250,12 @@
                             }
 
                             window.addEventListener('DOMContentLoaded', () => {
-                                if (window.location.hash === '#build') {
+                                const params = new URLSearchParams(window.location.search);
+                                const formParam = params.get('form');
+                                if (formParam === 'build' || window.location.hash === '#build') {
                                     switchForm('build');
+                                } else {
+                                    switchForm('boutique');
                                 }
                             });
 
