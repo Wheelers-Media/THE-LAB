@@ -1381,6 +1381,30 @@ function initPDP() {
                         </div>
                     </div>
 
+                    ${product.category === 'Merch' && product.variants && product.variants.filter(v => v.title && v.title !== 'Default Title').length > 0 ? `
+                    <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mb-6" id="pdp-size-wrap">
+                        <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">
+                            Select size <span class="text-red-500 ml-1" aria-label="required">*</span>
+                        </label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" role="radiogroup" aria-label="Select size">
+                            ${product.variants.filter(v => v.available !== false).map(variant => `
+                            <button type="button"
+                                class="pdp-size-card min-h-[48px] rounded-lg border border-[#1E1E28] text-sm font-bold text-white transition-all hover:border-labCyan hover:bg-labCyan/10 focus:outline-none focus:ring-2 focus:ring-labCyan"
+                                data-variant-id="${variant.id}"
+                                data-variant-price="${variant.price}"
+                                data-variant-title="${variant.title.replace(/"/g, '&quot;')}"
+                                aria-pressed="false"
+                                role="radio">
+                                ${variant.title}
+                            </button>
+                            `).join('')}
+                        </div>
+                        <p id="pdp-size-error" class="text-red-500 text-[10px] font-bold uppercase tracking-wider mt-3 hidden" role="alert">
+                            Please select a size before adding to cart.
+                        </p>
+                    </div>
+                    ` : ''}
+
                     ${product.category === 'Tuning & Electronics' ? `
                     <!-- ═══════════════════════════════════════════════════════ -->
                     <!-- MANDATE 2: OLED VARIANT INPUT LOGIC                     -->
@@ -2407,9 +2431,19 @@ function initPDP() {
             }
         } else {
             if (validationFailed) return;
+            if (product.category === 'Merch' && product.variants && product.variants.length > 1 && !selectedVariant) {
+                const sizeError = document.getElementById('pdp-size-error');
+                const sizeWrap = document.getElementById('pdp-size-wrap');
+                if (sizeError) sizeError.classList.remove('hidden');
+                if (sizeWrap) {
+                    sizeWrap.style.borderColor = 'rgba(239,68,68,0.6)';
+                    sizeWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
             const qtyInput = document.getElementById("pdp-qty-input");
             const qty = qtyInput ? (parseInt(qtyInput.value) || 1) : 1;
-            addToCart(product.id, qty, customAttributes);
+            addToCart(product.id, qty, customAttributes, selectedVariant);
         }
 
         if (window.isBuyNowFlow) {
@@ -2418,6 +2452,35 @@ function initPDP() {
         }
     });
 
+
+    // Merchandise size selector
+    if (product.category === 'Merch') {
+        const sizeCards = document.querySelectorAll('.pdp-size-card');
+        sizeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                sizeCards.forEach(c => {
+                    c.style.borderColor = '#1E1E28';
+                    c.style.backgroundColor = '';
+                    c.setAttribute('aria-pressed', 'false');
+                });
+
+                card.style.borderColor = '#00E5FF';
+                card.style.backgroundColor = 'rgba(0,229,255,0.10)';
+                card.setAttribute('aria-pressed', 'true');
+                selectedVariant = {
+                    id: card.dataset.variantId,
+                    price: parseFloat(card.dataset.variantPrice),
+                    title: card.dataset.variantTitle
+                };
+                updateTotalPrice();
+
+                const sizeError = document.getElementById('pdp-size-error');
+                const sizeWrap = document.getElementById('pdp-size-wrap');
+                if (sizeError) sizeError.classList.add('hidden');
+                if (sizeWrap) sizeWrap.style.borderColor = '#1E1E28';
+            });
+        });
+    }
 
     // Accordion Logic
     document.querySelectorAll('.pdp-accordion-btn').forEach(btn => {
