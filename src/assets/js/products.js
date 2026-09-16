@@ -33,14 +33,17 @@ const EXCLUDED_KEYWORDS = [
     "gift card", "e-gift card",
     "ceramic tint", "suntek carbon tint", "carbon tint",
     "tint removal", "glue cleanup", "windshield brow removal",
-    "rear window tint removal",
-    "hoodie", "duck camo"
+    "rear window tint removal"
 ];
 
 function isExcluded(title, tags) {
     const t = title.toLowerCase();
+    // Store merchandise is intentionally available in the parts catalog.
+    if (t.includes("hoodie") || t.includes("t-shirt") || t.includes("tshirt") ||
+        tags.some(tag => ["merch", "merchandise"].includes(tag.toLowerCase()))) {
+        return false;
+    }
     if (EXCLUDED_KEYWORDS.some(kw => t.includes(kw))) return true;
-    if (tags.some(tag => tag.toLowerCase() === "merchandise")) return true;
     return false;
 }
 
@@ -50,6 +53,12 @@ function classifyCategory(title, tags) {
     const tagStr = tags.join(" ").toLowerCase();
 
     // Order matters: check more specific before general
+
+    // Apparel and branded goods
+    if (t.includes("hoodie") || t.includes("t-shirt") || t.includes("tshirt") ||
+        tagStr.includes("merch") || tagStr.includes("merchandise")) {
+        return "Merch";
+    }
 
     // Bumpers & Armor (Gridiron)
     if (t.includes("bumper") || t.includes("interceptor") || t.includes("grille guard") ||
