@@ -187,46 +187,13 @@
 
                         <!-- Boutique Form -->
                         <div id="form-boutique" class="block">
-                            <iframe
-                                src="https://api.leadconnectorhq.com/widget/form/z0mxfa83vDRmfWYqXmnb"
-                                style="width:100%;height:100%;border:none;border-radius:0px"
-                                id="inline-z0mxfa83vDRmfWYqXmnb" 
-                                data-layout="{'id':'INLINE'}"
-                                data-trigger-type="alwaysShow"
-                                data-trigger-value=""
-                                data-activation-type="alwaysActivated"
-                                data-activation-value=""
-                                data-deactivation-type="neverDeactivate"
-                                data-deactivation-value=""
-                                data-form-name="The Boutique Service Appointment"
-                                data-height="1283"
-                                data-layout-iframe-id="inline-z0mxfa83vDRmfWYqXmnb"
-                                data-form-id="z0mxfa83vDRmfWYqXmnb"
-                                title="The Boutique Service Appointment"
-                            ></iframe>
+                            <div data-intake="boutique"></div>
                         </div>
 
                         <!-- Build Form -->
                         <div id="form-build" class="hidden">
-                            <iframe
-                                src="https://api.leadconnectorhq.com/widget/form/A0muuF8ckT9dvPIcevlP"
-                                style="width:100%;height:100%;border:none;border-radius:0px"
-                                id="inline-A0muuF8ckT9dvPIcevlP" 
-                                data-layout="{'id':'INLINE'}"
-                                data-trigger-type="alwaysShow"
-                                data-trigger-value=""
-                                data-activation-type="alwaysActivated"
-                                data-activation-value=""
-                                data-deactivation-type="neverDeactivate"
-                                data-deactivation-value=""
-                                data-form-name="Performance &amp; Build Request Form"
-                                data-height="2232"
-                                data-layout-iframe-id="inline-A0muuF8ckT9dvPIcevlP"
-                                data-form-id="A0muuF8ckT9dvPIcevlP"
-                                title="Performance &amp; Build Request Form"
-                            ></iframe>
+                            <div data-intake="build"></div>
                         </div>
-
                         <script>
                             function switchForm(type) {
                                 const btnBoutique = document.getElementById('btn-boutique');
@@ -258,19 +225,8 @@
                                     switchForm('boutique');
                                 }
                             });
-
-                            (function() {
-                                const params = new URLSearchParams(window.location.search);
-                                if (params.toString()) {
-                                    const iframe = document.getElementById("inline-z0mxfa83vDRmfWYqXmnb");
-                                    if (iframe) {
-                                        const separator = iframe.src.includes("?") ? "&" : "?";
-                                        iframe.src += separator + params.toString();
-                                    }
-                                }
-                            })();
                         </script>
-                        <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript"></script>
+                        <script src="/assets/js/intake.js"></script>
                     </div>
 
                     <!-- Info side - order-2 (second on mobile), order-1 on desktop -->

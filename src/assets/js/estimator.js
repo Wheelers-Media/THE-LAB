@@ -519,33 +519,14 @@ function loadBookingIframe() {
                         <span class="text-white font-extrabold text-base">$${price.toFixed(2)}</span>
                     </div>
                 </div>
-                <p class="text-[10px] text-zinc-600 mt-3 leading-relaxed">Please reference this info when filling out the booking form below. Select the matching service & options.</p>
+                <p class="text-[10px] text-zinc-600 mt-3 leading-relaxed">Your selections above will help us quote you faster. Tell us about your vehicle on the next step and we will confirm pricing and timing.</p>
             </div>
-            
-            <!-- Booking Form -->
-            <div class="rounded-xl overflow-hidden border border-edge bg-[#0D0D12] relative">
-                <div class="flex flex-col items-center justify-center gap-3 text-zinc-600 py-8" id="ghl-loading-spinner">
-                    <svg class="w-8 h-8 animate-spin text-labBlue" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    <span class="text-xs font-mono uppercase tracking-widest">Loading Booking...</span>
-                </div>
-                <iframe src="https://api.leadconnectorhq.com/widget/booking/uCWyqHn7e5TTX1838aZi" 
-                    style="width: 100%; height: 1200px; border: none;" 
-                    scrolling="no" 
-                    id="ghl-booking-iframe"
-                    onload="document.getElementById('ghl-loading-spinner').style.display='none';">
-                </iframe>
-            </div>
+
+            <a href="/contact/?service=${encodeURIComponent(serviceName)}#form" class="block text-center bg-white text-black font-extrabold py-4 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all min-h-[48px]">
+                Continue to Booking
+            </a>
         </div>
     `;
-    
-    // Load form_embed.js for proper iframe resizing
-    const script = document.createElement('script');
-    script.src = 'https://link.msgsndr.com/js/form_embed.js';
-    script.type = 'text/javascript';
-    document.body.appendChild(script);
 }
 
 // Global exposure
