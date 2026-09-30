@@ -1,20 +1,16 @@
-// Intake forms (replaces the GoHighLevel embeds). On submit the customer's Messages app opens (phone) or their email
-// app does (desktop) with the request pre-filled, an email copy goes to Eric silently, and a confirmation replaces the form.
-// Mount with <div data-intake="boutique|build">. The confirmation links to the right Google Calendar booking page.
+// Intake forms (replaces the GoHighLevel embeds). On submit the site emails the request to Eric (Web3Forms), then the
+// form is replaced by a confirmation with the matching Google Calendar booking page embedded. The customer sends nothing.
+// Mount with <div data-intake="boutique|build">.
 (function () {
-    const TEXT_TO = '+12505003191';                       // Eric
-    const EMAIL_TO = 'info@luxxautomotiveboutique.com';   // mailto target on desktop
     const SHOP_PHONE = '(250) 261-9502';
-    // Fill these in to switch the features on (empty = feature stays off):
+    const TEXT_TO = '+12505003191';  // Eric; only shown as a call/text fallback if sending fails
+    // Web3Forms public key (safe in client code). Submissions go to the email it was registered with.
+    const WEB3FORMS_KEY = '947b4a0a-5af7-480b-9aca-5f81e25e834e';
     // Google Calendar appointment schedule links. detailing = the Detailing Bay team; eric = everything Eric does himself
-    // (tint, lighting, tuning, the whole Build Request form). No link = no booking button.
+    // (tint, lighting, tuning, the whole Build Request form).
     const BOOKING = { detailing: 'https://calendar.app.google/xqP3H8QFGh7AKuGv6', eric: 'https://calendar.app.google/9FUs5TMTG7aPKhdt6' };
-    const WEB3FORMS_KEY = '';  // free key from web3forms.com (enter the email that should get copies) -> silent email backup
 
-    const smsBody = (title, rows) => [`THE LAB - New ${title}`, ...rows.map(([l, v]) => `${l}: ${v}`)].join('\n');
-    const smsHref = (body) => `sms:${TEXT_TO}?&body=${encodeURIComponent(body)}`;
-    const mailHref = (title, body) => `mailto:${EMAIL_TO}?subject=${encodeURIComponent('THE LAB: New ' + title)}&body=${encodeURIComponent(body)}`;
-    const onPhone = () => matchMedia('(pointer: coarse)').matches;
+    const messageBody = (title, rows) => [`THE LAB - New ${title}`, ...rows.map(([l, v]) => `${l}: ${v}`)].join('\n');
     const textDisplay = TEXT_TO.replace(/^\+1(\d{3})(\d{3})(\d{4})$/, '($1) $2-$3');
 
     const SMS_CONSENT = 'I agree to receive promotional and marketing text messages from Luxx Automotive Boutique Inc. (THE LAB). Msg &amp; data rates may apply. Reply STOP to unsubscribe. See our <a href="/terms/" target="_blank" class="text-labBlue hover:underline">Privacy Policy</a>.';
@@ -105,6 +101,7 @@
             ${cfg.fields.map(field).join('')}
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
             <div class="sm:col-span-2">
+                <p data-msg role="alert" class="text-sm text-red-400 mb-3" hidden></p>
                 <button type="submit" class="w-full bg-signal text-void font-extrabold text-[15px] tracking-wide min-h-[52px] rounded-xl hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase disabled:opacity-60">${cfg.submit}</button>
             </div>
         </form>`;
@@ -137,7 +134,7 @@
         const sel = form.elements.service;
         if (pre && sel && sel.tagName === 'SELECT' && [...sel.options].some((o) => o.value === pre)) { sel.value = pre; refresh(); }
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!form.checkValidity()) return form.reportValidity();
             if (form.elements.website.value) return; // honeypot: bots fill the hidden field
@@ -146,7 +143,8 @@
             cfg.fields.forEach((d) => { if (!box(d.id).hidden) v[d.id] = d.type === 'check' ? 'Yes' : val(d.id).join(', '); });
             const rows = [];
             const add = (l, x) => x && rows.push([l, x]);
-            add('Name', v.name || `${v.first || ''} ${v.last || ''}`);
+            const name = (v.name || `${v.first || ''} ${v.last || ''}`).trim();
+            add('Name', name);
             add('Phone', v.phone); add('Email', v.email);
             add('Vehicle', [v.year, v.make, v.model].filter(Boolean).join(' '));
             add('VIN', v.vin);
@@ -156,60 +154,39 @@
             });
             add('Off-road disclaimer agreed', v.offroad); add('SMS consent', v.consent);
 
-            const body = smsBody(cfg.title, rows);
-            emailBackup(cfg.title, rows, body);
-            const a = Object.assign(document.createElement('a'), { href: onPhone() ? smsHref(body) : mailHref(cfg.title, body) });
-            document.body.appendChild(a); a.click(); a.remove(); // attached first: Firefox ignores clicks on detached links
-            done(el, cfg.title, body, v.service === 'Premium Detailing' ? 'detailing' : 'eric');
+            const btn = form.querySelector('button[type=submit]');
+            const msg = form.querySelector('[data-msg]');
+            btn.disabled = true; btn.textContent = 'Sending…'; msg.hidden = true;
+            try {
+                const r = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                    body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject: `THE LAB: New ${cfg.title} - ${name}`, from_name: 'THE LAB Website', name, email: v.email, phone: v.phone, message: messageBody(cfg.title, rows) }),
+                });
+                const j = await r.json();
+                if (!j.success) throw new Error(j.message);
+                done(el, v.service === 'Premium Detailing' ? 'detailing' : 'eric');
+            } catch (err) {
+                msg.innerHTML = `We couldn't send that. Please call or text us at <a class="underline" href="tel:${TEXT_TO}">${textDisplay}</a> or try again.`;
+                msg.hidden = false;
+                btn.disabled = false; btn.textContent = cfg.submit;
+            }
         });
     }
 
-    // Silent email copy so Eric gets every request even if the customer never taps Send.
-    function emailBackup(title, rows, body) {
-        if (!WEB3FORMS_KEY) return;
-        const get = (l) => (rows.find(([k]) => k === l) || [])[1] || '';
-        fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            keepalive: true, // survives the page losing focus to the Messages app
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject: `THE LAB: New ${title}`, from_name: 'THE LAB Website', name: get('Name'), email: get('Email'), phone: get('Phone'), message: body }),
-        }).catch(() => {});
-    }
-
-    async function copyText(t) {
-        try { await navigator.clipboard.writeText(t); return true; } catch (err) {
-            const ta = Object.assign(document.createElement('textarea'), { value: t });
-            document.body.appendChild(ta); ta.select();
-            const ok = document.execCommand('copy'); ta.remove(); return ok;
-        }
-    }
-
-    // Replaces the form. No redirect: we can't know whether they actually hit Send.
-    function done(el, title, body, route) {
-        const btn = (attrs, label, style) => `<a ${attrs} class="inline-flex items-center justify-center font-extrabold text-xs uppercase tracking-widest py-3 px-5 min-h-[48px] rounded-lg transition-all cursor-pointer ${style}">${label}</a>`;
-        const primary = 'bg-white text-black hover:bg-zinc-200';
-        const ghost = 'border border-edge text-white hover:bg-white/5';
-        const phone = onPhone();
-        const text = btn(`href="${esc(smsHref(body))}"`, 'Text Eric', phone ? primary : ghost);
-        const mail = btn(`href="${esc(mailHref(title, body))}"`, 'Email Us', phone ? ghost : primary);
+    // Replaces the form once Eric has the request. The booking calendar is embedded right here, no redirect.
+    function done(el, route) {
         const url = BOOKING[route];
         const drop = route === 'detailing';
-        const book = url ? `<div class="mb-6">${btn(`href="${esc(url)}" target="_blank" rel="noopener"`, drop ? 'Pick your drop-off time' : 'Pick a time', 'bg-labBlue text-white hover:bg-blue-600 w-full sm:w-auto')}${drop ? '<p class="text-zinc-400 text-xs mt-3">Drop-off is 8:00 to 9:00 AM, Monday to Friday.</p>' : ''}</div>` : '';
         el.innerHTML = `<div class="text-center">
-            <p class="text-white text-lg leading-snug mb-5"><strong class="font-heading font-extrabold uppercase">Text sent?</strong> ${url && drop ? 'Now pick your drop-off time. ' : ''}Eric will confirm ${url && drop ? '' : 'your time '}and send your deposit link.</p>
-            ${book}
-            <pre class="text-left text-xs text-zinc-400 bg-void border border-edge rounded-xl p-4 mb-5 whitespace-pre-wrap break-words font-body">${esc(body)}</pre>
-            <div class="flex flex-wrap justify-center gap-3">
-                ${phone ? text + mail : mail + text}
-                ${btn('data-copy', 'Copy message', ghost)}
-            </div>
-            <p class="text-zinc-500 text-[11px] mt-4">Nothing opened? Copy the message and text ${textDisplay}, or call ${SHOP_PHONE}.</p>
+            <p class="text-white text-lg leading-snug mb-2"><strong class="font-heading font-extrabold uppercase">Got it!</strong> Eric has your request.</p>
+            <p class="text-zinc-400 text-sm mb-5">${url ? `Pick ${drop ? 'your drop-off' : 'a'} time below. ` : ''}Eric will confirm and text you a $50 deposit link to lock in your spot (100% credited to your final invoice).</p>
+            ${drop ? '<p class="text-zinc-300 text-xs mb-4">Drop-off is 8:00 to 9:00 AM, Monday to Friday (Fort St. John time).</p>' : ''}
+            ${url ? `<iframe src="${esc(url)}" title="Pick a time" loading="lazy" class="w-full rounded-xl bg-white" style="height:720px;border:0"></iframe>
+            <a href="${esc(url)}" target="_blank" rel="noopener" class="inline-block text-labBlue hover:underline text-xs mt-3">Calendar not loading? Open it in a new tab</a>` : ''}
+            <p class="text-zinc-500 text-[11px] mt-4">Questions? Call or text ${textDisplay}.</p>
         </div>`;
-        const copy = el.querySelector('[data-copy]');
-        copy.addEventListener('click', async () => {
-            copy.textContent = (await copyText(body)) ? 'Copied' : 'Press Ctrl+C to copy';
-        });
-        el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        el.scrollIntoView({ block: 'start', behavior: 'smooth' });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
