@@ -1,4 +1,4 @@
-// Intake forms (replaces the GoHighLevel embeds). On submit the site emails the request to Eric (Web3Forms), then the
+// Intake forms. On submit the site emails the request to Eric (Web3Forms), then the
 // form is replaced by a confirmation with the matching Google Calendar booking page embedded. The customer sends nothing.
 // Mount with <div data-intake="boutique|build">.
 (function () {
