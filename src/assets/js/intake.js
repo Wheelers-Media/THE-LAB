@@ -3,7 +3,7 @@
 // Mount with <div data-intake="boutique|build">.
 (function () {
     const SHOP_PHONE = '(250) 261-9502';
-    const TEXT_TO = '+12505003191';  // Eric; only shown as a call/text fallback if sending fails
+    const TEXT_TO = '+12502619502';  // shop number; only shown as a call/text fallback if sending fails
     // Web3Forms public key (safe in client code). Submissions go to the email it was registered with.
     const WEB3FORMS_KEY = '947b4a0a-5af7-480b-9aca-5f81e25e834e';
     // Google Calendar appointment schedule links. detailing = the Detailing Bay team; eric = everything Eric does himself
