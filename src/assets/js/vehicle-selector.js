@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.remove('selected-make');
         });
         
-        if (step2) step2.classList.add('opacity-30', 'pointer-events-none');
+        if (step2) { step2.classList.add('opacity-30', 'pointer-events-none'); step2.setAttribute('inert', ''); }
         if (engineSelect) engineSelect.innerHTML = '<option value="">Select Engine</option>';
         validateStep2();
     }
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.remove('selected-make');
         });
         
-        if (step2) step2.classList.add('opacity-30', 'pointer-events-none');
+        if (step2) { step2.classList.add('opacity-30', 'pointer-events-none'); step2.setAttribute('inert', ''); }
         if (engineSelect) engineSelect.innerHTML = '<option value="">Select Engine</option>';
         validateStep2();
 
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         // Activate Step 2
-        step2.classList.remove('opacity-30', 'pointer-events-none');
+        step2.classList.remove('opacity-30', 'pointer-events-none'); step2.removeAttribute('inert');
         validateStep2();
     }
     

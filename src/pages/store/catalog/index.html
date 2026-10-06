@@ -64,7 +64,7 @@
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<div class="site-warn" role="note">Warning: Off-road &amp; sanctioned racing use only. Not legal for use on pollution-controlled vehicles.</div>
+<div class="site-warn" role="region" aria-label="Off-road use notice">Warning: Off-road &amp; sanctioned racing use only. Not legal for use on pollution-controlled vehicles.</div>
 <header class="site-header" id="site-header">
     <div class="site-util">
         <div class="site-wrap">
@@ -180,7 +180,7 @@
 
         <section class="wrap cat-shell" aria-label="Parts catalog">
             <!-- Sidebar filters (store.js finds this aside by its w-full / md:w-72 classes) -->
-            <aside class="w-full md:w-72 flex-shrink-0">
+            <aside class="w-full md:w-72 flex-shrink-0" role="region" aria-label="Filters">
                 <div class="filters-panel">
                     <div class="filters-head">
                         <button type="button" class="filters-open md:hidden" onclick="document.getElementById('mobile-filter-content').classList.toggle('hidden')">
@@ -298,7 +298,7 @@
     
 
     <!-- Vehicle Selector Modal -->
-    <div id="vehicle-selector-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
+    <div id="vehicle-selector-modal" role="dialog" aria-modal="true" aria-label="Select your truck" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
         <div class="bg-[#12121A] border border-edge rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
             <!-- Modal Header -->
             <div class="p-6 border-b border-edge flex items-start justify-between">
@@ -324,29 +324,29 @@
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6" id="vs-make-grid">
                         <button type="button" data-make="Cummins" class="vs-make-btn flex flex-col items-center justify-center p-8 border border-edge rounded-xl bg-[#0D0D12] transition-all group">
-                            <img width="2500" height="2250" src="/assets/ram-logo.png" alt="Cummins" class="h-16 w-auto mb-4 object-contain vs-make-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <img width="2500" height="2250" src="/assets/ram-logo.png" alt="" class="h-16 w-auto mb-4 object-contain vs-make-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <span class="hidden text-zinc-500 mb-2">Ram</span>
                             <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest transition-colors vs-make-text group-hover:text-white">Cummins</span>
                         </button>
                         <button type="button" data-make="Duramax" class="vs-make-btn flex flex-col items-center justify-center p-8 border border-edge rounded-xl bg-[#0D0D12] transition-all group">
-                            <img width="394" height="394" src="/assets/gm-logo.png" alt="Duramax" class="h-16 w-auto mb-4 object-contain vs-make-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <img width="394" height="394" src="/assets/gm-logo.png" alt="" class="h-16 w-auto mb-4 object-contain vs-make-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <span class="hidden text-zinc-500 mb-2">GM</span>
                             <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest transition-colors vs-make-text group-hover:text-white">Duramax</span>
                         </button>
                         <button type="button" data-make="Powerstroke" class="vs-make-btn flex flex-col items-center justify-center p-8 border border-edge rounded-xl bg-[#0D0D12] transition-all group">
-                            <img width="1004" height="362" src="/assets/ford-logo.png" alt="Powerstroke" class="h-16 w-auto mb-4 object-contain vs-make-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <img width="1004" height="362" src="/assets/ford-logo.png" alt="" class="h-16 w-auto mb-4 object-contain vs-make-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <span class="hidden text-zinc-500 mb-2">Ford</span>
                             <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest transition-colors vs-make-text group-hover:text-white">Powerstroke</span>
                         </button>
                         <button type="button" data-make="Half-Ton" class="vs-make-btn flex flex-col items-center justify-center p-8 border border-edge rounded-xl bg-[#0D0D12] transition-all group">
-                            <img width="540" height="360" src="/assets/half-ton.png" alt="Half-Ton" class="h-16 w-auto mb-4 object-contain vs-make-icon brightness-0 invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <img width="540" height="360" src="/assets/half-ton.png" alt="" class="h-16 w-auto mb-4 object-contain vs-make-icon brightness-0 invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest transition-colors vs-make-text group-hover:text-white">Half-Ton</span>
                         </button>
                     </div>
                 </div>
                 
                 <!-- Step 2 -->
-                <div id="vs-step-2" class="opacity-30 pointer-events-none transition-all duration-300">
+                <div id="vs-step-2" inert class="opacity-30 pointer-events-none transition-all duration-300">
                     <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Step 2 - Select Engine</h3>
                     <div class="relative w-full md:w-1/2 mb-8">
                         <select aria-label="Engine" id="vs-engine-select" class="w-full appearance-none bg-[#000000] border border-edge rounded-xl p-4 pr-12 text-sm text-white focus:outline-none focus:border-labBlue focus:ring-2 focus:ring-labBlue/50 shadow-oled-blue transition-all cursor-pointer min-h-[48px]">

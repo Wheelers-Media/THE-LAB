@@ -1292,11 +1292,11 @@ function initPDP() {
                     <div id="pdp-gallery-container" class="flex gap-3 pb-2 overflow-x-hidden relative" style="mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);">
                         <div id="pdp-gallery-track" class="flex gap-3 transition-transform duration-500 ease-out" style="transform: translateX(0px);">
                             ${product.images.map((img, idx) => `
-                                <button class="pdp-gallery-thumb flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-labBlue" 
+                                <button type="button" aria-label="Show photo ${idx + 1} of ${product.images.length}" class="pdp-gallery-thumb flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-labBlue" 
                                     data-img-src="${img}"
                                     data-img-index="${idx}"
                                     style="border-color: ${idx === 0 ? '#0066FF' : '#1E1E28'};">
-                                    <img src="${img}" class="w-full h-full object-cover" loading="lazy">
+                                    <img src="${img}" alt="" class="w-full h-full object-cover" loading="lazy">
                                 </button>
                             `).join('')}
                         </div>
@@ -1334,7 +1334,7 @@ function initPDP() {
                         <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">
                             Select size <span class="text-red-500 ml-1" aria-label="required">*</span>
                         </label>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" role="radiogroup" aria-label="Select size">
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" role="group" aria-label="Select size">
                             ${product.variants.filter(v => v.available !== false).map(variant => `
                             <button type="button"
                                 class="pdp-size-card min-h-[48px] rounded-lg border border-[#1E1E28] text-sm font-bold text-white transition-all hover:border-labCyan hover:bg-labCyan/10 focus:outline-none focus:ring-2 focus:ring-labCyan"
@@ -1342,7 +1342,7 @@ function initPDP() {
                                 data-variant-price="${variant.price}"
                                 data-variant-title="${variant.title.replace(/"/g, '&quot;')}"
                                 aria-pressed="false"
-                                role="radio">
+                                >
                                 ${variant.title}
                             </button>
                             `).join('')}
@@ -1366,7 +1366,7 @@ function initPDP() {
                                 Power Level
                                 <span class="text-red-500 ml-1" aria-label="required">*</span>
                             </label>
-                            <div class="space-y-2" role="radiogroup" aria-label="Select tune power level">
+                            <div class="space-y-2" role="group" aria-label="Select tune power level">
                                 ${product.variants.filter(v => v.available !== false).map((variant, i) => `
                                 <button type="button"
                                     class="pdp-tune-card w-full flex items-center justify-between gap-4 p-4 rounded-lg border border-[#1E1E28] text-left transition-all duration-200 hover:border-labBlue/50 hover:bg-labBlue/5 focus:outline-none focus:ring-2 focus:ring-labBlue min-h-[56px]"
@@ -1374,7 +1374,7 @@ function initPDP() {
                                     data-variant-price="${variant.price}"
                                     data-variant-title="${variant.title.replace(/"/g, '&quot;')}"
                                     aria-pressed="false"
-                                    role="radio">
+                                    >
                                     <div class="flex items-center gap-3">
                                         <div class="w-5 h-5 rounded-full border-2 border-[#1E1E28] bg-[#000000] flex items-center justify-center flex-shrink-0 tune-radio-indicator">
                                             <div class="w-2.5 h-2.5 rounded-full bg-labCyan opacity-0 tune-radio-dot transition-opacity"></div>
@@ -1739,14 +1739,14 @@ function initPDP() {
 
                     <!-- Quantity & Add to Cart Row -->
                     <div class="flex flex-col gap-3 mt-4">
-                        <label class="text-[10px] text-zinc-400 uppercase tracking-widest">Quantity</label>
+                        <label for="pdp-qty-input" class="text-[10px] text-zinc-400 uppercase tracking-widest">Quantity</label>
                         <div class="flex gap-4 items-center">
                             <div class="flex items-center bg-[#0D0D12] border border-[#1E1E28] rounded-xl h-[56px]">
-                                <button id="pdp-qty-minus" class="w-12 h-full text-zinc-400 hover:text-white flex items-center justify-center transition-colors focus:outline-none">
+                                <button id="pdp-qty-minus" type="button" aria-label="Decrease quantity" class="w-12 h-full text-zinc-400 hover:text-white flex items-center justify-center transition-colors focus:outline-none">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
                                 </button>
-                                <input type="number" id="pdp-qty-input" value="1" min="1" class="w-12 h-full bg-transparent text-center text-white font-bold focus:outline-none appearance-none" style="-moz-appearance: textfield;">
-                                <button id="pdp-qty-plus" class="w-12 h-full text-zinc-400 hover:text-white flex items-center justify-center transition-colors focus:outline-none">
+                                <input type="number" id="pdp-qty-input" aria-label="Quantity" value="1" min="1" class="w-12 h-full bg-transparent text-center text-white font-bold focus:outline-none appearance-none" style="-moz-appearance: textfield;">
+                                <button id="pdp-qty-plus" type="button" aria-label="Increase quantity" class="w-12 h-full text-zinc-400 hover:text-white flex items-center justify-center transition-colors focus:outline-none">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                                 </button>
                             </div>

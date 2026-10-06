@@ -12,7 +12,13 @@
     const vehicle = () => [f.year.value, f.make.value, f.model.value].map((x) => x.trim()).filter(Boolean).join(' ');
 
     function render() {
-        cards.forEach((c) => c.setAttribute('aria-pressed', String(sel.has(c.dataset.pick))));
+        cards.forEach((c) => {
+            const on = sel.has(c.dataset.pick);
+            c.setAttribute('data-on', String(on));
+            const b = $('.light-add', c);
+            b.setAttribute('aria-pressed', String(on));
+            b.textContent = on ? 'Added to my plan' : 'Add to my plan';
+        });
         const chosen = cards.filter((c) => sel.has(c.dataset.pick));
         $('#light-count').textContent = chosen.length ? chosen.length + (chosen.length === 1 ? ' upgrade selected' : ' upgrades selected') : 'Nothing selected yet';
         const i = root.wz ? root.wz.index : 0;
@@ -29,8 +35,8 @@
 
     cards.forEach((c) => {
         const toggle = () => { sel.has(c.dataset.pick) ? sel.delete(c.dataset.pick) : sel.add(c.dataset.pick); render(); };
+        // tapping the card toggles it; the Add button inside is the keyboard and screen reader control (its click bubbles here)
         c.addEventListener('click', (e) => { if (e.target.closest('details, summary')) return; toggle(); });
-        c.addEventListener('keydown', (e) => { if (e.target === c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(); } });
     });
     Object.keys(f).forEach((k) => f[k].addEventListener('input', render));
     $('#wz-restart').addEventListener('click', () => { sel.clear(); Object.keys(f).forEach((k) => (f[k].value = '')); render(); root.dispatchEvent(new CustomEvent('wz:goto', { detail: 0 })); });

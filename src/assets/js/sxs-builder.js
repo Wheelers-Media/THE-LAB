@@ -25,7 +25,7 @@
         $('#est-lines').innerHTML = lines.map((l) => '<li><span>' + l.label + '</span><span class="price">' + l.txt + '</span></li>').join('');
         $('#est-total').textContent = 'from ' + money(total);
         window.labHandoff('Window Tinting', 'SxS: ' + name + ' film' + (S.brow ? ' + sun-strip' : '') + '. Estimate from ' + money(total, 'CAD'), {
-            tint_pref: 'Off-Road SxS & Equipment Film - Starts at $25 CAD',
+            tint_pref: 'Off-Road SxS & Equipment Film',
             category: 'Side-by-Side (SxS) / Off-Road',
         });
     }
