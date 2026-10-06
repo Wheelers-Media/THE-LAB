@@ -85,23 +85,23 @@ function initCart() {
     // Inject Cart Flyout DOM
     const flyoutHTML = `
         <div id="cart-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden opacity-0 transition-opacity"></div>
-        <div id="cart-flyout" class="fixed top-0 right-0 h-full w-full max-w-md bg-midnight border-l border-edge shadow-2xl z-[201] transform translate-x-full transition-transform duration-300 flex flex-col">
-            <div class="p-6 border-b border-edge flex items-center justify-between">
-                <h2 class="text-white font-heading font-bold text-lg uppercase tracking-widest">Your Cart</h2>
-                <button onclick="closeCart()" class="text-zinc-400 hover:text-white p-2 min-w-[44px] min-h-[44px] flex items-center justify-center">
+        <div id="cart-flyout" role="dialog" aria-label="Your cart" class="cart fixed top-0 right-0 h-full w-full max-w-md shadow-2xl z-[201] transform translate-x-full transition-transform duration-300 flex flex-col">
+            <div class="cart-head">
+                <h2 class="cart-title">Your Cart</h2>
+                <button onclick="closeCart()" class="cart-x" aria-label="Close cart">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-6"></div>
-            <div class="p-6 border-t border-edge bg-void pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] md:pb-6">
-                <div class="flex justify-between text-white font-bold mb-4">
+            <div id="cart-items" class="cart-items flex-1 overflow-y-auto"></div>
+            <div class="cart-foot">
+                <div class="cart-sub">
                     <span>Subtotal</span>
                     <span id="cart-subtotal">$0.00</span>
                 </div>
-                <button onclick="handleCheckout()" class="block w-full text-center bg-labBlue text-white font-extrabold uppercase tracking-widest py-4 rounded-xl hover:bg-labCyan transition-colors min-h-[56px] text-sm">
+                <button onclick="handleCheckout()" class="cart-go">
                     Checkout Securely →
                 </button>
-                <p class="text-center text-zinc-600 text-[10px] mt-3 uppercase tracking-wider">Secure checkout via Shopify</p>
+                <p class="cart-note">Secure checkout via Shopify</p>
             </div>
         </div>
     `;
@@ -146,7 +146,7 @@ function updateCartUI() {
     if (!itemsContainer) return;
 
     if (cart.length === 0) {
-        itemsContainer.innerHTML = `<p class="text-zinc-500 text-center mt-10">Your cart is empty.</p>`;
+        itemsContainer.innerHTML = `<p class="cart-empty">Your cart is empty.</p>`;
         document.getElementById("cart-subtotal").innerHTML = `<span data-price-cad="0.00">$0.00 CAD</span>`;
         return;
     }
@@ -156,19 +156,19 @@ function updateCartUI() {
         subtotal += item.price * item.quantity;
         let attrHtml = '';
         if (item.customAttributes && Object.keys(item.customAttributes).length > 0) {
-            attrHtml = Object.entries(item.customAttributes).map(([k, v]) => `<p class="text-[10px] text-zinc-500 font-mono mt-1">${k}: ${v}</p>`).join('');
+            attrHtml = Object.entries(item.customAttributes).map(([k, v]) => `<p class="cart-attr">${k}: ${v}</p>`).join('');
         }
         return `
-            <div class="flex gap-4 items-center">
-                <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded bg-void border border-edge">
-                <div class="flex-1">
-                    <h3 class="text-white text-xs font-bold leading-tight mb-1 line-clamp-2">${item.name}</h3>
+            <div class="cart-row">
+                <img src="${item.image}" alt="${item.name}">
+                <div>
+                    <h3 class="cart-name">${item.name}</h3>
                     ${attrHtml}
-                    <p class="text-labBlue text-xs font-mono font-bold mt-1" data-price-cad="${item.price}">$${item.price.toFixed(2)} CAD</p>
-                    <div class="flex items-center gap-3 mt-2">
-                        <button onclick="updateQuantity('${item.cartItemId}', -1)" class="text-zinc-400 hover:text-white px-2 py-1 bg-edge rounded">-</button>
-                        <span class="text-white text-xs font-bold">${item.quantity}</span>
-                        <button onclick="updateQuantity('${item.cartItemId}', 1)" class="text-zinc-400 hover:text-white px-2 py-1 bg-edge rounded">+</button>
+                    <p class="cart-price" data-price-cad="${item.price}">$${item.price.toFixed(2)} CAD</p>
+                    <div class="cart-qty">
+                        <button onclick="updateQuantity('${item.cartItemId}', -1)" aria-label="Decrease quantity">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="updateQuantity('${item.cartItemId}', 1)" aria-label="Increase quantity">+</button>
                     </div>
                 </div>
             </div>
@@ -179,19 +179,17 @@ function updateCartUI() {
     const upsells = getCartUpsells();
     if (upsells.length > 0) {
         itemsContainer.innerHTML += `
-            <div class="mt-8 border-t border-edge pt-6">
-                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Customers Also Purchased</h4>
-                <div class="space-y-4">
+            <div>
+                <h4 class="cart-up-title">Customers Also Purchased</h4>
+                <div>
                     ${upsells.map(u => `
-                        <div class="flex gap-3 items-center bg-[#0D0D12] p-3 rounded-lg border border-edge/50">
-                            <img src="${u.image}" alt="${u.name}" class="w-12 h-12 object-cover rounded bg-void">
-                            <div class="flex-1">
-                                <h5 class="text-white text-[10px] font-bold leading-tight line-clamp-2 uppercase tracking-wide">${u.name}</h5>
-                                <div class="text-labBlue text-xs font-mono font-bold mt-1" data-price-cad="${u.price}">$${u.price.toFixed(2)} CAD</div>
+                        <div class="cart-up">
+                            <img src="${u.image}" alt="${u.name}">
+                            <div>
+                                <h5>${u.name}</h5>
+                                <div class="cart-price" data-price-cad="${u.price}">$${u.price.toFixed(2)} CAD</div>
                             </div>
-                            <button onclick="addToCart('${u.id}')" class="px-3 py-1.5 bg-labBlue/10 hover:bg-labBlue/20 text-labBlue border border-labBlue/30 hover:border-labBlue/50 text-[10px] font-bold uppercase tracking-wider rounded transition-colors min-h-[32px] min-w-[48px]">
-                                Add
-                            </button>
+                            <button onclick="addToCart('${u.id}')" class="cart-add">Add</button>
                         </div>
                     `).join('')}
                 </div>
@@ -583,11 +581,11 @@ function initVehicleSelector() {
 function buildFilterCheckbox(value, dataType, label, count) {
     const id = `filter-${dataType}-${value.replace(/[\s\/&.]+/g, '-')}`;
     return `
-        <label class="flex items-center gap-3 px-1 py-1.5 cursor-pointer group rounded-lg hover:bg-white/5 transition-colors" for="${id}">
+        <label class="fopt" for="${id}">
             <input type="checkbox" value="${value}" data-type="${dataType}" id="${id}"
-                class="store-filter w-4 h-4 bg-void border border-edge rounded text-labBlue focus:ring-labBlue focus:ring-opacity-50 accent-[#0066FF] flex-shrink-0">
-            <span class="text-sm text-zinc-400 group-hover:text-white transition-colors flex-1">${label}</span>
-            <span class="text-[10px] text-zinc-600 font-mono">${count}</span>
+                class="store-filter fopt-box">
+            <span class="fopt-label">${label}</span>
+            <span class="fopt-n">${count}</span>
         </label>`;
 }
 
@@ -702,7 +700,7 @@ function updateActiveChips() {
     bar.classList.add('flex');
     bar.innerHTML = allActive.map(chip => `
         <button data-chip-type="${chip.type}" data-chip-value="${chip.value}"
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-full bg-labBlue/15 text-labBlue border border-labBlue/30 hover:bg-red-900/20 hover:text-red-400 hover:border-red-500/30 transition-all min-h-[32px]">
+            class="chip" aria-label="Remove filter ${chip.value}">
             ${chip.value}
             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
@@ -1112,24 +1110,19 @@ function renderProducts() {
 
     if (filtered.length === 0) {
         const garageWarning = activeVehicle 
-            ? `<div class="mt-6 p-4 bg-labBlue/10 border border-labBlue/30 rounded-lg text-labBlue text-sm max-w-md mx-auto text-left">
-                 <div class="flex gap-3">
-                     <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                     <div>
-                         <p class="font-bold mb-1">Garage Filter Active</p>
-                         <p class="opacity-80">You are only seeing parts that fit your <strong>${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.engine}</strong>. To search the entire store, clear your garage.</p>
-                         <button onclick="document.getElementById('filter-reset-btn').click()" class="mt-3 font-bold text-white hover:text-labCyan underline">Clear Garage</button>
-                     </div>
-                 </div>
+            ? `<div class="pgrid-note">
+                 <p style="margin:0 0 6px"><strong>Garage filter active</strong></p>
+                 <p style="margin:0">You are only seeing parts that fit your <strong>${activeVehicle.year} ${activeVehicle.make} ${activeVehicle.engine}</strong>. To search the entire store, clear your garage.</p>
+                 <button onclick="document.getElementById('filter-reset-btn').click()" style="margin-top:12px">Clear Garage</button>
                </div>`
             : '';
 
         grid.innerHTML = `
-            <div class="col-span-full py-20 text-center">
-                <svg class="w-16 h-16 text-zinc-700 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <h3 class="text-white text-xl font-bold mb-2">No products found</h3>
-                <p class="text-zinc-500 mb-6">Try adjusting your filters or search terms.</p>
-                <button onclick="document.getElementById('filter-reset-btn').click()" class="text-labBlue hover:text-labCyan text-sm font-bold uppercase tracking-wider">Clear All Filters →</button>
+            <div class="pgrid-empty">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <h3>No products found</h3>
+                <p>Try adjusting your filters or search terms.</p>
+                <button onclick="document.getElementById('filter-reset-btn').click()">Clear all filters →</button>
                 ${garageWarning}
             </div>
         `;
@@ -1149,28 +1142,22 @@ function renderProducts() {
             const engOk = enginesMatch(activeVehicle.engine, p.engine);
             const fits = makeMatch && yearOk && engOk;
             cardFitment = fits
-                ? `<span class="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded">✓ Fits Your Truck</span>`
-                : `<span class="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-red-400 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded">✗ May Not Fit</span>`;
+                ? `<span class="fit fit--ok">✓ Fits your truck</span>`
+                : `<span class="fit fit--no">✗ May not fit</span>`;
         }
         return `
-        <div class="group relative bg-void border border-edge rounded-xl overflow-hidden hover:border-labBlue/50 transition-all flex flex-col">
-            <!-- IMAGE FIRST -->
-            <a href="${productUrl}" class="block bg-[#0D0D12] relative flex-shrink-0 overflow-hidden" style="aspect-ratio:4/3;">
-                ${p.isPopular ? '<span class="absolute top-2 right-2 bg-labBlue text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider z-10">Popular</span>' : ''}
-                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 pointer-events-none" loading="lazy">
+        <article class="pcard">
+            <a href="${productUrl}" class="pcard-img" tabindex="-1" aria-hidden="true">
+                ${p.isPopular ? '<span class="pcard-tag">Popular</span>' : ''}
+                <img src="${p.image}" alt="" loading="lazy">
             </a>
-            <!-- TITLE + PRICE BELOW IMAGE -->
-            <div class="p-4 flex flex-col flex-1">
-                <div class="flex items-center gap-2 mb-1.5 flex-wrap">
-                    <span class="text-[10px] font-mono text-labBlue uppercase tracking-widest">${p.brand}</span>
-                    <span class="text-[10px] text-zinc-700">•</span>
-                    <span class="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">${p.category}</span>
-                </div>
-                <h3 class="text-white font-bold text-sm leading-snug line-clamp-2 mb-1 flex-1"><a href="${productUrl}" class="hover:text-labBlue transition-colors">${p.name}</a></h3>
-                <div class="text-[10px] text-zinc-600 font-mono mb-3 leading-relaxed">${p.makes.filter(m => m !== 'Universal').join(', ') || 'Universal Fit'}${p.engine !== 'Universal' ? ' • ' + p.engine : ''}</div>
-                <div class="flex items-center justify-between mt-auto">
+            <div class="pcard-body">
+                <p class="pcard-meta"><span>${p.brand}</span><span>${p.category}</span></p>
+                <h3 class="pcard-name"><a href="${productUrl}">${p.name}</a></h3>
+                <p class="pcard-fit">${p.makes.filter(m => m !== 'Universal').join(', ') || 'Universal Fit'}${p.engine !== 'Universal' ? ' • ' + p.engine : ''}</p>
+                <div class="pcard-foot">
                     <div>
-                        <span class="text-base font-extrabold text-white" data-price-cad="${p.price}">$${p.price.toFixed(2)} CAD</span>
+                        <span class="pcard-price" data-price-cad="${p.price}">$${p.price.toFixed(2)} CAD</span>
                         ${(() => {
                             if (p.price >= 50 && p.price <= 30000) {
                                 let msg = "";
@@ -1180,27 +1167,27 @@ function renderProducts() {
                                     msg = `Pay in monthly installments as low as <strong>$${(p.price / 24).toFixed(2)}/mo</strong> with`;
                                 }
                                 return `
-                                <div class="mt-1.5 text-[9px] text-zinc-400 leading-tight">
+                                <div class="pcard-affirm">
                                     <span data-affirm-cad-total="${p.price}">${msg}</span>
-                                    <img src="/assets/affirm-logo.png" alt="Affirm" class="inline-block h-2.5 w-auto object-contain grayscale opacity-70 ml-1 translate-y-[-1px]">
+                                    <img src="/assets/affirm-logo.png" alt="Affirm">
                                 </div>`;
                             }
                             return '';
                         })()}
-                        ${cardFitment ? `<div class="mt-1">${cardFitment}</div>` : ''}
+                        ${cardFitment ? `<div>${cardFitment}</div>` : ''}
                     </div>
-                    ${p.category === 'Tuning & Electronics' 
-                        ? `<a href="${productUrl}" title="Configure Tune" class="bg-labBlue/10 hover:bg-labBlue text-labBlue hover:text-white border border-labBlue/30 hover:border-labBlue text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-lg transition-all min-h-[44px] flex items-center gap-2">
-                               Configure
-                               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    ${p.category === 'Tuning & Electronics'
+                        ? `<a href="${productUrl}" title="Configure Tune" class="pcard-act">
+                               <span class="pcard-act-txt">Configure</span>
+                               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                            </a>`
-                        : `<button onclick="addToCart('${p.id}')" class="bg-edge hover:bg-labBlue text-white p-2.5 rounded-lg transition-colors min-w-[48px] min-h-[48px] flex items-center justify-center">
-                               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        : `<button onclick="addToCart('${p.id}')" class="pcard-act" aria-label="Add ${p.name.replace(/"/g, '&quot;')} to cart">
+                               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                            </button>`
                     }
                 </div>
             </div>
-        </div>
+        </article>
     `}).join("");
 
     // Scroll jump removed as requested by user
