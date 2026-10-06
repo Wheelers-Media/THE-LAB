@@ -24,6 +24,7 @@ def read(path):
 def render(template, flags):
     def block(m):
         return m.group(2) if flags.get(m.group(1)) else ""
+    template = re.sub(r"\A<!--.*?-->\n", "", template, count=1, flags=re.S)  # the file's own note is not page content
     out = re.sub(r"<!--if:(\w+)-->(.*?)<!--/if:\1-->\n?", block, template, flags=re.S)
     return out.strip("\n") + "\n"
 
@@ -33,6 +34,9 @@ def sync(path):
     raw = open(path, encoding="utf8", newline="").read()
     nl = "\r\n" if "\r\n" in raw else "\n"
     s = raw.replace("\r\n", "\n")
+
+    # drop explanatory notes that earlier runs copied in from the component files
+    s = re.sub(r"<!-- (?:Site (?:header|footer|search overlay)|Truck selector modal): single source of truth[^\n]*-->\n", "", s)
 
     store = rel.startswith("store/")
     price = store or "data-price-cad" in s or "data-price-from-cad" in s
@@ -72,7 +76,20 @@ def sync(path):
     else:
         s = s[:sj] + search + "\n" + s[sj:]
 
-    # 5. chrome.js in <head>, once
+    # 5. truck selector modal (store pages only): replaces the old copy, or goes in before products.js on the product page
+    if store:
+        modal = render(read(os.path.join(COMP, "site-truck-modal.html")), dict(flags, tuning=(rel == "store/tuning/index.html")))
+        start = s.find("<!-- Vehicle Selector Modal -->")
+        vs = s.find('<script src="/assets/js/vehicle-selector.js"')
+        if start >= 0 and vs > start:
+            s = s[:start] + modal + "\n    " + s[vs:]
+        else:
+            pj = s.find('<script src="/assets/js/products.js"')
+            if pj < 0:
+                raise SystemExit("no products.js include in " + rel)
+            s = s[:pj] + modal + '\n    <script src="/assets/js/vehicle-selector.js"></script>\n    ' + s[pj:]
+
+    # 6. chrome.js in <head>, once
     if "/assets/js/chrome.js" not in s:
         s = s.replace("</head>", "    " + CHROME_JS + "\n</head>", 1)
 
