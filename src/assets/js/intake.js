@@ -94,7 +94,7 @@
         }
         if (d.type === 'note') return `<div class="rounded-xl border border-labBlue/40 bg-labBlue/10 p-4 text-sm text-zinc-200 leading-relaxed">${d.html}</div>`;
         if (d.type === 'check') return `<label class="flex items-start gap-3 cursor-pointer"><input type="checkbox" name="${d.id}" ${d.req ? 'required' : ''} class="mt-1 accent-[#0066FF] flex-shrink-0"><span class="text-[11px] text-zinc-500 leading-relaxed">${d.html}</span></label>`;
-        const extra = (d.type === 'tel' ? ' pattern="[0-9\\s()+.\\-]{10,}" title="Enter a 10-digit phone number" autocomplete="tel"' : '') + (d.minlength ? ` minlength="${d.minlength}" maxlength="${d.maxlength}"` : '');
+        const extra = (d.type === 'tel' ? ' pattern="[0-9\\s\\(\\)+.\\-]{10,}" title="Enter a 10-digit phone number" autocomplete="tel"' : '') + (d.minlength ? ` minlength="${d.minlength}" maxlength="${d.maxlength}"` : '');
         return `<input type="${d.type}" ${attrs} placeholder="${esc(d.ph || '')}"${extra} class="${INPUT}">`;
     }
 

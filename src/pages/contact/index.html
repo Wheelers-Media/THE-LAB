@@ -139,169 +139,58 @@
 
 </div>
 
-    <main>
-
-        <!-- HERO -->
-        <section class="relative py-28 px-6 overflow-hidden grid-bg">
-            <div class="absolute top-1/2 right-0 w-1/2 h-80 rounded-full bg-labBlue opacity-[0.06] blur-[120px] pointer-events-none"></div>
-            <div class="max-w-7xl mx-auto relative z-10">
-                <span class="text-labBlue font-mono tracking-[0.25em] uppercase text-xs mb-4 flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-labBlue animate-pulse"></span>
-                    Booking Request
-                </span>
-                <h1 class="font-heading font-extrabold text-5xl md:text-6xl text-white uppercase leading-tight mb-4">
-                    START YOUR<br>BOOKING.
-                </h1>
-                <p class="text-zinc-400 text-lg max-w-xl leading-relaxed">
-                    Pick a service, tell us what you drive, and we will reply with pricing, timing, and the easiest next step. Prefer to talk now? Call or text the shop.
-                </p>
-            </div>
+    <main class="lab-page">
+        <section class="wrap pg-head" aria-labelledby="ct-h1">
+            <p class="pg-kick">Booking request</p>
+            <h1 id="ct-h1" class="display pg-h1">START YOUR<br>BOOKING.</h1>
+            <p class="lede" style="margin:0">Pick a service, tell us what you drive, and we will reply with pricing, timing, and the easiest next step. Prefer to talk now? Call or text the shop.</p>
         </section>
 
-        <!-- CONTACT GRID - Mobile: Form first (zero friction), Desktop: Info left / Form right -->
-        <section class="py-10 px-4 md:py-20 md:px-6 border-t border-edge">
-            <div class="max-w-7xl mx-auto">
-
-                <!-- MOBILE: Quick Action Strip (visible only on mobile, above everything) -->
-                <div class="md:hidden flex gap-3 mb-8">
-                    <a href="tel:+12502619502" class="flex-1 flex items-center justify-center gap-2 bg-edge border border-edge/60 text-white font-bold text-sm py-4 px-4 rounded-xl min-h-[56px] active:scale-95 transition-all">
-                        <svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        Call Now
-                    </a>
-                    <a href="https://maps.google.com/?q=10219+95+Ave+Fort+Saint+John+BC" target="_blank" rel="noopener noreferrer" class="flex-1 flex items-center justify-center gap-2 bg-edge border border-edge/60 text-white font-bold text-sm py-4 px-4 rounded-xl min-h-[56px] active:scale-95 transition-all">
-                        <svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        Directions
-                    </a>
+        <section class="book wrap" aria-label="Contact and booking">
+            <div class="book-grid book-grid--form-first">
+                <div>
+                    <div class="quick">
+                        <a class="btn btn-ghost" href="tel:+12502619502">Call</a>
+                        <a class="btn btn-ghost" href="sms:+12502619502">Text</a>
+                        <a class="btn btn-ghost" href="https://maps.google.com/?q=10219+95+Ave+Fort+Saint+John+BC" target="_blank" rel="noopener noreferrer">Directions</a>
+                    </div>
+                    <dl class="info">
+                        <div><dt>Visit</dt><dd>10219 95 Ave<small>Fort St. John, BC &nbsp;V1J 5J5</small></dd></div>
+                        <div><dt>Call or text</dt><dd><a href="tel:+12502619502">(250) 261-9502</a><small>During business hours</small></dd></div>
+                        <div><dt>Email</dt><dd><a href="mailto:info@luxxautomotiveboutique.com">info@luxxautomotiveboutique.com</a><small>General inquiries and support</small></dd></div>
+                        <div><dt>Hours</dt><dd><span class="hours"><span>Monday &ndash; Friday</span><span>9 a.m. &ndash; 5 p.m.</span></span><span class="hours" style="color:var(--mute)"><span>Saturday &ndash; Sunday</span><span>Closed</span></span></dd></div>
+                    </dl>
+                    <ul class="rail more-links">
+                        <li class="bay--boutique"><a class="rail-row" href="/boutique/"><span class="display rail-name">The Boutique</span><span class="rail-go" aria-hidden="true">&rarr;</span><span class="rail-desc">Premium detailing, window tinting and lighting installation.</span></a></li>
+                        <li class="bay--parts"><a class="rail-row" href="/store/"><span class="display rail-name">The Parts Store</span><span class="rail-go" aria-hidden="true">&rarr;</span><span class="rail-desc">EGR solutions, exhaust systems, CCV solutions, and custom tuning packages.</span></a></li>
+                    </ul>
                 </div>
 
-                <!-- GRID: Desktop = [info | form], Mobile = [form | info] with CSS order -->
-                <div class="grid md:grid-cols-2 gap-10 md:gap-16">
-
-                    <!-- Form side - order-1 (first on mobile), order-2 on desktop -->
-                    <div id="form" class="order-1 md:order-2 rounded-2xl p-6 md:p-8 border border-edge" style="background-color:#0D0D12; box-shadow:0 0 30px rgba(0,102,255,0.1);">
-
-                        <!-- Form Type Toggle -->
-                        <div class="flex gap-2 p-1 rounded-xl border border-edge mb-6" style="background-color: rgba(0,0,0,0.5);">
-                            <button onclick="switchForm('boutique')" id="btn-boutique" class="flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider bg-edge text-white transition-all shadow-[0_0_15px_rgba(0,102,255,0.2)]">Boutique Booking</button>
-                            <button onclick="switchForm('build')" id="btn-build" class="flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider text-zinc-500 hover:text-white transition-all">Build Request</button>
-                        </div>
-
-                        <!-- Boutique Form -->
-                        <div id="form-boutique" class="block">
-                            <div data-intake="boutique"></div>
-                        </div>
-
-                        <!-- Build Form -->
-                        <div id="form-build" class="hidden">
-                            <div data-intake="build"></div>
-                        </div>
-                        <script>
-                            function switchForm(type) {
-                                const btnBoutique = document.getElementById('btn-boutique');
-                                const btnBuild = document.getElementById('btn-build');
-                                const formBoutique = document.getElementById('form-boutique');
-                                const formBuild = document.getElementById('form-build');
-
-                                if (type === 'boutique') {
-                                    btnBoutique.className = 'flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider bg-edge text-white transition-all shadow-[0_0_15px_rgba(0,102,255,0.2)]';
-                                    btnBuild.className = 'flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider text-zinc-500 hover:text-white transition-all';
-                                    formBoutique.classList.remove('hidden');
-                                    formBuild.classList.add('hidden');
-                                    history.replaceState(null, null, ' ');
-                                } else {
-                                    btnBuild.className = 'flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider bg-edge text-white transition-all shadow-[0_0_15px_rgba(0,229,255,0.2)]';
-                                    btnBoutique.className = 'flex-1 py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider text-zinc-500 hover:text-white transition-all';
-                                    formBuild.classList.remove('hidden');
-                                    formBoutique.classList.add('hidden');
-                                    history.replaceState(null, null, '#build');
-                                }
-                            }
-
-                            window.addEventListener('DOMContentLoaded', () => {
-                                const params = new URLSearchParams(window.location.search);
-                                const formParam = params.get('form');
-                                if (formParam === 'build' || window.location.hash === '#build') {
-                                    switchForm('build');
-                                } else {
-                                    switchForm('boutique');
-                                }
-                            });
-                        </script>
-                        <script src="/assets/js/intake.js"></script>
+                <div id="form" class="form-panel">
+                    <div class="seg form-switch" role="group" aria-label="Request type">
+                        <button type="button" id="btn-boutique" aria-pressed="true" onclick="switchForm('boutique')">Boutique Booking</button>
+                        <button type="button" id="btn-build" aria-pressed="false" onclick="switchForm('build')">Build Request</button>
                     </div>
-
-                    <!-- Info side - order-2 (second on mobile), order-1 on desktop -->
-                    <div class="order-2 md:order-1">
-                        <!-- Contact essentials -->
-                        <div class="space-y-4 mb-10">
-                            <div class="flex items-start gap-3">
-                                <div class="w-8 h-8 rounded-lg border border-edge flex items-center justify-center flex-shrink-0 mt-0.5" style="background-color:#0D0D12;">
-                                    <svg class="w-4 h-4 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                </div>
-                                <div>
-                                    <p class="text-white text-sm font-medium">10219 95 Ave</p>
-                                    <p class="text-zinc-400 text-xs">Fort St. John, BC &nbsp;V1J 5J5</p>
-                                    <a href="https://maps.google.com/?q=10219+95+Ave+Fort+Saint+John+BC" target="_blank" rel="noopener noreferrer" class="text-labBlue text-xs hover:text-labCyan transition-colors mt-1 inline-block">Get Directions →</a>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <div class="w-8 h-8 rounded-lg border border-edge flex items-center justify-center flex-shrink-0 mt-0.5" style="background-color:#0D0D12;">
-                                    <svg class="w-4 h-4 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                                </div>
-                                <div>
-                                    <p class="text-white text-sm font-medium"><a href="tel:+12502619502" class="hover:text-labCyan transition-colors">(250) 261-9502</a></p>
-                                    <p class="text-zinc-500 text-xs">Call or text during business hours</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <div class="w-8 h-8 rounded-lg border border-edge flex items-center justify-center flex-shrink-0 mt-0.5" style="background-color:#0D0D12;">
-                                    <svg class="w-4 h-4 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                                </div>
-                                <div>
-                                    <p class="text-white text-sm font-medium"><a href="mailto:info@luxxautomotiveboutique.com" class="hover:text-labCyan transition-colors">info@luxxautomotiveboutique.com</a></p>
-                                    <p class="text-zinc-500 text-xs">General inquiries and support</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <div class="w-8 h-8 rounded-lg border border-edge flex items-center justify-center flex-shrink-0 mt-0.5" style="background-color:#0D0D12;">
-                                    <svg class="w-4 h-4 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                </div>
-                                <div class="w-full">
-                                    <p class="text-white text-sm font-medium mb-2">Business Hours</p>
-                                    <div class="space-y-1">
-                                        <div class="flex justify-between text-xs">
-                                            <span class="text-zinc-400">Monday – Friday</span>
-                                            <span class="text-white font-medium">9 a.m. – 5 p.m.</span>
-                                        </div>
-                                        <div class="flex justify-between text-xs">
-                                            <span class="text-zinc-400">Saturday – Sunday</span>
-                                            <span class="text-zinc-500">Closed</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Services section (below contact info on mobile) -->
-                        <h2 class="font-heading font-extrabold text-xl text-white mb-5">Our Services</h2>
-                        <div class="space-y-4">
-                            <div class="p-5 rounded-xl border border-edge hover:border-white/20 transition-all" style="background-color:#0D0D12;">
-                                <h3 class="font-heading font-bold text-white text-base mb-2">The Boutique - Detailing &amp; Aesthetics</h3>
-                                <p class="text-zinc-500 text-sm leading-relaxed">Premium detailing, window tinting, lighting installation and more.</p>
-                                <a href="/boutique/" class="text-xs text-labCyan font-bold uppercase tracking-wider mt-3 inline-block hover:text-white transition-colors">Explore Services →</a>
-                            </div>
-                            <div class="p-5 rounded-xl border border-edge hover:border-labBlue/30 transition-all" style="background-color:#0D0D12;">
-                                <h3 class="font-heading font-bold text-white text-base mb-2">The Parts Store - Diesel Performance</h3>
-                                <p class="text-zinc-500 text-sm leading-relaxed">EGR solutions, exhaust systems, CCV solutions, and custom tuning packages.</p>
-                                <a href="/store/" class="text-xs text-labBlue font-bold uppercase tracking-wider mt-3 inline-block hover:text-white transition-colors">Shop Now →</a>
-                            </div>
-                        </div>
-                    </div>
-
+                    <div id="form-boutique"><div data-intake="boutique"></div></div>
+                    <div id="form-build" hidden><div data-intake="build"></div></div>
+                    <script>
+                        function switchForm(type) {
+                            var build = type === 'build';
+                            document.getElementById('btn-boutique').setAttribute('aria-pressed', String(!build));
+                            document.getElementById('btn-build').setAttribute('aria-pressed', String(build));
+                            document.getElementById('form-boutique').hidden = build;
+                            document.getElementById('form-build').hidden = !build;
+                            history.replaceState(null, null, build ? '#build' : ' ');
+                        }
+                        window.addEventListener('DOMContentLoaded', function () {
+                            var params = new URLSearchParams(window.location.search);
+                            switchForm(params.get('form') === 'build' || window.location.hash === '#build' ? 'build' : 'boutique');
+                        });
+                    </script>
+                    <script src="/assets/js/intake.js"></script>
                 </div>
             </div>
         </section>
-
     </main>
 
     <!-- ═══ GLOBAL FOOTER ═══ -->
