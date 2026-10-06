@@ -326,6 +326,30 @@ footer p.uppercase { letter-spacing:.04em; }
 .wz-nav { position:sticky; bottom:calc(72px + env(safe-area-inset-bottom)); z-index:30; display:flex; gap:10px; justify-content:space-between; padding:14px 0 12px; margin-top:20px; background:linear-gradient(to top, var(--ink) 72%, rgba(10,10,11,0)); }
 .wz-nav .btn { flex:1; }
 .wz[data-last] .wz-nav { position:static; background:none; }
+.films--3 { }
+.light-img { display:block; width:calc(100% + 36px); max-width:none; height:150px; object-fit:cover; margin:-22px -18px 14px; }
+.light-card .more { margin-bottom:10px; }
+.light-add { display:inline-flex; align-items:center; margin-top:8px; padding:8px 16px; border:1px solid var(--line); font:700 13px 'Barlow',sans-serif; letter-spacing:.08em; text-transform:uppercase; color:var(--text); }
+.light-add::before { content:'Add to my plan'; }
+.light-card[aria-pressed="true"] .light-add { background:var(--ice); color:#000; border-color:var(--ice); }
+.light-card[aria-pressed="true"] .light-add::before { content:'Added to my plan'; }
+.wz-fields { display:grid; gap:14px; }
+.wz-field { display:block; }
+.wz-field span { display:block; margin-bottom:6px; font-weight:700; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); }
+.wz-field input { width:100%; min-height:52px; padding:0 14px; background:var(--panel); border:1px solid var(--line); color:var(--text); font:500 17px 'Barlow',sans-serif; border-radius:0; }
+.wz-field input:focus { outline:2px solid #fff; outline-offset:2px; }
+@media (min-width:768px) { .films--2 { grid-template-columns:1fr 1fr; } .wz-fields { grid-template-columns:1fr 2fr 3fr; } }
+@media (min-width:768px) { .films--3 { grid-template-columns:repeat(3,1fr); } }
+.film .tier-desc { margin:0 0 10px; font-size:16px; }
+.film .tier-label { margin:12px 0 6px; }
+.wz-h2 { font-size:1.6rem; margin:28px 0 6px; }
+.addon-pick { display:flex; gap:14px; align-items:flex-start; padding:16px 0; border-top:1px solid var(--line); cursor:pointer; }
+.addon-pick:last-child { border-bottom:1px solid var(--line); }
+.addon-pick input { width:26px; height:26px; margin-top:2px; accent-color:var(--ice); flex:none; }
+.addon-pick strong { display:block; font-size:1.5rem; }
+.addon-pick small { display:block; margin-top:2px; color:var(--mute); font-size:15px; line-height:1.4; }
+.rc-incl { margin:4px 0 12px; }
+.upsell a { color:var(--text); text-decoration:underline; text-underline-offset:3px; }
 .wz-step .btns { margin-top:20px; }
 .wz-step .fine { margin-top:16px; }
 .wz-nav [hidden] { display:none; }

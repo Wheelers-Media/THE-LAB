@@ -173,15 +173,62 @@
                 <h1 id="svc-h1" class="display page-h1">EVERY INCH.<br>EVERY TIME.</h1>
                 <p class="cred">Interior &amp; Exterior Detailing</p>
                 <p class="lede">From daily drivers to show trucks, we detail every surface with the same obsessive attention to detail. Three tiers - Standard, De-Luxx, and Diamond - for every need and budget.</p>
-                <div class="btns"><a class="btn btn-primary" href="/contact/#form">Get an estimated price</a><a class="btn btn-ghost" href="#packages">View packages</a></div>
+                <div class="btns"><a class="btn btn-primary" href="#build">Build your detail</a><a class="btn btn-ghost" href="/contact/#form">Get a quote</a></div>
             </div>
         </section>
 
         <!-- Packages -->
-        <section id="packages" class="wrap packages" aria-labelledby="pk-h">
-            <h2 id="pk-h" class="display bay-title">What are you<br>here for?</h2>
-            <p class="lede">Choose your focus - Interior, Exterior, or the Complete Transformation. Every package is delivered with the same obsessive standard.</p>
-            <div class="tabs" role="tablist" aria-label="Detailing package categories"><button id="tab-interior" role="tab" aria-selected="true" aria-controls="panel-interior" onclick="switchTab('interior')" style="background:#0066FF;color:#fff">Interior Focus</button><button id="tab-exterior" role="tab" aria-selected="false" aria-controls="panel-exterior" onclick="switchTab('exterior')" style="color:#B4B8BF">Exterior Focus</button><button id="tab-complete" role="tab" aria-selected="false" aria-controls="panel-complete" onclick="switchTab('complete')" style="color:#B4B8BF">Complete</button></div>
+        <span id="packages"></span>
+        <section id="build" class="wz" data-wz aria-labelledby="wz-h">
+            <div class="wrap">
+                <header class="wz-head">
+                    <h2 id="wz-h" class="display bay-title">Build your detail.</h2>
+                    <p class="wz-count" aria-live="polite">Step <b data-wz-n>1</b> of <span data-wz-total>4</span> &middot; <span data-wz-title></span></p>
+                </header>
+                <div class="wz-bar" aria-hidden="true"><i data-wz-bar></i></div>
+
+                <div class="wz-step" data-title="What are you here for?">
+                    <h3 class="display wz-h">What are you here for?</h3>
+                    <p class="wz-sub">Choose your focus. Every package is delivered with the same obsessive standard.</p>
+                    <div class="films films--3" role="group" aria-label="Detailing focus">
+                        <div class="film" data-focus="interior" role="button" tabindex="0" aria-pressed="false"><strong class="display film-name">Interior Focus</strong><em>Deep clean to full restoration</em><p class="tier-desc">The essential reset, or the full interior restoration experience.</p></div>
+                        <div class="film" data-focus="exterior" role="button" tabindex="0" aria-pressed="false"><strong class="display film-name">Exterior Focus</strong><em>Clean to full protection</em><p class="tier-desc">Refreshed and dressed, or fully decontaminated and protected.</p></div>
+                        <div class="film" data-focus="complete" role="button" tabindex="0" aria-pressed="false"><strong class="display film-name">Complete</strong><em>Inside and out</em><p class="tier-desc">The complete transformation, interior and exterior together.</p></div>
+                    </div>
+                </div>
+
+                <div class="wz-step" data-title="Choose your level" hidden>
+                    <h3 class="display wz-h">Choose your level.</h3>
+                    <p class="wz-sub">See exactly what is included. Prices come at the end.</p>
+                    <div id="tier-picks" class="films"></div>
+                </div>
+
+                <div class="wz-step" data-title="Your vehicle" hidden>
+                    <h3 class="display wz-h">Your vehicle.</h3>
+                    <p class="wz-sub">Small = 5 &amp; 6 seat vehicles. Large = 7 &amp; 8 seat vehicles / vans.</p>
+                    <div class="seg" role="group" aria-label="Vehicle size">
+                        <button type="button" data-size aria-pressed="true">Small SUV / Truck</button>
+                        <button type="button" data-size aria-pressed="false">Large SUV / Van</button>
+                    </div>
+                    <h4 class="display wz-h2">Anything extra?</h4>
+                    <div class="addon-picks"><label class="addon-pick"><input type="checkbox" data-addon="Pet Hair Removal" data-price="50" data-from="1"><span><strong class="display">Pet Hair Removal</strong><small>Heavy-duty pet hair extraction from carpets and upholstery. Billed at $100/hr for extreme severity. Starting at $50.</small></span></label><label class="addon-pick"><input type="checkbox" data-addon="Odour Elimination" data-price="70" data-from="0"><span><strong class="display">Odour Elimination</strong><small>Professional ozone treatment to eradicate smoke, food, or mildew odours at the molecular level. $70 flat rate.</small></span></label><label class="addon-pick"><input type="checkbox" data-addon="Headlight Restoration" data-price="150" data-from="0"><span><strong class="display">Headlight Restoration</strong><small>Multi-step wet sanding, compounding, and polishing to restore hazy, yellowed headlights to near-new clarity. $150.</small></span></label><label class="addon-pick"><input type="checkbox" data-addon="Engine Bay Detail" data-price="100" data-from="0"><span><strong class="display">Engine Bay Detail</strong><small>Meticulous degreasing, cleaning, and premium dressing for a show-quality engine bay presentation. $100.</small></span></label></div>
+                </div>
+
+                <div class="wz-step" data-title="Your detail" hidden>
+                    <h3 class="display wz-h">Here is your detail.</h3>
+                    <ul class="recap"><li><span>Focus</span><b id="rc-focus"></b></li><li><span>Level</span><b id="rc-tier"></b></li><li><span>Vehicle</span><b id="rc-size"></b></li></ul>
+                    <div id="rc-incl" class="rc-incl"></div>
+                    <ul id="est-lines" class="est-lines"></ul>
+                    <p class="est-total"><span>Estimated total</span><strong id="est-total" class="display">$0 CAD</strong></p>
+                    <p class="fine">Additional labour charged at $100/hr &middot; Excessive personal belongings removal: $25 &middot; Prices confirmed upon vehicle inspection</p>
+                    <div class="btns">
+                        <a id="bd-book" class="btn btn-primary" href="/contact/?service=Premium%20Detailing#form">Book this detail</a>
+                        <button type="button" id="wz-restart" class="btn btn-ghost">Start over</button>
+                    </div>
+                    <p class="fine upsell">Keep it that way: see the <a href="#maintenance">monthly maintenance programs</a>.</p>
+                    <details class="fulllist">
+                        <summary>See every package and price</summary>
+                        <div id="detail-board"><div class="tabs" role="tablist" aria-label="Detailing package categories"><button id="tab-interior" role="tab" aria-selected="true" aria-controls="panel-interior" onclick="switchTab('interior')" style="background:#0066FF;color:#fff">Interior Focus</button><button id="tab-exterior" role="tab" aria-selected="false" aria-controls="panel-exterior" onclick="switchTab('exterior')" style="color:#B4B8BF">Exterior Focus</button><button id="tab-complete" role="tab" aria-selected="false" aria-controls="panel-complete" onclick="switchTab('complete')" style="color:#B4B8BF">Complete</button></div>
             <p class="legend">Small = 5 &amp; 6 seat vehicles &nbsp;&middot;&nbsp; Large = 7 &amp; 8 seat vehicles / vans</p>
             <div id="panel-interior" role="tabpanel" aria-labelledby="tab-interior" class="tier-list">
 <article class="tier">
@@ -272,6 +319,15 @@
                     if (window.setCurrency) window.setCurrency(cur);
                 }
             </script>
+        </div>
+                    </details>
+                </div>
+
+                <nav class="wz-nav" aria-label="Walkthrough steps">
+                    <button type="button" class="btn btn-ghost" data-wz-back hidden>Back</button>
+                    <button type="button" class="btn btn-primary" data-wz-next>Next</button>
+                </nav>
+            </div>
         </section>
 
         <!-- Membership -->
@@ -289,14 +345,7 @@
         </section>
 
         <!-- Add-ons -->
-        <section class="wrap addons-sec" aria-labelledby="ad-h">
-            <h2 id="ad-h" class="display bay-title">Add-on services</h2>
-            <ul class="addons"><li><h3 class="display addon-name">Pet Hair Removal</h3><p>Heavy-duty pet hair extraction from carpets and upholstery. Billed at $100/hr for extreme severity. Starting at $50.</p></li><li><h3 class="display addon-name">Odour Elimination</h3><p>Professional ozone treatment to eradicate smoke, food, or mildew odours at the molecular level. $70 flat rate.</p></li><li><h3 class="display addon-name">Headlight Restoration</h3><p>Multi-step wet sanding, compounding, and polishing to restore hazy, yellowed headlights to near-new clarity. $150.</p></li><li><h3 class="display addon-name">Engine Bay Detail</h3><p>Meticulous degreasing, cleaning, and premium dressing for a show-quality engine bay presentation. $100.</p></li>
-                <li class="addon-ask"><div><h3 class="display addon-name">Not sure what you need?</h3><p>Send us a message and our technicians will recommend the exact preservation package for your vehicle build.</p></div><a class="btn btn-ghost" href="/contact/">Ask us</a></li>
-            </ul>
-        </section>
-
-        <!-- Reviews -->
+                <!-- Reviews -->
         <section class="wrap proof" aria-labelledby="rv-h">
             <h2 id="rv-h" class="display bay-title">From our clients</h2>
             <div class="quotes"><blockquote class="quote"><p>&ldquo;We brought our Jeep in for the De-Luxx package and we were absolutely in shock when we picked it up! It looks so good!! We were so happy to be leaving with a fresh ride not to mention the inside also smells incredible now!&rdquo;</p><footer>Cassidy Canova &middot; Google review</footer></blockquote><blockquote class="quote"><p>&ldquo;Had my truck detailed the other day and it came back amazing!!! I had hot sauce on my seat, goat milk on my seat, sprinkles from kids - you name it, it was in my cloth seats. All of it gone.&rdquo;</p><footer>Jessica Howell &middot; Google review</footer></blockquote></div>
@@ -491,6 +540,8 @@
 
 
 <script src="/assets/js/text-eric.js"></script>
+<script src="/assets/js/wizard.js"></script>
+<script src="/assets/js/detail-builder.js"></script>
 </body>
 <script src="/assets/js/estimator.js"></script>
 </html>

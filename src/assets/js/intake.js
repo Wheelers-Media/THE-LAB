@@ -130,6 +130,12 @@
         form.addEventListener('change', refresh);
         refresh();
 
+        // vehicle typed in a service-page walkthrough: fill it in so the customer never types it twice
+        try {
+            const veh = JSON.parse(sessionStorage.getItem('labVehicle') || 'null');
+            if (veh) ['year', 'make', 'model'].forEach((k) => { const f = form.elements[k]; if (f && veh[k] && !f.value) f.value = veh[k]; });
+        } catch (err) { /* storage unavailable */ }
+
         const pre = new URLSearchParams(location.search).get('service');
         const sel = form.elements.service;
         if (pre && sel && sel.tagName === 'SELECT' && [...sel.options].some((o) => o.value === pre)) { sel.value = pre; refresh(); }
@@ -153,7 +159,8 @@
                 add(d.label, v[d.id]);
             });
             // set by the tinting page estimator (tint-builder.js) so Eric sees which windows they tapped
-            try { const t = sessionStorage.getItem('labTint'); if (t && v.service === 'Window Tinting') add('Tint estimate', t); } catch (err) { /* storage unavailable */ }
+            const EST = { 'Window Tinting': ['labTint', 'Tint estimate'], 'Premium Detailing': ['labDetail', 'Detailing estimate'], 'Custom Lighting': ['labLighting', 'Lighting wish list'], 'Custom Tuning': [] };
+            try { const e = EST[v.service]; const t = e && e[0] && sessionStorage.getItem(e[0]); if (t) add(e[1], t); } catch (err) { /* storage unavailable */ }
             add('Off-road disclaimer agreed', v.offroad); add('SMS consent', v.consent);
 
             const btn = form.querySelector('button[type=submit]');

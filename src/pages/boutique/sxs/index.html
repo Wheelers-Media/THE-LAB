@@ -175,36 +175,64 @@
                 <p class="cred">Powersports</p>
                 <p class="lede">Protect your toys before you hit the trails. We offer specialized ceramic coating and tinting packages specifically engineered for Polaris, Can-Am, and CFMOTO machines.</p>
                 <ul class="checks"><li>Mud &amp; Dirt Repellent Coatings</li><li>Polycarbonate Tinting</li><li>Heavy Duty Surface Prep</li></ul>
-                <div class="btns"><a class="btn btn-primary" href="/contact/">Book your SxS</a><a class="btn btn-ghost" href="/boutique/lighting/">Explore lighting</a></div>
+                <div class="btns"><a class="btn btn-primary" href="#build">Build your SxS tint</a><a class="btn btn-ghost" href="/boutique/lighting/">Explore lighting</a></div>
             </div>
         </section>
 
         <!-- Film choice -->
-        <section class="wrap film" aria-labelledby="film-h">
-            <h2 id="film-h" class="display bay-title">Carbon vs. Ceramic tinting</h2>
-            <p class="lede">SxS cabins are open to the elements. Choosing the right film makes the difference between a hot, blinding ride and a cool, high-visibility trail experience.</p>
-            <div class="pt-grid">
-                <article class="pt">
-                    <header><h3 class="display tier-name">Carbon Series</h3><p class="tier-kick">Baseline</p></header>
-                    <p class="tier-desc">A solid baseline film providing standard UV protection and a sleek dark aesthetic. Great for basic glare reduction, but offers limited heat insulation.</p>
-                    <ul class="checks"><li>Standard UV Block (Up to 99%)</li><li>Standard Glare Reduction</li><li>Non-Reflective Black Finish</li></ul>
-                    <div class="pt-foot">
-                        <div class="price-line"><span>Starting at</span><span class="price">$180 <small>CAD</small></span></div>
-                        <a class="btn btn-ghost" href="/contact/">Get Carbon Tint</a>
+        <section id="build" class="wz" data-wz aria-labelledby="wz-h">
+            <div class="wrap">
+                <header class="wz-head">
+                    <h2 id="wz-h" class="display bay-title">Build your SxS tint.</h2>
+                    <p class="wz-count" aria-live="polite">Step <b data-wz-n>1</b> of <span data-wz-total>3</span> &middot; <span data-wz-title></span></p>
+                </header>
+                <div class="wz-bar" aria-hidden="true"><i data-wz-bar></i></div>
+
+                <div class="wz-step" data-title="Choose your film">
+                    <h3 class="display wz-h">Choose your film.</h3>
+                    <p class="wz-sub">SxS cabins are open to the elements. Choosing the right film makes the difference between a hot, blinding ride and a cool, high-visibility trail experience.</p>
+                    <div class="films" role="group" aria-label="Film type">
+                        <div class="film" data-sxs-film="ceramic" data-price="260" role="button" tabindex="0" aria-pressed="true">
+                            <span class="film-tag">Highly Recommended</span>
+                            <strong class="display film-name">Nano-Ceramic</strong>
+                            <em>Premium standard</em>
+                            <p class="tier-desc">Engineered with nano-ceramic particles that block solar heat where carbon fails. Crucial for open-cab environments, keeping you cool under direct sunlight and protecting dashboard screens from cracking.</p>
+                            <ul class="checks"><li>Superior Infrared Heat Rejection (Up to 95%)</li><li>Enhanced Optical Clarity &amp; Trail Visibility</li><li>Maximum UV Protection (Blocks 99.9%)</li></ul>
+                        </div>
+                        <div class="film" data-sxs-film="carbon" data-price="180" role="button" tabindex="0" aria-pressed="false">
+                            <strong class="display film-name">Carbon Series</strong>
+                            <em>Baseline</em>
+                            <p class="tier-desc">A solid baseline film providing standard UV protection and a sleek dark aesthetic. Great for basic glare reduction, but offers limited heat insulation.</p>
+                            <ul class="checks"><li>Standard UV Block (Up to 99%)</li><li>Standard Glare Reduction</li><li>Non-Reflective Black Finish</li></ul>
+                        </div>
                     </div>
-                </article>
-                <article class="pt pt--feature">
-                    <header><h3 class="display tier-name">Nano-Ceramic <span class="tier-badge">Highly Recommended</span></h3><p class="tier-kick">Premium standard</p></header>
-                    <p class="tier-desc">Engineered with nano-ceramic particles that block solar heat where carbon fails. Crucial for open-cab environments, keeping you cool under direct sunlight and protecting dashboard screens from cracking.</p>
-                    <ul class="checks"><li>Superior Infrared Heat Rejection (Up to 95%)</li><li>Enhanced Optical Clarity &amp; Trail Visibility</li><li>Maximum UV Protection (Blocks 99.9%)</li></ul>
-                    <div class="pt-foot">
-                        <div class="price-line"><span>Starting at</span><span class="price">$260 <small>CAD</small></span></div>
-                        <a class="btn btn-primary" href="/contact/">Upgrade to Ceramic</a>
+                </div>
+
+                <div class="wz-step" data-title="Add a sun-strip?" hidden>
+                    <h3 class="display wz-h">Add a sun-strip?</h3>
+                    <p class="wz-sub">Reduce direct glare through the top section of your windshield. Available in Carbon or Ceramic.</p>
+                    <div class="films" role="group" aria-label="Windshield sun-strip">
+                        <div class="film" id="sxs-brow" data-lo="90" data-hi="180" data-sxs-brow="1" role="button" tabindex="0" aria-pressed="false"><strong class="display film-name">Add the visor brow</strong><em>Windshield sun-strip</em></div>
+                        <div class="film" data-sxs-brow="0" role="button" tabindex="0" aria-pressed="true"><strong class="display film-name">Skip it</strong><em>Just the side glass</em></div>
                     </div>
-                </article>
-            </div>
-            <div class="pt pt--addon">
-                <div class="pt-row"><div><span class="pt-l">Add a Windshield Sun-Strip (Visor Brow)</span><small>Reduce direct glare through the top section of your windshield. Available in Carbon or Ceramic.</small></div><span class="price">$90 to <span data-price-cad="180.00">$180 CAD</span></span></div>
+                </div>
+
+                <div class="wz-step" data-title="Your price" hidden>
+                    <h3 class="display wz-h">Here is your SxS tint.</h3>
+                    <ul class="recap"><li><span>Film</span><b id="rc-film"></b></li><li><span>Sun-strip</span><b id="rc-brow"></b></li></ul>
+                    <ul id="est-lines" class="est-lines"></ul>
+                    <p class="est-total"><span>Estimated total</span><strong id="est-total" class="display">$0 CAD</strong></p>
+                    <p class="fine">Starting prices. Final price is confirmed at inspection and may vary with your machine and film condition.</p>
+                    <div class="btns">
+                        <a id="bd-book" class="btn btn-primary" href="/contact/?service=Window%20Tinting#form">Book your SxS</a>
+                        <button type="button" id="wz-restart" class="btn btn-ghost">Start over</button>
+                    </div>
+                </div>
+
+                <nav class="wz-nav" aria-label="Walkthrough steps">
+                    <button type="button" class="btn btn-ghost" data-wz-back hidden>Back</button>
+                    <button type="button" class="btn btn-primary" data-wz-next>Next</button>
+                </nav>
             </div>
         </section>
 
@@ -394,6 +422,8 @@
 
 
 <script src="/assets/js/text-eric.js"></script>
+<script src="/assets/js/wizard.js"></script>
+<script src="/assets/js/sxs-builder.js"></script>
 </body>
 </html>
 
