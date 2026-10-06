@@ -1,10 +1,13 @@
-// Tinting page: shade preview + "tap your windows" estimator.
-// Prices are read from the page's own price tables (the collapsed full list), so those tables stay the single source of truth.
+// Tinting walkthrough: shade preview + info sheet, film choice, tap-your-windows, then the price.
+// Prices are read from the page's own price tables (inside #pricing), so those tables stay the single source of truth.
 (function () {
     const $ = (s, r = document) => r.querySelector(s);
     const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    const root = $('[data-wz]');
+    const car = $('.bd-car');
+    if (!root || !car) return;
 
-    /* ---------- Shade preview ---------- */
+    /* ---------- Step 1: shade preview ---------- */
     const SHADES = [
         { pct: 100, label: 'None', name: 'No tint', note: 'Factory glass. This is the view you have now.' },
         { pct: 35, label: '35%', name: 'Light Smoke', note: 'Subtle upgrade: adds comfort and UV protection without a heavily tinted look.' },
@@ -12,28 +15,28 @@
         { pct: 18, label: '18%', name: 'Popular Privacy', note: 'Daily-driver balance with strong privacy.' },
         { pct: 5, label: '5%', name: 'Limo Dark', note: 'Maximum privacy: the darkest look.' },
     ];
-    const range = $('#shade-range');
-    const img = $('#shade-img');
-    if (range && img) {
-        const chips = $$('.shade-chip');
-        const setShade = (i) => {
-            const s = SHADES[i];
-            img.style.filter = s.pct >= 100 ? 'none' : 'brightness(' + (0.14 + 0.86 * Math.pow(s.pct / 100, 0.75)).toFixed(2) + ') contrast(1.05)';
-            $('#shade-pct').textContent = s.pct >= 100 ? 'No tint' : s.label;
-            $('#shade-name').textContent = s.pct >= 100 ? '' : s.name;
-            $('#shade-note').textContent = s.note;
-            range.value = i;
-            chips.forEach((c, k) => { c.setAttribute('aria-checked', String(k === i)); c.tabIndex = k === i ? 0 : -1; });
-        };
-        range.addEventListener('input', () => setShade(+range.value));
-        chips.forEach((c, k) => c.addEventListener('click', () => setShade(k)));
-        setShade(0);
+    const range = $('#shade-range'), img = $('#shade-img'), chips = $$('.shade-chip');
+    let shadeIdx = 0;
+    function setShade(i) {
+        shadeIdx = i;
+        const s = SHADES[i];
+        img.style.filter = s.pct >= 100 ? 'none' : 'brightness(' + (0.14 + 0.86 * Math.pow(s.pct / 100, 0.75)).toFixed(2) + ') contrast(1.05)';
+        $('#shade-pct').textContent = s.pct >= 100 ? 'No tint' : s.label;
+        $('#shade-name').textContent = s.pct >= 100 ? '' : s.name;
+        $('#shade-note').textContent = s.note;
+        range.value = i;
+        chips.forEach((c, k) => { c.setAttribute('aria-checked', String(k === i)); c.tabIndex = k === i ? 0 : -1; });
     }
+    range.addEventListener('input', () => setShade(+range.value));
+    chips.forEach((c, k) => c.addEventListener('click', () => setShade(k)));
+    setShade(0);
 
-    /* ---------- Estimator ---------- */
-    const car = $('.bd-car');
-    if (!car) return;
+    const sheet = $('#shade-help');
+    $('#shade-info').addEventListener('click', () => (sheet.showModal ? sheet.showModal() : sheet.setAttribute('open', '')));
+    $$('[data-close]', sheet).forEach((b) => b.addEventListener('click', () => sheet.close()));
+    sheet.addEventListener('click', (e) => { if (e.target === sheet) sheet.close(); }); // tap the dimmed area to close
 
+    /* ---------- Prices, read from the page's own tables ---------- */
     const keyOf = (label, sub, pkg) => {
         const l = label.toLowerCase(), s = (sub || '').toLowerCase();
         if (pkg) return 'pkg:' + (l.indexOf('sedan') > -1 ? 'sedan' : l.indexOf('truck') > -1 ? 'truck' : 'suv');
@@ -47,7 +50,6 @@
         if (l.indexOf('panoramic') > -1) return 'pano';
         return null;
     };
-
     const PR = { carbon: {}, ceramic: {} };
     $$('#pricing .pt').forEach((card) => {
         const h = $('h3', card);
@@ -68,11 +70,11 @@
         });
     });
 
-    // small labels on the diagram (drawn in script so the markup stays simple); each sits right after its window
+    /* ---------- Step 3: windows ---------- */
     const LABELS = {
-        brow: ['BROW', 150, 78, 0], ws: ['WINDSHIELD', 150, 126, 0], sun: ['ROOF', 150, 232, 0],
-        fl: ['FRONT', 57, 212, -90], fr: ['FRONT', 243, 212, 90], rl: ['REAR', 57, 306, -90], rr: ['REAR', 243, 306, 90],
-        ql: ['¼', 59, 386, 0], qr: ['¼', 241, 386, 0], rear: ['REAR GLASS', 150, 462, 0],
+        brow: ['BROW', 150, 146, 0], ws: ['WINDSHIELD', 150, 178, 0], sun: ['ROOF', 150, 250, 0],
+        fl: ['FRONT', 82, 248, -90], fr: ['FRONT', 218, 248, 90], rl: ['REAR', 80, 344, -90], rr: ['REAR', 220, 344, 90],
+        ql: ['¼', 80, 420, 0], qr: ['¼', 220, 420, 0], rear: ['REAR GLASS', 150, 480, 0],
     };
     $$('.win', car).forEach((w) => {
         const l = LABELS[w.dataset.id];
@@ -117,6 +119,9 @@
         return { items, lo, hi, from: items.some((i) => i.from) };
     }
 
+    const shadeText = () => (SHADES[shadeIdx].pct >= 100 ? 'No tint' : SHADES[shadeIdx].label + ' ' + SHADES[shadeIdx].name);
+    const filmText = () => (S.film === 'ceramic' ? 'Ceramic' : 'Carbon');
+
     function render() {
         $$('.win', car).forEach((w) => w.setAttribute('aria-pressed', String(S.sel.has(w.dataset.id))));
         $$('[data-film]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.film === S.film)));
@@ -125,15 +130,21 @@
         $$('[data-roof]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.roof === S.roof)));
         $('#opt-brow').hidden = !S.sel.has('brow');
         $('#opt-roof').hidden = !S.sel.has('sun');
+
         const c = compute();
-        $('#est-empty').hidden = c.items.length > 0;
+        const count = c.items.length ? [...S.sel].filter((id) => id !== 'fr').length : 0;
+        $('#win-count').textContent = count ? count + (count === 1 ? ' window selected' : ' windows selected') : 'Nothing selected yet';
+        if (root.wz && root.wz.index === 2) root.wz.setNext(c.items.length > 0);
+
+        // step 4 recap + price
+        $('#rc-shade').textContent = shadeText();
+        $('#rc-film').textContent = filmText();
+        $('#rc-veh').textContent = VEH[S.veh];
         $('#est-lines').innerHTML = c.items.map((i) =>
             '<li><span>' + i.label + (i.n > 1 && i.label.indexOf('package') < 0 ? ' &times; ' + i.n : '') + '</span><span class="price">' + rng(i.lo, i.hi, i.from) + '</span></li>').join('');
         $('#est-total').textContent = c.items.length ? rng(c.lo, c.hi, c.from) : money(0);
-        const mini = $('#est-mini');
-        if (mini) mini.textContent = c.items.length ? 'Estimate so far: ' + rng(c.lo, c.hi, c.from) : '';
         const summary = c.items.length
-            ? (S.film === 'ceramic' ? 'Ceramic' : 'Carbon') + ' film, ' + VEH[S.veh] + ': ' + c.items.map((i) => i.label + (i.n > 1 && i.label.indexOf('package') < 0 ? ' x' + i.n : '')).join('; ') + '. Estimate ' + rng(c.lo, c.hi, c.from, 'CAD')
+            ? 'Shade ' + shadeText() + '; ' + filmText() + ' film, ' + VEH[S.veh] + ': ' + c.items.map((i) => i.label + (i.n > 1 && i.label.indexOf('package') < 0 ? ' x' + i.n : '')).join('; ') + '. Estimate ' + rng(c.lo, c.hi, c.from, 'CAD')
             : '';
         try { summary ? sessionStorage.setItem('labTint', summary) : sessionStorage.removeItem('labTint'); } catch (e) { /* storage unavailable */ }
     }
@@ -149,14 +160,19 @@
         w.addEventListener('click', () => toggle(w.dataset.id));
         w.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(w.dataset.id); } });
     });
-    $$('[data-film]').forEach((b) => b.addEventListener('click', () => { S.film = b.dataset.film; render(); }));
+    $$('[data-film]').forEach((b) => {
+        b.addEventListener('click', () => { S.film = b.dataset.film; render(); });
+        b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); b.click(); } });
+    });
     $$('[data-veh]').forEach((b) => b.addEventListener('click', () => { S.veh = b.dataset.veh; render(); }));
     $$('[data-brow]').forEach((b) => b.addEventListener('click', () => { S.brow = b.dataset.brow; render(); }));
     $$('[data-roof]').forEach((b) => b.addEventListener('click', () => { S.roof = b.dataset.roof; render(); }));
     $('#bd-all').addEventListener('click', () => { BASE.forEach((i) => S.sel.add(i)); render(); });
     $('#bd-clear').addEventListener('click', () => { S.sel.clear(); render(); });
+    $('#wz-restart').addEventListener('click', () => { S.sel.clear(); setShade(0); S.film = 'ceramic'; render(); root.dispatchEvent(new CustomEvent('wz:goto', { detail: 0 })); });
+    root.addEventListener('wz:enter', render);
 
-    // the header currency toggle re-renders the estimate too
+    // the header currency toggle re-renders prices too
     const orig = window.setCurrency;
     if (orig) window.setCurrency = function (c) { orig(c); render(); };
     render();
