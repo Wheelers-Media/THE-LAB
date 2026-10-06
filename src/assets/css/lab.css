@@ -748,7 +748,7 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .site-drop a { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:44px; padding:0 20px; color:var(--mute); text-decoration:none; font:600 15px "Barlow",sans-serif; }
 .site-drop a:hover, .site-drop a:focus-visible { color:var(--text); background:rgba(255,255,255,.05); }
 .site-drop .site-drop-all { margin-top:6px; border-top:1px solid var(--line); color:var(--text); font-weight:700; }
-.site-soon { padding:2px 6px; border:1px solid rgba(255,255,255,.45); color:var(--text); font:700 10px/1.2 "Barlow",sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+.site-soon { padding:2px 6px; border:1px solid rgba(255,255,255,.45); color:var(--text); font:700 11px/1.2 "Barlow",sans-serif; letter-spacing:.08em; text-transform:uppercase; }
 
 .site-actions { display:flex; align-items:center; gap:2px; margin-left:auto; }
 .site-icon { position:relative; width:48px; height:48px; display:inline-flex; align-items:center; justify-content:center; background:none; border:0; color:var(--text); cursor:pointer; }
