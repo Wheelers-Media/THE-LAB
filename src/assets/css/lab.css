@@ -152,5 +152,7 @@ html body .font-body { font-family:'Barlow',system-ui,sans-serif; }
 .animate-pulse:not(.lab-page *) { animation:none; }
 .grid-bg:not(.lab-page *) { background-image:none; }
 [class*="blur-["]:not(.lab-page *) { display:none; }
+footer p.uppercase { letter-spacing:.04em; }
+.text-zinc-700:not(.lab-page *) { color:#7D828A; }
 .text-zinc-600:not(.lab-page *) { color:#8E939B; }
 .text-zinc-500:not(.lab-page *) { color:#A3A8B0; }
