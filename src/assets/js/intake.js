@@ -9,6 +9,14 @@
     // Google Calendar appointment schedule links. detailing = the Detailing Bay team; eric = everything Eric does himself
     // (tint, lighting, tuning, the whole Build Request form).
     const BOOKING = { detailing: 'https://calendar.app.google/xqP3H8QFGh7AKuGv6', eric: 'https://calendar.app.google/9FUs5TMTG7aPKhdt6' };
+    // Cal.com booking pages (same two routes). When set they replace the Google links above, and the customer's
+    // name, email, phone and full request are pre-filled so they land in the calendar event. Leave '' to keep Google.
+    const CAL = { detailing: '', eric: '' };
+    function bookingUrl(route, c) {
+        if (!CAL[route]) return { url: BOOKING[route], prefilled: false };
+        const q = new URLSearchParams({ embed: 'true', name: c.name, email: c.email, phone: c.phone, attendeePhoneNumber: c.phone, notes: c.notes.slice(0, 1200) });
+        return { url: `${CAL[route]}${CAL[route].includes('?') ? '&' : '?'}${q}`, prefilled: true };
+    }
 
     const messageBody = (title, rows) => [`THE LAB - New ${title}`, ...rows.map(([l, v]) => `${l}: ${v}`)].join('\n');
     const textDisplay = TEXT_TO.replace(/^\+1(\d{3})(\d{3})(\d{4})$/, '($1) $2-$3');
@@ -202,7 +210,10 @@
                 });
                 const j = await r.json();
                 if (!j.success) throw new Error(j.message);
-                done(el, v.service === 'Premium Detailing' ? 'detailing' : 'eric', name, v.email);
+                done(el, v.service === 'Premium Detailing' ? 'detailing' : 'eric', {
+                    name, email: v.email, phone: v.phone,
+                    notes: rows.filter(([l]) => !['Name', 'Phone', 'Email', 'SMS consent'].includes(l)).map(([l, x]) => `${l}: ${x}`).join('\n'),
+                });
             } catch (err) {
                 msg.innerHTML = `We couldn't send that. Please call or text us at <a class="underline" href="tel:${TEXT_TO}">${textDisplay}</a> or try again.`;
                 msg.hidden = false;
@@ -212,13 +223,13 @@
     }
 
     // Replaces the form once Eric has the request. The booking calendar is embedded right here, no redirect.
-    function done(el, route, name, email) {
-        const url = BOOKING[route];
+    function done(el, route, c) {
+        const { url, prefilled } = bookingUrl(route, c);
         const drop = route === 'detailing';
         el.innerHTML = `<div class="text-center">
             <p class="text-white text-lg leading-snug mb-2"><strong class="font-heading font-extrabold uppercase">Got it!</strong> Eric has your request.</p>
             <p class="text-zinc-400 text-sm mb-5">${url ? `Pick ${drop ? 'your drop-off' : 'a'} time below. ` : ''}Eric will confirm and text you a $50 deposit link to lock in your spot (100% credited to your final invoice).</p>
-            ${url ? `<p class="text-zinc-200 text-sm mb-4 rounded-xl border border-labBlue/40 bg-labBlue/10 p-3">Book under <strong class="text-white">${esc(name)}</strong> and <strong class="text-white">${esc(email)}</strong> (same as above) so Eric can match your time to your request.</p>` : ''}
+            ${url && !prefilled ? `<p class="text-zinc-200 text-sm mb-4 rounded-xl border border-labBlue/40 bg-labBlue/10 p-3">Book under <strong class="text-white">${esc(c.name)}</strong> and <strong class="text-white">${esc(c.email)}</strong> (same as above) so Eric can match your time to your request.</p>` : ''}
             ${drop ? '<p class="text-zinc-300 text-xs mb-4">Drop-off is 8:00 to 9:00 AM, Monday to Friday (Fort St. John time).</p>' : ''}
             ${url ? `<iframe src="${esc(url)}" title="Pick a time" loading="lazy" class="w-full rounded-xl bg-white" style="height:720px;border:0"></iframe>
             <a href="${esc(url)}" target="_blank" rel="noopener" class="inline-block text-labBlue hover:underline text-xs mt-3">Calendar not loading? Open it in a new tab</a>` : ''}
