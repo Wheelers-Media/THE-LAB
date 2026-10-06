@@ -11,7 +11,7 @@
     const BOOKING = { detailing: 'https://calendar.app.google/xqP3H8QFGh7AKuGv6', eric: 'https://calendar.app.google/9FUs5TMTG7aPKhdt6' };
     // Cal.com booking pages (same two routes). When set they replace the Google links above, and the customer's
     // name, email, phone and full request are pre-filled so they land in the calendar event. Leave '' to keep Google.
-    const CAL = { detailing: '', eric: '' };
+    const CAL = { detailing: 'https://cal.com/eric-wheeler-5w6xqv/detailing-drop-off', eric: 'https://cal.com/eric-wheeler-5w6xqv/eric-services' };
     function bookingUrl(route, c) {
         if (!CAL[route]) return { url: BOOKING[route], prefilled: false };
         const q = new URLSearchParams({ embed: 'true', name: c.name, email: c.email, phone: c.phone, attendeePhoneNumber: c.phone, notes: c.notes.slice(0, 1200) });
