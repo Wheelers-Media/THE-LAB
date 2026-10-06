@@ -891,3 +891,6 @@ textarea.lf-input { min-height:104px; padding:12px 14px; resize:vertical; }
 #byt-gateway .text-zinc-600, #byt-gateway .text-zinc-500 { color:var(--mute); }
 #byt-gateway p a { color:var(--text); text-decoration:underline; text-underline-offset:3px; }
 #pdp-container .text-labBlue { color:#5C9DFF; }
+
+/* reserve the grid's space while products load, so the footer does not jump when they appear */
+.pgrid:empty { min-height:100svh; }

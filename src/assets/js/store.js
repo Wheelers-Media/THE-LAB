@@ -1109,7 +1109,7 @@ function renderProducts() {
             </a>
             <div class="pcard-body">
                 <p class="pcard-meta"><span>${p.brand}</span><span>${p.category}</span></p>
-                <h3 class="pcard-name"><a href="${productUrl}">${p.name}</a></h3>
+                <h2 class="pcard-name"><a href="${productUrl}">${p.name}</a></h2>
                 <p class="pcard-fit">${p.makes.filter(m => m !== 'Universal').join(', ') || 'Universal Fit'}${p.engine !== 'Universal' ? ' • ' + p.engine : ''}</p>
                 <div class="pcard-foot">
                     <div>
