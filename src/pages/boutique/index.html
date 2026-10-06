@@ -19,7 +19,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700;800&family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -54,6 +54,7 @@
         }
         ::selection { background: #0066FF; color: #fff; }
     </style>
+    <link rel="stylesheet" href="/assets/css/lab.css">
 </head>
 <body class="bg-void text-zinc-400 antialiased overflow-x-hidden pb-[72px] md:pb-0">
 
@@ -185,215 +186,130 @@
 
 </div>
 
-    <main>
+    <main class="lab-page lab-boutique">
 
-        <!-- ═══ HERO ═══ -->
-        <section class="relative min-h-[85vh] flex items-center overflow-hidden">
-            <!-- Layered dark background with subtle blue glow -->
-            <div class="absolute inset-0 bg-void grid-bg"></div>
-            <div class="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-white/[0.02] to-transparent pointer-events-none"></div>
-            <div class="absolute top-1/3 left-1/4 w-96 h-96 rounded-full bg-labBlue opacity-[0.06] blur-[120px] pointer-events-none"></div>
-            <div class="absolute bottom-0 right-1/3 w-64 h-64 rounded-full bg-white opacity-[0.03] blur-[80px] pointer-events-none"></div>
-
-            <div class="relative z-10 max-w-7xl mx-auto px-6 py-28">
-                <div class="max-w-3xl">
-                    <span class="text-labCyan font-mono tracking-[0.25em] uppercase text-xs mb-6 flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-labCyan animate-pulse"></span>
-                        Fort St. John, BC - Local Aesthetics
-                    </span>
-                    <h1 class="font-heading font-extrabold text-5xl md:text-7xl text-white leading-[1.05] uppercase mb-6">
-                        Flawless<br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-500">Aesthetic<br>Preservation.</span>
-                    </h1>
-                    <p class="text-zinc-400 text-lg md:text-xl max-w-xl mb-10 leading-relaxed">
-                        Multi-stage paint correction, premium Carbon and Ceramic tinting, and elite coating packages. We protect what you've invested in.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#contact" class="bg-white text-black font-extrabold py-4 px-10 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-sm text-center">Book Service</a>
-                        <a href="#services" class="border border-edge text-white font-bold py-4 px-10 rounded-lg hover:border-white/40 transition-all uppercase tracking-widest text-sm text-center">View Services</a>
-                    </div>
+        <!-- Hero -->
+        <section class="page-hero" aria-labelledby="b-h1">
+            <img class="page-hero-img" src="/assets/boutique-coatings.jpg" width="1024" height="572" fetchpriority="high" alt="Technician applying ceramic coating to a black pickup under white hex lights at THE LAB">
+            <div class="wrap page-hero-body">
+                <h1 id="b-h1" class="display page-h1">Flawless<br>Aesthetic<br>Preservation.</h1>
+                <p class="lede">Multi-stage paint correction, premium Carbon and Ceramic tinting, and elite coating packages. We protect what you've invested in.</p>
+                <div class="btns">
+                    <a class="btn btn-primary" href="#contact">Book service</a>
+                    <a class="btn btn-ghost" href="#services">View services</a>
                 </div>
             </div>
-
-            <!-- Bottom fade -->
-            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-void to-transparent pointer-events-none"></div>
         </section>
 
-        <!-- ═══ PREMIUM DETAILING ═══ -->
-        <section id="services" class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
-            <!-- Background Image with Overlay -->
-            <div class="absolute inset-0 z-0">
-                <img src="/assets/boutique-detailing.jpg" alt="" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/65"></div>
-            </div>
-            
-            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-end">
-                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
-                    <span class="text-labCyan font-mono tracking-[0.2em] uppercase text-xs mb-4">The Boutique</span>
-                    <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Premium<br>Detailing</h2>
-                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">Multi-stage paint correction, extensive interior deep cleaning, and professional-grade surface treatments to restore your vehicle to showroom perfection.</p>
-                    <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Single & Multi-Stage Paint Correction</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Interior Deep Extraction</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Maintenance Wash Packages</li>
+        <!-- Services -->
+        <div id="services">
+
+            <article class="spread">
+                <figure class="spread-photo"><img src="/assets/boutique-detailing.jpg" width="1024" height="572" loading="lazy" alt="Black Chevrolet Silverado being washed under white hex lights in THE LAB detailing bay"></figure>
+                <div class="spread-body">
+                    <h2 class="display spread-title">Premium Detailing</h2>
+                    <p>Multi-stage paint correction, extensive interior deep cleaning, and professional-grade surface treatments to restore your vehicle to showroom perfection.</p>
+                    <ul class="checks">
+                        <li>Single &amp; Multi-Stage Paint Correction</li>
+                        <li>Interior Deep Extraction</li>
+                        <li>Maintenance Wash Packages</li>
                     </ul>
-                    <div class="flex flex-col sm:flex-row flex-wrap gap-4 mt-auto">
-                        <a href="/boutique/detailing/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-6 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">View Detailing Packages</a>
-                        <a href="/boutique/detailing/#maintenance" class="inline-flex items-center justify-center border border-edge text-zinc-400 font-extrabold py-4 px-6 rounded-lg hover:border-white/20 hover:text-white active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">View Maintenance Plans</a>
-                        <a href="/contact/#form" class="inline-flex items-center justify-center bg-labBlue text-white font-extrabold py-4 px-6 rounded-lg hover:bg-blue-500 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px] shadow-oled-blue gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            AI Estimate
-                        </a>
+                    <div class="btns">
+                        <a class="btn btn-primary" href="/boutique/detailing/">View detailing packages</a>
+                        <a class="btn btn-ghost" href="/boutique/detailing/#maintenance">View maintenance plans</a>
+                        <a class="btn btn-ghost" href="/contact/#form">AI Estimate</a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </article>
 
-        <!-- ═══ WINDOW TINTING ═══ -->
-        <section class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
-            <!-- Background Image with Overlay -->
-            <div class="absolute inset-0 z-0">
-                <img src="/assets/boutique-tinting.jpg" alt="" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/65"></div>
-            </div>
-            
-            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-end">
-                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
-                    <span class="text-zinc-500 font-mono tracking-[0.2em] uppercase text-xs mb-4">SunTek Films</span>
-                    <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Window<br>Tinting</h2>
-                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">Enhance your vehicle's look while drastically reducing interior heat and glare. We install premium SunTek Carbon and Ceramic films cut precisely to your vehicle's specs.</p>
-                    <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Maximum Heat Rejection</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> 99% UV Blockage</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Flawless Lifetime Install</li>
+            <article class="spread spread--flip">
+                <figure class="spread-photo"><img src="/assets/boutique-tinting.jpg" width="1024" height="572" loading="lazy" alt="THE LAB technician fitting window tint film under hex lighting"></figure>
+                <div class="spread-body">
+                    <h2 class="display spread-title">Window Tinting</h2>
+                    <p class="cred">SunTek Films</p>
+                    <p>Enhance your vehicle's look while drastically reducing interior heat and glare. We install premium SunTek Carbon and Ceramic films cut precisely to your vehicle's specs.</p>
+                    <ul class="checks">
+                        <li>Maximum Heat Rejection</li>
+                        <li>99% UV Blockage</li>
+                        <li>Flawless Lifetime Install</li>
                     </ul>
-                    <div class="flex flex-col sm:flex-row flex-wrap gap-4 mt-auto">
-                        <a href="/boutique/tinting/" class="inline-flex items-center justify-center border border-edge bg-[#0D0D12] text-white font-extrabold py-4 px-8 rounded-lg hover:border-white/40 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">View Tint Pricing</a>
-                        <a href="/contact/#form" class="inline-flex items-center justify-center bg-labBlue text-white font-extrabold py-4 px-8 rounded-lg hover:bg-blue-500 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px] shadow-oled-blue gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            AI Estimate
-                        </a>
+                    <div class="btns">
+                        <a class="btn btn-primary" href="/boutique/tinting/">View tint pricing</a>
+                        <a class="btn btn-ghost" href="/contact/#form">AI Estimate</a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </article>
 
-        <!-- ═══ CUSTOM LIGHTING ═══ -->
-        <section class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
-            <!-- Background Image with Overlay -->
-            <div class="absolute inset-0 z-0">
-                <img src="/assets/boutique-lighting.jpg" alt="" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/65"></div>
-            </div>
-            
-            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-end">
-                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
-                    <span class="text-labBlue font-mono tracking-[0.2em] uppercase text-xs mb-4">Authorized Retailer & Installer</span>
-                    <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Custom<br>Lighting</h2>
-                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">Night-piercing visibility combined with aggressive, modern styling. We install premium lighting from top brands like Morimoto, Baja Designs, and Diode Dynamics, plus custom interior Starlight-Headliners.</p>
-                    <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Full Headlight/Taillight Assemblies</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Off-Road Light Bars & Pods</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Starlight-Headliner Installations</li>
+            <article class="spread">
+                <figure class="spread-photo"><img src="/assets/boutique-lighting.jpg" width="1024" height="572" loading="lazy" alt="Custom lighting installed by THE LAB"></figure>
+                <div class="spread-body">
+                    <h2 class="display spread-title">Custom Lighting</h2>
+                    <p class="cred">Authorized retailer &amp; installer</p>
+                    <p>Night-piercing visibility combined with aggressive, modern styling. We install premium lighting from top brands like Morimoto, Baja Designs, and Diode Dynamics, plus custom interior Starlight-Headliners.</p>
+                    <ul class="checks">
+                        <li>Full Headlight/Taillight Assemblies</li>
+                        <li>Off-Road Light Bars &amp; Pods</li>
+                        <li>Starlight-Headliner Installations</li>
                     </ul>
-                    <div class="flex flex-col sm:flex-row flex-wrap gap-4 mt-auto">
-                        <a href="/boutique/lighting/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-8 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">Explore Custom Lighting</a>
-                        <a href="/contact/#form" class="inline-flex items-center justify-center bg-labBlue text-white font-extrabold py-4 px-8 rounded-lg hover:bg-blue-500 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px] shadow-oled-blue gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            AI Estimate
-                        </a>
+                    <div class="btns">
+                        <a class="btn btn-primary" href="/boutique/lighting/">Explore custom lighting</a>
+                        <a class="btn btn-ghost" href="/contact/#form">AI Estimate</a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </article>
 
-        <!-- ═══ OFF-ROAD & SXS ═══ -->
-        <section class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
-            <!-- Background Image with Overlay -->
-            <div class="absolute inset-0 z-0">
-                <img src="/assets/boutique-sxs.jpg" alt="" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/65"></div>
-            </div>
-            
-            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-start">
-                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
-                    <span class="text-labCyan font-mono tracking-[0.2em] uppercase text-xs mb-4">Powersports</span>
-                    <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Off-Road<br>& SxS</h2>
-                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">Protect your toys before you hit the trails. We offer specialized ceramic coating and tinting packages specifically engineered for Polaris, Can-Am, and CFMOTO machines.</p>
-                    <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Mud & Dirt Repellent Coatings</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Polycarbonate Tinting</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labCyan flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Heavy Duty Surface Prep</li>
+            <article class="spread spread--flip">
+                <figure class="spread-photo"><img src="/assets/boutique-sxs.jpg" width="1024" height="572" loading="lazy" alt="Side-by-side prepared with coating and tint at THE LAB"></figure>
+                <div class="spread-body">
+                    <h2 class="display spread-title">Off-Road &amp; SxS</h2>
+                    <p class="cred">Powersports</p>
+                    <p>Protect your toys before you hit the trails. We offer specialized ceramic coating and tinting packages specifically engineered for Polaris, Can-Am, and CFMOTO machines.</p>
+                    <ul class="checks">
+                        <li>Mud &amp; Dirt Repellent Coatings</li>
+                        <li>Polycarbonate Tinting</li>
+                        <li>Heavy Duty Surface Prep</li>
                     </ul>
-                    <div class="mt-auto">
-                        <div class="flex flex-col sm:flex-row gap-3 mt-auto">
-                        <a href="/boutique/sxs/" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-6 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px] grow text-center">Explore SxS Packages</a>
-                        <a href="/contact/" class="inline-flex items-center justify-center border border-edge bg-[#0D0D12] text-white font-extrabold py-4 px-6 rounded-lg hover:border-white/40 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px] grow text-center">Book Service</a>
-                    </div>
+                    <div class="btns">
+                        <a class="btn btn-primary" href="/boutique/sxs/">Explore SxS packages</a>
+                        <a class="btn btn-ghost" href="/contact/">Book service</a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </article>
 
-        <!-- ═══ BUMPERS & ACCESSORIES ═══ -->
-        <section class="relative min-h-[75vh] md:min-h-[70vh] flex items-center py-20 md:py-32 px-6 border-t border-edge overflow-hidden bg-void">
-            <!-- Background Image with Overlay -->
-            <div class="absolute inset-0 z-0">
-                <img src="/assets/boutique-accessories.jpg" alt="" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/65"></div>
-            </div>
-            
-            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-end">
-                <div class="w-full md:w-[48%] lg:w-[42%] glass-panel p-8 md:p-12 rounded-2xl border border-edge/80 shadow-2xl flex flex-col">
-                    <span class="text-labBlue font-mono tracking-[0.2em] uppercase text-xs mb-4">Authorized Gridiron Dealer</span>
-                    <h2 class="font-heading font-extrabold text-4xl text-white uppercase mb-6 leading-tight">Bumpers &amp;<br>Accessories</h2>
-                    <p class="text-zinc-400 text-sm md:text-base mb-8 leading-relaxed">Upgrade your truck with extreme protection and custom styling. We are Fort St. John's authorized dealer and installer for Gridiron heavy-duty steel bumpers, alongside premium lighting, mud flaps, and off-road armor.</p>
-                    <ul class="space-y-4 mb-10 text-sm font-medium text-zinc-300">
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Gridiron Front &amp; Rear Steel Bumpers</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Off-Road Winches &amp; Recovery Gear</li>
-                        <li class="flex items-center gap-3"><svg class="w-5 h-5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Severe-Duty Styling &amp; Mud Flaps</li>
+            <article class="spread">
+                <figure class="spread-photo"><img src="/assets/boutique-accessories.jpg" width="1024" height="572" loading="lazy" alt="Gridiron steel bumper and accessories on a pickup at THE LAB"></figure>
+                <div class="spread-body">
+                    <h2 class="display spread-title">Bumpers &amp; Accessories</h2>
+                    <p class="cred">Authorized Gridiron dealer</p>
+                    <p>Upgrade your truck with extreme protection and custom styling. We are Fort St. John's authorized dealer and installer for Gridiron heavy-duty steel bumpers, alongside premium lighting, mud flaps, and off-road armor.</p>
+                    <ul class="checks">
+                        <li>Gridiron Front &amp; Rear Steel Bumpers</li>
+                        <li>Off-Road Winches &amp; Recovery Gear</li>
+                        <li>Severe-Duty Styling &amp; Mud Flaps</li>
                     </ul>
-                    <div class="mt-auto">
-                        <a href="/store/catalog/?category=Accessories" class="inline-flex items-center justify-center bg-white text-black font-extrabold py-4 px-8 rounded-lg hover:bg-zinc-200 active:scale-[0.98] transition-all uppercase tracking-widest text-xs min-h-[48px]">Shop Bumpers &amp; Accessories</a>
+                    <div class="btns">
+                        <a class="btn btn-primary" href="/store/catalog/?category=Accessories">Shop bumpers &amp; accessories</a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </article>
 
+        </div>
 
-        <!-- ═══ LEAD CAPTURE ═══ -->
-        <section id="contact" class="py-24 px-6 border-t border-edge relative overflow-hidden">
-            <div class="absolute inset-0 grid-bg opacity-40"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-64 bg-labBlue opacity-[0.04] blur-[100px] pointer-events-none"></div>
-            <div class="max-w-7xl mx-auto relative z-10">
-                <div class="grid md:grid-cols-2 gap-16 items-center">
-
-                    <div>
-                        <span class="text-labBlue font-mono text-xs tracking-[0.25em] uppercase mb-4 block">Book Your Service</span>
-                        <h2 class="font-heading font-extrabold text-4xl md:text-5xl text-white uppercase mb-5 leading-tight">Book Your<br>Appointment.</h2>
-                        <p class="text-zinc-400 text-lg leading-relaxed mb-8">Tell us about your vehicle and the service you're looking for. We respond same day.</p>
-                        <div class="space-y-4 text-sm">
-                            <div class="flex items-center gap-3 text-zinc-400">
-                                <span class="w-1 h-1 rounded-full bg-labBlue flex-shrink-0"></span>
-                                <span>Fort St. John, BC - In-Shop and Mobile Available</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-zinc-400">
-                                <span class="w-1 h-1 rounded-full bg-labBlue flex-shrink-0"></span>
-                                <span>Trucks, SUVs, Cars, and Side-by-Side Vehicles</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-zinc-400">
-                                <span class="w-1 h-1 rounded-full bg-labBlue flex-shrink-0"></span>
-                                <span>Fast response - same-day pipeline processing</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Lead Capture Form -->
-                    <div class="rounded-2xl p-8 border border-edge" style="background-color: #0D0D12; box-shadow: 0 0 20px rgba(0,102,255,0.15);">
-                        <div data-intake="boutique"></div>
-                        <script src="/assets/js/intake.js"></script>
-                    </div>
-
+        <!-- Booking form -->
+        <section id="contact" class="book wrap" aria-labelledby="book-h">
+            <div class="book-grid">
+                <div>
+                    <h2 id="book-h" class="display bay-title">Book your<br>appointment.</h2>
+                    <p class="lede">Tell us about your vehicle and the service you're looking for. We respond same day.</p>
+                    <ul class="checks">
+                        <li>Fort St. John, BC - In-Shop and Mobile Available</li>
+                        <li>Trucks, SUVs, Cars, and Side-by-Side Vehicles</li>
+                        <li>Fast response - same-day pipeline processing</li>
+                    </ul>
+                </div>
+                <div class="form-panel">
+                    <div data-intake="boutique"></div>
+                    <script src="/assets/js/intake.js"></script>
                 </div>
             </div>
         </section>

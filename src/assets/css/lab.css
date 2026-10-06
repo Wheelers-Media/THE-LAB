@@ -1,0 +1,156 @@
+/* THE LAB shared design system: Two Bays. Loaded on every page. */
+/* Site-wide type: Barlow body, Barlow Condensed headings (overrides Tailwind classes via specificity) */
+html body { font-family:'Barlow',system-ui,sans-serif; }
+html body .font-heading { font-family:'Barlow Condensed',sans-serif; letter-spacing:.005em; }
+html body .font-mono { font-family:'Barlow',system-ui,sans-serif; letter-spacing:.02em; }
+html body .font-mono.uppercase { letter-spacing:.12em; }
+html body .font-body { font-family:'Barlow',system-ui,sans-serif; }
+
+/* ═══ Home: Two Bays ═══ */
+:root { --ink:#0A0A0B; --panel:#141517; --line:#26282C; --text:#F2F4F7; --mute:#B4B8BF; --ice:#CFE3FF; --amber:#FF8A1F; --brand:#0066FF; }
+.lab-page { font-family:'Barlow',system-ui,sans-serif; background:var(--ink); color:var(--mute); font-size:17px; line-height:1.5; }
+.lab-page .display { font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.005em; line-height:.95; color:var(--text); }
+.lab-page a:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+.lab-page .wrap { max-width:1200px; margin:0 auto; padding-left:16px; padding-right:16px; }
+.lab-page .btns { display:flex; flex-wrap:wrap; gap:10px; }
+.lab-page .btn { display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:0 20px; border-radius:3px; font-weight:700; font-size:13px; letter-spacing:.07em; text-transform:uppercase; text-decoration:none; transition:background-color .2s, border-color .2s; }
+.lab-page .btn-primary { background:var(--brand); color:#fff; }
+.lab-page .btn-primary:hover { background:#0052cc; }
+.lab-page .btn-ghost { color:#fff; border:1px solid rgba(255,255,255,.55); background:rgba(0,0,0,.35); }
+.lab-page .btn-ghost:hover { border-color:#fff; background:rgba(0,0,0,.55); }
+.lab-page .textlink { color:var(--text); font-weight:700; font-size:13px; letter-spacing:.07em; text-transform:uppercase; text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; white-space:nowrap; }
+.lab-page .textlink:hover { border-color:var(--bay, #fff); }
+
+/* Hero doors */
+.hero { padding-top:28px; }
+.hero-h1 { font-size:clamp(2.6rem,10.5vw,5.5rem); margin:0 0 20px; text-wrap:balance; }
+.doors { display:grid; gap:12px; }
+.door { position:relative; overflow:hidden; min-height:min(300px,40svh); display:flex; align-items:flex-end; background:#000; }
+.door::before { content:''; position:absolute; left:0; top:0; height:3px; width:100%; background:var(--bay); z-index:3; }
+.door--boutique { --bay:var(--ice); }
+.door--parts { --bay:var(--amber); }
+.door-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.door--boutique .door-img { object-position:50% 45%; }
+.door--parts .door-img { object-position:50% 62%; }
+.door::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(10,10,11,.96) 0%, rgba(10,10,11,.82) 38%, rgba(10,10,11,.15) 100%); z-index:1; }
+.door-body { position:relative; z-index:2; padding:18px 18px 20px; width:100%; }
+.door-title { font-size:clamp(2.2rem,9vw,3.5rem); margin:0 0 6px; }
+.door-line { color:#DADDE2; font-size:15px; margin:0 0 14px; max-width:36ch; }
+
+/* Bays */
+.bay { padding:64px 0 72px; border-top:3px solid var(--bay); margin-top:56px; }
+.bay--boutique { --bay:var(--ice); }
+.bay--parts { --bay:var(--amber); }
+.bay-head { display:flex; flex-direction:column; gap:14px; align-items:flex-start; margin-bottom:28px; }
+.bay-title { font-size:clamp(2.1rem,7.5vw,3.75rem); text-wrap:balance; margin:0; }
+.bay-grid { display:grid; gap:24px; }
+.bay-photo { margin:0; }
+.bay-photo img { width:100%; height:240px; object-fit:cover; display:block; }
+
+/* Service rail: one unbroken list, the active row lights */
+.rail { list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
+.rail li { border-bottom:1px solid var(--line); }
+.rail-row { display:grid; grid-template-columns:1fr auto; column-gap:16px; row-gap:4px; padding:20px 0; text-decoration:none; color:inherit;
+    background-image:linear-gradient(var(--bay,#fff),var(--bay,#fff)); background-repeat:no-repeat; background-position:left bottom; background-size:0 3px;
+    transition:background-size .55s cubic-bezier(.16,1,.3,1); }
+.rail-row:hover, .rail-row:focus-visible { background-size:100% 3px; }
+.rail-name { font-size:1.75rem; }
+.rail-desc { grid-column:1; font-size:15.5px; line-height:1.45; max-width:56ch; }
+.rail-go { grid-column:2; grid-row:1 / span 2; align-self:center; color:var(--bay,#fff); font-size:24px; transition:transform .3s cubic-bezier(.16,1,.3,1); }
+.rail-row:hover .rail-go { transform:translateX(4px); }
+.rail-logos { grid-column:1; display:flex; gap:16px; align-items:center; margin-top:8px; }
+.rail-logos img { height:22px; width:auto; max-width:none; filter:brightness(0) invert(1); opacity:.85; }
+.tag { display:inline-block; vertical-align:middle; margin-left:8px; padding:3px 8px; background:var(--amber); color:#000; font-family:'Barlow',sans-serif; font-size:11px; font-weight:800; letter-spacing:.08em; border-radius:2px; transform:translateY(-3px); }
+.dealer { display:grid; gap:16px; align-items:center; margin-top:36px; padding-top:28px; border-top:1px solid var(--line); }
+.dealer img { height:56px; width:auto; max-width:100%; background:#000; }
+.dealer-title { font-size:1.6rem; margin:0 0 6px; }
+.dealer p { margin:0; font-size:15.5px; max-width:52ch; }
+.dealer .btn { justify-self:start; }
+
+/* Shop photo, social, close */
+.shop { margin-top:0; }
+.shop img { width:100%; height:260px; object-fit:cover; object-position:50% 55%; display:block; }
+.social { padding-top:64px; padding-bottom:16px; }
+.social .bay-title { margin-bottom:24px; }
+.rail-row--social { --bay:#fff; }
+.close { padding-top:72px; padding-bottom:88px; }
+.close-title { font-size:clamp(2.6rem,10vw,5rem); margin:0 0 16px; }
+.close p { max-width:54ch; margin:0 0 24px; }
+.close .close-phone { margin:24px 0 0; font-size:16px; }
+.close-phone a { color:var(--text); font-weight:600; }
+
+@media (min-width:768px) {
+    .lab-page .wrap { padding-left:32px; padding-right:32px; }
+    .hero { padding-top:48px; }
+    .hero-h1 { margin-bottom:28px; }
+    .doors { grid-template-columns:1fr 1fr; gap:16px; }
+    .door { min-height:clamp(420px,62svh,620px); }
+    .door-body { padding:28px 28px 30px; }
+    .bay { padding:88px 0 96px; margin-top:72px; }
+    .bay-head { flex-direction:row; justify-content:space-between; align-items:flex-end; margin-bottom:40px; }
+    .bay-grid { grid-template-columns:5fr 7fr; gap:48px; align-items:start; }
+    .bay-grid--flip { grid-template-columns:7fr 5fr; }
+    .bay-grid--flip .bay-photo { order:2; }
+    .bay-photo img { height:100%; min-height:520px; max-height:640px; }
+    .dealer { grid-template-columns:auto 1fr auto; gap:28px; }
+    .shop img { height:420px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .door::before { transform-origin:left; animation:lightbar .9s cubic-bezier(.16,1,.3,1) both; }
+    .door--parts::before { animation-delay:.18s; }
+    @keyframes lightbar { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+}
+@media (prefers-reduced-motion: reduce) { .rail-row, .rail-go { transition:none; } }
+
+/* ── Inner pages: shared hero, spreads, booking panel ── */
+.lab-page { --bay: var(--ice); }
+.lab-parts { --bay: var(--amber); }
+.lab-page .lede { font-size:18px; line-height:1.5; color:#D5D8DD; max-width:46ch; margin:0 0 24px; }
+.lab-page .cred { font-weight:600; font-size:14px; letter-spacing:.1em; text-transform:uppercase; color:var(--bay); margin:-8px 0 14px; }
+
+.page-hero { position:relative; overflow:hidden; display:flex; align-items:flex-end; min-height:min(560px,72svh); background:#000; border-bottom:3px solid var(--bay); }
+.page-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%; }
+.page-hero::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(10,10,11,.96) 0%, rgba(10,10,11,.78) 42%, rgba(10,10,11,.2) 100%); z-index:1; }
+.page-hero-body { position:relative; z-index:2; width:100%; padding-top:40px; padding-bottom:32px; }
+.page-h1 { font-size:clamp(2.9rem,12vw,6rem); margin:0 0 16px; text-wrap:balance; }
+
+.spread { display:grid; gap:0; border-bottom:1px solid var(--line); }
+.spread-photo { margin:0; }
+.spread-photo img { width:100%; height:240px; object-fit:cover; display:block; }
+.spread-body { padding:28px 16px 40px; }
+.spread-title { font-size:clamp(2.2rem,8.5vw,3.5rem); margin:0 0 14px; text-wrap:balance; }
+.spread-body > p { font-size:16.5px; line-height:1.55; max-width:52ch; margin:0 0 20px; }
+.checks { list-style:none; margin:0 0 24px; padding:0; }
+.checks li { position:relative; padding:12px 0 12px 22px; border-top:1px solid var(--line); color:#E4E6EA; font-weight:500; }
+.checks li:last-child { border-bottom:1px solid var(--line); }
+.checks li::before { content:''; position:absolute; left:0; top:50%; width:12px; height:3px; margin-top:-1px; background:var(--bay); }
+
+.book { padding-top:64px; padding-bottom:88px; }
+.book-grid { display:grid; gap:32px; }
+.form-panel { background:var(--panel); border:1px solid var(--line); padding:20px 16px; }
+.lab-page .bay-title { font-size:clamp(2.1rem,7.5vw,3.75rem); }
+
+@media (min-width:768px) {
+    .page-hero { min-height:clamp(520px,78svh,720px); }
+    .page-hero-body { padding-bottom:64px; }
+    .spread { grid-template-columns:1fr 1fr; align-items:stretch; }
+    .spread-photo img { height:100%; min-height:460px; }
+    .spread-body { padding:56px 48px; align-self:center; }
+    .spread--flip .spread-photo { order:2; }
+    .book { padding-top:96px; padding-bottom:112px; }
+    .book-grid { grid-template-columns:5fr 7fr; gap:64px; align-items:start; }
+    .form-panel { padding:32px; }
+}
+
+.book .bay-title { margin:0 0 20px; }
+
+/* ── Legacy pages: pull Tailwind-built sections into the new system (CSS only, no markup or script changes) ── */
+.rounded-2xl:not(.lab-page *), .rounded-xl:not(.lab-page *), .rounded-3xl:not(.lab-page *) { border-radius:4px; }
+.glass-panel:not(.lab-page *) { backdrop-filter:none; -webkit-backdrop-filter:none; background:var(--panel); }
+.shadow-oled-blue:not(.lab-page *), .shadow-oled-cyan:not(.lab-page *), .shadow-2xl:not(.lab-page *) { box-shadow:none; }
+[style*="rgba(0,102,255"]:not(.lab-page *) { box-shadow:none !important; }
+.animate-pulse:not(.lab-page *) { animation:none; }
+.grid-bg:not(.lab-page *) { background-image:none; }
+[class*="blur-["]:not(.lab-page *) { display:none; }
+.text-zinc-600:not(.lab-page *) { color:#8E939B; }
+.text-zinc-500:not(.lab-page *) { color:#A3A8B0; }
