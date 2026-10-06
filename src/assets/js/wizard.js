@@ -4,6 +4,16 @@
 (function () {
     const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // Hands a walkthrough's choices to the booking form (intake.js reads sessionStorage.labForm).
+    // set = { formFieldId: 'option label' | ['option label', ...] }. An empty summary clears this service's hand-off.
+    window.labHandoff = function (service, summary, set) {
+        try {
+            const old = JSON.parse(sessionStorage.getItem('labForm') || 'null');
+            if (summary) sessionStorage.setItem('labForm', JSON.stringify({ service, summary, set, url: location.pathname + '#build' }));
+            else if (old && old.service === service) sessionStorage.removeItem('labForm');
+        } catch (e) { /* storage unavailable */ }
+    };
+
     document.querySelectorAll('[data-wz]').forEach((root) => {
         const steps = [...root.querySelectorAll('.wz-step')];
         const back = root.querySelector('[data-wz-back]');

@@ -146,7 +146,19 @@
         const summary = c.items.length
             ? 'Shade ' + shadeText() + '; ' + filmText() + ' film, ' + VEH[S.veh] + ': ' + c.items.map((i) => i.label + (i.n > 1 && i.label.indexOf('package') < 0 ? ' x' + i.n : '')).join('; ') + '. Estimate ' + rng(c.lo, c.hi, c.from, 'CAD')
             : '';
-        try { summary ? sessionStorage.setItem('labTint', summary) : sessionStorage.removeItem('labTint'); } catch (e) { /* storage unavailable */ }
+        // hand-off to the booking form (intake.js): field values use that form's own option labels
+        const full = BASE.every((id) => S.sel.has(id));
+        const set = {};
+        const pct = SHADES[shadeIdx].pct;
+        if (pct < 100) set.tint_shade = pct === 5 ? '5% (Limo)' : String(pct);
+        if (full) set.tint_pref = S.film === 'ceramic' ? 'Full Vehicle (Premium Ceramic) - $260 to $1,300 CAD' : 'Full Vehicle (Carbon Tinting) - $180 to $800 CAD';
+        else if (S.sel.has('fl')) set.tint_pref = S.film === 'ceramic' ? 'Premium Ceramic Tint (Front Roll-Ups) - $260 CAD' : 'Standard Carbon Tint (Front Roll-Ups) - $180 CAD';
+        set.tint_addons = [];
+        if (S.sel.has('brow') && S.brow === '1') set.tint_addons.push('Windshield Brow (1-Piece Custom Cut) - +$180 CAD');
+        if (S.sel.has('sun') && S.roof === 'pano') set.tint_addons.push('Panoramic Roof Absolute Shield - +$350 CAD');
+        if (S.sel.has('ws')) set.tint_addons.push('Full Windshield');
+        if (!full && S.sel.has('rear')) set.tint_addons.push('Rear Glass Standard');
+        window.labHandoff('Window Tinting', summary, set);
     }
 
     const toggle = (id) => {

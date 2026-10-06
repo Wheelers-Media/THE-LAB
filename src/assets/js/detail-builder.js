@@ -77,7 +77,8 @@
         const summary = c.t
             ? FOCUS[S.focus] + ', ' + c.t.name + ', ' + sizeNow + (S.add.size ? '. Extras: ' + [...S.add].join(', ') : '') + '. Estimate ' + (c.from ? 'from ' : '') + money(c.total, 'CAD')
             : '';
-        try { summary ? sessionStorage.setItem('labDetail', summary) : sessionStorage.removeItem('labDetail'); } catch (e) { /* storage unavailable */ }
+        const FORM_ADDON = { 'Pet Hair Removal': 'Heavy Pet Hair Extraction Clean - +$50 CAD', 'Odour Elimination': 'Odor Neutralizing Ozone Air Cleansing - +$75 CAD', 'Headlight Restoration': 'Headlight Restoration - +$150 CAD', 'Engine Bay Detail': 'Engine Bay Detail & Component Dressing - +$80 CAD' };
+        window.labHandoff('Premium Detailing', summary, { detail_pkg: 'As chosen in my walkthrough (see summary)', protection: [...S.add].map((n) => FORM_ADDON[n]).filter(Boolean) });
     }
 
     $$('[data-focus]').forEach((b) => b.addEventListener('click', () => {

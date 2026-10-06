@@ -24,7 +24,10 @@
         if (S.brow) { const b = brow(); lines.push({ label: 'Windshield sun-strip (visor brow)', txt: money(b.lo) + ' to ' + money(b.hi) }); total += b.lo; }
         $('#est-lines').innerHTML = lines.map((l) => '<li><span>' + l.label + '</span><span class="price">' + l.txt + '</span></li>').join('');
         $('#est-total').textContent = 'from ' + money(total);
-        try { sessionStorage.setItem('labTint', 'SxS: ' + name + ' film' + (S.brow ? ' + sun-strip' : '') + '. Estimate from ' + money(total, 'CAD')); } catch (e) { /* storage unavailable */ }
+        window.labHandoff('Window Tinting', 'SxS: ' + name + ' film' + (S.brow ? ' + sun-strip' : '') + '. Estimate from ' + money(total, 'CAD'), {
+            tint_pref: 'Off-Road SxS & Equipment Film - Starts at $25 CAD',
+            category: 'Side-by-Side (SxS) / Off-Road',
+        });
     }
 
     $$('[data-sxs-film]').forEach((c) => {

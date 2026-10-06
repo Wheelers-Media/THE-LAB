@@ -34,7 +34,7 @@
                 f('tint_shade', 'Tint Shade Preference', 'select', { when: ['service', ['Window Tinting']], opts: ['5% (Limo)', '18', '25', '35', 'Not sure yet - need a recommendation'] }),
                 f('tint_pref', 'Window Tint Preference', 'radio', { when: ['service', ['Window Tinting']], opts: ['Standard Carbon Tint (Front Roll-Ups) - $180 CAD', 'Premium Ceramic Tint (Front Roll-Ups) - $260 CAD', 'Full Vehicle (Carbon Tinting) - $180 to $800 CAD', 'Full Vehicle (Premium Ceramic) - $260 to $1,300 CAD', 'Off-Road SxS & Equipment Film - Starts at $25 CAD'] }),
                 f('tint_addons', 'Tint Add-Ons & Glass Coverage', 'multi', { when: ['service', ['Window Tinting']], opts: ['Windshield Brow (1-Piece Custom Cut) - +$180 CAD', 'Panoramic Roof Absolute Shield - +$350 CAD', 'Full Windshield', 'Rear Glass Standard'] }),
-                f('detail_pkg', 'Detailing Package', 'select', { req: 1, when: ['service', ['Premium Detailing']], opts: ['Standard Detail (Starts at $149 CAD)', 'De-Luxx Signature Interior (Starts at $279 CAD)', 'De-Luxx Signature Ultimate (Starts at $499 CAD)', 'The Monthly Signature (Starts at $249 CAD Per Month)', 'The LAB Syndicate Bi-Weekly (Starts at $349 CAD Per Month)'] }),
+                f('detail_pkg', 'Detailing Package', 'select', { req: 1, when: ['service', ['Premium Detailing']], opts: ['As chosen in my walkthrough (see summary)', 'Standard Detail (Starts at $149 CAD)', 'De-Luxx Signature Interior (Starts at $279 CAD)', 'De-Luxx Signature Ultimate (Starts at $499 CAD)', 'The Monthly Signature (Starts at $249 CAD Per Month)', 'The LAB Syndicate Bi-Weekly (Starts at $349 CAD Per Month)'] }),
                 f('drop_note', 'Drop-off', 'note', { when: ['service', ['Premium Detailing']], html: '<strong class="text-white">Detailing drop-off is 8:00 to 9:00 AM, Monday to Friday.</strong> We take 2 details per day, so spots fill up. Need a different time? Just let us know and Eric will confirm.' }),
                 f('lighting', 'Custom Lighting Upgrades', 'multi', { when: ['service', ['Custom Lighting']], opts: ['Morimoto Headlight/Taillight Assemblies', 'Off-Road & Auxiliary (Baja Designs / BMC)', 'Accent & Replacement Bulbs (Diode Dynamics)', 'Starlight Headliner Installation'] }),
                 f('protection', 'Additional Protection', 'multi', { when: ['service', ['Premium Detailing', 'Window Tinting']], opts: ['Windshield Brow (1-Piece Custom Cut) - +$180 CAD', 'Panoramic Roof Absolute Shield - +$350 CAD', 'Heavy Pet Hair Extraction Clean - +$50 CAD', 'Odor Neutralizing Ozone Air Cleansing - +$75 CAD', 'Engine Bay Detail & Component Dressing - +$80 CAD', 'Paint Pore Clay Bar Finish Treatment - +$60 CAD', 'Headlight Restoration - +$150 CAD', 'Single-Stage Machine Gloss Polish - +$200 CAD'] }),
@@ -98,6 +98,11 @@
     function mount(el, key) {
         const cfg = FORMS[key];
         el.innerHTML = `<form novalidate class="grid sm:grid-cols-2 gap-5" autocomplete="on">
+            <div data-recap hidden class="sm:col-span-2 rounded-xl border border-labBlue/40 bg-labBlue/10 p-4">
+                <p class="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mb-2">Your walkthrough choices (sent to Eric)</p>
+                <p data-recap-text class="text-sm text-zinc-100 leading-relaxed"></p>
+                <a data-recap-edit href="#" class="inline-block text-labBlue hover:underline text-xs mt-2">Change my choices</a>
+            </div>
             ${cfg.fields.map(field).join('')}
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
             <div class="sm:col-span-2">
@@ -140,6 +145,30 @@
         const sel = form.elements.service;
         if (pre && sel && sel.tagName === 'SELECT' && [...sel.options].some((o) => o.value === pre)) { sel.value = pre; refresh(); }
 
+        // choices made in a service-page walkthrough (wizard.js labHandoff): tick the matching options, show the recap
+        function saved() {
+            let h = null;
+            try { h = JSON.parse(sessionStorage.getItem('labForm') || 'null'); } catch (err) { /* storage unavailable */ }
+            return h && val('service').includes(h.service) ? h : null;
+        }
+        function handoff() {
+            const h = saved();
+            form.querySelector('[data-recap]').hidden = !h;
+            if (!h) return;
+            form.querySelector('[data-recap-text]').textContent = h.summary;
+            form.querySelector('[data-recap-edit]').href = h.url;
+            Object.entries(h.set || {}).forEach(([id, v]) => {
+                const want = [].concat(v);
+                form.querySelectorAll(`[name="${id}"]`).forEach((c) => {
+                    if (c.tagName === 'SELECT') { const o = [...c.options].find((x) => want.includes(x.value)); if (o) c.value = o.value; }
+                    else c.checked = want.includes(c.value);
+                });
+            });
+            refresh();
+        }
+        form.addEventListener('change', (e) => { if (e.target.name === 'service') handoff(); });
+        handoff();
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!form.checkValidity()) return form.reportValidity();
@@ -158,9 +187,8 @@
                 if (['name', 'first', 'last', 'phone', 'email', 'year', 'make', 'model', 'vin', 'consent', 'offroad'].includes(d.id)) return;
                 add(d.label, v[d.id]);
             });
-            // set by the tinting page estimator (tint-builder.js) so Eric sees which windows they tapped
-            const EST = { 'Window Tinting': ['labTint', 'Tint estimate'], 'Premium Detailing': ['labDetail', 'Detailing estimate'], 'Custom Lighting': ['labLighting', 'Lighting wish list'], 'Custom Tuning': [] };
-            try { const e = EST[v.service]; const t = e && e[0] && sessionStorage.getItem(e[0]); if (t) add(e[1], t); } catch (err) { /* storage unavailable */ }
+            const h = saved();
+            if (h) add('Walkthrough summary', h.summary);
             add('Off-road disclaimer agreed', v.offroad); add('SMS consent', v.consent);
 
             const btn = form.querySelector('button[type=submit]');
@@ -174,7 +202,7 @@
                 });
                 const j = await r.json();
                 if (!j.success) throw new Error(j.message);
-                done(el, v.service === 'Premium Detailing' ? 'detailing' : 'eric');
+                done(el, v.service === 'Premium Detailing' ? 'detailing' : 'eric', name, v.email);
             } catch (err) {
                 msg.innerHTML = `We couldn't send that. Please call or text us at <a class="underline" href="tel:${TEXT_TO}">${textDisplay}</a> or try again.`;
                 msg.hidden = false;
@@ -184,12 +212,13 @@
     }
 
     // Replaces the form once Eric has the request. The booking calendar is embedded right here, no redirect.
-    function done(el, route) {
+    function done(el, route, name, email) {
         const url = BOOKING[route];
         const drop = route === 'detailing';
         el.innerHTML = `<div class="text-center">
             <p class="text-white text-lg leading-snug mb-2"><strong class="font-heading font-extrabold uppercase">Got it!</strong> Eric has your request.</p>
             <p class="text-zinc-400 text-sm mb-5">${url ? `Pick ${drop ? 'your drop-off' : 'a'} time below. ` : ''}Eric will confirm and text you a $50 deposit link to lock in your spot (100% credited to your final invoice).</p>
+            ${url ? `<p class="text-zinc-200 text-sm mb-4 rounded-xl border border-labBlue/40 bg-labBlue/10 p-3">Book under <strong class="text-white">${esc(name)}</strong> and <strong class="text-white">${esc(email)}</strong> (same as above) so Eric can match your time to your request.</p>` : ''}
             ${drop ? '<p class="text-zinc-300 text-xs mb-4">Drop-off is 8:00 to 9:00 AM, Monday to Friday (Fort St. John time).</p>' : ''}
             ${url ? `<iframe src="${esc(url)}" title="Pick a time" loading="lazy" class="w-full rounded-xl bg-white" style="height:720px;border:0"></iframe>
             <a href="${esc(url)}" target="_blank" rel="noopener" class="inline-block text-labBlue hover:underline text-xs mt-3">Calendar not loading? Open it in a new tab</a>` : ''}
