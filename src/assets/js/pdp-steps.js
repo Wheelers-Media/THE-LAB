@@ -87,7 +87,8 @@
 
     const units = () => ui.fields.filter((u) => u.live()).concat([ui.finalUnit]);
 
-    function schedule() { if (queued || dead) return; queued = true; requestAnimationFrame(() => { queued = false; try { render(); } catch (e) { bail(e); } }); }
+    // batch updates on a timer rather than requestAnimationFrame, which browsers pause in hidden tabs
+    function schedule() { if (queued || dead) return; queued = true; setTimeout(() => { queued = false; try { render(); } catch (e) { bail(e); } }, 0); }
 
     function go(step) {
         const list = units();

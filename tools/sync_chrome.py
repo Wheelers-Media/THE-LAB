@@ -14,6 +14,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAGES = os.path.join(ROOT, "src", "pages")
 COMP = os.path.join(ROOT, "src", "components")
 CHROME_JS = '<script src="/assets/js/chrome.js"></script>'
+TAILWIND_LINK = '<link rel="stylesheet" href="/assets/css/tailwind.css">'
+FONTS = "https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800&display=swap"
 
 
 def read(path):
@@ -37,6 +39,15 @@ def sync(path):
 
     # drop explanatory notes that earlier runs copied in from the component files
     s = re.sub(r"<!-- (?:Site (?:header|footer|search overlay)|Truck selector modal): single source of truth[^\n]*-->\n", "", s)
+
+    # 0. head: prebuilt Tailwind (tools/tailwind) instead of the in-browser CDN compiler, and only the fonts the site uses.
+    #    tailwind.css goes right after lab.css, the same place the CDN's generated styles used to land in the cascade.
+    had_cdn = "cdn.tailwindcss.com" in s
+    s = re.sub(r'[ \t]*<script src="https://cdn\.tailwindcss\.com"></script>\n', "", s)
+    s = re.sub(r"[ \t]*<script>\s*tailwind\.config\s*=.*?</script>\n", "", s, flags=re.S)
+    s = re.sub(r'https://fonts\.googleapis\.com/css2\?[^"]*', FONTS, s)
+    if (had_cdn or TAILWIND_LINK in s) and TAILWIND_LINK not in s:
+        s = re.sub(r'([ \t]*<link rel="stylesheet" href="/assets/css/lab\.css">\n)', lambda m: m.group(1) + "    " + TAILWIND_LINK + "\n", s, count=1)
 
     store = rel.startswith("store/")
     price = store or "data-price-cad" in s or "data-price-from-cad" in s

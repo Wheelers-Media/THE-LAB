@@ -1,0 +1,11 @@
+{
+  "name": "lab-tailwind-build",
+  "private": true,
+  "description": "Builds src/assets/css/tailwind.css (run: npm run build). Not part of the deployed site.",
+  "scripts": {
+    "build": "tailwindcss -c tailwind.config.js -i input.css -o ../../src/assets/css/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.19"
+  }
+}
