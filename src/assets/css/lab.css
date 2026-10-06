@@ -61,6 +61,7 @@ html body .font-body { font-family:'Barlow',system-ui,sans-serif; }
 .rail-logos { grid-column:1; display:flex; gap:16px; align-items:center; margin-top:8px; }
 .rail-logos img { height:22px; width:auto; max-width:none; filter:brightness(0) invert(1); opacity:.85; }
 .tag { display:inline-block; vertical-align:middle; margin-left:8px; padding:3px 8px; background:var(--amber); color:#000; font-family:'Barlow',sans-serif; font-size:11px; font-weight:800; letter-spacing:.08em; border-radius:2px; transform:translateY(-3px); }
+.tag--soon { background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.5); padding:2px 7px; }
 .dealer { display:grid; gap:16px; align-items:center; margin-top:36px; padding-top:28px; border-top:1px solid var(--line); }
 .dealer img { height:56px; width:auto; max-width:100%; background:#000; }
 .dealer-title { font-size:1.6rem; margin:0 0 6px; }
@@ -156,3 +157,9 @@ footer p.uppercase { letter-spacing:.04em; }
 .text-zinc-700:not(.lab-page *) { color:#7D828A; }
 .text-zinc-600:not(.lab-page *) { color:#8E939B; }
 .text-zinc-500:not(.lab-page *) { color:#A3A8B0; }
+
+/* Service-page heroes */
+.page-hero .checks { max-width:520px; margin:0 0 24px; }
+.page-hero .checks li { background:rgba(10,10,11,.55); }
+.page-hero .soon { display:inline-block; margin:0 0 14px; padding:3px 9px; border:1px solid rgba(255,255,255,.55); color:var(--text); font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+.page-hero .hero-note { font-size:15px; color:#B4B8BF; max-width:46ch; margin:-8px 0 20px; }

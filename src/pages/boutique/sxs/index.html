@@ -168,57 +168,14 @@
     <main>
 
         <!-- ═══ HERO SECTION ═══ -->
-        <section class="relative min-h-[85vh] flex items-center py-20 md:py-32 px-6 overflow-hidden">
-            <!-- Background Image with Overlay -->
-            <div class="absolute inset-0 z-0">
-                <img src="/assets/sxs-hero-image.jpg" alt="SxS Offroad Customization" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/60"></div>
-            </div>
-            
-            <div class="relative z-10 max-w-7xl mx-auto w-full flex justify-start">
-                <div class="w-full md:w-[55%] lg:w-[45%] bg-[#0D0D12]/90 backdrop-blur-md border border-[#1E1E28] p-8 rounded-xl shadow-2xl flex flex-col">
-                    <!-- Eyebrow -->
-                    <span class="text-[#00E5FF] text-xs font-bold tracking-[0.2em] uppercase">POWERSPORTS</span>
-                    <!-- Heading -->
-                    <h1 class="text-white text-4xl font-extrabold uppercase mt-2 mb-4">OFF-ROAD &amp; SXS</h1>
-                    <!-- Description -->
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                        Protect your toys before you hit the trails. We offer specialized ceramic coating and tinting packages specifically engineered for Polaris, Can-Am, and CFMOTO machines.
-                    </p>
-                    
-                    <!-- Bullet Points -->
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-3">
-                            <!-- Electric Cyan Checkmark SVG -->
-                            <svg class="w-5 h-5 text-[#00E5FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            <span class="text-white text-sm font-semibold">Mud &amp; Dirt Repellent Coatings</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 text-[#00E5FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            <span class="text-white text-sm font-semibold">Polycarbonate Tinting</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 text-[#00E5FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            <span class="text-white text-sm font-semibold">Heavy Duty Surface Prep</span>
-                        </li>
-                    </ul>
-                    
-                    <!-- Dual CTAs -->
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <a href="/contact/" class="bg-[#0066FF] hover:bg-blue-600 text-white font-extrabold py-3.5 px-6 rounded-xl transition-all uppercase tracking-widest text-xs min-h-[48px] flex items-center justify-center grow">
-                            BOOK YOUR SXS
-                        </a>
-                        <a href="/boutique/lighting/" class="bg-transparent text-white border border-gray-600 hover:border-white transition-colors font-extrabold py-3.5 px-6 rounded-xl uppercase tracking-widest text-xs min-h-[48px] flex items-center justify-center grow">
-                            EXPLORE LIGHTING
-                        </a>
-                    </div>
-                </div>
+        <section class="lab-page page-hero" aria-labelledby="svc-h1">
+            <img class="page-hero-img" src="/assets/sxs-hero-image.jpg" width="1024" height="572" fetchpriority="high" alt="Side-by-side prepared with coating and tint at THE LAB">
+            <div class="wrap page-hero-body">
+                <h1 id="svc-h1" class="display page-h1">OFF-ROAD<br>&amp; SXS</h1>
+                <p class="cred">Powersports</p>
+                <p class="lede">Protect your toys before you hit the trails. We offer specialized ceramic coating and tinting packages specifically engineered for Polaris, Can-Am, and CFMOTO machines.</p>
+                <ul class="checks"><li>Mud &amp; Dirt Repellent Coatings</li><li>Polycarbonate Tinting</li><li>Heavy Duty Surface Prep</li></ul>
+                <div class="btns"><a class="btn btn-primary" href="/contact/">Book your SxS</a><a class="btn btn-ghost" href="/boutique/lighting/">Explore lighting</a></div>
             </div>
         </section>
 
