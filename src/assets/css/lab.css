@@ -643,3 +643,26 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .cart-go { display:flex; align-items:center; justify-content:center; width:100%; min-height:56px; background:var(--brand); color:#fff; border:0; cursor:pointer; font:700 14px 'Barlow',sans-serif; letter-spacing:.08em; text-transform:uppercase; }
 .cart-go:hover { background:#0052cc; }
 .cart-note { margin:12px 0 0; text-align:center; color:var(--mute); font-size:12px; }
+
+/* ── Store: product page skin. Scoped to #pdp-container; the configurator markup and the selectors store.js uses stay as they are ── */
+.pdp-crumb { padding-top:24px; }
+.pdp-crumb a { color:var(--mute); text-decoration:none; font:700 12px/1 'Barlow',sans-serif; letter-spacing:.1em; text-transform:uppercase; }
+.pdp-crumb a:hover { color:var(--text); }
+#pdp-container [class*="rounded-"]:not(.rounded-full) { border-radius:2px; }
+#pdp-container h1 { font-family:'Barlow Condensed',sans-serif; font-weight:800; text-transform:uppercase; line-height:.98; letter-spacing:.005em; font-size:clamp(2.1rem,7vw,3.3rem); color:var(--text); text-wrap:balance; }
+#pdp-container .font-mono.text-labBlue.uppercase { color:var(--amber); font-weight:600; font-size:13px; }
+#pdp-container .text-2xl.font-extrabold { font-family:'Barlow',sans-serif; font-size:2.2rem; line-height:1; letter-spacing:0; color:var(--text); }
+#pdp-container .border-\[\#1E1E28\] { border-color:var(--line); }
+#pdp-container .border-edge { border-color:var(--line); }
+#pdp-container .bg-\[\#111115\], #pdp-container .bg-\[\#0D0D12\], #pdp-container .bg-\[\#1a1a24\] { background-color:var(--panel); }
+#pdp-container .bg-\[\#000000\] { background-color:var(--ink); }
+#pdp-container .text-\[10px\].uppercase, #pdp-container label.text-\[10px\] { font-size:12px; letter-spacing:.1em; color:var(--mute); }
+#pdp-container .pdp-gallery-thumb { border-radius:0; }
+#pdp-container #pdp-add-btn { background:var(--brand); border-radius:0; font-family:'Barlow',sans-serif; font-weight:700; font-size:14px; letter-spacing:.08em; box-shadow:none; }
+#pdp-container #pdp-add-btn:hover { background:#0052cc; }
+#pdp-container #pdp-buy-shop-btn { border-radius:0; }
+#pdp-container .pdp-accordion-btn span { font-family:'Barlow Condensed',sans-serif; font-size:1.6rem; letter-spacing:.01em; }
+#pdp-container .pdp-tune-card, #pdp-container .pdp-size-card { border-radius:0; }
+#pdp-container .pdp-tune-card[aria-pressed="true"], #pdp-container .pdp-size-card[aria-pressed="true"] { border-color:var(--text); }
+#pdp-container input[type="text"], #pdp-container input[type="number"], #pdp-container input[type="email"], #pdp-container select, #pdp-container textarea { border-radius:0; }
+#pdp-container :focus-visible { outline:2px solid #fff; outline-offset:2px; }
