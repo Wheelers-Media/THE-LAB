@@ -63,28 +63,22 @@
         .vs-make-btn.selected-make .vs-make-text { color: #0066FF; }
 
         /* ── BUILD YOUR TUNE GATEWAY ── */
-        /* Custom OLED selects - reject all browser defaults */
         .byt-select {
             appearance: none; -webkit-appearance: none;
-            background-color: #000000;
-            border: 1px solid #1E1E28;
-            color: #ffffff;
-            border-radius: 0.75rem;
-            padding: 1rem 3rem 1rem 1rem;
-            font-size: 0.875rem;
-            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0B;
+            border: 1px solid #26282C;
+            color: #F2F4F7;
+            border-radius: 0;
+            padding: 0 3rem 0 1rem;
+            font-size: 1rem;
+            font-family: 'Barlow', sans-serif;
             width: 100%;
             min-height: 48px;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
             cursor: pointer;
         }
-        .byt-select:focus {
-            border-color: #0066FF;
-            box-shadow: 0 0 0 2px rgba(0,102,255,0.25), 0 0 16px rgba(0,102,255,0.15);
-        }
-        .byt-select:disabled { opacity: 0.3; cursor: not-allowed; }
-        .byt-select option { background: #0D0D12; color: #ffffff; }
+        .byt-select:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+        .byt-select:disabled { opacity: 0.35; cursor: not-allowed; }
+        .byt-select option { background: #141517; color: #F2F4F7; }
         .byt-select-wrap { position: relative; }
         .byt-select-wrap::after {
             content: '';
@@ -92,7 +86,7 @@
             width: 0; height: 0;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
-            border-top: 5px solid #4b5563;
+            border-top: 5px solid #B4B8BF;
             pointer-events: none;
         }
         /* Platform split card */
@@ -100,32 +94,11 @@
         .platform-card:hover { transform: translateY(-4px); }
         .platform-card.platform-ezlynk:hover { border-color: rgba(0,229,255,0.6); box-shadow: 0 0 32px rgba(0,229,255,0.12); }
         .platform-card.platform-hptuners:hover { border-color: rgba(0,102,255,0.6); box-shadow: 0 0 32px rgba(0,102,255,0.12); }
-        /* Scan-line title animation */
-        @keyframes scan {
-            0%   { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-        .byt-title-accent {
-            background: linear-gradient(90deg, transparent 0%, #00E5FF 40%, #0066FF 60%, transparent 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: scan 4s linear infinite;
-        }
+        .byt-title-accent { color: #FF8A1F; }
         /* Step progress indicator */
-        .byt-step-dot {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: #1E1E28;
-            transition: background 0.3s, box-shadow 0.3s;
-        }
-        .byt-step-dot.active {
-            background: #0066FF;
-            box-shadow: 0 0 8px rgba(0,102,255,0.6);
-        }
-        .byt-step-dot.done {
-            background: #00E5FF;
-        }
+        .byt-step-dot { width: 10px; height: 10px; border-radius: 0; background: #26282C; transition: background 0.3s; }
+        .byt-step-dot.active { background: #0066FF; }
+        .byt-step-dot.done { background: #F2F4F7; }
         /* Gateway collapse/expand */
         #byt-gateway-body { -webkit-overflow-scrolling: touch; transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s; overflow: hidden; }
         /* Platform cards hidden until vehicle confirmed */
@@ -270,13 +243,18 @@
 
 </div>
 
-    <main>
+    <main class="lab-page lab-parts">
+    <section class="wrap pg-head" aria-labelledby="tn-h1">
+        <p class="pg-kick">Custom tuning</p>
+        <h1 id="tn-h1" class="display pg-h1">TUNING<br>PACKAGES.</h1>
+        <p class="pg-meta">Tell us what you drive and we match it to the right tune. HP Tuners and EZ LYNK, built by people who run them.</p>
+    </section>
 
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- MANDATE 1: "BUILD YOUR TUNE" - YMM GUIDED TUNING GATEWAY          -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <section id="byt-gateway" class="border-b border-edge/60" style="background:linear-gradient(180deg,#050508 0%,#000000 100%);">
-        <div class="max-w-7xl mx-auto px-6 py-5">
+    <section id="byt-gateway" class="wrap byt-wrap">
+        <div class="byt-panel">
 
             <!-- Collapsed Header Row (always visible) -->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -292,8 +270,8 @@
                         <div class="byt-step-dot" id="byt-dot-4"></div>
                     </div>
                     <div>
-                        <p class="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-0.5">Guided Tuning Experience</p>
-                        <h2 class="font-heading font-extrabold text-white text-lg leading-none">
+                        <p class="byt-kick">Guided tuning</p>
+                        <h2 class="byt-h">
                             Build Your <span class="byt-title-accent">Tune</span>
                         </h2>
                     </div>
@@ -382,31 +360,22 @@
     </section>
     <!-- /BUILD YOUR TUNE GATEWAY -->
 
-    <section class="py-12 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
-            <!-- Sidebar removed for guided tuning -->
-
-            <!-- Product Grid -->
-            <div class="flex-1">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
-                    <div class="flex items-center gap-4">
-                        <h1 class="text-2xl md:text-3xl font-heading font-extrabold text-white uppercase">Tuning Packages</h1>
-                        <span data-product-count class="text-xs font-mono text-zinc-500 bg-edge px-3 py-1 rounded-full hidden lg:inline-block">Loading...</span>
-                    </div>
-                    <div class="flex items-center gap-3 self-end sm:self-auto w-full sm:w-auto">
-                        <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest hidden sm:block whitespace-nowrap">Sort By:</span>
-                        <select id="sort-select" onchange="window.applySort(this.value)" class="bg-[#111115] border border-edge rounded-lg pl-4 pr-10 py-2.5 text-xs font-bold uppercase tracking-widest text-white focus:outline-none focus:border-labBlue transition-colors cursor-pointer appearance-none w-full sm:w-auto" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23A1A1AA%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat, repeat; background-position: right .7em top 50%, 0 0; background-size: .65em auto, 100%;">
-                            <option value="featured">Featured / Popular</option>
-                            <option value="price-low">Price: Low to High</option>
-                            <option value="price-high">Price: High to Low</option>
-                            <option value="name-asc">Name: A to Z</option>
-                            <option value="name-desc">Name: Z to A</option>
-                        </select>
-                    </div>
-                </div>
-                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Javascript populates products here -->
-                </div>
+    <section class="wrap cat-shell" aria-label="Tuning packages">
+        <div class="cat-main">
+            <div class="cat-bar">
+                <span data-product-count class="cat-count" aria-live="polite">Loading...</span>
+                <label class="cat-sort"><span>Sort by</span>
+                    <select id="sort-select" onchange="window.applySort(this.value)" class="cat-select">
+                        <option value="featured">Featured / Popular</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="name-asc">Name: A to Z</option>
+                        <option value="name-desc">Name: Z to A</option>
+                    </select>
+                </label>
+            </div>
+            <div id="product-grid" class="pgrid">
+                <!-- Javascript populates products here -->
             </div>
         </div>
     </section>

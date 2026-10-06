@@ -357,17 +357,6 @@
 </footer>
 
 
-    <script>
-        /* YMM Find Parts - scrolls to make-specific anchor */
-        document.getElementById('ymm-find').addEventListener('click', function() {
-            var make = document.getElementById('ymm-make').value;
-            var target = document.getElementById('egr');
-            if (make === 'ford') target = document.getElementById('ford');
-            else if (make === 'ram') target = document.getElementById('ram');
-            else if (make === 'chevy') target = document.getElementById('chevy');
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    </script>
 
     <script src="/assets/js/products.js"></script>
     <script src="/assets/js/store.js?v=2"></script>

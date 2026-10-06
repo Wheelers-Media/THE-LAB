@@ -666,3 +666,26 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 #pdp-container .pdp-tune-card[aria-pressed="true"], #pdp-container .pdp-size-card[aria-pressed="true"] { border-color:var(--text); }
 #pdp-container input[type="text"], #pdp-container input[type="number"], #pdp-container input[type="email"], #pdp-container select, #pdp-container textarea { border-radius:0; }
 #pdp-container :focus-visible { outline:2px solid #fff; outline-offset:2px; }
+
+/* ── Store: tuning portal gateway (guided-tuning.js keeps its ids and toggled classes) ── */
+.byt-wrap { padding-top:32px; }
+.byt-panel { background:var(--panel); border:1px solid var(--line); padding:16px; }
+.byt-kick { margin:0 0 4px; color:var(--amber); font:600 12px/1 "Barlow",sans-serif; letter-spacing:.1em; text-transform:uppercase; }
+.byt-h { margin:0; color:var(--text); font:800 1.7rem/1 "Barlow Condensed",sans-serif; text-transform:uppercase; }
+#byt-gateway label.text-\[9px\] { font-size:12px; letter-spacing:.1em; color:var(--mute); }
+#byt-gateway [class*="rounded-"]:not(.rounded-full) { border-radius:0; }
+#byt-gateway #byt-find { background:var(--brand); font-family:"Barlow",sans-serif; font-weight:700; letter-spacing:.08em; }
+#byt-gateway #byt-find:not(:disabled):hover { background:#0052cc; }
+#byt-gateway .text-\[10px\] { font-size:12px; letter-spacing:.08em; }
+@media (min-width:768px) { .byt-wrap { padding-top:40px; } .byt-panel { padding:24px; } }
+.byt-select { padding:0 2rem 0 .75rem; font-size:15px; }
+@media (min-width:768px) { .byt-select { padding:0 3rem 0 1rem; font-size:16px; } }
+
+/* ── Store: vehicle selector modal skin (markup and script untouched) ── */
+#vehicle-selector-modal > div { background-color:var(--panel); border-color:var(--line); border-radius:0; box-shadow:none; }
+#vehicle-selector-modal [class*="rounded-"]:not(.rounded-full) { border-radius:0; }
+#vehicle-selector-modal .border-edge { border-color:var(--line); }
+#vehicle-selector-modal h2 { font-family:"Barlow Condensed",sans-serif; font-weight:800; font-size:1.6rem; line-height:1; text-transform:uppercase; letter-spacing:.01em; }
+#vehicle-selector-modal .vs-make-btn.selected-make { border-color:var(--text); background-color:rgba(255,255,255,.06); box-shadow:none; }
+#vehicle-selector-modal .vs-make-btn.selected-make .vs-make-text { color:var(--text); }
+#vehicle-selector-modal :focus-visible { outline:2px solid #fff; outline-offset:2px; }
