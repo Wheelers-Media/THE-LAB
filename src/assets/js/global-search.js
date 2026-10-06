@@ -10,9 +10,9 @@
     // Site-wide content index
     const SITE_PAGES = [
         { title: 'Window Tinting', desc: 'Ceramic & carbon film tinting services for cars and trucks.', url: '/boutique/tinting/', tags: ['tinting', 'window', 'ceramic', 'film', 'heat', 'uv', 'boutique', 'service'] },
-        { title: 'Ceramic Coatings', desc: 'Industry-leading nano-ceramic paint protection and coating services.', url: '/boutique/coatings/', tags: ['ceramic', 'coating', 'paint', 'protection', 'nano', 'hydrophobic', 'boutique', 'service'] },
+        { title: 'Ceramic Coatings', desc: 'Nano-ceramic paint protection. Coming soon.', url: '/boutique/coatings/', tags: ['ceramic', 'coating', 'paint', 'protection', 'nano', 'hydrophobic', 'boutique', 'service'] },
         { title: 'Premium Detailing', desc: 'Full decontamination, paint correction, and concours-level finish restoration.', url: '/boutique/detailing/', tags: ['detailing', 'detail', 'paint', 'correction', 'polish', 'wash', 'boutique', 'service'] },
-        { title: 'Paint Protection Film (PPF)', desc: 'Self-healing TPU film invisible armor against chips and road debris.', url: '/boutique/ppf/', tags: ['ppf', 'paint', 'protection', 'film', 'clear', 'bra', 'chip', 'boutique', 'service'] },
+        { title: 'Paint Protection Film (PPF)', desc: 'Self-healing TPU film against chips and road debris. Coming soon.', url: '/boutique/ppf/', tags: ['ppf', 'paint', 'protection', 'film', 'clear', 'bra', 'chip', 'boutique', 'service'] },
         { title: 'Custom Lighting', desc: 'Morimoto headlights, LED upgrades, and custom truck lighting packages.', url: '/boutique/lighting/', tags: ['lighting', 'lights', 'led', 'headlight', 'morimoto', 'diode', 'boutique', 'service'] },
         { title: 'SxS Services', desc: 'Side-by-side and ATV detailing, wrapping, and upgrade services.', url: '/boutique/sxs/', tags: ['sxs', 'side by side', 'atv', 'utv', 'polaris', 'can-am', 'boutique'] },
         { title: 'The Boutique', desc: 'All vehicle aesthetics and protection services - tinting, coatings, detailing, PPF, lighting.', url: '/boutique/', tags: ['boutique', 'service', 'booking', 'appointment'] },
@@ -96,26 +96,25 @@
         if (matches.length === 0) { suggestEl.innerHTML = ''; suggestEl.classList.add('hidden'); return; }
         suggestEl.classList.remove('hidden');
         suggestEl.innerHTML = matches.map(m => `
-            <a href="${m.url}" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors border-b border-edge/40 last:border-0">
-                <svg class="w-4 h-4 text-zinc-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <div><div class="text-white text-sm font-bold">${m.title}</div><div class="text-zinc-500 text-xs">${m.desc}</div></div>
-            </a>
+            <a href="${m.url}" class="site-search-item" role="option"><b>${m.title}</b><span>${m.desc}</span></a>
         `).join('');
     };
 
+    let opener = null;
     window.toggleGlobalSearch = function () {
         const el = document.getElementById('global-search-overlay');
         if (!el) return;
-        const isHidden = el.classList.contains('hidden') || el.style.display === 'none' || el.style.display === '';
-        if (isHidden) {
-            el.classList.remove('hidden');
-            el.style.display = 'flex';
-            el.style.flexDirection = 'column';
-            setTimeout(() => { el.classList.remove('opacity-0'); document.getElementById('global-search-input')?.focus(); }, 10);
+        const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!el.classList.contains('is-open')) {
+            opener = document.activeElement;
+            el.classList.add('is-open');
             document.body.style.overflow = 'hidden';
+            requestAnimationFrame(() => { el.classList.add('is-visible'); const i = document.getElementById('global-search-input'); if (i) i.focus(); });
         } else {
-            el.classList.add('opacity-0');
-            setTimeout(() => { el.classList.add('hidden'); el.style.display = 'none'; document.body.style.overflow = ''; }, 300);
+            el.classList.remove('is-visible');
+            document.body.style.overflow = '';
+            setTimeout(() => el.classList.remove('is-open'), calm ? 0 : 200);
+            if (opener && opener.focus) opener.focus();
         }
     };
 
@@ -124,10 +123,15 @@
         const input = document.getElementById('global-search-input');
         if (submitBtn) submitBtn.addEventListener('click', () => { if (input?.value) window.globalSearch(input.value); });
         if (input) {
-            input.addEventListener('keypress', (e) => { if (e.key === 'Enter') window.globalSearch(e.target.value); });
+            input.addEventListener('keydown', (e) => { if (e.key === 'Enter') window.globalSearch(e.target.value); });
             input.addEventListener('input', (e) => window.renderSearchSuggestions(e.target.value));
         }
     }
+
+    document.addEventListener('keydown', (e) => {
+        const el = document.getElementById('global-search-overlay');
+        if (e.key === 'Escape' && el && el.classList.contains('is-open')) window.toggleGlobalSearch();
+    });
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', wireOverlay);

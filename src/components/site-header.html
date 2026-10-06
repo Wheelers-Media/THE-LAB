@@ -1,0 +1,113 @@
+<!-- Site header: single source of truth. tools/sync_chrome.py copies this into every page. The if:store and if:price marker pairs show only on store pages and on pages that show prices. -->
+<a class="skip-link" href="#main">Skip to content</a>
+<!--if:store-->
+<div class="site-warn" role="note">Warning: Off-road &amp; sanctioned racing use only. Not legal for use on pollution-controlled vehicles.</div>
+<!--/if:store-->
+<header class="site-header" id="site-header">
+    <div class="site-util">
+        <div class="site-wrap">
+            <p class="site-util-info">Fort St. John, BC <span aria-hidden="true">&middot;</span> Mon&ndash;Fri 9 a.m.&ndash;5 p.m. <span aria-hidden="true">&middot;</span> <a href="tel:+12502619502">(250) 261-9502</a></p>
+            <!--if:price-->
+            <div class="site-currency" role="group" aria-label="Currency"><span>Currency</span><button type="button" data-cur="CAD" aria-pressed="true">CAD</button><button type="button" data-cur="USD" aria-pressed="false">USD</button></div>
+            <!--/if:price-->
+        </div>
+    </div>
+    <div class="site-bar site-wrap">
+        <a class="site-logo" href="/" aria-label="THE LAB home"><img src="/assets/LAB-LOGO-sm.png" alt="THE LAB" width="68" height="34"></a>
+        <nav class="site-nav" aria-label="Primary">
+            <div class="site-nav-item site-nav-item--boutique">
+                <a class="site-nav-link" href="/boutique/" data-nav="boutique">The Boutique</a>
+                <div class="site-drop">
+                    <a href="/boutique/tinting/">Window Tinting</a>
+                    <a href="/boutique/detailing/">Premium Detailing</a>
+                    <a href="/boutique/lighting/">Custom Lighting</a>
+                    <a href="/boutique/sxs/">SxS Services</a>
+                    <a href="/boutique/coatings/">Ceramic Coatings <span class="site-soon">Soon</span></a>
+                    <a href="/boutique/ppf/">Paint Protection Film <span class="site-soon">Soon</span></a>
+                    <a class="site-drop-all" href="/boutique/">All Boutique services</a>
+                </div>
+            </div>
+            <div class="site-nav-item site-nav-item--parts">
+                <a class="site-nav-link" href="/store/" data-nav="store">The Parts Store</a>
+                <div class="site-drop">
+                    <a href="/store/tuning/">Custom Tuning</a>
+                    <a href="/store/catalog/?category=EGR">EGR Solutions</a>
+                    <a href="/store/catalog/?category=Exhaust">Exhaust Systems</a>
+                    <a href="/store/catalog/?category=CCV">CCV Solutions</a>
+                    <a href="/store/catalog/?category=Accessories">Bumpers &amp; Accessories</a>
+                    <a href="/store/catalog/?category=Merch">THE LAB Merch</a>
+                    <a class="site-drop-all" href="/store/catalog/">Shop all parts</a>
+                </div>
+            </div>
+            <a class="site-nav-link" href="/about/" data-nav="about">About</a>
+            <a class="site-nav-link" href="/contact/" data-nav="contact">Contact</a>
+        </nav>
+        <div class="site-actions">
+            <button type="button" class="site-icon" onclick="toggleGlobalSearch()" aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+            <button type="button" class="site-icon" id="cart-btn" aria-label="Open cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 7V6a3 3 0 016 0v1"/></svg><span id="cart-count" class="site-badge hidden" aria-live="polite">0</span></button>
+            <a class="site-book" href="/contact/">Book now</a>
+            <button type="button" class="site-icon site-burger" id="mob-btn" aria-expanded="false" aria-controls="mob-menu" aria-label="Open menu">
+                <svg class="ham" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+        </div>
+    </div>
+    <div id="mob-menu" class="site-drawer" hidden>
+        <div class="site-drawer-inner">
+            <nav aria-label="Mobile">
+                <p class="site-drawer-h">The Boutique</p>
+                <div class="site-drawer-links site-drawer-links--boutique">
+                    <a href="/boutique/tinting/">Window Tinting</a>
+                    <a href="/boutique/detailing/">Premium Detailing</a>
+                    <a href="/boutique/lighting/">Custom Lighting</a>
+                    <a href="/boutique/sxs/">SxS Services</a>
+                    <a href="/boutique/coatings/">Ceramic Coatings <span class="site-soon">Soon</span></a>
+                    <a href="/boutique/ppf/">Paint Protection Film <span class="site-soon">Soon</span></a>
+                </div>
+                <p class="site-drawer-h site-drawer-h--parts">The Parts Store</p>
+                <div class="site-drawer-links">
+                    <a href="/store/tuning/">Custom Tuning</a>
+                    <a href="/store/catalog/?category=EGR">EGR Solutions</a>
+                    <a href="/store/catalog/?category=Exhaust">Exhaust Systems</a>
+                    <a href="/store/catalog/?category=CCV">CCV Solutions</a>
+                    <a href="/store/catalog/?category=Accessories">Bumpers &amp; Accessories</a>
+                    <a href="/store/catalog/?category=Merch">THE LAB Merch</a>
+                    <a href="/store/catalog/">Shop all parts</a>
+                </div>
+                <p class="site-drawer-h site-drawer-h--plain">THE LAB</p>
+                <div class="site-drawer-links">
+                    <a href="/about/">About</a>
+                    <a href="/contact/">Contact</a>
+                    <a href="/shipping/">Shipping &amp; Returns</a>
+                </div>
+            </nav>
+            <!--if:price-->
+            <div class="site-currency site-currency--drawer" role="group" aria-label="Currency"><span>Currency</span><button type="button" data-cur="CAD" aria-pressed="true">CAD</button><button type="button" data-cur="USD" aria-pressed="false">USD</button></div>
+            <!--/if:price-->
+            <div class="site-drawer-cta">
+                <a class="primary" href="/contact/">Book now</a>
+                <a class="ghost" href="tel:+12502619502">Call (250) 261-9502</a>
+                <a class="ghost" href="sms:+12502619502">Text us</a>
+            </div>
+        </div>
+    </div>
+</header>
+<!--if:store-->
+<div class="site-sub">
+    <div class="site-wrap">
+        <button type="button" id="vehicle-selector-trigger-mob" class="site-truck site-truck--mob" aria-label="Select your truck">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16V7h11v9M14 10h4l3 3v3h-7"/><circle cx="7.5" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg>
+            <span><span id="vs-greeting-mob" class="site-truck-g">Hello,</span><span id="vs-label-mob" class="site-truck-l">Select your truck</span></span>
+        </button>
+        <div class="site-sub-search" role="search">
+            <label class="sr-only" for="store-search-input">Search parts</label>
+            <input type="search" id="store-search-input" placeholder="Search parts, tuning, exhaust..." autocomplete="off">
+            <button type="button" id="store-search-btn">Search</button>
+        </div>
+        <button type="button" id="vehicle-selector-trigger" class="site-truck site-truck--desk" aria-label="Select your truck">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16V7h11v9M14 10h4l3 3v3h-7"/><circle cx="7.5" cy="17" r="2"/><circle cx="17.5" cy="17" r="2"/></svg>
+            <span><span id="vs-greeting" class="site-truck-g">Hello,</span><span id="vs-label" class="site-truck-l">Select your truck</span></span>
+        </button>
+    </div>
+</div>
+<!--/if:store-->

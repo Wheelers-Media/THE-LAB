@@ -112,6 +112,8 @@ function initCart() {
     
     document.getElementById("cart-overlay").addEventListener("click", closeCart);
     updateCartUI();
+    // the header cart button on other pages sends people here with ?cart=1
+    if (new URLSearchParams(location.search).get('cart') === '1') openCart();
 }
 
 function openCart() {
@@ -411,53 +413,7 @@ window.setActiveVehicle = function(vehicle) {
     activeVehicle = vehicle;
 };
 
-/* --- ROBUST GLOBAL CURRENCY TOGGLE --- */
-window.setCurrency = function(c) {
-    const r = 0.74;
-    const ac = 'text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider bg-labBlue text-white transition-all';
-    const ic = 'text-[10px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider text-zinc-500 hover:text-white transition-all';
-    
-    document.querySelectorAll('#btn-cad').forEach(cb => cb.className = (c === 'CAD') ? ac : ic);
-    document.querySelectorAll('#btn-usd').forEach(ub => ub.className = (c === 'USD') ? ac : ic);
-    
-    localStorage.setItem('theLab_currency', c);
-    
-    document.querySelectorAll('[data-price-cad]').forEach(function(el) {
-        const cad = parseFloat(el.getAttribute('data-price-cad'));
-        if (!isNaN(cad)) {
-            el.textContent = c === 'USD' ? '$' + (cad * r).toFixed(2) + ' USD' : '$' + cad.toFixed(2) + ' CAD';
-        }
-    });
-    
-    document.querySelectorAll('[data-price-from-cad]').forEach(function(el) {
-        const cad = parseFloat(el.getAttribute('data-price-from-cad'));
-        if (!isNaN(cad)) {
-            el.textContent = c === 'USD' ? 'From $' + (cad * r).toFixed(2) + ' USD' : 'From $' + cad.toFixed(2) + ' CAD';
-        }
-    });
-    
-    document.querySelectorAll('[data-affirm-cad-total]').forEach(function(el) {
-        const baseCad = parseFloat(el.getAttribute('data-affirm-cad-total'));
-        if (!isNaN(baseCad)) {
-            // Add 12% estimated tax for a more accurate payment projection (matches checkout)
-            const taxMultiplier = 1.12;
-            const cad = baseCad * taxMultiplier;
-
-            if (baseCad >= 50 && baseCad < 1000) {
-                el.innerHTML = c === 'USD' 
-                    ? 'Pay in 4 installments of <strong>$' + ((cad / 4) * r).toFixed(2) + ' USD</strong> with' 
-                    : 'Pay in 4 installments of <strong>$' + (cad / 4).toFixed(2) + ' CAD</strong> with';
-            } else if (baseCad >= 1000) {
-                el.innerHTML = c === 'USD' 
-                    ? 'Pay in monthly installments as low as <strong>$' + ((cad / 24) * r).toFixed(2) + ' USD/mo</strong> with' 
-                    : 'Pay in monthly installments as low as <strong>$' + (cad / 24).toFixed(2) + ' CAD/mo</strong> with';
-            }
-        }
-    });
-    
-    // Removed updateCartUI() call to prevent infinite loop.
-    // setCurrency already updates [data-price-cad] elements, which the cart uses.
-};
+/* Currency: window.setCurrency lives in chrome.js (loaded on every page). */
 
 function initVehicleSelector() {
     const hero = document.getElementById("vehicle-selector-hero");

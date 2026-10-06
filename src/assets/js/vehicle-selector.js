@@ -95,12 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (greetingEl) {
                 greetingEl.textContent = 'Your selected truck:';
-                greetingEl.className = 'text-[10px] text-zinc-400 font-bold uppercase tracking-wider';
             }
             
             if (labelEl) {
-                labelEl.innerHTML = `<span class="text-labBlue">${make}</span> &middot; ${engine}`;
-                labelEl.className = 'text-xs text-white font-extrabold tracking-wide whitespace-nowrap';
+                labelEl.innerHTML = `<b>${make}</b> &middot; ${engine}`;
             }
             
             const iconSvg = btn.querySelector('svg');
@@ -189,11 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const labelEl = btn.querySelector('#vs-label') || btn.querySelector('#vs-label-mob');
             if (greetingEl) {
                 greetingEl.textContent = 'Hello,';
-                greetingEl.className = 'text-[10px] text-labBlue font-bold uppercase tracking-wider';
             }
             if (labelEl) {
                 labelEl.textContent = 'Select your truck';
-                labelEl.className = 'text-xs text-white font-extrabold uppercase tracking-widest whitespace-nowrap';
             }
             const imgEl = btn.querySelector('img.vs-header-icon');
             if (imgEl) imgEl.style.display = 'none';
