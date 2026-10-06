@@ -17,7 +17,7 @@
         function go(k, byUser) {
             i = Math.max(0, Math.min(steps.length - 1, k));
             steps.forEach((s, j) => { s.hidden = j !== i; });
-            if (bar) bar.style.width = ((i + 1) / steps.length * 100) + '%';
+            if (bar) bar.style.transform = 'scaleX(' + ((i + 1) / steps.length) + ')';
             if (n) n.textContent = i + 1;
             if (total) total.textContent = steps.length;
             if (title) title.textContent = steps[i].dataset.title || '';
