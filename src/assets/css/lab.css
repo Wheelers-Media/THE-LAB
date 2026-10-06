@@ -163,3 +163,98 @@ footer p.uppercase { letter-spacing:.04em; }
 .page-hero .checks li { background:rgba(10,10,11,.55); }
 .page-hero .soon { display:inline-block; margin:0 0 14px; padding:3px 9px; border:1px solid rgba(255,255,255,.55); color:var(--text); font-weight:700; font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
 .page-hero .hero-note { font-size:15px; color:#B4B8BF; max-width:46ch; margin:-8px 0 20px; }
+
+/* ── Price board, tabs, membership plans, add-ons, client quotes ── */
+.packages { padding-top:64px; padding-bottom:48px; }
+.packages .lede { margin-bottom:28px; }
+.tabs { display:grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); margin-bottom:12px; }
+.tabs button { min-height:48px; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.05rem; text-transform:uppercase; letter-spacing:.04em; background:transparent; border:0; border-right:1px solid var(--line); cursor:pointer; padding:0 8px; }
+.tabs button:last-child { border-right:0; }
+.tabs button:focus-visible { outline:2px solid #fff; outline-offset:-2px; }
+.legend { font-size:14px; color:var(--mute); margin:0 0 28px; }
+.tier { display:grid; gap:24px; padding:28px 0 32px; border-top:1px solid var(--line); }
+.tier--feature { border-top:3px solid var(--bay); }
+.tier-name { font-size:clamp(2rem,8vw,3rem); margin:0 0 6px; }
+.tier-badge { display:inline-block; vertical-align:middle; margin-left:10px; padding:3px 9px; background:var(--bay); color:#000; font-family:'Barlow',sans-serif; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; transform:translateY(-4px); }
+.tier-kick { font-weight:700; font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--bay); margin:0 0 10px; }
+.tier-desc { margin:0 0 16px; font-size:17px; color:#D5D8DD; }
+.tier-label { font-weight:700; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--text); margin:0 0 8px; }
+.tier-price { background:var(--panel); border:1px solid var(--line); padding:20px; align-self:start; }
+.price-line { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); }
+.price-line:last-of-type { margin-bottom:18px; }
+.price { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.9rem; color:var(--text); white-space:nowrap; line-height:1; }
+.price small { font-family:'Barlow',sans-serif; font-weight:500; font-size:13px; color:var(--mute); }
+.tier-price .btn { width:100%; }
+.fine { font-size:13.5px; color:var(--mute); margin:20px 0 0; max-width:70ch; }
+.band { border-top:3px solid var(--bay); background:var(--panel); padding:64px 0 72px; margin-top:48px; }
+.membership { display:grid; gap:32px; }
+.plans { display:grid; gap:16px; }
+.plan { background:var(--ink); border:1px solid var(--line); padding:22px 20px; }
+.plan .price-line:last-of-type { margin-bottom:0; }
+.addons-sec { padding-top:72px; }
+.addons { list-style:none; margin:24px 0 0; padding:0; border-top:1px solid var(--line); }
+.addons li { padding:20px 0; border-bottom:1px solid var(--line); display:grid; gap:6px; }
+.addon-name { font-size:1.6rem; margin:0; }
+.addons p { margin:0; max-width:60ch; font-size:16px; }
+.addons li.addon-ask { gap:14px; }
+.addon-ask .btn { justify-self:start; }
+.proof { padding-top:72px; }
+.quotes { display:grid; gap:36px; margin-top:28px; }
+.quote { margin:0; padding:0; }
+.quote p { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:clamp(1.5rem,5.4vw,2.2rem); line-height:1.15; color:var(--text); margin:0 0 12px; text-wrap:pretty; }
+.quote footer { font-size:14px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); }
+@media (min-width:768px) {
+    .tier { grid-template-columns:7fr 5fr; gap:48px; padding:40px 0 44px; }
+    .membership { grid-template-columns:5fr 7fr; gap:56px; align-items:start; }
+    .plans { grid-template-columns:1fr 1fr; }
+    .addons li { grid-template-columns:260px 1fr; gap:32px; align-items:baseline; }
+    .addons li.addon-ask { grid-template-columns:1fr auto; align-items:center; }
+    .quotes { grid-template-columns:1fr 1fr; gap:56px; }
+}
+
+/* ── Tinting: shade swatches, price tables, two-column blocks ── */
+.bay-title + .lede { margin-top:16px; }
+.shade-sec { padding-top:64px; padding-bottom:56px; }
+.shades { list-style:none; margin:0 0 40px; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.shade { position:relative; min-height:150px; display:flex; flex-direction:column; justify-content:flex-end; padding:14px;
+    background-image:linear-gradient(rgba(0,0,0,var(--dark)),rgba(0,0,0,var(--dark))), url(/assets/boutique-detailing.jpg); background-size:cover; background-position:center; color:#fff; }
+.shade-pct { font-size:3rem; line-height:.95; }
+.shade-name { font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#E4E6EA; margin-top:4px; }
+.two-col { display:grid; gap:36px; }
+.two-col .checks { margin-top:12px; }
+.benefits li { gap:6px; }
+.pricing { padding-top:72px; padding-bottom:24px; }
+.pricing-note { margin:0; }
+.pt-grid { display:grid; gap:24px; margin-bottom:24px; }
+.pt { background:var(--panel); border:1px solid var(--line); padding:22px 18px 8px; }
+.pt--feature { border-top:3px solid var(--bay); }
+.pt header { margin-bottom:12px; }
+.pt-row { display:flex; justify-content:space-between; align-items:baseline; gap:14px; padding:12px 0; border-top:1px solid var(--line); }
+.pt-row > div { display:flex; flex-direction:column; gap:2px; }
+.pt-l { font-weight:600; color:var(--text); font-size:16px; }
+.pt-row small { color:var(--mute); font-size:13.5px; }
+.pt-sub { margin:18px 0 0; padding-top:16px; border-top:1px solid var(--line); font-weight:700; font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--bay); }
+.pt--addon { margin-bottom:24px; }
+.chips { font-weight:700; font-size:14px; letter-spacing:.08em; text-transform:uppercase; color:var(--text); margin:0 0 20px; }
+.aside-call .call-num { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:clamp(2.2rem,9vw,3rem); line-height:1; margin:10px 0 6px; }
+.aside-call .call-num a { color:var(--text); text-decoration:none; }
+.aside-call .btn { margin-top:14px; }
+@media (min-width:768px) {
+    .shades { grid-template-columns:repeat(4,1fr); gap:12px; }
+    .shade { min-height:220px; }
+    .two-col { grid-template-columns:1fr 1fr; gap:56px; }
+    .pt-grid { grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+    .pt { padding:28px 28px 12px; }
+    .benefits { display:grid; grid-template-columns:1fr 1fr; column-gap:48px; }
+    .benefits li { grid-template-columns:1fr; }
+}
+
+/* ── SxS film choice, brand logos ── */
+.film { padding-top:64px; padding-bottom:40px; }
+.film .pt .tier-desc { margin-top:4px; }
+.pt-foot { margin:8px 0 14px; }
+.pt-foot .price-line { border-bottom:0; padding-top:4px; }
+.pt-foot .btn { width:100%; }
+.brands { padding-top:40px; padding-bottom:72px; }
+.logos { list-style:none; margin:20px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:28px 40px; align-items:center; }
+.logos img { height:34px; width:auto; max-width:160px; object-fit:contain; filter:brightness(0) invert(1); opacity:.8; }

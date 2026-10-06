@@ -164,7 +164,7 @@
 
 </div>
 
-    <main>
+    <main class="lab-page">
 
         <!-- ═══ HERO ═══ -->
         <section class="lab-page page-hero" aria-labelledby="svc-h1">
@@ -177,470 +177,85 @@
             </div>
         </section>
 
-        <!-- ═══ SHADE LEVELS ═══ -->
-        <section id="shade-levels" class="py-20 px-6 border-t border-edge">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex items-center gap-4 mb-12">
-                    <span class="text-labBlue font-mono text-xs tracking-widest uppercase">Shade Levels</span>
-                    <div class="h-px bg-edge flex-grow"></div>
-                    <a href="#pricing" class="text-xs font-bold text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">See Pricing →</a>
+        <!-- Shade -->
+        <section id="shade-levels" class="wrap shade-sec" aria-labelledby="sh-h">
+            <div class="bay-head">
+                <h2 id="sh-h" class="display bay-title">Choose your shade.</h2>
+                <a class="textlink" href="#pricing">See pricing</a>
+            </div>
+            <ul class="shades"><li class="shade" style="--dark:.95"><span class="shade-pct display">5%</span><span class="shade-name">Limo Dark</span></li><li class="shade" style="--dark:.82"><span class="shade-pct display">18%</span><span class="shade-name">Popular Privacy</span></li><li class="shade" style="--dark:.75"><span class="shade-pct display">25%</span><span class="shade-name">Balanced Smoke</span></li><li class="shade" style="--dark:.65"><span class="shade-pct display">35%</span><span class="shade-name">Light Smoke</span></li></ul>
+            <div class="two-col">
+                <div>
+                    <h3 class="display addon-name">Which shade is right?</h3>
+                    <ul class="checks">
+                        <li><strong>Maximum privacy:</strong> 5% or 18% gives the darkest look and strongest privacy.</li>
+                        <li><strong>Daily-driver balance:</strong> 18% or 25% keeps the vehicle clean, dark, and usable.</li>
+                        <li><strong>Subtle upgrade:</strong> 35% adds comfort and UV protection without a heavily tinted look.</li>
+                        <li><strong>Factory match:</strong> Bring the vehicle in and we can match the front windows to existing rear privacy glass.</li>
+                    </ul>
                 </div>
-
-                <div class="relative h-[550px] md:h-[650px] overflow-hidden rounded-2xl border border-edge mb-8 group bg-[#0D0D12]">
-                    <!-- Base Background Image (Un-tinted) -->
-                    <img src="/assets/CHOOSE-YOUR-SHADE.png" alt="Choose Your Shade" class="absolute inset-0 w-full h-full object-cover z-0">
-                    
-                    <!-- Title overlays (Top) -->
-                    <div class="absolute top-0 left-0 w-full p-8 md:p-12 z-30 pointer-events-none bg-gradient-to-b from-black/80 via-black/40 to-transparent h-64">
-                        <p class="text-xs font-mono text-labBlue uppercase tracking-[0.3em] mb-4 drop-shadow-md">Window Tinting Solutions</p>
-                        <h2 class="font-heading font-extrabold text-4xl md:text-6xl text-white uppercase leading-none drop-shadow-lg">CHOOSE YOUR SHADE.</h2>
-                    </div>
-
-                    <!-- The 4 Tint Panes -->
-                    <div class="absolute inset-0 z-20 flex">
-                        <!-- 5% Limo -->
-                        <div class="flex-1 border-r border-white/10 relative flex flex-col justify-end transition-all duration-500 hover:flex-[1.4] cursor-pointer" style="background:rgba(0,0,0,0.95);">
-                            <div class="p-4 md:p-8">
-                                <span class="h-px w-6 md:w-10 bg-white/80 block mb-4 transition-all duration-500"></span>
-                                <p class="font-heading font-extrabold text-4xl md:text-6xl text-white drop-shadow-md">5%</p>
-                                <p class="text-[10px] md:text-sm text-zinc-400 uppercase tracking-widest mt-1 md:mt-2 font-bold whitespace-nowrap overflow-hidden">Limo Dark</p>
-                            </div>
-                        </div>
-                        
-                        <!-- 18% Popular -->
-                        <div class="flex-1 border-r border-white/10 relative flex flex-col justify-end transition-all duration-500 hover:flex-[1.4] cursor-pointer" style="background:rgba(0,0,0,0.82);">
-                            <div class="p-4 md:p-8">
-                                <span class="h-px w-6 md:w-10 bg-white/80 block mb-4 transition-all duration-500"></span>
-                                <p class="font-heading font-extrabold text-4xl md:text-6xl text-white drop-shadow-md">18%</p>
-                                <p class="text-[10px] md:text-sm text-zinc-400 uppercase tracking-widest mt-1 md:mt-2 font-bold whitespace-nowrap overflow-hidden">Popular Privacy</p>
-                            </div>
-                        </div>
-
-                        <!-- 25% Balanced -->
-                        <div class="flex-1 border-r border-white/10 relative flex flex-col justify-end transition-all duration-500 hover:flex-[1.4] cursor-pointer" style="background:rgba(0,0,0,0.75);">
-                            <div class="p-4 md:p-8">
-                                <span class="h-px w-6 md:w-10 bg-white/80 block mb-4 transition-all duration-500"></span>
-                                <p class="font-heading font-extrabold text-4xl md:text-6xl text-white drop-shadow-md">25%</p>
-                                <p class="text-[10px] md:text-sm text-zinc-400 uppercase tracking-widest mt-1 md:mt-2 font-bold whitespace-nowrap overflow-hidden">Balanced Smoke</p>
-                            </div>
-                        </div>
-
-                        <!-- 35% Light -->
-                        <div class="flex-1 relative flex flex-col justify-end transition-all duration-500 hover:flex-[1.4] cursor-pointer" style="background:rgba(0,0,0,0.65);">
-                            <div class="p-4 md:p-8">
-                                <span class="h-px w-6 md:w-10 bg-white/80 block mb-4 transition-all duration-500"></span>
-                                <p class="font-heading font-extrabold text-4xl md:text-6xl text-white drop-shadow-md">35%</p>
-                                <p class="text-[10px] md:text-sm text-zinc-400 uppercase tracking-widest mt-1 md:mt-2 font-bold whitespace-nowrap overflow-hidden">Light Smoke</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 border border-edge rounded-xl p-6" style="background:#0D0D12;">
-                        <h3 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Which shade is right?</h3>
-                        <div class="grid sm:grid-cols-2 gap-4">
-                            <div class="flex gap-3"><span class="w-2 h-2 rounded-full bg-labBlue mt-1.5 flex-shrink-0"></span><p class="text-zinc-500 text-sm"><strong class="text-zinc-300">Maximum privacy:</strong> 5% or 18% gives the darkest look and strongest privacy.</p></div>
-                            <div class="flex gap-3"><span class="w-2 h-2 rounded-full bg-labBlue mt-1.5 flex-shrink-0"></span><p class="text-zinc-500 text-sm"><strong class="text-zinc-300">Daily-driver balance:</strong> 18% or 25% keeps the vehicle clean, dark, and usable.</p></div>
-                            <div class="flex gap-3"><span class="w-2 h-2 rounded-full bg-labBlue mt-1.5 flex-shrink-0"></span><p class="text-zinc-500 text-sm"><strong class="text-zinc-300">Subtle upgrade:</strong> 35% adds comfort and UV protection without a heavily tinted look.</p></div>
-                            <div class="flex gap-3"><span class="w-2 h-2 rounded-full bg-labBlue mt-1.5 flex-shrink-0"></span><p class="text-zinc-500 text-sm"><strong class="text-zinc-300">Factory match:</strong> Bring the vehicle in and we can match the front windows to existing rear privacy glass.</p></div>
-                        </div>
-                    </div>
-                    <div class="border border-labBlue/40 rounded-xl p-6" style="background:#0D0D12;">
-                        <h3 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Shade vs. film type</h3>
-                        <p class="text-zinc-500 text-sm leading-relaxed mb-4">Shade controls how dark the glass looks. Film type controls how it performs.</p>
-                        <div class="space-y-3 text-sm">
-                            <p class="text-zinc-400"><strong class="text-white">Carbon:</strong> privacy, appearance, UV protection, and everyday comfort.</p>
-                            <p class="text-zinc-400"><strong class="text-labBlue">Ceramic:</strong> higher heat rejection, better clarity, and premium cabin comfort.</p>
-                        </div>
-                    </div>
+                <div>
+                    <h3 class="display addon-name">Shade vs. film type</h3>
+                    <p class="tier-desc">Shade controls how dark the glass looks. Film type controls how it performs.</p>
+                    <ul class="checks">
+                        <li><strong>Carbon:</strong> privacy, appearance, UV protection, and everyday comfort.</li>
+                        <li><strong>Ceramic:</strong> higher heat rejection, better clarity, and premium cabin comfort.</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- ═══ WHY GO CERAMIC ═══ -->
-        <section class="py-20 px-6 border-t border-edge">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex items-center gap-4 mb-12">
-                    <span class="text-labBlue font-mono text-xs tracking-widest uppercase">Why Go Ceramic?</span>
-                    <div class="h-px bg-edge flex-grow"></div>
-                    <a href="#pricing" class="text-xs font-bold text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">See Pricing →</a>
+        <!-- Why ceramic -->
+        <section class="band" aria-labelledby="wc-h">
+            <div class="wrap">
+                <div class="bay-head">
+                    <h2 id="wc-h" class="display bay-title">Why go ceramic?</h2>
+                    <a class="textlink" href="#pricing">See pricing</a>
                 </div>
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <div class="border border-edge rounded-xl p-6 hover:border-labBlue/40 transition-all" style="background:#0D0D12;">
-                        <div class="w-10 h-10 rounded-lg bg-labBlue/10 flex items-center justify-center mb-4">
-                            <svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                        <h3 class="text-white font-bold text-sm mb-1">Maximum Heat Rejection</h3>
-                        <p class="text-zinc-500 text-xs leading-relaxed">Ceramic film rejects significantly more infrared heat than Carbon, keeping your cab cooler on BC summer days.</p>
-                    </div>
-                    <div class="border border-edge rounded-xl p-6 hover:border-labBlue/40 transition-all" style="background:#0D0D12;">
-                        <div class="w-10 h-10 rounded-lg bg-labBlue/10 flex items-center justify-center mb-4">
-                            <svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                        </div>
-                        <h3 class="text-white font-bold text-sm mb-1">Better Clarity</h3>
-                        <p class="text-zinc-500 text-xs leading-relaxed">Non-metallic ceramic construction means zero signal interference and crystal-clear visibility day or night.</p>
-                    </div>
-                    <div class="border border-edge rounded-xl p-6 hover:border-labBlue/40 transition-all" style="background:#0D0D12;">
-                        <div class="w-10 h-10 rounded-lg bg-labBlue/10 flex items-center justify-center mb-4">
-                            <svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                        </div>
-                        <h3 class="text-white font-bold text-sm mb-1">Blocks Harmful UV Rays</h3>
-                        <p class="text-zinc-500 text-xs leading-relaxed">Up to 99% UV rejection protects your skin and prevents your interior from fading and cracking over time.</p>
-                    </div>
-                    <div class="border border-edge rounded-xl p-6 hover:border-labBlue/40 transition-all" style="background:#0D0D12;">
-                        <div class="w-10 h-10 rounded-lg bg-labBlue/10 flex items-center justify-center mb-4">
-                            <svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
-                        </div>
-                        <h3 class="text-white font-bold text-sm mb-1">Protects Interior from UV</h3>
-                        <p class="text-zinc-500 text-xs leading-relaxed">Leather, dash, and upholstery all degrade from UV exposure. Ceramic film extends the life of your interior.</p>
-                    </div>
-                    <div class="border border-edge rounded-xl p-6 hover:border-labBlue/40 transition-all" style="background:#0D0D12;">
-                        <div class="w-10 h-10 rounded-lg bg-labBlue/10 flex items-center justify-center mb-4">
-                            <svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"/></svg>
-                        </div>
-                        <h3 class="text-white font-bold text-sm mb-1">Less Glare</h3>
-                        <p class="text-zinc-500 text-xs leading-relaxed">Reduce eye strain from sun and headlight glare, especially critical during long northern BC commutes.</p>
-                    </div>
-                    <div class="border border-edge rounded-xl p-6 hover:border-labBlue/40 transition-all" style="background:#0D0D12;">
-                        <div class="w-10 h-10 rounded-lg bg-labBlue/10 flex items-center justify-center mb-4">
-                            <svg class="w-5 h-5 text-labBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
-                        </div>
-                        <h3 class="text-white font-bold text-sm mb-1">Premium Comfort Every Drive</h3>
-                        <p class="text-zinc-500 text-xs leading-relaxed">A cooler, glare-free cabin means more comfortable drives year-round - whether it's 35°C or a January blizzard.</p>
-                    </div>
+                <ul class="addons benefits"><li><h3 class="display addon-name">Maximum Heat Rejection</h3><p>Ceramic film rejects significantly more infrared heat than Carbon, keeping your cab cooler on BC summer days.</p></li><li><h3 class="display addon-name">Better Clarity</h3><p>Non-metallic ceramic construction means zero signal interference and crystal-clear visibility day or night.</p></li><li><h3 class="display addon-name">Blocks Harmful UV Rays</h3><p>Up to 99% UV rejection protects your skin and prevents your interior from fading and cracking over time.</p></li><li><h3 class="display addon-name">Protects Interior from UV</h3><p>Leather, dash, and upholstery all degrade from UV exposure. Ceramic film extends the life of your interior.</p></li><li><h3 class="display addon-name">Less Glare</h3><p>Reduce eye strain from sun and headlight glare, especially critical during long northern BC commutes.</p></li><li><h3 class="display addon-name">Premium Comfort Every Drive</h3><p>A cooler, glare-free cabin means more comfortable drives year-round - whether it's 35°C or a January blizzard.</p></li></ul>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section id="pricing" class="wrap pricing" aria-labelledby="pc-h">
+            <div class="bay-head">
+                <h2 id="pc-h" class="display bay-title">Pricing</h2>
+                <p class="fine pricing-note">Prices in CAD &middot; USD available via toggle</p>
+            </div>
+            <div class="pt-grid"><article class="pt"><header><h3 class="display tier-name">Carbon Tint </h3><p class="tier-kick">SunTek CXP Carbon Series &middot; Entry</p></header><div class="pt-row"><div><span class="pt-l">Front Roll-Ups</span><small>2 Front Windows</small></div><span class="price" data-price-cad="180.00">$180 CAD</span></div><div class="pt-row"><div><span class="pt-l">Side Windows</span><small>Per Side Window</small></div><span class="price" data-price-cad="90.00">$90 CAD</span></div><div class="pt-row"><div><span class="pt-l">¼ Glass</span><small>Per ¼ Panel</small></div><span class="price" data-price-cad="30.00">$30 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass</span><small>Standard Car / Truck</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass - Large</span><small>SUV / Large Car</small></div><span class="price">$150–$180</span></div><div class="pt-row"><div><span class="pt-l">Full Windshield</span><small>Starting at</small></div><span class="price" data-price-from-cad="280.00">From <span data-price-cad="280.00">$280 CAD</span></span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>2-Piece Brow</small></div><span class="price" data-price-cad="90.00">$90 CAD</span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>1-Piece Brow</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">Standard Sunroof</span></div><span class="price" data-price-cad="100.00">$100 CAD</span></div><div class="pt-row"><div><span class="pt-l">Panoramic Roof</span></div><span class="price">$180–$250</span></div><p class="pt-sub">Full vehicle packages</p><div class="pt-row"><div><span class="pt-l">Sedan</span><small>Full Car</small></div><span class="price">$450–$550</span></div><div class="pt-row"><div><span class="pt-l">Crew Cab Truck</span><small>Full Truck</small></div><span class="price">$550–$700</span></div><div class="pt-row"><div><span class="pt-l">SUV</span><small>Full SUV</small></div><span class="price">$600–$800</span></div></article><article class="pt pt--feature"><header><h3 class="display tier-name">Ceramic Tint <span class="tier-badge">Recommended</span></h3><p class="tier-kick">SunTek CIR Ceramic Series &middot; Premium</p></header><div class="pt-row"><div><span class="pt-l">Front Roll-Ups</span><small>2 Front Windows</small></div><span class="price" data-price-cad="260.00">$260 CAD</span></div><div class="pt-row"><div><span class="pt-l">Side Windows</span><small>Per Side Window</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">¼ Glass</span><small>Per ¼ Panel</small></div><span class="price" data-price-cad="45.00">$45 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass</span><small>Standard Car / Truck</small></div><span class="price" data-price-cad="185.00">$185 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass - Large</span><small>SUV / Large Car</small></div><span class="price">$200–$250</span></div><div class="pt-row"><div><span class="pt-l">Full Windshield</span><small>Starting at</small></div><span class="price" data-price-from-cad="300.00">From <span data-price-cad="300.00">$300 CAD</span></span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>2-Piece Brow</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>1-Piece Brow</small></div><span class="price" data-price-cad="180.00">$180 CAD</span></div><div class="pt-row"><div><span class="pt-l">Standard Sunroof</span></div><span class="price" data-price-cad="150.00">$150 CAD</span></div><div class="pt-row"><div><span class="pt-l">Panoramic Roof</span></div><span class="price">$250–$400</span></div><p class="pt-sub">Full vehicle packages</p><div class="pt-row"><div><span class="pt-l">Sedan</span><small>Full Car</small></div><span class="price">$700–$900</span></div><div class="pt-row"><div><span class="pt-l">Crew Cab Truck</span><small>Full Truck</small></div><span class="price">$850–$1,100</span></div><div class="pt-row"><div><span class="pt-l">SUV</span><small>Full SUV</small></div><span class="price">$900–$1,300</span></div></article></div>
+            <div class="pt pt--addon">
+                <header><h3 class="display tier-name">Add-on &amp; removal pricing</h3><p class="tier-kick">Pricing may vary depending on vehicle and film condition.</p></header>
+                <div class="pt-row"><div><span class="pt-l">Tint Removal</span><small>Per side window</small></div><span class="price" data-price-cad="25.00">$25 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Window Removal</span><small>Full rear glass</small></div><span class="price">$75–$150</span></div><div class="pt-row"><div><span class="pt-l">Glue Cleanup</span><small>Starting at</small></div><span class="price" data-price-from-cad="25.00">From <span data-price-cad="25.00">$25 CAD</span></span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow Removal</span><small>Any brow style</small></div><span class="price" data-price-cad="25.00">$25 CAD</span></div>
+            </div>
+        </section>
+
+        <!-- Equipment -->
+        <section class="band" aria-labelledby="eq-h">
+            <div class="wrap two-col">
+                <div>
+                    <h2 id="eq-h" class="display bay-title">Equipment deserves<br>the same treatment.</h2>
+                    <p class="lede">We don't just tint trucks. From your Polaris or Can-Am to heavy duty excavators, tractors, and loaders, we'll protect you from glare and UV so you can work and play comfortably. Book your rig today.</p>
+                    <p class="chips">Side-by-sides &middot; Excavators &middot; Tractors &middot; Loaders</p>
+                    <a class="btn btn-primary" href="/contact/#form">Book now</a>
+                </div>
+                <div class="aside-call">
+                    <h3 class="display addon-name">Questions? We're here.</h3>
+                    <p class="call-num"><a href="tel:+12502619502">(250) 261-9502</a></p>
+                    <p class="fine">Mon&ndash;Fri &nbsp;9 a.m.&ndash;5 p.m.</p>
+                    <a class="btn btn-ghost" href="/contact/#form">Book online</a>
                 </div>
             </div>
         </section>
 
-        <!-- ═══ PRICING ═══ -->
-        <section id="pricing" class="py-20 px-6 border-t border-edge">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex items-center gap-4 mb-12">
-                    <span class="text-labBlue font-mono text-xs tracking-widest uppercase">Pricing</span>
-                    <div class="h-px bg-edge flex-grow"></div>
-                    <span class="text-[10px] text-zinc-600 font-mono">Prices in CAD · USD available via toggle</span>
-                </div>
-
-                <div class="grid lg:grid-cols-2 gap-8 mb-12">
-
-                    <!-- CARBON TINT -->
-                    <div class="border border-edge rounded-2xl overflow-hidden" style="background:#0D0D12;">
-                        <div class="px-7 py-5 border-b border-edge flex items-center justify-between">
-                            <div>
-                                <h2 class="font-heading font-extrabold text-xl text-white uppercase tracking-tight">Carbon Tint</h2>
-                                <p class="text-zinc-500 text-xs mt-0.5">SunTek CXP Carbon Series</p>
-                            </div>
-                            <span class="text-[10px] font-bold bg-zinc-800 text-zinc-300 px-3 py-1 rounded-full uppercase tracking-widest">Entry</span>
-                        </div>
-                        <div class="px-7 py-6 space-y-4">
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Front Roll-Ups</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">2 Front Windows</p>
-                                </div>
-                                <span class="text-white font-extrabold font-mono text-sm" data-price-cad="180.00">$180 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Side Windows</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">Per Side Window</p>
-                                </div>
-                                <span class="text-white font-extrabold font-mono text-sm" data-price-cad="90.00">$90 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">¼ Glass</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">Per ¼ Panel</p>
-                                </div>
-                                <span class="text-white font-extrabold font-mono text-sm" data-price-cad="30.00">$30 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Rear Glass</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">Standard Car / Truck</p>
-                                </div>
-                                <span class="text-white font-extrabold font-mono text-sm" data-price-cad="130.00">$130 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Rear Glass - Large</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">SUV / Large Car</p>
-                                </div>
-                                <span class="text-white font-extrabold font-mono text-sm">$150–$180</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Full Windshield</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">Starting at</p>
-                                </div>
-                                <span class="text-white font-extrabold font-mono text-sm" data-price-from-cad="280.00">From <span data-price-cad="280.00">$280 CAD</span></span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Windshield Brow</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">2-Piece Brow</p>
-                                </div>
-                                <span class="text-white font-extrabold font-mono text-sm" data-price-cad="90.00">$90 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Windshield Brow</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">1-Piece Brow</p>
-                                </div>
-                                <span class="text-white font-extrabold font-mono text-sm" data-price-cad="130.00">$130 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Standard Sunroof</p>
-                                </div>
-                                <span class="text-white font-extrabold font-mono text-sm" data-price-cad="100.00">$100 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Panoramic Roof</p>
-                                </div>
-                                <span class="text-white font-extrabold font-mono text-sm">$180–$250</span>
-                            </div>
-
-                            <!-- Full Vehicle Packages -->
-                            <div class="pt-3">
-                                <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-4">Full Vehicle Packages</p>
-                                <div class="space-y-3">
-                                    <div class="flex items-center justify-between bg-black/40 rounded-lg px-4 py-3">
-                                        <div>
-                                            <p class="text-white text-sm font-bold">Sedan</p>
-                                            <p class="text-zinc-600 text-xs">Full Car</p>
-                                        </div>
-                                        <span class="text-white font-extrabold font-mono text-sm">$450–$550</span>
-                                    </div>
-                                    <div class="flex items-center justify-between bg-black/40 rounded-lg px-4 py-3">
-                                        <div>
-                                            <p class="text-white text-sm font-bold">Crew Cab Truck</p>
-                                            <p class="text-zinc-600 text-xs">Full Truck</p>
-                                        </div>
-                                        <span class="text-white font-extrabold font-mono text-sm">$550–$700</span>
-                                    </div>
-                                    <div class="flex items-center justify-between bg-black/40 rounded-lg px-4 py-3">
-                                        <div>
-                                            <p class="text-white text-sm font-bold">SUV</p>
-                                            <p class="text-zinc-600 text-xs">Full SUV</p>
-                                        </div>
-                                        <span class="text-white font-extrabold font-mono text-sm">$600–$800</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- CERAMIC TINT -->
-                    <div class="border border-labBlue/50 rounded-2xl overflow-hidden relative" style="background:#0D0D12;">
-                        <div class="absolute top-4 right-4 bg-labBlue text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest">Recommended</div>
-                        <div class="px-7 py-5 border-b border-labBlue/30 flex items-center justify-between">
-                            <div>
-                                <h2 class="font-heading font-extrabold text-xl text-white uppercase tracking-tight">Ceramic Tint</h2>
-                                <p class="text-labBlue text-xs mt-0.5">SunTek CIR Ceramic Series</p>
-                            </div>
-                            <span class="text-[10px] font-bold bg-labBlue/20 text-labBlue px-3 py-1 rounded-full uppercase tracking-widest">Premium</span>
-                        </div>
-                        <div class="px-7 py-6 space-y-4">
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Front Roll-Ups</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">2 Front Windows</p>
-                                </div>
-                                <span class="text-labBlue font-extrabold font-mono text-sm" data-price-cad="260.00">$260 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Side Windows</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">Per Side Window</p>
-                                </div>
-                                <span class="text-labBlue font-extrabold font-mono text-sm" data-price-cad="130.00">$130 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">¼ Glass</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">Per ¼ Panel</p>
-                                </div>
-                                <span class="text-labBlue font-extrabold font-mono text-sm" data-price-cad="45.00">$45 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Rear Glass</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">Standard Car / Truck</p>
-                                </div>
-                                <span class="text-labBlue font-extrabold font-mono text-sm" data-price-cad="185.00">$185 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Rear Glass - Large</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">SUV / Large Car</p>
-                                </div>
-                                <span class="text-labBlue font-extrabold font-mono text-sm">$200–$250</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Full Windshield</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">Starting at</p>
-                                </div>
-                                <span class="text-labBlue font-extrabold font-mono text-sm" data-price-from-cad="300.00">From <span data-price-cad="300.00">$300 CAD</span></span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Windshield Brow</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">2-Piece Brow</p>
-                                </div>
-                                <span class="text-labBlue font-extrabold font-mono text-sm" data-price-cad="130.00">$130 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Windshield Brow</p>
-                                    <p class="text-zinc-600 text-xs mt-0.5">1-Piece Brow</p>
-                                </div>
-                                <span class="text-labBlue font-extrabold font-mono text-sm" data-price-cad="180.00">$180 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Standard Sunroof</p>
-                                </div>
-                                <span class="text-labBlue font-extrabold font-mono text-sm" data-price-cad="150.00">$150 CAD</span>
-                            </div>
-
-                            <div class="flex items-start justify-between py-3 border-b border-edge/60">
-                                <div>
-                                    <p class="text-white text-sm font-bold">Panoramic Roof</p>
-                                </div>
-                                <span class="text-labBlue font-extrabold font-mono text-sm">$250–$400</span>
-                            </div>
-
-                            <!-- Full Vehicle Packages -->
-                            <div class="pt-3">
-                                <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-[0.2em] mb-4">Full Vehicle Packages</p>
-                                <div class="space-y-3">
-                                    <div class="flex items-center justify-between rounded-lg px-4 py-3" style="background:rgba(0,102,255,0.08);border:1px solid rgba(0,102,255,0.2);">
-                                        <div>
-                                            <p class="text-white text-sm font-bold">Sedan</p>
-                                            <p class="text-zinc-600 text-xs">Full Car</p>
-                                        </div>
-                                        <span class="text-labBlue font-extrabold font-mono text-sm">$700–$900</span>
-                                    </div>
-                                    <div class="flex items-center justify-between rounded-lg px-4 py-3" style="background:rgba(0,102,255,0.08);border:1px solid rgba(0,102,255,0.2);">
-                                        <div>
-                                            <p class="text-white text-sm font-bold">Crew Cab Truck</p>
-                                            <p class="text-zinc-600 text-xs">Full Truck</p>
-                                        </div>
-                                        <span class="text-labBlue font-extrabold font-mono text-sm">$850–$1,100</span>
-                                    </div>
-                                    <div class="flex items-center justify-between rounded-lg px-4 py-3" style="background:rgba(0,102,255,0.08);border:1px solid rgba(0,102,255,0.2);">
-                                        <div>
-                                            <p class="text-white text-sm font-bold">SUV</p>
-                                            <p class="text-zinc-600 text-xs">Full SUV</p>
-                                        </div>
-                                        <span class="text-labBlue font-extrabold font-mono text-sm">$900–$1,300</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ADD-ON / REMOVAL PRICING -->
-                <div class="border border-edge rounded-2xl overflow-hidden" style="background:#0D0D12;">
-                    <div class="px-7 py-5 border-b border-edge">
-                        <h3 class="font-heading font-extrabold text-base text-white uppercase tracking-tight">Add-On &amp; Removal Pricing</h3>
-                        <p class="text-zinc-600 text-xs mt-1">Pricing may vary depending on vehicle and film condition.</p>
-                    </div>
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-edge">
-                        <div class="px-6 py-5">
-                            <p class="text-white font-bold text-sm mb-1">Tint Removal</p>
-                            <p class="text-zinc-600 text-xs mb-3">Per side window</p>
-                            <span class="text-labBlue font-extrabold font-mono" data-price-cad="25.00">$25 CAD</span>
-                        </div>
-                        <div class="px-6 py-5">
-                            <p class="text-white font-bold text-sm mb-1">Rear Window Removal</p>
-                            <p class="text-zinc-600 text-xs mb-3">Full rear glass</p>
-                            <span class="text-white font-extrabold font-mono">$75–$150</span>
-                        </div>
-                        <div class="px-6 py-5">
-                            <p class="text-white font-bold text-sm mb-1">Glue Cleanup</p>
-                            <p class="text-zinc-600 text-xs mb-3">Starting at</p>
-                            <span class="text-labBlue font-extrabold font-mono" data-price-from-cad="25.00">From <span data-price-cad="25.00">$25 CAD</span></span>
-                        </div>
-                        <div class="px-6 py-5">
-                            <p class="text-white font-bold text-sm mb-1">Windshield Brow Removal</p>
-                            <p class="text-zinc-600 text-xs mb-3">Any brow style</p>
-                            <span class="text-labBlue font-extrabold font-mono" data-price-cad="25.00">$25 CAD</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Close -->
+        <section class="close wrap" aria-labelledby="cl-h">
+            <h2 id="cl-h" class="display close-title">Ready to get<br>tinted?</h2>
+            <p>Drop off your vehicle and let us handle the rest. We use SunTek Premium Films with a satisfaction guarantee.</p>
+            <div class="btns">
+                <a class="btn btn-primary" href="/contact/#form">Get an estimated price</a>
+                <a class="btn btn-ghost" href="/boutique/">All Boutique services</a>
             </div>
         </section>
-
-        <!-- ═══ SXS & HEAVY EQUIPMENT TINTING ═══ -->
-        <section class="py-20 px-6 border-t border-edge">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex items-center gap-4 mb-12">
-                    <span class="text-labBlue font-mono text-xs tracking-widest uppercase">SxS &amp; Heavy Equipment</span>
-                    <div class="h-px bg-edge flex-grow"></div>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div>
-                        <h2 class="font-heading font-extrabold text-4xl text-white uppercase leading-tight mb-5">EQUIPMENT DESERVES<br>THE SAME TREATMENT.</h2>
-                        <p class="text-zinc-400 leading-relaxed mb-6">We don't just tint trucks. From your Polaris or Can-Am to heavy duty excavators, tractors, and loaders, we'll protect you from glare and UV so you can work and play comfortably. Book your rig today.</p>
-                        <div class="flex flex-wrap gap-3 mb-8">
-                            <span class="border border-edge text-zinc-300 text-xs font-bold px-4 py-2 rounded-lg uppercase tracking-wider" style="background:#0D0D12;">Side-By-Sides</span>
-                            <span class="border border-edge text-zinc-300 text-xs font-bold px-4 py-2 rounded-lg uppercase tracking-wider" style="background:#0D0D12;">Excavators</span>
-                            <span class="border border-edge text-zinc-300 text-xs font-bold px-4 py-2 rounded-lg uppercase tracking-wider" style="background:#0D0D12;">Tractors</span>
-                            <span class="border border-edge text-zinc-300 text-xs font-bold px-4 py-2 rounded-lg uppercase tracking-wider" style="background:#0D0D12;">Loaders</span>
-                        </div>
-                        <a href="/contact/#form" class="inline-flex items-center gap-2 bg-labBlue text-white font-extrabold py-3 px-7 rounded-xl text-sm uppercase tracking-widest hover:bg-blue-500 transition-all">Book Now →</a>
-                    </div>
-                    <div class="border border-edge rounded-2xl p-8 text-center" style="background:#0D0D12;">
-                        <p class="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-4">Questions? We're here.</p>
-                        <p class="text-white font-bold text-xl mb-2">(250) 261-9502</p>
-                        <p class="text-zinc-500 text-sm mb-6">Mon–Fri &nbsp;9 a.m.–5 p.m.</p>
-                        <a href="/contact/#form" class="inline-flex items-center gap-2 border border-labBlue text-labBlue font-bold py-2.5 px-6 rounded-lg text-sm uppercase tracking-widest hover:bg-labBlue/10 transition-all">Book Online →</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══ CTA ═══ -->
-        <section class="py-20 px-6 border-t border-edge">
-            <div class="max-w-3xl mx-auto text-center">
-                <p class="text-xs font-mono text-labBlue uppercase tracking-[0.3em] mb-4">Fort St. John's Tint Specialists</p>
-                <h2 class="font-heading font-extrabold text-4xl md:text-5xl text-white uppercase leading-tight mb-6">READY TO GET<br>TINTED?</h2>
-                <p class="text-zinc-500 mb-8">Drop off your vehicle and let us handle the rest. We use SunTek Premium Films with a satisfaction guarantee.</p>
-                <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                    <a href="/contact/#form" class="bg-white text-black font-extrabold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:bg-zinc-200 transition-all flex items-center justify-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        Get an Estimated Price
-                    </a>
-                    <a href="/boutique/" class="border border-edge text-zinc-400 font-bold py-3 px-8 rounded-xl text-sm uppercase tracking-widest hover:border-white/30 hover:text-white transition-all flex items-center justify-center">← All Boutique Services</a>
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <!-- ═══ GLOBAL FOOTER ═══ -->

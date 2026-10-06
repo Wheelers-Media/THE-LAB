@@ -165,7 +165,7 @@
 
 </div>
 
-    <main>
+    <main class="lab-page">
 
         <!-- ═══ HERO SECTION ═══ -->
         <section class="lab-page page-hero" aria-labelledby="svc-h1">
@@ -179,124 +179,45 @@
             </div>
         </section>
 
-        <!-- ═══ THE UPSELL SECTION ═══ -->
-        <section class="py-24 px-6 border-t border-edge bg-void relative">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16">
-                    <span class="text-[#0066FF] font-mono text-xs tracking-widest uppercase">The Upgrade Decision</span>
-                    <h2 class="font-heading font-extrabold text-3xl md:text-4xl text-white uppercase mt-2 mb-4">Carbon vs. Ceramic Tinting</h2>
-                    <p class="text-zinc-400 text-sm max-w-xl mx-auto">SxS cabins are open to the elements. Choosing the right film makes the difference between a hot, blinding ride and a cool, high-visibility trail experience.</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-8 mb-12">
-                    <!-- Carbon Card (The Baseline) -->
-                    <div class="bg-midnight border border-edge rounded-2xl p-8 flex flex-col justify-between relative group">
-                        <div>
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-white font-heading font-extrabold text-xl uppercase tracking-wider">Carbon Series</h3>
-                                <span class="text-zinc-500 font-mono text-sm">Baseline</span>
-                            </div>
-                            <p class="text-zinc-400 text-sm leading-relaxed mb-6">
-                                A solid baseline film providing standard UV protection and a sleek dark aesthetic. Great for basic glare reduction, but offers limited heat insulation.
-                            </p>
-                            <ul class="space-y-3 text-xs text-zinc-400 mb-8">
-                                <li class="flex items-center gap-2.5">
-                                    <svg class="w-4 h-4 text-zinc-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    Standard UV Block (Up to 99%)
-                                </li>
-                                <li class="flex items-center gap-2.5">
-                                    <svg class="w-4 h-4 text-zinc-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    Standard Glare Reduction
-                                </li>
-                                <li class="flex items-center gap-2.5">
-                                    <svg class="w-4 h-4 text-zinc-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    Non-Reflective Black Finish
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <div class="border-t border-edge pt-6 mb-6">
-                                <p class="text-xs text-zinc-500 uppercase tracking-widest mb-1">Starting At</p>
-                                <p class="text-white font-heading font-extrabold text-3xl">$180 <span class="text-xs text-zinc-500 font-normal">CAD</span></p>
-                            </div>
-                            <a href="/contact/" class="block w-full py-3.5 text-center bg-transparent border border-edge text-zinc-400 hover:text-white hover:border-white transition-colors rounded-xl text-xs font-bold uppercase tracking-widest min-h-[48px] flex items-center justify-center">Get Carbon Tint</a>
-                        </div>
+        <!-- Film choice -->
+        <section class="wrap film" aria-labelledby="film-h">
+            <h2 id="film-h" class="display bay-title">Carbon vs. Ceramic tinting</h2>
+            <p class="lede">SxS cabins are open to the elements. Choosing the right film makes the difference between a hot, blinding ride and a cool, high-visibility trail experience.</p>
+            <div class="pt-grid">
+                <article class="pt">
+                    <header><h3 class="display tier-name">Carbon Series</h3><p class="tier-kick">Baseline</p></header>
+                    <p class="tier-desc">A solid baseline film providing standard UV protection and a sleek dark aesthetic. Great for basic glare reduction, but offers limited heat insulation.</p>
+                    <ul class="checks"><li>Standard UV Block (Up to 99%)</li><li>Standard Glare Reduction</li><li>Non-Reflective Black Finish</li></ul>
+                    <div class="pt-foot">
+                        <div class="price-line"><span>Starting at</span><span class="price">$180 <small>CAD</small></span></div>
+                        <a class="btn btn-ghost" href="/contact/">Get Carbon Tint</a>
                     </div>
-
-                    <!-- Ceramic Card (The Premium Standard) -->
-                    <div class="bg-midnight border border-[#00E5FF]/30 rounded-2xl p-8 flex flex-col justify-between relative group shadow-[0_0_30px_rgba(0,229,255,0.08)]">
-                        <div class="absolute -top-3.5 right-6 bg-labBlue text-white text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest">Highly Recommended</div>
-                        <div>
-                            <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-white font-heading font-extrabold text-xl uppercase tracking-wider">Nano-Ceramic</h3>
-                                <span class="text-[#00E5FF] font-mono text-sm uppercase tracking-wider font-bold">Premium Standard</span>
-                            </div>
-                            <p class="text-zinc-300 text-sm leading-relaxed mb-6">
-                                Engineered with nano-ceramic particles that block solar heat where carbon fails. Crucial for open-cab environments, keeping you cool under direct sunlight and protecting dashboard screens from cracking.
-                            </p>
-                            <ul class="space-y-3 text-xs text-zinc-300 mb-8">
-                                <li class="flex items-center gap-2.5">
-                                    <svg class="w-4 h-4 text-[#00E5FF] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    Superior Infrared Heat Rejection (Up to 95%)
-                                </li>
-                                <li class="flex items-center gap-2.5">
-                                    <svg class="w-4 h-4 text-[#00E5FF] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    Enhanced Optical Clarity &amp; Trail Visibility
-                                </li>
-                                <li class="flex items-center gap-2.5">
-                                    <svg class="w-4 h-4 text-[#00E5FF] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    Maximum UV Protection (Blocks 99.9%)
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <div class="border-t border-edge pt-6 mb-6">
-                                <p class="text-xs text-zinc-500 uppercase tracking-widest mb-1">Starting At</p>
-                                <p class="text-white font-heading font-extrabold text-3xl text-white">$260 <span class="text-xs text-zinc-500 font-normal">CAD</span></p>
-                            </div>
-                            <a href="/contact/" class="block w-full py-3.5 text-center bg-[#00E5FF] hover:bg-[#00E5FF]/90 text-black font-extrabold rounded-xl text-xs uppercase tracking-widest min-h-[48px] flex items-center justify-center shadow-oled-cyan">Upgrade to Ceramic</a>
-                        </div>
+                </article>
+                <article class="pt pt--feature">
+                    <header><h3 class="display tier-name">Nano-Ceramic <span class="tier-badge">Highly Recommended</span></h3><p class="tier-kick">Premium standard</p></header>
+                    <p class="tier-desc">Engineered with nano-ceramic particles that block solar heat where carbon fails. Crucial for open-cab environments, keeping you cool under direct sunlight and protecting dashboard screens from cracking.</p>
+                    <ul class="checks"><li>Superior Infrared Heat Rejection (Up to 95%)</li><li>Enhanced Optical Clarity &amp; Trail Visibility</li><li>Maximum UV Protection (Blocks 99.9%)</li></ul>
+                    <div class="pt-foot">
+                        <div class="price-line"><span>Starting at</span><span class="price">$260 <small>CAD</small></span></div>
+                        <a class="btn btn-primary" href="/contact/">Upgrade to Ceramic</a>
                     </div>
-                </div>
-
-                <!-- Micro-upsell Banner -->
-                <div class="bg-black border border-edge rounded-xl px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-[#0066FF]/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                    <div class="flex items-center gap-4 relative z-10">
-                        <div class="w-10 h-10 rounded-lg bg-[#00E5FF]/10 flex items-center justify-center flex-shrink-0">
-                            <svg class="w-5 h-5 text-[#00E5FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                        <div>
-                            <p class="text-white font-bold text-sm">Add a Windshield Sun-Strip (Visor Brow)</p>
-                            <p class="text-zinc-500 text-xs mt-0.5">Reduce direct glare through the top section of your windshield. Available in Carbon or Ceramic.</p>
-                        </div>
-                    </div>
-                    <span class="text-xs font-extrabold text-white tracking-wider uppercase bg-zinc-900 border border-edge px-4 py-2.5 rounded-lg whitespace-nowrap z-10 shrink-0">$90 to <span data-price-cad="180.00">$180 CAD</span></span>
-                </div>
+                </article>
+            </div>
+            <div class="pt pt--addon">
+                <div class="pt-row"><div><span class="pt-l">Add a Windshield Sun-Strip (Visor Brow)</span><small>Reduce direct glare through the top section of your windshield. Available in Carbon or Ceramic.</small></div><span class="price">$90 to <span data-price-cad="180.00">$180 CAD</span></span></div>
             </div>
         </section>
 
-        <!-- ═══ TRUST SIGNALS & PARTNERS SECTION ═══ -->
-        <section class="py-20 bg-void border-t border-edge">
-            <div class="max-w-5xl mx-auto px-6 text-center">
-                <h3 class="text-xs font-mono text-zinc-500 uppercase tracking-[0.25em] mb-10">Backed by the brands that matter</h3>
-                <div class="flex flex-wrap justify-center items-center gap-12 md:gap-16">
-                    <div class="h-10 flex items-center justify-center opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
-                        <img src="/assets/Suntek-Logopng.png" alt="SunTek" class="h-8 w-auto object-contain">
-                    </div>
-                    <div class="h-10 flex items-center justify-center opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
-                        <img src="/assets/MORIMOTO-Logo.png" alt="Morimoto" class="h-8 w-auto object-contain">
-                    </div>
-                    <div class="h-10 flex items-center justify-center opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
-                        <img src="/assets/DIODE DYNAMICS.png" alt="Diode Dynamics" class="h-6 w-auto object-contain">
-                    </div>
-                    <div class="h-10 flex items-center justify-center opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer">
-                        <img src="/assets/GRIDIRON-logo.webp" alt="Gridiron Bumper Corp" class="h-9 w-auto object-contain">
-                    </div>
-                </div>
-            </div>
+        <!-- Brands -->
+        <section class="wrap brands" aria-labelledby="br-h">
+            <h2 id="br-h" class="display addon-name">Backed by the brands that matter</h2>
+            <ul class="logos">
+                <li><img src="/assets/Suntek-Logopng.png" alt="SunTek" height="36"></li>
+                <li><img src="/assets/MORIMOTO-Logo.png" alt="Morimoto" height="36"></li>
+                <li><img src="/assets/DIODE DYNAMICS.png" alt="Diode Dynamics" height="36"></li>
+                <li><img src="/assets/GRIDIRON-logo.webp" alt="Gridiron Bumper Corp" height="36"></li>
+            </ul>
         </section>
-
     </main>
 
     <!-- ═══ GLOBAL FOOTER ═══ -->
