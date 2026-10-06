@@ -152,6 +152,8 @@
                 if (['name', 'first', 'last', 'phone', 'email', 'year', 'make', 'model', 'vin', 'consent', 'offroad'].includes(d.id)) return;
                 add(d.label, v[d.id]);
             });
+            // set by the tinting page estimator (tint-builder.js) so Eric sees which windows they tapped
+            try { const t = sessionStorage.getItem('labTint'); if (t && v.service === 'Window Tinting') add('Tint estimate', t); } catch (err) { /* storage unavailable */ }
             add('Off-road disclaimer agreed', v.offroad); add('SMS consent', v.consent);
 
             const btn = form.querySelector('button[type=submit]');

@@ -180,10 +180,18 @@
         <!-- Shade -->
         <section id="shade-levels" class="wrap shade-sec" aria-labelledby="sh-h">
             <div class="bay-head">
-                <h2 id="sh-h" class="display bay-title">Choose your shade.</h2>
-                <a class="textlink" href="#pricing">See pricing</a>
+                <h2 id="sh-h" class="display bay-title">See the<br>difference.</h2>
+                <a class="textlink" href="#pricing">Build your tint</a>
             </div>
-            <ul class="shades"><li class="shade" style="--dark:.95"><span class="shade-pct display">5%</span><span class="shade-name">Limo Dark</span></li><li class="shade" style="--dark:.82"><span class="shade-pct display">18%</span><span class="shade-name">Popular Privacy</span></li><li class="shade" style="--dark:.75"><span class="shade-pct display">25%</span><span class="shade-name">Balanced Smoke</span></li><li class="shade" style="--dark:.65"><span class="shade-pct display">35%</span><span class="shade-name">Light Smoke</span></li></ul>
+            <div class="vp">
+                <div class="vp-window"><img id="shade-img" class="vp-img" src="/assets/tint-view.webp" width="1400" height="651" loading="lazy" alt="View of mountains and a highway through a vehicle window"></div>
+                <div class="vp-ctl">
+                    <p class="vp-now"><span id="shade-pct" class="display">No tint</span> <span id="shade-name" class="vp-name"></span></p>
+                    <p id="shade-note" class="vp-note" aria-live="polite"></p>
+                    <input id="shade-range" class="vp-range" type="range" min="0" max="4" step="1" value="0" aria-label="Tint shade, from none to 5 percent">
+                    <div class="vp-chips" role="radiogroup" aria-label="Tint shade"><button type="button" class="chip shade-chip" role="radio" aria-checked="false">None</button><button type="button" class="chip shade-chip" role="radio" aria-checked="false">35%</button><button type="button" class="chip shade-chip" role="radio" aria-checked="false">25%</button><button type="button" class="chip shade-chip" role="radio" aria-checked="false">18%</button><button type="button" class="chip shade-chip" role="radio" aria-checked="false">5%</button></div>
+                </div>
+            </div>
             <div class="two-col">
                 <div>
                     <h3 class="display addon-name">Which shade is right?</h3>
@@ -203,6 +211,7 @@
                     </ul>
                 </div>
             </div>
+        
         </section>
 
         <!-- Why ceramic -->
@@ -217,16 +226,64 @@
         </section>
 
         <!-- Pricing -->
-        <section id="pricing" class="wrap pricing" aria-labelledby="pc-h">
+        <section id="pricing" class="wrap builder" aria-labelledby="pc-h">
             <div class="bay-head">
-                <h2 id="pc-h" class="display bay-title">Pricing</h2>
-                <p class="fine pricing-note">Prices in CAD &middot; USD available via toggle</p>
+                <h2 id="pc-h" class="display bay-title">Tap your windows.<br>Get your estimate.</h2>
             </div>
-            <div class="pt-grid"><article class="pt"><header><h3 class="display tier-name">Carbon Tint </h3><p class="tier-kick">SunTek CXP Carbon Series &middot; Entry</p></header><div class="pt-row"><div><span class="pt-l">Front Roll-Ups</span><small>2 Front Windows</small></div><span class="price" data-price-cad="180.00">$180 CAD</span></div><div class="pt-row"><div><span class="pt-l">Side Windows</span><small>Per Side Window</small></div><span class="price" data-price-cad="90.00">$90 CAD</span></div><div class="pt-row"><div><span class="pt-l">¼ Glass</span><small>Per ¼ Panel</small></div><span class="price" data-price-cad="30.00">$30 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass</span><small>Standard Car / Truck</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass - Large</span><small>SUV / Large Car</small></div><span class="price">$150–$180</span></div><div class="pt-row"><div><span class="pt-l">Full Windshield</span><small>Starting at</small></div><span class="price" data-price-from-cad="280.00">From <span data-price-cad="280.00">$280 CAD</span></span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>2-Piece Brow</small></div><span class="price" data-price-cad="90.00">$90 CAD</span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>1-Piece Brow</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">Standard Sunroof</span></div><span class="price" data-price-cad="100.00">$100 CAD</span></div><div class="pt-row"><div><span class="pt-l">Panoramic Roof</span></div><span class="price">$180–$250</span></div><p class="pt-sub">Full vehicle packages</p><div class="pt-row"><div><span class="pt-l">Sedan</span><small>Full Car</small></div><span class="price">$450–$550</span></div><div class="pt-row"><div><span class="pt-l">Crew Cab Truck</span><small>Full Truck</small></div><span class="price">$550–$700</span></div><div class="pt-row"><div><span class="pt-l">SUV</span><small>Full SUV</small></div><span class="price">$600–$800</span></div></article><article class="pt pt--feature"><header><h3 class="display tier-name">Ceramic Tint <span class="tier-badge">Recommended</span></h3><p class="tier-kick">SunTek CIR Ceramic Series &middot; Premium</p></header><div class="pt-row"><div><span class="pt-l">Front Roll-Ups</span><small>2 Front Windows</small></div><span class="price" data-price-cad="260.00">$260 CAD</span></div><div class="pt-row"><div><span class="pt-l">Side Windows</span><small>Per Side Window</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">¼ Glass</span><small>Per ¼ Panel</small></div><span class="price" data-price-cad="45.00">$45 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass</span><small>Standard Car / Truck</small></div><span class="price" data-price-cad="185.00">$185 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass - Large</span><small>SUV / Large Car</small></div><span class="price">$200–$250</span></div><div class="pt-row"><div><span class="pt-l">Full Windshield</span><small>Starting at</small></div><span class="price" data-price-from-cad="300.00">From <span data-price-cad="300.00">$300 CAD</span></span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>2-Piece Brow</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>1-Piece Brow</small></div><span class="price" data-price-cad="180.00">$180 CAD</span></div><div class="pt-row"><div><span class="pt-l">Standard Sunroof</span></div><span class="price" data-price-cad="150.00">$150 CAD</span></div><div class="pt-row"><div><span class="pt-l">Panoramic Roof</span></div><span class="price">$250–$400</span></div><p class="pt-sub">Full vehicle packages</p><div class="pt-row"><div><span class="pt-l">Sedan</span><small>Full Car</small></div><span class="price">$700–$900</span></div><div class="pt-row"><div><span class="pt-l">Crew Cab Truck</span><small>Full Truck</small></div><span class="price">$850–$1,100</span></div><div class="pt-row"><div><span class="pt-l">SUV</span><small>Full SUV</small></div><span class="price">$900–$1,300</span></div></article></div>
+            <div class="bd-grid">
+                <div class="bd-left">
+                    <div class="seg" role="group" aria-label="Film type">
+                        <button type="button" data-film="ceramic" aria-pressed="true">Ceramic <small>Recommended</small></button>
+                        <button type="button" data-film="carbon" aria-pressed="false">Carbon</button>
+                    </div>
+                    <div class="seg seg--3" role="group" aria-label="Vehicle">
+                        <button type="button" data-veh="sedan" aria-pressed="false">Sedan</button>
+                        <button type="button" data-veh="truck" aria-pressed="true">Crew cab truck</button>
+                        <button type="button" data-veh="suv" aria-pressed="false">SUV</button>
+                    </div>
+                    <svg class="bd-car" viewBox="0 0 300 540" role="group" aria-label="Vehicle window map. Tap a window to add it to your estimate.">
+                        <rect class="car-body" x="28" y="14" width="244" height="512" rx="52"/>
+                        <rect class="car-roof" x="76" y="158" width="148" height="170" rx="14"/>
+                        <text class="car-end" x="150" y="52" text-anchor="middle">FRONT</text>
+                        <text class="car-end" x="150" y="516" text-anchor="middle">REAR</text>
+                        <rect class="win" data-id="brow" tabindex="0" role="button" aria-pressed="false" aria-label="Windshield brow" x="82" y="68" width="136" height="20" rx="5"><title>Windshield brow</title></rect>
+                        <polygon class="win" data-id="ws" tabindex="0" role="button" aria-pressed="false" aria-label="Full windshield" points="84,98 216,98 232,152 68,152"><title>Full windshield</title></polygon>
+                        <rect class="win" data-id="sun" tabindex="0" role="button" aria-pressed="false" aria-label="Sunroof or panoramic roof" x="104" y="196" width="92" height="70" rx="8"><title>Sunroof</title></rect>
+                        <rect class="win" data-id="fl" tabindex="0" role="button" aria-pressed="false" aria-label="Front windows (priced as a pair)" x="34" y="170" width="46" height="84" rx="8"><title>Front windows (pair)</title></rect>
+                        <rect class="win" data-id="fr" tabindex="0" role="button" aria-pressed="false" aria-label="Front windows (priced as a pair)" x="220" y="170" width="46" height="84" rx="8"><title>Front windows (pair)</title></rect>
+                        <rect class="win" data-id="rl" tabindex="0" role="button" aria-pressed="false" aria-label="Rear left side window" x="34" y="264" width="46" height="84" rx="8"><title>Rear left window</title></rect>
+                        <rect class="win" data-id="rr" tabindex="0" role="button" aria-pressed="false" aria-label="Rear right side window" x="220" y="264" width="46" height="84" rx="8"><title>Rear right window</title></rect>
+                        <rect class="win" data-id="ql" tabindex="0" role="button" aria-pressed="false" aria-label="Left quarter glass" x="38" y="358" width="42" height="56" rx="8"><title>Left quarter glass</title></rect>
+                        <rect class="win" data-id="qr" tabindex="0" role="button" aria-pressed="false" aria-label="Right quarter glass" x="220" y="358" width="42" height="56" rx="8"><title>Right quarter glass</title></rect>
+                        <polygon class="win" data-id="rear" tabindex="0" role="button" aria-pressed="false" aria-label="Rear glass" points="88,432 212,432 228,488 72,488"><title>Rear glass</title></polygon>
+                    </svg>
+                    <p class="bd-help">Tap a window to add it. Tap again to remove it.</p>
+                    <div class="bd-actions">
+                        <button type="button" id="bd-all" class="btn btn-ghost">Tint all side + rear glass</button>
+                        <button type="button" id="bd-clear" class="btn btn-ghost">Clear</button>
+                    </div>
+                    <p id="est-mini" class="est-mini" aria-live="polite"></p>
+                </div>
+                <div class="bd-right est">
+                    <h3 class="display tier-name">Your estimate</h3>
+                    <p id="est-empty" class="tier-desc">Tap the windows you want tinted and your estimate builds here.</p>
+                    <ul id="est-lines" class="est-lines"></ul>
+                    <div id="opt-brow" class="est-opt" hidden><span>Windshield brow</span><div class="seg seg--2" role="group" aria-label="Brow style"><button type="button" data-brow="1" aria-pressed="true">1-piece</button><button type="button" data-brow="2" aria-pressed="false">2-piece</button></div></div>
+                    <div id="opt-roof" class="est-opt" hidden><span>Roof glass</span><div class="seg seg--2" role="group" aria-label="Roof glass type"><button type="button" data-roof="sunroof" aria-pressed="true">Sunroof</button><button type="button" data-roof="pano" aria-pressed="false">Panoramic</button></div></div>
+                    <p class="est-total"><span>Estimated total</span><strong id="est-total" class="display">$0 CAD</strong></p>
+                    <p class="fine">An estimate only. Final price is confirmed at inspection and may vary with vehicle and film condition.</p>
+                    <a id="bd-book" class="btn btn-primary" href="/contact/?service=Window%20Tinting#form">Book this tint</a>
+                </div>
+            </div>
+            <details class="fulllist">
+                <summary>See the full price list</summary>
+                <div class="pt-grid"><article class="pt"><header><h3 class="display tier-name">Carbon Tint </h3><p class="tier-kick">SunTek CXP Carbon Series &middot; Entry</p></header><div class="pt-row"><div><span class="pt-l">Front Roll-Ups</span><small>2 Front Windows</small></div><span class="price" data-price-cad="180.00">$180 CAD</span></div><div class="pt-row"><div><span class="pt-l">Side Windows</span><small>Per Side Window</small></div><span class="price" data-price-cad="90.00">$90 CAD</span></div><div class="pt-row"><div><span class="pt-l">¼ Glass</span><small>Per ¼ Panel</small></div><span class="price" data-price-cad="30.00">$30 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass</span><small>Standard Car / Truck</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass - Large</span><small>SUV / Large Car</small></div><span class="price">$150–$180</span></div><div class="pt-row"><div><span class="pt-l">Full Windshield</span><small>Starting at</small></div><span class="price" data-price-from-cad="280.00">From <span data-price-cad="280.00">$280 CAD</span></span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>2-Piece Brow</small></div><span class="price" data-price-cad="90.00">$90 CAD</span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>1-Piece Brow</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">Standard Sunroof</span></div><span class="price" data-price-cad="100.00">$100 CAD</span></div><div class="pt-row"><div><span class="pt-l">Panoramic Roof</span></div><span class="price">$180–$250</span></div><p class="pt-sub">Full vehicle packages</p><div class="pt-row"><div><span class="pt-l">Sedan</span><small>Full Car</small></div><span class="price">$450–$550</span></div><div class="pt-row"><div><span class="pt-l">Crew Cab Truck</span><small>Full Truck</small></div><span class="price">$550–$700</span></div><div class="pt-row"><div><span class="pt-l">SUV</span><small>Full SUV</small></div><span class="price">$600–$800</span></div></article><article class="pt pt--feature"><header><h3 class="display tier-name">Ceramic Tint <span class="tier-badge">Recommended</span></h3><p class="tier-kick">SunTek CIR Ceramic Series &middot; Premium</p></header><div class="pt-row"><div><span class="pt-l">Front Roll-Ups</span><small>2 Front Windows</small></div><span class="price" data-price-cad="260.00">$260 CAD</span></div><div class="pt-row"><div><span class="pt-l">Side Windows</span><small>Per Side Window</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">¼ Glass</span><small>Per ¼ Panel</small></div><span class="price" data-price-cad="45.00">$45 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass</span><small>Standard Car / Truck</small></div><span class="price" data-price-cad="185.00">$185 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Glass - Large</span><small>SUV / Large Car</small></div><span class="price">$200–$250</span></div><div class="pt-row"><div><span class="pt-l">Full Windshield</span><small>Starting at</small></div><span class="price" data-price-from-cad="300.00">From <span data-price-cad="300.00">$300 CAD</span></span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>2-Piece Brow</small></div><span class="price" data-price-cad="130.00">$130 CAD</span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow</span><small>1-Piece Brow</small></div><span class="price" data-price-cad="180.00">$180 CAD</span></div><div class="pt-row"><div><span class="pt-l">Standard Sunroof</span></div><span class="price" data-price-cad="150.00">$150 CAD</span></div><div class="pt-row"><div><span class="pt-l">Panoramic Roof</span></div><span class="price">$250–$400</span></div><p class="pt-sub">Full vehicle packages</p><div class="pt-row"><div><span class="pt-l">Sedan</span><small>Full Car</small></div><span class="price">$700–$900</span></div><div class="pt-row"><div><span class="pt-l">Crew Cab Truck</span><small>Full Truck</small></div><span class="price">$850–$1,100</span></div><div class="pt-row"><div><span class="pt-l">SUV</span><small>Full SUV</small></div><span class="price">$900–$1,300</span></div></article></div>
             <div class="pt pt--addon">
                 <header><h3 class="display tier-name">Add-on &amp; removal pricing</h3><p class="tier-kick">Pricing may vary depending on vehicle and film condition.</p></header>
                 <div class="pt-row"><div><span class="pt-l">Tint Removal</span><small>Per side window</small></div><span class="price" data-price-cad="25.00">$25 CAD</span></div><div class="pt-row"><div><span class="pt-l">Rear Window Removal</span><small>Full rear glass</small></div><span class="price">$75–$150</span></div><div class="pt-row"><div><span class="pt-l">Glue Cleanup</span><small>Starting at</small></div><span class="price" data-price-from-cad="25.00">From <span data-price-cad="25.00">$25 CAD</span></span></div><div class="pt-row"><div><span class="pt-l">Windshield Brow Removal</span><small>Any brow style</small></div><span class="price" data-price-cad="25.00">$25 CAD</span></div>
             </div>
+        
+            </details>
         </section>
 
         <!-- Equipment -->
@@ -436,6 +493,7 @@
 
 
 <script src="/assets/js/text-eric.js"></script>
+<script src="/assets/js/tint-builder.js"></script>
 </body>
 <script src="/assets/js/estimator.js"></script>
 </html>
