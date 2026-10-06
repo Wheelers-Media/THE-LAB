@@ -1261,7 +1261,12 @@ function initPDP() {
     const hwEFI_ID = ''; // placeholder for EFI Live ID if needed later
     // Since we don't have MPVI4 ID, we will just add the base product, or we can fetch it dynamically from storeCatalog later.
     container.innerHTML = `
-        <div class="max-w-6xl mx-auto py-12 px-6">
+        <div class="max-w-6xl mx-auto py-8 lg:py-12 px-6">
+            <!-- Phone title: the desktop title sits in the right column, so phones need their own above the photos -->
+            <div class="lg:hidden mb-6">
+                <div class="text-xs font-mono text-labBlue uppercase tracking-widest mb-3">${product.makes.filter(m => m !== 'Universal').join(", ") || 'Universal Fit'} &bull; ${product.category}</div>
+                <h1 class="text-3xl font-heading font-extrabold text-white leading-tight">${product.name}</h1>
+            </div>
             <!-- Top Config Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
                 <!-- Left: Image Gallery -->
@@ -1301,10 +1306,10 @@ function initPDP() {
                 
                 <!-- Right: Config & Cart -->
                 <div class="flex flex-col justify-start">
-                    <!-- Desktop only title -->
-                    <div class="hidden lg:block">
-                        <div class="text-xs font-mono text-labBlue uppercase tracking-widest mb-4">${product.makes.filter(m => m !== 'Universal').join(", ") || 'Universal Fit'} &bull; ${product.category}</div>
-                        <h1 class="text-3xl md:text-4xl font-heading font-extrabold text-white leading-tight mb-4">${product.name}</h1>
+                    <!-- Title (desktop) plus the legal notice and fitment badge, which must show on phones too -->
+                    <div>
+                        <div class="hidden lg:block text-xs font-mono text-labBlue uppercase tracking-widest mb-4">${product.makes.filter(m => m !== 'Universal').join(", ") || 'Universal Fit'} &bull; ${product.category}</div>
+                        <h1 class="hidden lg:block text-3xl md:text-4xl font-heading font-extrabold text-white leading-tight mb-4">${product.name}</h1>
                         
                         ${pTitleLower.includes('tune') || pTitleLower.includes('tuning') || pTitleLower.includes('delete') || pTitleLower.includes('off-road') || pTitleLower.includes('race') || pTitleLower.includes('sotf') || pTitleLower.includes('package') || pTitleLower.includes('ez lynk') || pTitleLower.includes('hp tuners') || pTitleLower.includes('efi live') || pTitleLower.includes('mm3') ? `
                         <div class="mb-6 flex items-start gap-2 border-l-4 border-red-600 pl-3 py-1 bg-red-900/10">
