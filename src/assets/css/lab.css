@@ -689,3 +689,24 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 #vehicle-selector-modal .vs-make-btn.selected-make { border-color:var(--text); background-color:rgba(255,255,255,.06); box-shadow:none; }
 #vehicle-selector-modal .vs-make-btn.selected-make .vs-make-text { color:var(--text); }
 #vehicle-selector-modal :focus-visible { outline:2px solid #fff; outline-offset:2px; }
+
+/* ── Store: step-by-step product configurator (pdp-steps.js) ── */
+.pdp-off { display:none !important; }
+.pdp-steps-head { margin:0 0 20px; scroll-margin-top:16px; outline:none; }
+.pdp-steps-count { margin:0 0 8px; color:var(--amber); font:600 13px/1 "Barlow",sans-serif; letter-spacing:.1em; text-transform:uppercase; }
+.pdp-steps-title { margin:0 0 14px; color:var(--text); font:800 1.9rem/1 "Barlow Condensed",sans-serif; text-transform:uppercase; }
+.pdp-bar { height:3px; background:var(--line); }
+.pdp-bar i { display:block; width:100%; height:100%; background:var(--amber); transform-origin:left; transition:transform .5s cubic-bezier(.16,1,.3,1); }
+.pdp-steps-nav { display:flex; gap:10px; margin:16px 0 8px; }
+.pdp-steps-nav button { flex:1; min-height:52px; padding:0 16px; cursor:pointer; font:700 14px "Barlow",sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+.pdp-steps-nav button[hidden] { display:none; }
+.pdp-next { background:var(--brand); color:#fff; border:0; }
+.pdp-next:hover:not(:disabled) { background:#0052cc; }
+.pdp-next:disabled { opacity:.35; cursor:not-allowed; }
+.pdp-back { background:transparent; color:#fff; border:1px solid rgba(255,255,255,.55); }
+.pdp-back:hover { border-color:#fff; }
+.pdp-recap { list-style:none; margin:0 0 20px; padding:0; border-top:1px solid var(--line); }
+.pdp-recap[hidden] { display:none; }
+.pdp-recap li { display:grid; grid-template-columns:120px minmax(0,1fr); gap:12px; padding:12px 0; border-bottom:1px solid var(--line); }
+.pdp-recap span { color:var(--mute); font:700 12px/1.4 "Barlow",sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+.pdp-recap b { color:var(--text); font-weight:600; overflow-wrap:anywhere; }
