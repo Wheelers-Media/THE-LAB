@@ -896,8 +896,6 @@ textarea.lf-input { min-height:104px; padding:12px 14px; resize:vertical; }
 .pgrid:empty { min-height:100svh; }
 
 /* photo rows and before/after results */
-.photo-row { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; padding-top:8px; padding-bottom:40px; }
-.photo-row img { width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; display:block; }
 .results { padding-top:56px; }
 .results-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:20px; }
 .results-grid figure { margin:0; }
@@ -906,10 +904,8 @@ textarea.lf-input { min-height:104px; padding:12px 14px; resize:vertical; }
 .results-grid figcaption { font-size:14px; line-height:1.4; color:var(--mute); margin-top:6px; }
 .results-wide { grid-column:1 / -1; }
 @media (min-width:900px) {
-    .photo-row { gap:16px; padding-top:16px; padding-bottom:56px; }
     .results-grid { grid-template-columns:repeat(3,1fr); gap:16px; }
     .results-wide { grid-column:auto; }
-    .photo-row img { aspect-ratio:3/2; }
 }
 
 /* price estimate carried from a service-page walkthrough into the form */
