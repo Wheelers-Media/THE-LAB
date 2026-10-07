@@ -33,6 +33,13 @@
         boutique: {
             title: 'Boutique Booking',
             submit: 'Book Service Date',
+            // one group of fields per screen; contact details come last. A step with nothing to show is skipped.
+            steps: [
+                { title: 'What do you need?', ids: ['service'] },
+                { title: 'Your options', ids: ['tint_shade', 'tint_pref', 'tint_addons', 'detail_pkg', 'drop_note', 'lighting', 'protection', 'other_notes'], skipWhenHandoff: true },
+                { title: 'Your vehicle', ids: ['category', 'year', 'make', 'model'] },
+                { title: 'Your details', ids: ['first', 'last', 'phone', 'email', 'consent'] },
+            ],
             fields: [
                 f('category', 'Vehicle Category', 'multi', { opts: ['Standard Car', 'Van', 'SUV', 'Truck', 'Side-by-Side (SxS) / Off-Road'] }),
                 f('year', 'Vehicle Year', 'text', { req: 1, ph: '2019', half: 1 }),
@@ -58,6 +65,13 @@
         build: {
             title: 'Build Request',
             submit: 'Book Service Date',
+            steps: [
+                { title: 'What do you need?', ids: ['service'] },
+                { title: 'Your options', ids: ['deleted', 'hp', 'idle', 'straight', 'diameter', 'tip', 'accessories'] },
+                { title: 'Your goals', ids: ['goals', 'notes'] },
+                { title: 'Your truck', ids: ['vin', 'year', 'make', 'model', 'engine'] },
+                { title: 'Your details', ids: ['name', 'phone', 'email', 'offroad', 'consent'] },
+            ],
             fields: [
                 f('vin', 'Vehicle Identification Number (VIN)', 'text', { req: 1, ph: '17 Digit VIN number', minlength: 17, maxlength: 17 }),
                 f('year', 'Vehicle Year', 'text', { req: 1, ph: '2019', half: 1 }),
@@ -106,14 +120,14 @@
         return `<input type="${d.type}" ${attrs} placeholder="${esc(d.ph || '')}"${extra} class="lf-input">`;
     }
 
-    function field(d, key) {
+    function field(d, key, step) {
         const req = d.req ? ' <span class="lf-req" aria-hidden="true">*</span>' : '';
         const text = `${esc(d.label)}${req}`;
         let inner;
         if (d.type === 'check' || d.type === 'note') inner = control(d, key);
         else if (d.type === 'multi' || d.type === 'radio') inner = `<fieldset class="lf-group"><legend class="lf-label">${text}</legend>${control(d, key)}</fieldset>`;
         else inner = `<label class="lf-label" for="${fid(key, d.id)}">${text}</label>${control(d, key)}`;
-        return `<div data-field="${d.id}" class="lf-field${d.half ? ' lf-field--half' : ''}"${d.when ? ' hidden' : ''}>${inner}</div>`;
+        return `<div data-field="${d.id}" data-step="${step}" class="lf-field${d.half ? ' lf-field--half' : ''}"${d.when ? ' hidden' : ''}>${inner}</div>`;
     }
 
     // service pages with a price walkthrough: the form points people there when they arrive without one
@@ -121,8 +135,14 @@
 
     function mount(el, key) {
         const cfg = FORMS[key];
+        const last = cfg.steps.length - 1;
+        const stepOf = {};
+        cfg.steps.forEach((s, i) => s.ids.forEach((id) => { stepOf[id] = i; }));
+        cfg.fields.forEach((d) => { if (stepOf[d.id] === undefined) console.warn('[intake] field is in no step:', d.id); });
         el.innerHTML = `<form novalidate class="lf" autocomplete="on" aria-label="${cfg.title}">
-            <div data-recap hidden class="lf-field lf-recap">
+            <div class="lf-steps-head" tabindex="-1"><p class="lf-steps-count" aria-live="polite"></p><h3 class="display lf-steps-title"></h3><div class="lf-bar" aria-hidden="true"><i></i></div></div>
+            <p data-recap-mini data-step="${last}" hidden class="lf-note"></p>
+            <div data-recap data-step="0" hidden class="lf-field lf-recap">
                 <p class="lf-label">Your walkthrough choices (sent to Eric)</p>
                 <p data-recap-text></p>
                 <div data-recap-est hidden class="lf-est">
@@ -133,12 +153,16 @@
                 </div>
                 <a data-recap-edit href="#">Change my choices</a>
             </div>
-            <p data-build-hint hidden class="lf-note">Want to see a price first? <a data-build-link href="#">Build your estimate</a>.</p>
-            ${cfg.fields.map((d) => field(d, key)).join('')}
+            <p data-build-hint data-step="0" hidden class="lf-note">Want to see a price first? <a data-build-link href="#">Build your estimate</a>.</p>
+            ${cfg.fields.map((d) => field(d, key, stepOf[d.id])).join('')}
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
             <div class="lf-field">
                 <p data-msg role="alert" class="lf-msg" hidden></p>
-                <button type="submit" class="btn btn-primary lf-submit">${cfg.submit}</button>
+                <div class="lf-nav">
+                    <button type="button" class="btn btn-ghost lf-back" hidden>Back</button>
+                    <button type="button" class="btn btn-primary lf-next">Next</button>
+                    <button type="submit" class="btn btn-primary lf-submit" hidden>${cfg.submit}</button>
+                </div>
             </div>
         </form>`;
         const form = el.querySelector('form');
@@ -211,9 +235,55 @@
         form.addEventListener('change', (e) => { if (e.target.name === 'service') handoff(); });
         handoff();
 
+        // step-by-step: show one group of fields at a time. Same fields, same validation, same submit.
+        const head = form.querySelector('.lf-steps-head');
+        const mini = form.querySelector('[data-recap-mini]');
+        const back = form.querySelector('.lf-back'), next = form.querySelector('.lf-next'), sub = form.querySelector('.lf-submit');
+        let cur = 0;
+        const controls = (i) => [...form.querySelectorAll(`[data-step="${i}"]:not([hidden]) :is(input,select,textarea)`)].filter((c) => !c.disabled);
+        const invalid = (i) => controls(i).find((c) => !c.checkValidity());
+        // steps worth showing: the first and last always, the rest only if they have a visible field. After a
+        // walkthrough the options are already filled in, so that step is skipped unless something there is missing.
+        const live = () => cfg.steps.map((s, i) => i).filter((i) => {
+            const s = cfg.steps[i];
+            if (i === 0 || i === last) return true;
+            if (!s.ids.some((id) => !box(id).hidden)) return false;
+            return !(s.skipWhenHandoff && saved() && !invalid(i));
+        });
+        function render() {
+            const L = live();
+            if (!L.includes(cur)) { const n = L.find((i) => i > cur); cur = n === undefined ? L[L.length - 1] : n; }
+            const pos = L.indexOf(cur), final = pos === L.length - 1;
+            form.querySelectorAll('[data-step]').forEach((b) => b.classList.toggle('lf-step-off', +b.dataset.step !== cur));
+            let t = cfg.steps[cur].title;
+            if (cur === 0 && !form.querySelector('[data-recap]').hidden) t = 'Your estimate';
+            head.querySelector('.lf-steps-count').textContent = `Step ${pos + 1} of ${L.length}`;
+            head.querySelector('.lf-steps-title').textContent = t;
+            head.querySelector('.lf-bar i').style.transform = `scaleX(${(pos + 1) / L.length})`;
+            back.hidden = pos === 0; next.hidden = final; sub.hidden = !final;
+            const h = saved();
+            mini.hidden = !(h && h.est);
+            mini.textContent = h && h.est ? `Your estimate: ${h.est.total}. Starting price, confirmed by Eric after he sees your vehicle.` : '';
+        }
+        function go(dir) {
+            const L = live(), j = L.indexOf(cur) + dir;
+            if (j < 0 || j >= L.length) return;
+            if (dir > 0) { const bad = invalid(cur); if (bad) { bad.reportValidity(); return; } }
+            cur = L[j];
+            render();
+            head.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+            head.focus({ preventScroll: true });
+        }
+        back.addEventListener('click', () => go(-1));
+        next.addEventListener('click', () => go(1));
+        form.addEventListener('change', render);
+        render();
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (!form.checkValidity()) return form.reportValidity();
+            const L = live();
+            if (cur !== L[L.length - 1]) return go(1); // Enter on an earlier step just moves on
+            for (const i of L) { const bad = invalid(i); if (bad) { cur = i; render(); bad.reportValidity(); return; } }
             if (form.elements.website.value) return; // honeypot: bots fill the hidden field
 
             const v = {};
