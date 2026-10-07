@@ -31,11 +31,13 @@
 
     const FORMS = {
         boutique: {
-            title: 'Boutique Booking',
-            submit: 'Book Service Date',
+            title: 'Boutique Quote and Booking',
+            submit: 'Send my request',
             // one group of fields per screen; contact details come last. A step with nothing to show is skipped.
             steps: [
                 { title: 'What do you need?', ids: ['service'] },
+                { title: 'Build your quote', ids: [], quote: 0 },
+                { title: 'Your quote', ids: [], quote: 1 },
                 { title: 'Your options', ids: ['tint_shade', 'tint_pref', 'tint_addons', 'detail_pkg', 'drop_note', 'lighting', 'protection', 'other_notes'], skipWhenHandoff: true },
                 { title: 'Your vehicle', ids: ['category', 'year', 'make', 'model'] },
                 { title: 'Your details', ids: ['first', 'last', 'phone', 'email', 'consent'] },
@@ -45,7 +47,13 @@
                 f('year', 'Vehicle Year', 'text', { req: 1, ph: '2019', half: 1 }),
                 f('make', 'Vehicle Make', 'text', { req: 1, ph: 'Ford', half: 1 }),
                 f('model', 'Vehicle Model', 'text', { req: 1, ph: 'F-350 Super Duty' }),
-                f('service', 'Primary Service Requested', 'select', { req: 1, opts: ['Premium Detailing', 'Window Tinting', 'Custom Lighting', 'Custom Tuning', 'Other / Custom Install'] }),
+                f('service', 'Primary Service Requested', 'select', { req: 1, opts: ['Premium Detailing', 'Window Tinting', 'Custom Lighting', 'Custom Tuning', 'Other / Custom Install'], tiles: [
+                    { v: 'Premium Detailing', t: 'Premium detailing', d: 'Interior, exterior or complete', b: 'Instant quote' },
+                    { v: 'Window Tinting', t: 'Window tint', d: 'Carbon or ceramic for cars, trucks and side-by-sides', b: 'Instant quote' },
+                    { v: 'Custom Lighting', t: 'Custom lighting', d: 'Morimoto, Baja Designs, BMC, Diode Dynamics, starlight headliners', b: 'Quoted by Eric' },
+                    { v: 'Custom Tuning', t: 'Custom tuning', d: 'EZ LYNK, HP Tuners and AMDP tunes', b: 'Quoted by Eric' },
+                    { v: 'Other / Custom Install', t: 'Installs and other', d: 'Mud flaps, bumpers, polishing, decal removal, custom parts', b: 'Quoted by Eric' },
+                ] }),
                 f('tint_shade', 'Tint Shade Preference', 'select', { when: ['service', ['Window Tinting']], opts: ['5% (Limo)', '18', '25', '35', 'Not sure yet - need a recommendation'] }),
                 f('tint_pref', 'Window Tint Preference', 'radio', { when: ['service', ['Window Tinting']], opts: ['Standard Carbon Tint (Front Roll-Ups)', 'Premium Ceramic Tint (Front Roll-Ups)', 'Full Vehicle (Carbon Tint)', 'Full Vehicle (Premium Ceramic)', 'Off-Road SxS & Equipment Film'] }),
                 f('tint_addons', 'Tint Add-Ons & Glass Coverage', 'multi', { when: ['service', ['Window Tinting']], opts: ['Windshield Brow (1-Piece Custom Cut)', 'Panoramic Roof', 'Full Windshield', 'Rear Glass Standard'] }),
@@ -64,7 +72,7 @@
         },
         build: {
             title: 'Build Request',
-            submit: 'Book Service Date',
+            submit: 'Send build request',
             steps: [
                 { title: 'What do you need?', ids: ['service'] },
                 { title: 'Your options', ids: ['deleted', 'hp', 'idle', 'straight', 'diameter', 'tip', 'accessories'] },
@@ -106,6 +114,11 @@
         const id = fid(key, d.id);
         const attrs = `id="${id}" name="${d.id}"${d.req ? ' required aria-required="true"' : ''}`;
         if (d.type === 'textarea') return `<textarea ${attrs} rows="3" placeholder="${esc(d.ph || '')}" class="lf-input"></textarea>`;
+        if (d.type === 'select' && d.tiles) {
+            return `<div class="lf-tiles" role="radiogroup" aria-label="${esc(d.label)}">${d.tiles.map((t) => `<button type="button" role="radio" aria-checked="false" class="lf-tile" data-tile="${esc(t.v)}"><strong class="display">${esc(t.t)}</strong><span>${esc(t.d)}</span><em>${esc(t.b)}</em></button>`).join('')}</div>`
+                + '<p data-tile-msg class="lf-msg" role="alert" hidden>Pick one to continue.</p>'
+                + `<select ${attrs} class="lf-input lf-select lf-hide" tabindex="-1" aria-hidden="true"><option value=""></option>${d.opts.map((o) => `<option>${esc(o)}</option>`).join('')}</select>`;
+        }
         if (d.type === 'select') return `<select ${attrs} class="lf-input lf-select"><option value="">Select…</option>${d.opts.map((o) => `<option>${esc(o)}</option>`).join('')}</select>`;
         if (d.type === 'multi' || d.type === 'radio') {
             const t = d.type === 'multi' ? 'checkbox' : 'radio';
@@ -126,12 +139,9 @@
         let inner;
         if (d.type === 'check' || d.type === 'note') inner = control(d, key);
         else if (d.type === 'multi' || d.type === 'radio') inner = `<fieldset class="lf-group"><legend class="lf-label">${text}</legend>${control(d, key)}</fieldset>`;
-        else inner = `<label class="lf-label" for="${fid(key, d.id)}">${text}</label>${control(d, key)}`;
+        else inner = `<label class="lf-label${d.tiles ? ' lf-sr' : ''}" for="${fid(key, d.id)}">${text}</label>${control(d, key)}`;
         return `<div data-field="${d.id}" data-step="${step}" class="lf-field${d.half ? ' lf-field--half' : ''}"${d.when ? ' hidden' : ''}>${inner}</div>`;
     }
-
-    // service pages with a price walkthrough: the form points people there when they arrive without one
-    const BUILD = { 'Premium Detailing': '/boutique/detailing/#build', 'Window Tinting': '/boutique/tinting/#build', 'Custom Lighting': '/boutique/lighting/#build' };
 
     function mount(el, key) {
         const cfg = FORMS[key];
@@ -153,7 +163,7 @@
                 </div>
                 <a data-recap-edit href="#">Change my choices</a>
             </div>
-            <p data-build-hint data-step="0" hidden class="lf-note">Want to see a price first? <a data-build-link href="#">Build your estimate</a>.</p>
+            ${cfg.steps.map((s, i) => (s.quote === undefined ? '' : `<div data-quote="${s.quote}" data-step="${i}" data-ready="0" class="lf-field lq"></div>`)).join('')}
             ${cfg.fields.map((d) => field(d, key, stepOf[d.id])).join('')}
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
             <div class="lf-field">
@@ -171,6 +181,8 @@
             .filter((e) => (e.type !== 'checkbox' && e.type !== 'radio') || e.checked)
             .map((e) => e.value.trim())
             .filter(Boolean);
+
+        try { const h0 = JSON.parse(sessionStorage.getItem('labForm') || 'null'); if (h0 && h0.src === 'quote') sessionStorage.removeItem('labForm'); } catch (err) { /* storage unavailable */ }
 
         function refresh() {
             cfg.fields.forEach((d) => {
@@ -208,10 +220,7 @@
         }
         function handoff() {
             const h = saved();
-            form.querySelector('[data-recap]').hidden = !h;
-            const bu = BUILD[val('service')[0]];
-            form.querySelector('[data-build-hint]').hidden = !!h || !bu;
-            if (bu) form.querySelector('[data-build-link]').href = bu;
+            form.querySelector('[data-recap]').hidden = !h || h.src === 'quote';
             if (!h) return;
             const est = h.est;
             form.querySelector('[data-recap-text]').textContent = est ? h.summary.replace(/\.?\s*Estimate .*$/, '') : h.summary;
@@ -241,23 +250,38 @@
         const back = form.querySelector('.lf-back'), next = form.querySelector('.lf-next'), sub = form.querySelector('.lf-submit');
         let cur = 0;
         const controls = (i) => [...form.querySelectorAll(`[data-step="${i}"]:not([hidden]) :is(input,select,textarea)`)].filter((c) => !c.disabled);
-        const invalid = (i) => controls(i).find((c) => !c.checkValidity());
+        const invalid = (i) => {
+            const q = form.querySelector(`[data-quote][data-step="${i}"]`);
+            if (q) {
+                return q.dataset.ready === '0' ? { reportValidity() { const m = q.querySelector('.lq-hint'); if (m) m.hidden = false; const f = q.querySelector('button, input'); if (f) f.focus({ preventScroll: true }); } } : undefined;
+            }
+            const bad = controls(i).find((c) => !c.checkValidity());
+            if (bad && bad.classList.contains('lf-hide')) {
+                return { reportValidity() { const m = form.querySelector('[data-tile-msg]'); if (m) m.hidden = false; const t = form.querySelector('.lf-tile'); if (t) t.focus({ preventScroll: true }); } };
+            }
+            return bad;
+        };
+        const syncTiles = () => { const sv = val('service')[0]; form.querySelectorAll('[data-tile]').forEach((t) => t.setAttribute('aria-checked', String(t.dataset.tile === sv))); };
         // steps worth showing: the first and last always, the rest only if they have a visible field. After a
         // walkthrough the options are already filled in, so that step is skipped unless something there is missing.
         const live = () => cfg.steps.map((s, i) => i).filter((i) => {
             const s = cfg.steps[i];
             if (i === 0 || i === last) return true;
+            if (s.quote !== undefined) { const lq = window.labQuote, h = saved(); return !!(lq && lq.steps(val('service')[0]) > s.quote && (!h || h.src === 'quote')); }
             if (!s.ids.some((id) => !box(id).hidden)) return false;
             return !(s.skipWhenHandoff && saved() && !invalid(i));
         });
         function render() {
+            syncTiles();
             const L = live();
             if (!L.includes(cur)) { const n = L.find((i) => i > cur); cur = n === undefined ? L[L.length - 1] : n; }
             const pos = L.indexOf(cur), final = pos === L.length - 1;
             form.querySelectorAll('[data-step]').forEach((b) => b.classList.toggle('lf-step-off', +b.dataset.step !== cur));
             let t = cfg.steps[cur].title;
             if (cur === 0 && !form.querySelector('[data-recap]').hidden) t = 'Your estimate';
-            head.querySelector('.lf-steps-count').textContent = `Step ${pos + 1} of ${L.length}`;
+            if (cfg.steps[cur].quote !== undefined && window.labQuote) t = window.labQuote.title(val('service')[0], cfg.steps[cur].quote);
+            // before a service is chosen the number of steps is not known yet
+            head.querySelector('.lf-steps-count').textContent = cfg.steps.some((s) => s.quote !== undefined) && !val('service')[0] ? 'Step 1' : `Step ${pos + 1} of ${L.length}`;
             head.querySelector('.lf-steps-title').textContent = t;
             head.querySelector('.lf-bar i').style.transform = `scaleX(${(pos + 1) / L.length})`;
             back.hidden = pos === 0; next.hidden = final; sub.hidden = !final;
@@ -265,12 +289,19 @@
             mini.hidden = !(h && h.est);
             mini.textContent = h && h.est ? `Your estimate: ${h.est.total}. Starting price, confirmed by Eric after he sees your vehicle.` : '';
         }
+        // a quote step draws its own controls (quote.js), fresh each time it opens
+        function enterQuote() {
+            const q = cfg.steps[cur].quote;
+            if (q === undefined || !window.labQuote) return;
+            window.labQuote.render(form.querySelector(`[data-quote="${q}"]`), val('service')[0], q);
+        }
         function go(dir) {
             const L = live(), j = L.indexOf(cur) + dir;
             if (j < 0 || j >= L.length) return;
             if (dir > 0) { const bad = invalid(cur); if (bad) { bad.reportValidity(); return; } }
             cur = L[j];
             render();
+            enterQuote();
             if (window.labStepIn) window.labStepIn(form.querySelectorAll('[data-step]:not(.lf-step-off):not([hidden])'));
             head.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
             head.focus({ preventScroll: true });
@@ -278,7 +309,20 @@
         back.addEventListener('click', () => go(-1));
         next.addEventListener('click', () => go(1));
         form.addEventListener('change', render);
+        form.addEventListener('lab:handoff', () => { handoff(); render(); });
+        form.addEventListener('click', (e) => {
+            const t = e.target.closest('[data-tile]');
+            if (!t) return;
+            sel.value = t.dataset.tile;
+            sel.dispatchEvent(new Event('change', { bubbles: true }));
+            form.querySelector('[data-tile-msg]').hidden = true;
+            if (window.labQuote) window.labQuote.prefetch(t.dataset.tile);
+            go(1);
+        });
+        // arriving from a "Get a quote" button with the service already chosen: open straight on its first quote step
+        if (pre && sel && sel.value === pre && !saved()) { const L0 = live(); if (L0.length > 1) cur = L0[1]; }
         render();
+        enterQuote();
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();

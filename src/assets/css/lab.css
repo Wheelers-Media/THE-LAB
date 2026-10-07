@@ -1042,3 +1042,38 @@ main img { background-color:var(--panel); }
     .gi-card:hover { transform:translateY(-3px); border-color:var(--bay); }
 }
 @media print { .js [data-reveal] { opacity:1 !important; transform:none !important; } }
+
+/* Quote tool (quote.js) and service tiles */
+.lf-sr, .lf-hide { position:absolute !important; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+.lf-tiles { display:grid; gap:10px; }
+.lf-tile { display:grid; gap:4px; text-align:left; min-height:76px; padding:16px 18px; background:var(--panel); border:1px solid var(--line); border-radius:0; color:var(--text); font:inherit; cursor:pointer; }
+.lf-tile strong { font-size:1.6rem; line-height:1; }
+.lf-tile span { color:var(--mute); font-size:15px; line-height:1.35; }
+.lf-tile em { font-style:normal; font-weight:700; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--amber); }
+.lf-tile:hover { border-color:var(--mute); }
+.lf-tile[aria-checked="true"] { border-color:#fff; background:#1a1c20; }
+.lf-tile:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+.lq { display:grid; gap:20px; }
+.lq-group { display:grid; gap:8px; }
+.lq-seg { display:flex; flex-wrap:wrap; gap:8px; }
+.lq-opt { min-height:48px; padding:0 16px; background:var(--ink); border:1px solid var(--line); border-radius:0; color:var(--text); font:600 15px "Barlow",sans-serif; cursor:pointer; }
+.lq-opt:hover { border-color:var(--mute); }
+.lq-opt[aria-pressed="true"] { border-color:#fff; background:#1a1c20; color:#fff; }
+.lq-cards { display:grid; gap:10px; }
+.lq-card { position:relative; display:grid; gap:4px; text-align:left; padding:16px; background:var(--ink); border:1px solid var(--line); border-radius:0; color:var(--text); font:inherit; cursor:pointer; }
+.lq-card strong { font-size:1.6rem; line-height:1; }
+.lq-card span { color:var(--mute); font-size:15px; line-height:1.35; }
+.lq-card em { font-style:normal; font-size:13px; color:var(--mute); }
+.lq-card b { font:800 1.5rem "Barlow Condensed",sans-serif; color:#fff; }
+.lq-card:hover { border-color:var(--mute); }
+.lq-card[aria-pressed="true"] { border-color:#fff; background:#1a1c20; }
+.lq-tag { position:absolute; top:12px; right:12px; padding:2px 8px; background:var(--amber); color:#000; font:800 11px "Barlow",sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+.lq-row { align-items:center; }
+.lq-row span { flex:1; }
+.lq-price { color:#fff; white-space:nowrap; font-weight:700; }
+.lq-all { justify-self:start; min-height:44px; padding:0 14px; background:transparent; border:1px dashed var(--mute); border-radius:0; color:var(--text); font:600 14px "Barlow",sans-serif; cursor:pointer; }
+.lq-est { padding:16px; border:1px solid var(--line); background:var(--panel); }
+.lq-est .lf-label { color:var(--amber); }
+.lq-est .lf-est-total { margin:2px 0 8px; font-size:30px; line-height:1.1; font-weight:700; color:#fff; }
+.lq-ph { margin:0; color:var(--mute); }
+@media (min-width:700px) { .lf-tiles, .lq-cards { grid-template-columns:1fr 1fr; } }
