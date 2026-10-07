@@ -31,8 +31,8 @@
 
     const FORMS = {
         boutique: {
-            title: 'Boutique Booking',
-            submit: 'Book Service Date',
+            title: 'Boutique Quote Request',
+            submit: 'Get my quote',
             fields: [
                 f('category', 'Vehicle Category', 'multi', { opts: ['Standard Car', 'Van', 'SUV', 'Truck', 'Side-by-Side (SxS) / Off-Road'] }),
                 f('year', 'Vehicle Year', 'text', { req: 1, ph: '2019', half: 1 }),
@@ -57,7 +57,7 @@
         },
         build: {
             title: 'Build Request',
-            submit: 'Book Service Date',
+            submit: 'Send build request',
             fields: [
                 f('vin', 'Vehicle Identification Number (VIN)', 'text', { req: 1, ph: '17 Digit VIN number', minlength: 17, maxlength: 17 }),
                 f('year', 'Vehicle Year', 'text', { req: 1, ph: '2019', half: 1 }),
@@ -241,7 +241,7 @@
         const drop = route === 'detailing';
         el.innerHTML = `<div class="lf-done" role="status" tabindex="-1">
             <p class="lf-done-h"><strong>Got it!</strong> Eric has your request.</p>
-            <p>${url ? `Pick ${drop ? 'your drop-off' : 'a'} time below. ` : ''}Eric will confirm and text you a $50 deposit link to lock in your spot (100% credited to your final invoice).</p>
+            <p>Eric will reply within one business day with your price. ${url ? `Ready to lock it in? Pick ${drop ? 'your drop-off' : 'a'} time below. ` : ''}He will text you a $50 deposit link to hold your spot (100% credited to your final invoice).</p>
             ${url && !prefilled ? `<p class="lf-note">Book under <strong>${esc(c.name)}</strong> and <strong>${esc(c.email)}</strong> (same as above) so Eric can match your time to your request.</p>` : ''}
             ${drop ? '<p class="lf-fine">Drop-off is 8:00 to 9:00 AM, Monday to Friday (Fort St. John time).</p>' : ''}
             ${url ? `<iframe src="${esc(url)}" title="Pick a time" loading="lazy" class="lf-cal"></iframe>
