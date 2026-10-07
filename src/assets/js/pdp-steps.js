@@ -96,7 +96,8 @@
         state.key = list[i].key;
         render();
         if (window.labStepIn) window.labStepIn(list[i].els);
-        ui.head.scrollIntoView({ block: 'start', behavior: calm() ? 'auto' : 'smooth' });
+        if (window.labScrollTo) window.labScrollTo(ui.head);
+        else ui.head.scrollIntoView({ block: 'start', behavior: calm() ? 'auto' : 'smooth' });
         ui.head.focus({ preventScroll: true });
     }
 
@@ -163,7 +164,12 @@
         try {
             for (const u of units()) {
                 const bad = u.els.some((e) => e.querySelector && (e.querySelector('[role="alert"]:not(.hidden)') || e.querySelector('input[style*="239, 68, 68"],select[style*="239, 68, 68"]')));
-                if (bad && u.key !== state.key) { state.key = u.key; render(); ui.head.scrollIntoView({ block: 'start' }); return; }
+                if (bad && u.key !== state.key) {
+                    state.key = u.key; render();
+                    if (window.labScrollTo) window.labScrollTo(ui.head);
+                    else ui.head.scrollIntoView({ block: 'start' });
+                    return;
+                }
             }
         } catch (e) { bail(e); }
     }

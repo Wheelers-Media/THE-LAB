@@ -39,20 +39,20 @@
                 { title: 'Build your quote', ids: [], quote: 0 },
                 { title: 'Your quote', ids: [], quote: 1 },
                 { title: 'Your options', ids: ['tint_shade', 'tint_pref', 'tint_addons', 'detail_pkg', 'drop_note', 'lighting', 'protection', 'other_notes'], skipWhenHandoff: true },
-                { title: 'Your vehicle', ids: ['category', 'year', 'make', 'model'] },
+                { title: 'Your vehicle', ids: ['year', 'make', 'model'] },
                 { title: 'Your details', ids: ['first', 'last', 'phone', 'email', 'consent'] },
             ],
             fields: [
-                f('category', 'Vehicle Category', 'multi', { opts: ['Standard Car', 'Van', 'SUV', 'Truck', 'Side-by-Side (SxS) / Off-Road'] }),
                 f('year', 'Vehicle Year', 'text', { req: 1, ph: '2019', half: 1 }),
                 f('make', 'Vehicle Make', 'text', { req: 1, ph: 'Ford', half: 1 }),
                 f('model', 'Vehicle Model', 'text', { req: 1, ph: 'F-350 Super Duty' }),
-                f('service', 'Primary Service Requested', 'select', { req: 1, opts: ['Premium Detailing', 'Window Tinting', 'Custom Lighting', 'Custom Tuning', 'Other / Custom Install'], tiles: [
+                f('service', 'Primary Service Requested', 'select', { req: 1, opts: ['Premium Detailing', 'Window Tinting', 'Custom Lighting', 'Other / Custom Install'], tiles: [
                     { v: 'Premium Detailing', t: 'Premium detailing', d: 'Interior, exterior or complete', b: 'Instant quote' },
                     { v: 'Window Tinting', t: 'Window tint', d: 'Carbon or ceramic for cars, trucks and side-by-sides', b: 'Instant quote' },
                     { v: 'Custom Lighting', t: 'Custom lighting', d: 'Morimoto, Baja Designs, BMC, Diode Dynamics, starlight headliners', b: 'Quoted by Eric' },
-                    { v: 'Custom Tuning', t: 'Custom tuning', d: 'EZ LYNK, HP Tuners and AMDP tunes', b: 'Quoted by Eric' },
                     { v: 'Other / Custom Install', t: 'Installs and other', d: 'Mud flaps, bumpers, polishing, decal removal, custom parts', b: 'Quoted by Eric' },
+                    // tuning needs the VIN, goals and off-road acknowledgement, so it opens the parts form instead of a thin copy of it
+                    { v: 'Custom Tuning', t: 'Tuning, exhaust and parts', d: 'EZ LYNK, HP Tuners and AMDP tunes, EGR, exhaust, CCV, lift kits', b: 'Opens the parts form', route: 'build' },
                 ] }),
                 f('tint_shade', 'Tint Shade Preference', 'select', { when: ['service', ['Window Tinting']], opts: ['5% (Limo)', '18', '25', '35', 'Not sure yet - need a recommendation'] }),
                 f('tint_pref', 'Window Tint Preference', 'radio', { when: ['service', ['Window Tinting']], opts: ['Standard Carbon Tint (Front Roll-Ups)', 'Premium Ceramic Tint (Front Roll-Ups)', 'Full Vehicle (Carbon Tint)', 'Full Vehicle (Premium Ceramic)', 'Off-Road SxS & Equipment Film'] }),
@@ -115,7 +115,7 @@
         const attrs = `id="${id}" name="${d.id}"${d.req ? ' required aria-required="true"' : ''}`;
         if (d.type === 'textarea') return `<textarea ${attrs} rows="3" placeholder="${esc(d.ph || '')}" class="lf-input"></textarea>`;
         if (d.type === 'select' && d.tiles) {
-            return `<div class="lf-tiles" role="radiogroup" aria-label="${esc(d.label)}">${d.tiles.map((t) => `<button type="button" role="radio" aria-checked="false" class="lf-tile" data-tile="${esc(t.v)}"><strong class="display">${esc(t.t)}</strong><span>${esc(t.d)}</span><em>${esc(t.b)}</em></button>`).join('')}</div>`
+            return `<div class="lf-tiles" role="radiogroup" aria-label="${esc(d.label)}">${d.tiles.map((t) => `<button type="button" role="radio" aria-checked="false" class="lf-tile" data-tile="${esc(t.v)}"${t.route ? ` data-route="${t.route}"` : ''}><strong class="display">${esc(t.t)}</strong><span>${esc(t.d)}</span><em>${esc(t.b)}</em></button>`).join('')}</div>`
                 + '<p data-tile-msg class="lf-msg" role="alert" hidden>Pick one to continue.</p>'
                 + `<select ${attrs} class="lf-input lf-select lf-hide" tabindex="-1" aria-hidden="true"><option value=""></option>${d.opts.map((o) => `<option>${esc(o)}</option>`).join('')}</select>`;
         }
@@ -143,6 +143,13 @@
         return `<div data-field="${d.id}" data-step="${step}" class="lf-field${d.half ? ' lf-field--half' : ''}"${d.when ? ' hidden' : ''}>${inner}</div>`;
     }
 
+    // a tile that belongs to the other form: switch to it on the contact page, or open it from any other page
+    function route(to, service) {
+        const other = document.querySelector(`[data-intake="${to}"] form`);
+        if (other && window.switchForm) { window.switchForm(to); other.dispatchEvent(new CustomEvent('lab:preset', { detail: { service } })); }
+        else location.href = `/contact/?form=${to}&service=${encodeURIComponent(service)}#form`;
+    }
+
     function mount(el, key) {
         const cfg = FORMS[key];
         const last = cfg.steps.length - 1;
@@ -152,6 +159,8 @@
         el.innerHTML = `<form novalidate class="lf" autocomplete="on" aria-label="${cfg.title}">
             <div class="lf-steps-head" tabindex="-1"><p class="lf-steps-count" aria-live="polite"></p><h3 class="display lf-steps-title"></h3><div class="lf-bar" aria-hidden="true"><i></i></div></div>
             <p data-recap-mini data-step="${last}" hidden class="lf-note"></p>
+            <p data-veh-note data-step="${stepOf.year}" hidden class="lf-fine">Filled in from what you picked earlier. Change anything that is not right.</p>
+            <p data-me data-step="${last}" hidden class="lf-fine">Filled in from your last request on this device. <a href="#" data-me-clear>Not you? Clear</a></p>
             <div data-recap data-step="0" hidden class="lf-field lf-recap">
                 <p class="lf-label">Your walkthrough choices (sent to Eric)</p>
                 <p data-recap-text></p>
@@ -202,15 +211,43 @@
         form.addEventListener('change', refresh);
         refresh();
 
-        // vehicle typed in a service-page walkthrough: fill it in so the customer never types it twice
-        try {
-            const veh = JSON.parse(sessionStorage.getItem('labVehicle') || 'null');
-            if (veh) ['year', 'make', 'model'].forEach((k) => { const f = form.elements[k]; if (f && veh[k] && !f.value) f.value = veh[k]; });
-        } catch (err) { /* storage unavailable */ }
+        // everything the customer already told us: the truck picked in the store, the vehicle typed in a walkthrough, and the
+        // details from their last request on this device. Fill it in so nothing is typed twice.
+        const read = (store, k) => { try { return JSON.parse(store.getItem(k) || 'null') || {}; } catch (err) { return {}; } };
+        const me = read(localStorage, 'labCustomer');
+        const seen = Object.assign({}, read(sessionStorage, 'lab_active_vehicle'), read(sessionStorage, 'labVehicle'));
+        const put = (id, v) => { const c = form.elements[id]; if (c && c.tagName && v && !c.value) { c.value = String(v); return true; } return false; };
+        // a returning customer's saved vehicle is only a fallback behind what they picked this session
+        const gotVeh = [...['year', 'make', 'model', 'engine'].map((k) => put(k, seen[k])), ...['year', 'make', 'model'].map((k) => put(k, (me.veh || {})[k]))].some(Boolean);
+        const gotMe = ['first', 'last', 'name', 'phone', 'email'].map((k) => put(k, me[k])).some(Boolean);
+        form.querySelector('[data-veh-note]').hidden = !gotVeh;
+        form.querySelector('[data-me]').hidden = !gotMe;
+        form.querySelector('[data-me-clear]').addEventListener('click', (e) => {
+            e.preventDefault();
+            try { localStorage.removeItem('labCustomer'); } catch (err) { /* storage unavailable */ }
+            ['first', 'last', 'name', 'phone', 'email'].forEach((k) => { const c = form.elements[k]; if (c && c.tagName) c.value = ''; });
+            form.querySelector('[data-me]').hidden = true;
+        });
 
         const pre = new URLSearchParams(location.search).get('service');
         const sel = form.elements.service;
-        if (pre && sel && sel.tagName === 'SELECT' && [...sel.options].some((o) => o.value === pre)) { sel.value = pre; refresh(); }
+        // pick the service(s) named by a link (?service=a,b) or by a route tile on the other form; true if something matched
+        function preset(list) {
+            const want = String(list || '').split(',').map((s) => s.trim()).filter(Boolean);
+            if (!want.length || !sel) return false;
+            if (sel.tagName === 'SELECT') {
+                const o = [...sel.options].find((x) => want.includes(x.value));
+                if (!o) return false;
+                sel.value = o.value;
+            } else {
+                const hit = [...sel].filter((c) => want.includes(c.value));
+                if (!hit.length) return false;
+                hit.forEach((c) => { c.checked = true; });
+            }
+            refresh();
+            return true;
+        }
+        const picked = preset(pre);
 
         // choices made in a service-page walkthrough (wizard.js labHandoff): tick the matching options, show the recap
         function saved() {
@@ -303,24 +340,30 @@
             render();
             enterQuote();
             if (window.labStepIn) window.labStepIn(form.querySelectorAll('[data-step]:not(.lf-step-off):not([hidden])'));
-            head.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+            if (window.labScrollTo) window.labScrollTo(head);
+            else { head.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
             head.focus({ preventScroll: true });
         }
         back.addEventListener('click', () => go(-1));
         next.addEventListener('click', () => go(1));
         form.addEventListener('change', render);
         form.addEventListener('lab:handoff', () => { handoff(); render(); });
+        form.addEventListener('lab:preset', (e) => {
+            if (!preset(e.detail.service)) return;
+            cur = 0; render(); go(1);
+        });
         form.addEventListener('click', (e) => {
             const t = e.target.closest('[data-tile]');
             if (!t) return;
+            if (t.dataset.route) return route(t.dataset.route, t.dataset.tile);
             sel.value = t.dataset.tile;
             sel.dispatchEvent(new Event('change', { bubbles: true }));
             form.querySelector('[data-tile-msg]').hidden = true;
             if (window.labQuote) window.labQuote.prefetch(t.dataset.tile);
             go(1);
         });
-        // arriving from a "Get a quote" button with the service already chosen: open straight on its first quote step
-        if (pre && sel && sel.value === pre && !saved()) { const L0 = live(); if (L0.length > 1) cur = L0[1]; }
+        // arriving from a "Get a quote" button with the service already chosen: open straight on its next step
+        if (picked && !saved()) { const L0 = live(); if (L0.length > 1) cur = L0[1]; }
         render();
         enterQuote();
 
@@ -359,6 +402,13 @@
                 });
                 const j = await r.json();
                 if (!j.success) throw new Error(j.message);
+                // remember them for next time: contact details on this device, the vehicle for the rest of this visit
+                try {
+                    const [first, ...rest] = name.split(/\s+/);
+                    const veh = { year: v.year, make: v.make, model: v.model };
+                    localStorage.setItem('labCustomer', JSON.stringify({ first: v.first || first, last: v.last || rest.join(' '), name, phone: v.phone, email: v.email, veh }));
+                    sessionStorage.setItem('labVehicle', JSON.stringify(veh));
+                } catch (err) { /* storage unavailable */ }
                 done(el, v.service === 'Premium Detailing' ? 'detailing' : 'eric', {
                     name, email: v.email, phone: v.phone,
                     est: (saved() || {}).est || null,

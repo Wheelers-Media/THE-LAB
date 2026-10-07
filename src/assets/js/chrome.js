@@ -35,6 +35,21 @@
         [].forEach.call(els, function (e) { e.classList.remove('step-in'); void e.offsetWidth; e.classList.add('step-in'); });
     };
 
+    // Header-aware smooth scroll — use this everywhere instead of raw scrollIntoView so step changes
+    // always land below the sticky bar, never under it. Reads --header-h so it tracks resize automatically.
+    window.labScrollTo = function (el) {
+        if (!el) return;
+        var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var hdrH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 0;
+        var pad = hdrH + 16; // 16px breathing room (matches scroll-padding-top in CSS)
+        var top = el.getBoundingClientRect().top + window.scrollY - pad;
+        if (calm || typeof window.scrollTo !== 'function') {
+            el.scrollIntoView({ block: 'start' });
+        } else {
+            window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        }
+    };
+
     document.addEventListener('DOMContentLoaded', function () {
         // keep --header-h equal to the sticky header's real height (it changes with screen size) so scrolls land below it
         var hdr = document.getElementById('site-header');

@@ -534,7 +534,7 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .filters-title { margin:0; font:700 13px/1 'Barlow',sans-serif; letter-spacing:.08em; text-transform:uppercase; color:var(--text); }
 .filters-reset { min-height:40px; padding:0 12px; border:1px solid var(--line); background:transparent; color:var(--mute); cursor:pointer; font:700 11px/1 'Barlow',sans-serif; letter-spacing:.08em; text-transform:uppercase; }
 .filters-reset:hover { color:var(--text); border-color:var(--mute); }
-.filters-body { padding:8px 16px 16px; max-height:70vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.filters-body { padding:8px 16px 16px; max-height:70vh; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
 .fgroup { padding:16px 0; border-bottom:1px solid var(--line); }
 .fgroup:last-child { border-bottom:0; }
 .fgroup-btn { width:100%; display:flex; align-items:center; justify-content:space-between; min-height:40px; margin:0 0 4px; padding:0; background:none; border:0; cursor:pointer; color:var(--text); font:700 12px/1 'Barlow',sans-serif; letter-spacing:.1em; text-transform:uppercase; }
@@ -691,7 +691,7 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 
 /* ── Store: step-by-step product configurator (pdp-steps.js) ── */
 .pdp-off { display:none !important; }
-.pdp-steps-head { margin:0 0 20px; scroll-margin-top:16px; outline:none; }
+.pdp-steps-head { margin:0 0 20px; scroll-margin-top:calc(var(--header-h) + 16px); outline:none; }
 .pdp-steps-count { margin:0 0 8px; color:var(--amber); font:600 13px/1 "Barlow",sans-serif; letter-spacing:.1em; text-transform:uppercase; }
 .pdp-steps-title { margin:0 0 14px; color:var(--text); font:800 1.9rem/1 "Barlow Condensed",sans-serif; text-transform:uppercase; }
 .pdp-bar { height:3px; background:var(--line); }
@@ -761,7 +761,7 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .site-burger[aria-expanded="true"] .ham { display:none; }
 .site-burger[aria-expanded="true"] .x { display:block; }
 
-.site-drawer { border-top:1px solid var(--line); background:var(--ink); max-height:calc(100dvh - 64px); overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.site-drawer { border-top:1px solid var(--line); background:var(--ink); max-height:calc(100dvh - 64px); overscroll-behavior:contain; overflow-y:auto; -webkit-overflow-scrolling:touch; }
 .site-drawer[hidden] { display:none; }
 .site-drawer-inner { padding:4px 16px 28px; }
 .site-drawer-h { margin:20px 0 4px; padding-top:14px; border-top:3px solid var(--ice); color:var(--text); font:800 1.5rem/1 "Barlow Condensed",sans-serif; text-transform:uppercase; }
@@ -918,7 +918,7 @@ textarea.lf-input { min-height:104px; padding:12px 14px; resize:vertical; }
 
 /* step-by-step intake forms */
 .lf [hidden], .lf-step-off { display:none !important; }
-.lf-steps-head { outline:none; }
+.lf-steps-head { outline:none; scroll-margin-top:calc(var(--header-h) + 16px); }
 .lf-steps-count { margin:0 0 4px; color:var(--amber); font:700 13px/1.3 "Barlow",sans-serif; letter-spacing:.1em; text-transform:uppercase; }
 .lf-steps-title { margin:0 0 12px; font-size:clamp(1.7rem,6vw,2.2rem); line-height:1.05; }
 .lf-bar { height:3px; background:var(--line); }
@@ -997,6 +997,10 @@ textarea.lf-input { min-height:104px; padding:12px 14px; resize:vertical; }
 /* A sticky header must never cover what we scroll to: step changes, #anchors and focus all land below it. */
 html { scroll-padding-top: calc(var(--header-h) + 16px); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* Prevent page-level rubber-band during in-page scrolls (mobile bounce that looks like a refresh) */
+body { overscroll-behavior-y: none; }
+/* Re-enable natural pull-to-refresh on the main scroll container so it still works in mobile browsers */
+main { overscroll-behavior-y: auto; }
 
 /* Titles: one scale, one gap under every title, balanced wrapping. */
 .page-h1 { font-size:var(--fs-hero); margin-bottom:var(--sp-4); }
@@ -1037,6 +1041,8 @@ main img { background-color:var(--panel); }
     .lab-page .btn { transition:transform .15s var(--ease-out), background-color .2s, border-color .2s, color .2s; }
     .lab-page .btn:active { transform:translateY(1px); }
     .gi-card, .gi-truck { transition:transform .35s var(--ease-out), border-color .25s; }
+    /* Step nav buttons: lock pointer-events for one frame after click to prevent double-fire */
+    .lf-nav button:active, .pdp-steps-nav button:active { pointer-events:none; }
 }
 @media (hover:hover) and (prefers-reduced-motion: no-preference) {
     .gi-card:hover { transform:translateY(-3px); border-color:var(--bay); }
