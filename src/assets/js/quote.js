@@ -147,7 +147,7 @@
     const group = (label, inner) => '<div class="lq-group"><p class="lf-label">' + esc(label) + '</p>' + inner + '</div>';
     const row = (g, label, price, on) => '<label class="lf-opt lq-row"><input type="checkbox" data-g="' + esc(g) + '"' + (on ? ' checked' : '') + '><span>' + esc(label) + '</span>' + (price ? '<b class="lq-price">' + esc(price) + '</b>' : '') + '</label>';
     const estCard = (c, ph) => '<div class="lq-est" aria-live="polite"><p class="lf-label">Your estimate</p>' + (c
-        ? '<p class="lf-est-total">' + esc(c.est.total) + '</p><ul class="lf-est-lines">' + c.est.lines.map((l) => '<li><span>' + esc(l.label) + '</span><span>' + esc(l.price) + '</span></li>').join('') + '</ul><p class="lf-fine">Starting prices in CAD. Eric confirms the final price after he sees your vehicle.</p>'
+        ? '<p class="lf-est-total">' + esc(c.est.total) + '</p><ul class="lf-est-lines">' + c.est.lines.map((l) => '<li><span>' + esc(l.label) + '</span><span>' + esc(l.price) + '</span></li>').join('') + '</ul><p class="lf-fine">Starting prices in CAD.</p>'
         : '<p class="lq-ph">' + esc(ph) + '</p>') + '</div>';
     const hint = (t) => '<p class="lq-hint lf-msg" role="alert" hidden>' + esc(t) + '</p>';
 
