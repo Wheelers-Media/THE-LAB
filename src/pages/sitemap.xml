@@ -93,6 +93,12 @@
   </url>
   <!-- Custom Tuning -->
   <url>
+    <loc>https://thelabfsj.ca/gridiron/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://thelabfsj.ca/store/tuning/</loc>
     <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
