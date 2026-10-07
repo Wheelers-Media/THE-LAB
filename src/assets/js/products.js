@@ -28,6 +28,8 @@ async function shopifyGraphQL(query, variables = {}) {
 const EXCLUDED_KEYWORDS = [
     "interior detail", "de-luxx interior", "standard detail",
     "detail labor", "maintenance detail", "exterior wash",
+    "decontamination wash", "de-luxx signature", "standard signature",
+    "tire rotation",
     "mechanical shop rate", "shop rate", "shop supplies",
     "light truck rotate", "emblem wrap", "bio bombs",
     "gift card", "e-gift card",

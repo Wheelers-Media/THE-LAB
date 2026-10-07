@@ -106,7 +106,7 @@
             const lines = [{ label: f.name, price: 'from ' + money(f.price) }];
             let total = f.price;
             if (T.sxsBrow) { lines.push({ label: 'Windshield sun-strip (visor brow)', price: money(SX.brow.lo) + ' to ' + money(SX.brow.hi) }); total += SX.brow.lo; }
-            return { est: { total: 'from ' + money(total), lines }, summary: 'SxS: ' + f.name + ' film' + (T.sxsBrow ? ' + sun-strip' : '') + '. Estimate from ' + money(total), set: { tint_pref: 'Off-Road SxS & Equipment Film', category: 'Side-by-Side (SxS) / Off-Road' } };
+            return { est: { total: 'from ' + money(total), lines }, summary: 'SxS: ' + f.name + ' film' + (T.sxsBrow ? ' + sun-strip' : '') + '. Estimate from ' + money(total), set: { tint_pref: 'Off-Road SxS & Equipment Film' } };
         }
         if (!hasGlass()) return null;
         const P = PR[T.film], items = [];
