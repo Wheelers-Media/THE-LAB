@@ -964,3 +964,13 @@ textarea.lf-input { min-height:104px; padding:12px 14px; resize:vertical; }
     .gi-gallery-grid figure:first-child { grid-column:auto; }
     .gi-gallery-grid figure:first-child img { aspect-ratio:4/5; }
 }
+
+/* Gridiron photo grid */
+.gi-road { padding-top:56px; }
+.gi-road-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:20px; }
+.gi-road-grid figure { margin:0; }
+.gi-road-grid img { width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; display:block; }
+.gi-road-grid figcaption { margin-top:6px; color:var(--mute); font-size:13.5px; line-height:1.35; }
+@media (min-width:900px) {
+    .gi-road-grid { grid-template-columns:repeat(4,1fr); gap:16px; }
+}
