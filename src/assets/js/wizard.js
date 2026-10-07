@@ -5,11 +5,11 @@
     const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // Hands a walkthrough's choices to the booking form (intake.js reads sessionStorage.labForm).
-    // set = { formFieldId: 'option label' | ['option label', ...] }. An empty summary clears this service's hand-off.
-    window.labHandoff = function (service, summary, set) {
+    // set = { formFieldId: 'option label' | ['option label', ...] }. est = { total: 'from $379 CAD', lines: [{ label, price }] } is the price shown on the form. An empty summary clears this service's hand-off.
+    window.labHandoff = function (service, summary, set, est) {
         try {
             const old = JSON.parse(sessionStorage.getItem('labForm') || 'null');
-            if (summary) sessionStorage.setItem('labForm', JSON.stringify({ service, summary, set, url: location.pathname + '#build' }));
+            if (summary) sessionStorage.setItem('labForm', JSON.stringify({ service, summary, set, est: est || null, url: location.pathname + '#build' }));
             else if (old && old.service === service) sessionStorage.removeItem('labForm');
         } catch (e) { /* storage unavailable */ }
     };

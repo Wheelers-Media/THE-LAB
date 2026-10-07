@@ -911,3 +911,11 @@ textarea.lf-input { min-height:104px; padding:12px 14px; resize:vertical; }
     .results-wide { grid-column:auto; }
     .photo-row img { aspect-ratio:3/2; }
 }
+
+/* price estimate carried from a service-page walkthrough into the form */
+.lf-est { margin-top:12px; padding-top:12px; border-top:1px solid var(--line); }
+.lf-recap .lf-est-total { font-size:30px; line-height:1.1; font-weight:700; color:#fff; margin:2px 0 8px; }
+.lf-est-lines { list-style:none; margin:0 0 8px; padding:0; font-size:14px; }
+.lf-est-lines li { display:flex; justify-content:space-between; gap:12px; padding:4px 0; border-bottom:1px dashed var(--line); }
+.lf-est-lines li span:last-child { white-space:nowrap; color:#fff; }
+.lf-est-done { margin:0 0 8px; }

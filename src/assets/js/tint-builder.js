@@ -158,7 +158,8 @@
         if (S.sel.has('sun') && S.roof === 'pano') set.tint_addons.push('Panoramic Roof');
         if (S.sel.has('ws')) set.tint_addons.push('Full Windshield');
         if (!full && S.sel.has('rear')) set.tint_addons.push('Rear Glass Standard');
-        window.labHandoff('Window Tinting', summary, set);
+        const est = c.items.length ? { total: rng(c.lo, c.hi, c.from, 'CAD'), lines: c.items.map((i) => ({ label: i.label + (i.n > 1 && i.label.indexOf('package') < 0 ? ' x' + i.n : ''), price: rng(i.lo, i.hi, i.from, 'CAD') })) } : null;
+        window.labHandoff('Window Tinting', summary, set, est);
     }
 
     const toggle = (id) => {

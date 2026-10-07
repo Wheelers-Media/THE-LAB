@@ -28,7 +28,7 @@
         $('#rc-veh').textContent = vehicle();
         try {
             const FORM_OPT = { morimoto: 'Morimoto Headlight/Taillight Assemblies', offroad: 'Off-Road & Auxiliary (Baja Designs / BMC)', accent: 'Accent & Replacement Bulbs (Diode Dynamics)', starlight: 'Starlight Headliner Installation' };
-            window.labHandoff('Custom Lighting', chosen.length ? chosen.map(name).join('; ') + (vehicle() ? ' | Vehicle: ' + vehicle() : '') : '', { lighting: chosen.map((c) => FORM_OPT[c.dataset.pick]) });
+            window.labHandoff('Custom Lighting', chosen.length ? chosen.map(name).join('; ') + (vehicle() ? ' | Vehicle: ' + vehicle() : '') : '', { lighting: chosen.map((c) => FORM_OPT[c.dataset.pick]) }, chosen.length ? { total: 'Quoted to your vehicle', lines: [] } : null);
             sessionStorage.setItem('labVehicle', JSON.stringify({ year: f.year.value.trim(), make: f.make.value.trim(), model: f.model.value.trim() }));
         } catch (e) { /* storage unavailable */ }
     }

@@ -80,7 +80,8 @@
         // option names must match the booking form's own labels (intake.js)
         const FORM_ADDON = { 'Pet Hair Removal': 'Heavy Pet Hair Extraction Clean', 'Odour Elimination': 'Odor Neutralizing Ozone Air Cleansing', 'Headlight Restoration': 'Headlight Restoration', 'Engine Bay Detail': 'Engine Bay Detail & Component Dressing' };
         const pkg = c.t ? { interior: 'Interior', exterior: 'Exterior', complete: 'Complete' }[S.focus] + ': ' + c.t.name : 'As chosen in my walkthrough (see summary)';
-        window.labHandoff('Premium Detailing', summary, { detail_pkg: pkg, protection: [...S.add].map((n) => FORM_ADDON[n]).filter(Boolean) });
+        const est = c.t ? { total: (c.from ? 'from ' : '') + money(c.total, 'CAD'), lines: c.lines.map((l) => ({ label: l.label, price: (l.from ? 'from ' : '') + money(l.price, 'CAD') })) } : null;
+        window.labHandoff('Premium Detailing', summary, { detail_pkg: pkg, protection: [...S.add].map((n) => FORM_ADDON[n]).filter(Boolean) }, est);
     }
 
     $$('[data-focus]').forEach((b) => b.addEventListener('click', () => {

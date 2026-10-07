@@ -116,14 +116,24 @@
         return `<div data-field="${d.id}" class="lf-field${d.half ? ' lf-field--half' : ''}"${d.when ? ' hidden' : ''}>${inner}</div>`;
     }
 
+    // service pages with a price walkthrough: the form points people there when they arrive without one
+    const BUILD = { 'Premium Detailing': '/boutique/detailing/#build', 'Window Tinting': '/boutique/tinting/#build', 'Custom Lighting': '/boutique/lighting/#build' };
+
     function mount(el, key) {
         const cfg = FORMS[key];
         el.innerHTML = `<form novalidate class="lf" autocomplete="on" aria-label="${cfg.title}">
             <div data-recap hidden class="lf-field lf-recap">
                 <p class="lf-label">Your walkthrough choices (sent to Eric)</p>
                 <p data-recap-text></p>
+                <div data-recap-est hidden class="lf-est">
+                    <p class="lf-label">Your estimate</p>
+                    <p class="lf-est-total" data-recap-total></p>
+                    <ul class="lf-est-lines" data-recap-lines></ul>
+                    <p class="lf-fine">Starting prices in CAD. Eric confirms the final price after he sees your vehicle.</p>
+                </div>
                 <a data-recap-edit href="#">Change my choices</a>
             </div>
+            <p data-build-hint hidden class="lf-note">Want to see a price first? <a data-build-link href="#">Build your estimate</a>.</p>
             ${cfg.fields.map((d) => field(d, key)).join('')}
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
             <div class="lf-field">
@@ -175,8 +185,19 @@
         function handoff() {
             const h = saved();
             form.querySelector('[data-recap]').hidden = !h;
+            const bu = BUILD[val('service')[0]];
+            form.querySelector('[data-build-hint]').hidden = !!h || !bu;
+            if (bu) form.querySelector('[data-build-link]').href = bu;
             if (!h) return;
-            form.querySelector('[data-recap-text]').textContent = h.summary;
+            const est = h.est;
+            form.querySelector('[data-recap-text]').textContent = est ? h.summary.replace(/\.?\s*Estimate .*$/, '') : h.summary;
+            form.querySelector('[data-recap-est]').hidden = !est;
+            if (est) {
+                form.querySelector('[data-recap-total]').textContent = est.total;
+                const ul = form.querySelector('[data-recap-lines]');
+                ul.textContent = '';
+                est.lines.forEach((l) => { const li = document.createElement('li'); const a = document.createElement('span'); const b = document.createElement('span'); a.textContent = l.label; b.textContent = l.price; li.append(a, b); ul.appendChild(li); });
+            }
             form.querySelector('[data-recap-edit]').href = h.url;
             Object.entries(h.set || {}).forEach(([id, v]) => {
                 const want = [].concat(v);
@@ -225,6 +246,7 @@
                 if (!j.success) throw new Error(j.message);
                 done(el, v.service === 'Premium Detailing' ? 'detailing' : 'eric', {
                     name, email: v.email, phone: v.phone,
+                    est: (saved() || {}).est || null,
                     notes: rows.filter(([l]) => !['Name', 'Phone', 'Email', 'SMS consent'].includes(l)).map(([l, x]) => `${l}: ${x}`).join('\n'),
                 });
             } catch (err) {
@@ -241,6 +263,7 @@
         const drop = route === 'detailing';
         el.innerHTML = `<div class="lf-done" role="status" tabindex="-1">
             <p class="lf-done-h"><strong>Got it!</strong> Eric has your request.</p>
+            ${c.est ? `<p class="lf-est-done">Your estimate: <strong>${esc(c.est.total)}</strong>. Starting price, confirmed by Eric after he sees your vehicle.</p>` : ''}
             <p>${url ? `Pick ${drop ? 'your drop-off' : 'a'} time below. ` : ''}Eric will confirm and text you a $50 deposit link to lock in your spot (100% credited to your final invoice).</p>
             ${url && !prefilled ? `<p class="lf-note">Book under <strong>${esc(c.name)}</strong> and <strong>${esc(c.email)}</strong> (same as above) so Eric can match your time to your request.</p>` : ''}
             ${drop ? '<p class="lf-fine">Drop-off is 8:00 to 9:00 AM, Monday to Friday (Fort St. John time).</p>' : ''}
