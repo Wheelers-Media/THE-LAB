@@ -59,7 +59,7 @@ html body .font-body { font-family:'Barlow',system-ui,sans-serif; }
 .rail-go { grid-column:2; grid-row:1 / span 2; align-self:center; color:var(--bay,#fff); font-size:24px; transition:transform .3s cubic-bezier(.16,1,.3,1); }
 .rail-row:hover .rail-go { transform:translateX(4px); }
 .rail-logos { grid-column:1; display:flex; gap:16px; align-items:center; margin-top:8px; }
-.rail-logos img { height:22px; width:auto; max-width:none; filter:brightness(0) invert(1); opacity:.85; }
+.rail-logos img { height:22px; width:auto; max-width:none; background:none; filter:brightness(0) invert(1); opacity:.85; }
 .tag { display:inline-block; vertical-align:middle; margin-left:8px; padding:3px 8px; background:var(--amber); color:#000; font-family:'Barlow',sans-serif; font-size:11px; font-weight:800; letter-spacing:.08em; border-radius:2px; transform:translateY(-3px); }
 .tag--soon { background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.5); padding:2px 7px; }
 .dealer { display:grid; gap:16px; align-items:center; margin-top:36px; padding-top:28px; border-top:1px solid var(--line); }
@@ -411,7 +411,7 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .car-cabin { fill:#0c0d0f; stroke:#2a2d33; stroke-width:1.5; }
 .car-line { fill:none; stroke:#1f2125; stroke-width:2; }
 .win--brow { fill:#2d3036; }
-.logos img { height:34px; width:auto; max-width:160px; object-fit:contain; filter:brightness(0) invert(1); opacity:.8; }
+.logos img { height:34px; width:auto; max-width:160px; object-fit:contain; background:none; filter:brightness(0) invert(1); opacity:.8; }
 
 /* ── Inner pages: About, Contact, Shipping, Terms, Store ── */
 .pg-head { padding-top:56px; padding-bottom:36px; border-bottom:3px solid var(--bay,var(--ice)); }
@@ -582,7 +582,7 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .pcard-price { color:var(--text); font:800 20px/1 'Barlow',sans-serif; }
 .pcard-affirm { margin-top:8px; color:var(--mute); font-size:12px; line-height:1.3; }
 .pcard-affirm strong { color:var(--text); }
-.pcard-affirm img { display:inline-block; height:11px; width:auto; margin-left:4px; filter:brightness(0) invert(1); opacity:.7; }
+.pcard-affirm img { display:inline-block; height:11px; width:auto; margin-left:4px; background:none; filter:brightness(0) invert(1); opacity:.7; }
 .pcard-act { flex-shrink:0; min-width:48px; min-height:48px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0 14px; background:var(--brand); color:#fff; border:0; cursor:pointer; text-decoration:none; font:700 12px/1 'Barlow',sans-serif; letter-spacing:.07em; text-transform:uppercase; }
 .pcard-act:hover { background:#0052cc; }
 .pcard-act svg { width:18px; height:18px; }
