@@ -29,7 +29,21 @@
         });
     };
 
+    // gives a step's content a short fade-and-rise each time it appears (CSS .step-in); skipped for reduced motion
+    window.labStepIn = function (els) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        [].forEach.call(els, function (e) { e.classList.remove('step-in'); void e.offsetWidth; e.classList.add('step-in'); });
+    };
+
     document.addEventListener('DOMContentLoaded', function () {
+        // keep --header-h equal to the sticky header's real height (it changes with screen size) so scrolls land below it
+        var hdr = document.getElementById('site-header');
+        if (hdr) {
+            var setH = function () { document.documentElement.style.setProperty('--header-h', hdr.offsetHeight + 'px'); };
+            setH();
+            if (window.ResizeObserver) new ResizeObserver(setH).observe(hdr); else window.addEventListener('resize', setH);
+        }
+
         // apply the saved currency to static prices and set the toggle state
         if (document.querySelector('[data-cur],[data-price-cad],[data-price-from-cad]')) window.setCurrency(readCurrency());
         document.addEventListener('click', function (e) {

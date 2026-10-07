@@ -271,6 +271,7 @@
             if (dir > 0) { const bad = invalid(cur); if (bad) { bad.reportValidity(); return; } }
             cur = L[j];
             render();
+            if (window.labStepIn) window.labStepIn(form.querySelectorAll('[data-step]:not(.lf-step-off):not([hidden])'));
             head.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
             head.focus({ preventScroll: true });
         }

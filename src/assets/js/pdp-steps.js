@@ -95,6 +95,7 @@
         const i = Math.max(0, Math.min(list.length - 1, list.findIndex((u) => u.key === state.key) + step));
         state.key = list[i].key;
         render();
+        if (window.labStepIn) window.labStepIn(list[i].els);
         ui.head.scrollIntoView({ block: 'start', behavior: calm() ? 'auto' : 'smooth' });
         ui.head.focus({ preventScroll: true });
     }
