@@ -37,12 +37,20 @@
 
     // Header-aware smooth scroll — use this everywhere instead of raw scrollIntoView so step changes
     // always land below the sticky bar, never under it. Reads --header-h so it tracks resize automatically.
+    // Only scrolls if the element is obscured by the header or pushed too far down the screen.
     window.labScrollTo = function (el) {
         if (!el) return;
         var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var hdrH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 0;
         var pad = hdrH + 16; // 16px breathing room (matches scroll-padding-top in CSS)
-        var top = el.getBoundingClientRect().top + window.scrollY - pad;
+        var rect = el.getBoundingClientRect();
+        
+        // If it's already comfortably in view, don't force a jump
+        if (rect.top >= pad && rect.top < window.innerHeight * 0.75) {
+            return;
+        }
+
+        var top = rect.top + window.scrollY - pad;
         if (calm || typeof window.scrollTo !== 'function') {
             el.scrollIntoView({ block: 'start' });
         } else {
