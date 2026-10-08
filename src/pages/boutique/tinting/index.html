@@ -163,6 +163,18 @@
                     </div>
                 </div>
 
+                <div class="wz-step" data-title="Your vehicle" hidden>
+                    <h3 class="display wz-h">What are we tinting?</h3>
+                    <p class="wz-sub">Enter your vehicle and we will draw its shape and pick the windows most people tint.</p>
+                    <div class="tv-fields">
+                        <label class="tv-f tv-year"><span class="lf-label">Year</span><input id="tv-year" class="lf-input" type="text" inputmode="numeric" maxlength="4" placeholder="2021" autocomplete="off"></label>
+                        <label class="tv-f"><span class="lf-label">Make</span><input id="tv-make" class="lf-input" type="text" list="tv-makes" placeholder="Ford" autocomplete="off"></label>
+                        <label class="tv-f tv-model"><span class="lf-label">Model</span><input id="tv-model" class="lf-input" type="text" list="tv-models" placeholder="F-350 Super Duty" autocomplete="off"></label>
+                        <datalist id="tv-makes"></datalist><datalist id="tv-models"></datalist>
+                    </div>
+                    <p id="tv-result" class="bd-help" aria-live="polite">Not sure, or not listed? Just tap Next and pick your vehicle type on the next screen.</p>
+                </div>
+
                 <div class="wz-step" data-title="Choose your film" hidden>
                     <h3 class="display wz-h">Choose your film.</h3>
                     <p class="wz-sub">Shade controls how dark the glass looks. Film controls how it performs.</p>
@@ -187,34 +199,16 @@
 
                 <div class="wz-step" data-title="Tap your windows" hidden>
                     <h3 class="display wz-h">Tap your windows.</h3>
-                    <p class="wz-sub">Select every window you want tinted. Front windows go as a pair.</p>
-                    <div class="seg seg--3" role="group" aria-label="Vehicle">
-                        <button type="button" data-veh="sedan" aria-pressed="false">Sedan</button>
-                        <button type="button" data-veh="truck" aria-pressed="true">Crew cab truck</button>
-                        <button type="button" data-veh="suv" aria-pressed="false">SUV</button>
+                    <p class="wz-sub">Tap any window to add or remove it. Front windows go as a pair.</p>
+                    <div class="seg seg--5" role="group" aria-label="Vehicle type">
+                        <button type="button" data-style="sedan" aria-pressed="false">Sedan</button>
+                        <button type="button" data-style="coupe" aria-pressed="false">Coupe</button>
+                        <button type="button" data-style="suv" aria-pressed="false">SUV or van</button>
+                        <button type="button" data-style="crew" aria-pressed="true">Crew cab truck</button>
+                        <button type="button" data-style="reg" aria-pressed="false">Regular or extended cab</button>
                     </div>
-                    <svg class="bd-car" viewBox="0 0 300 580" role="group" aria-label="Vehicle window map. Tap a window to add it to your tint.">
-                    <rect class="wheel" x="20" y="118" width="14" height="58" rx="5"/><rect class="wheel" x="266" y="118" width="14" height="58" rx="5"/>
-                    <rect class="wheel" x="20" y="410" width="14" height="58" rx="5"/><rect class="wheel" x="266" y="410" width="14" height="58" rx="5"/>
-                    <path class="car-body" d="M72 24 H228 Q256 24 262 54 L268 128 L264 330 L268 520 Q262 556 228 556 H72 Q38 556 32 520 L36 330 L32 128 L38 54 Q44 24 72 24 Z"/>
-                    <rect class="light" x="58" y="36" width="40" height="10" rx="5"/><rect class="light" x="202" y="36" width="40" height="10" rx="5"/>
-                    <path class="car-line" d="M96 100 H204 M120 60 H180"/>
-                    <rect class="mirror" x="32" y="186" width="26" height="16" rx="7"/><rect class="mirror" x="242" y="186" width="26" height="16" rx="7"/>
-                    <path class="car-cabin" d="M82 128 H218 L246 196 V440 L226 510 H74 L54 440 V196 Z"/>
-                    <rect class="car-roof" x="100" y="200" width="100" height="250" rx="12"/>
-                    <text class="car-end" x="150" y="84" text-anchor="middle">FRONT</text>
-                    <text class="car-end" x="150" y="540" text-anchor="middle">REAR</text>
-                    <polygon class="win" data-id="ws" tabindex="0" role="button" aria-pressed="false" aria-label="Full windshield" points="88,132 212,132 236,196 64,196"><title>Full windshield</title></polygon>
-                    <polygon class="win win--brow" data-id="brow" tabindex="0" role="button" aria-pressed="false" aria-label="Windshield brow, the strip across the top of the windshield" points="94,134 206,134 214,160 86,160"><title>Windshield brow (top of the windshield)</title></polygon>
-                    <rect class="win" data-id="sun" tabindex="0" role="button" aria-pressed="false" aria-label="Sunroof or panoramic roof" x="114" y="214" width="72" height="66" rx="9"><title>Sunroof</title></rect>
-                    <polygon class="win" data-id="fl" tabindex="0" role="button" aria-pressed="false" aria-label="Front windows (priced as a pair)" points="64,204 102,204 102,292 60,292"><title>Front windows (pair)</title></polygon>
-                    <polygon class="win" data-id="fr" tabindex="0" role="button" aria-pressed="false" aria-label="Front windows (priced as a pair)" points="236,204 198,204 198,292 240,292"><title>Front windows (pair)</title></polygon>
-                    <polygon class="win" data-id="rl" tabindex="0" role="button" aria-pressed="false" aria-label="Rear left side window" points="60,300 102,300 102,388 57,388"><title>Rear left window</title></polygon>
-                    <polygon class="win" data-id="rr" tabindex="0" role="button" aria-pressed="false" aria-label="Rear right side window" points="240,300 198,300 198,388 243,388"><title>Rear right window</title></polygon>
-                    <polygon class="win" data-id="ql" tabindex="0" role="button" aria-pressed="false" aria-label="Left quarter glass" points="58,396 102,396 102,444 64,444"><title>Left quarter glass</title></polygon>
-                    <polygon class="win" data-id="qr" tabindex="0" role="button" aria-pressed="false" aria-label="Right quarter glass" points="242,396 198,396 198,444 236,444"><title>Right quarter glass</title></polygon>
-                    <polygon class="win" data-id="rear" tabindex="0" role="button" aria-pressed="false" aria-label="Rear glass" points="92,456 208,456 226,502 74,502"><title>Rear glass</title></polygon>
-                </svg>
+                    <p id="win-pop" class="bd-help bd-pop" aria-live="polite"></p>
+                    <svg class="bd-car" viewBox="0 0 300 580" role="group" aria-label="Vehicle window map. Tap a window to add it to your tint."></svg>
                     <p id="win-count" class="bd-help" aria-live="polite">Nothing selected yet</p>
                     <div id="opt-brow" class="est-opt" hidden><span>Windshield brow</span><div class="seg seg--2" role="group" aria-label="Brow style"><button type="button" data-brow="1" aria-pressed="true">1-piece</button><button type="button" data-brow="2" aria-pressed="false">2-piece</button></div></div>
                     <div id="opt-roof" class="est-opt" hidden><span>Roof glass</span><div class="seg seg--2" role="group" aria-label="Roof glass type"><button type="button" data-roof="sunroof" aria-pressed="true">Sunroof</button><button type="button" data-roof="pano" aria-pressed="false">Panoramic</button></div></div>
@@ -229,7 +223,7 @@
                     <ul class="recap"><li><span>Shade</span><b id="rc-shade"></b></li><li><span>Film</span><b id="rc-film"></b></li><li><span>Vehicle</span><b id="rc-veh"></b></li></ul>
                     <ul id="est-lines" class="est-lines"></ul>
                     <p class="est-total"><span>Estimated total</span><strong id="est-total" class="display">$0 CAD</strong></p>
-                    <p class="fine">An estimate only. Final price is confirmed at inspection and may vary with vehicle and film condition.</p>
+                    <p class="fine">An estimate only. Prices may vary with vehicle and film condition.</p>
                     <div class="btns">
                         <a id="bd-book" class="btn btn-primary" href="/contact/?service=Window%20Tinting#form">Book this tint</a>
                         <button type="button" id="wz-restart" class="btn btn-ghost">Start over</button>
@@ -385,6 +379,7 @@
 
 <script src="/assets/js/text-eric.js"></script>
 <script src="/assets/js/wizard.js"></script>
+<script src="/assets/js/vehicle-shapes.js"></script>
 <script src="/assets/js/tint-builder.js"></script>
 </body>
 </html>

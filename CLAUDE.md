@@ -25,7 +25,7 @@ Luxx Automotive Boutique Inc., Fort St. John BC. Owners Eric and Christine Wheel
 - Every "Get a quote" or "Estimate" button must lead to something that delivers one: `/contact/?service=<name>#form` opens the quote tool with the service chosen. Do not add a button whose promise nothing fulfills.
 
 ## Booking flow
-Form (`intake.js`) -> Web3Forms email to the shop inbox -> confirmation with Cal.com embedded and pre-filled (`cal.com/the-lab/detailing-drop-off` for detailing, `cal.com/the-lab/eric-services` for everything else) -> Eric texts the $50 deposit link (short link `https://srtr.me/deposit`). Shop number for Text Us and fallbacks: (250) 261-9502. GoHighLevel is fully removed; do not reintroduce it.
+Form (`intake.js`) -> Web3Forms email to the shop inbox -> confirmation with Cal.com embedded and pre-filled (`cal.com/the-lab/detailing-drop-off` for detailing, `cal.com/the-lab/eric-services` for everything else) -> the customer pays the $50 deposit inside the Cal.com booking step (do not say Eric texts a deposit link, and do not say Eric confirms the final price after seeing the vehicle). Shop number for Text Us and fallbacks: (250) 261-9502. GoHighLevel is fully removed; do not reintroduce it.
 
 ## Claims
 Do not publish these until Eric confirms them: "authorized dealer for every brand", "certified specialists", "satisfaction guarantee". Do not state anything about legality of delete/emissions products beyond "off-road use only"; legality questions go to Eric. Do not describe SMS marketing, lead magnets or a fitment gallery as live.

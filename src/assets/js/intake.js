@@ -168,7 +168,7 @@
                     <p class="lf-label">Your estimate</p>
                     <p class="lf-est-total" data-recap-total></p>
                     <ul class="lf-est-lines" data-recap-lines></ul>
-                    <p class="lf-fine">Starting prices in CAD. Eric confirms the final price after he sees your vehicle.</p>
+                    <p class="lf-fine">Starting prices in CAD.</p>
                 </div>
                 <a data-recap-edit href="#">Change my choices</a>
             </div>
@@ -324,7 +324,7 @@
             back.hidden = pos === 0; next.hidden = final; sub.hidden = !final;
             const h = saved();
             mini.hidden = !(h && h.est);
-            mini.textContent = h && h.est ? `Your estimate: ${h.est.total}. Starting price, confirmed by Eric after he sees your vehicle.` : '';
+            mini.textContent = h && h.est ? `Your estimate: ${h.est.total} (starting price).` : '';
         }
         // a quote step draws its own controls (quote.js), fresh each time it opens
         function enterQuote() {
@@ -344,8 +344,9 @@
             else { head.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
             head.focus({ preventScroll: true });
         }
-        back.addEventListener('click', () => go(-1));
-        next.addEventListener('click', () => go(1));
+        // e.detail > 1 is the second click of a double-click: ignore it so a step is never skipped
+        back.addEventListener('click', (e) => { if (e.detail < 2) go(-1); });
+        next.addEventListener('click', (e) => { if (e.detail < 2) go(1); });
         form.addEventListener('change', render);
         form.addEventListener('lab:handoff', () => { handoff(); render(); });
         form.addEventListener('lab:preset', (e) => {
@@ -428,8 +429,8 @@
         const drop = route === 'detailing';
         el.innerHTML = `<div class="lf-done" role="status" tabindex="-1">
             <p class="lf-done-h"><strong>Got it!</strong> Eric has your request.</p>
-            ${c.est ? `<p class="lf-est-done">Your estimate: <strong>${esc(c.est.total)}</strong>. Starting price, confirmed by Eric after he sees your vehicle.</p>` : ''}
-            <p>${url ? `Pick ${drop ? 'your drop-off' : 'a'} time below. ` : ''}Eric will confirm and text you a $50 deposit link to lock in your spot (100% credited to your final invoice).</p>
+            ${c.est ? `<p class="lf-est-done">Your estimate: <strong>${esc(c.est.total)}</strong> (starting price).</p>` : ''}
+            <p>${url ? `Pick ${drop ? 'your drop-off' : 'a'} time below and pay the $50 deposit in the booking step to lock in your spot (100% credited to your final invoice).` : 'Call or text us to book your time.'}</p>
             ${url && !prefilled ? `<p class="lf-note">Book under <strong>${esc(c.name)}</strong> and <strong>${esc(c.email)}</strong> (same as above) so Eric can match your time to your request.</p>` : ''}
             ${drop ? '<p class="lf-fine">Drop-off is 8:00 to 9:00 AM, Monday to Friday (Fort St. John time).</p>' : ''}
             ${url ? `<iframe src="${esc(url)}" title="Pick a time" loading="lazy" class="lf-cal"></iframe>

@@ -77,8 +77,9 @@
 
         ui = { head, nav, recap, fields, finalUnit: { key: 'final', title: 'Review and add to cart', els: finalEls, live: () => true, ok: () => true } };
 
-        nav.querySelector('.pdp-back').addEventListener('click', () => go(-1));
-        nav.querySelector('.pdp-next').addEventListener('click', () => go(1));
+        // e.detail > 1 is the second click of a double-click: ignore it so a step is never skipped
+        nav.querySelector('.pdp-back').addEventListener('click', (e) => { if (e.detail < 2) go(-1); });
+        nav.querySelector('.pdp-next').addEventListener('click', (e) => { if (e.detail < 2) go(1); });
         ['input', 'change', 'click'].forEach((t) => root.addEventListener(t, schedule, true));
         new MutationObserver(schedule).observe(root, { subtree: true, attributes: true, attributeFilter: ['class'] });
         $('pdp-add-btn').addEventListener('click', () => setTimeout(routeErrors, 80));
