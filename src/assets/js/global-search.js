@@ -11,7 +11,7 @@
     const SITE_PAGES = [
         { title: 'Window Tinting', desc: 'Ceramic & carbon film tinting services for cars and trucks.', url: '/boutique/tinting/', tags: ['tinting', 'window', 'ceramic', 'film', 'heat', 'uv', 'boutique', 'service'] },
         { title: 'Ceramic Coatings', desc: 'Nano-ceramic paint protection. Coming soon.', url: '/boutique/coatings/', tags: ['ceramic', 'coating', 'paint', 'protection', 'nano', 'hydrophobic', 'boutique', 'service'] },
-        { title: 'Premium Detailing', desc: 'Full decontamination, paint correction, and concours-level finish restoration.', url: '/boutique/detailing/', tags: ['detailing', 'detail', 'paint', 'correction', 'polish', 'wash', 'boutique', 'service'] },
+        { title: 'Premium Detailing', desc: 'Full decontamination, paint correction, and concours-level finish restoration.', url: '/boutique/detailing/', tags: ['detailing', 'detail', 'paint', 'correction', 'polish', 'wash', 'maintenance', 'exterior wash', 'bio bomb', 'deodorize', 'odour', 'membership', 'boutique', 'service'] },
         { title: 'Paint Protection Film (PPF)', desc: 'Self-healing TPU film against chips and road debris. Coming soon.', url: '/boutique/ppf/', tags: ['ppf', 'paint', 'protection', 'film', 'clear', 'bra', 'chip', 'boutique', 'service'] },
         { title: 'Custom Lighting', desc: 'Morimoto headlights, LED upgrades, and custom truck lighting packages.', url: '/boutique/lighting/', tags: ['lighting', 'lights', 'led', 'headlight', 'morimoto', 'diode', 'boutique', 'service'] },
         { title: 'SxS Services', desc: 'Side-by-side and ATV detailing, wrapping, and upgrade services.', url: '/boutique/sxs/', tags: ['sxs', 'side by side', 'atv', 'utv', 'polaris', 'can-am', 'boutique'] },

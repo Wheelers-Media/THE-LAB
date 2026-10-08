@@ -18,7 +18,11 @@
         return { url: `${CAL[route]}${CAL[route].includes('?') ? '&' : '?'}${q}`, prefilled: true };
     }
 
-    const messageBody = (title, rows) => [`THE LAB - New ${title}`, ...rows.map(([l, v]) => `${l}: ${v}`)].join('\n');
+    // 10 digits (or 1 + 10) -> (250) 261-9502; anything else is left as typed
+    const phoneOk = (s) => /^1?\d{10}$/.test(String(s).replace(/\D/g, ''));
+    const fmtPhone = (s) => { const d = String(s).replace(/\D/g, '').replace(/^1(?=\d{10}$)/, ''); return d.length === 10 ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}` : String(s).trim(); };
+    // capitalise the first letter of each name part, leave the rest as typed (McDonald stays McDonald)
+    const cap = (s) => String(s || '').trim().replace(/(^|[\s'-])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
     const textDisplay = TEXT_TO.replace(/^\+1(\d{3})(\d{3})(\d{4})$/, '($1) $2-$3');
 
     const SMS_CONSENT = 'I agree to receive promotional and marketing text messages from Luxx Automotive Boutique Inc. (THE LAB). Msg &amp; data rates may apply. Reply STOP to unsubscribe. See our <a href="/terms/" target="_blank" rel="noopener">Privacy Policy</a>.';
@@ -54,18 +58,18 @@
                     // tuning needs the VIN, goals and off-road acknowledgement, so it opens the parts form instead of a thin copy of it
                     { v: 'Custom Tuning', t: 'Tuning, exhaust and parts', d: 'EZ LYNK, HP Tuners and AMDP tunes, EGR, exhaust, CCV, lift kits', b: 'Opens the parts form', route: 'build' },
                 ] }),
-                f('tint_shade', 'Tint Shade Preference', 'select', { when: ['service', ['Window Tinting']], opts: ['5% (Limo)', '18', '25', '35', 'Not sure yet - need a recommendation'] }),
+                f('tint_shade', 'Tint Shade Preference', 'select', { when: ['service', ['Window Tinting']], opts: ['5% (Limo)', '18%', '25%', '35%', 'Not sure yet - need a recommendation'] }),
                 f('tint_pref', 'Window Tint Preference', 'radio', { when: ['service', ['Window Tinting']], opts: ['Standard Carbon Tint (Front Roll-Ups)', 'Premium Ceramic Tint (Front Roll-Ups)', 'Full Vehicle (Carbon Tint)', 'Full Vehicle (Premium Ceramic)', 'Off-Road SxS & Equipment Film'] }),
-                f('tint_addons', 'Tint Add-Ons & Glass Coverage', 'multi', { when: ['service', ['Window Tinting']], opts: ['Windshield Brow (1-Piece Custom Cut)', 'Panoramic Roof', 'Full Windshield', 'Rear Glass Standard'] }),
+                f('tint_addons', 'Tint Add-Ons & Glass Coverage', 'multi', { when: ['service', ['Window Tinting']], opts: ['Windshield Brow (1-Piece Custom Cut)', 'Windshield Brow (2-Piece)', 'Full Windshield', 'Sunroof', 'Panoramic Roof', 'Rear Side Windows', 'Quarter Glass', 'Rear Glass Standard'] }),
                 // package names mirror the detailing page; prices live only on that page so they can never disagree
-                f('detail_pkg', 'Detailing Package', 'select', { req: 1, when: ['service', ['Premium Detailing']], opts: ['As chosen in my walkthrough (see summary)', 'Interior: Standard', 'Interior: De-Luxx', 'Exterior: Standard', 'Exterior: De-Luxx', 'Complete: Standard Signature', 'Complete: De-Luxx Signature', 'Membership: The Monthly Signature', 'Membership: The LAB Syndicate'] }),
+                f('detail_pkg', 'Detailing Package', 'select', { req: 1, when: ['service', ['Premium Detailing']], opts: ['As chosen in my walkthrough (see summary)', 'Interior: Standard', 'Interior: De-Luxx', 'Exterior: Standard', 'Exterior: De-Luxx', 'Complete: Standard Signature', 'Complete: De-Luxx Signature', 'Refresh: Exterior Wash', 'Refresh: Maintenance Detail', 'Membership: The Monthly Signature', 'Membership: The LAB Syndicate'] }),
                 f('drop_note', 'Drop-off', 'note', { when: ['service', ['Premium Detailing']], html: '<strong>Detailing drop-off is 8:00 to 9:00 AM, Monday to Friday.</strong> We take 2 details per day, so spots fill up. Need a different time? Just let us know and Eric will confirm.' }),
                 f('lighting', 'Custom Lighting Upgrades', 'multi', { when: ['service', ['Custom Lighting']], opts: ['Morimoto Headlight/Taillight Assemblies', 'Off-Road & Auxiliary (Baja Designs / BMC)', 'Accent & Replacement Bulbs (Diode Dynamics)', 'Starlight Headliner Installation'] }),
-                f('protection', 'Detailing Add-Ons', 'multi', { when: ['service', ['Premium Detailing']], opts: ['Heavy Pet Hair Extraction Clean', 'Odor Neutralizing Ozone Air Cleansing', 'Engine Bay Detail & Component Dressing', 'Paint Pore Clay Bar Finish Treatment', 'Headlight Restoration', 'Single-Stage Machine Gloss Polish', 'Decal Removal', 'Rim Polishing', 'Full Truck Polish'] }),
+                f('protection', 'Detailing Add-Ons', 'multi', { when: ['service', ['Premium Detailing']], opts: ['Heavy Pet Hair Extraction Clean', 'Odor Neutralizing Ozone Air Cleansing', 'Engine Bay Detail & Component Dressing', 'Paint Pore Clay Bar Finish Treatment', 'Headlight Restoration', 'Single-Stage Machine Gloss Polish', 'Decal Removal', 'Rim Polishing', 'Full Truck Polish', 'Bio Bomb Vehicle Deodorization', 'Extra Detailing Time (30 min)'] }),
                 f('other_notes', 'What do you need?', 'textarea', { req: 1, when: ['service', ['Other / Custom Install']], ph: 'e.g., mud flap install, fender flares or other custom parts, gift certificate question' }),
                 f('first', 'First Name', 'text', { req: 1, ph: 'Enter your first name', half: 1 }),
                 f('last', 'Last Name', 'text', { req: 1, ph: 'Enter your last name', half: 1 }),
-                f('phone', 'Phone', 'tel', { req: 1, ph: '+1 (555) 000-0000', half: 1 }),
+                f('phone', 'Phone', 'tel', { req: 1, ph: '(250) 555-0123', half: 1 }),
                 f('email', 'Email', 'email', { req: 1, ph: 'your@email.com', half: 1 }),
                 f('consent', 'SMS consent', 'check', { req: 1, html: SMS_CONSENT }),
             ],
@@ -97,7 +101,7 @@
                 f('goals', 'Overall Vehicle Goals', 'textarea', { req: 1, when: svc(...TUNE, 'Exhaust Systems', 'Bumpers & Accessories', 'Head Lights', 'Lift Kits'), ph: 'More information the better we can help bring your goals to the road' }),
                 f('notes', 'Additional Notes', 'textarea', { when: svc(...TUNE, 'Exhaust Systems', 'Bumpers & Accessories', 'Head Lights', 'Lift Kits', 'CCV Reroutes') }),
                 f('name', 'Full Name', 'text', { req: 1, ph: 'Enter your full name', half: 1 }),
-                f('phone', 'Phone', 'tel', { req: 1, ph: '+1 (555) 000-0000', half: 1 }),
+                f('phone', 'Phone', 'tel', { req: 1, ph: '(250) 555-0123', half: 1 }),
                 f('email', 'Email', 'email', { req: 1, ph: 'your@email.com' }),
                 f('offroad', 'Off-road disclaimer', 'check', { req: 1, when: svc(...TUNE), html: OFFROAD }),
                 f('consent', 'SMS consent', 'check', { req: 1, html: SMS_CONSENT }),
@@ -126,7 +130,7 @@
         }
         if (d.type === 'note') return `<div class="lf-note">${d.html}</div>`;
         if (d.type === 'check') return `<label class="lf-consent"><input type="checkbox" name="${d.id}" ${d.req ? 'required' : ''}><span>${d.html}</span></label>`;
-        const extra = (d.type === 'tel' ? ' pattern="[0-9\\s\\(\\)+.\\-]{10,}" title="Enter a 10-digit phone number" inputmode="tel"' : '')
+        const extra = (d.type === 'tel' ? ' title="Enter a 10-digit phone number" inputmode="tel"' : '')
             + (d.type === 'email' ? ' inputmode="email" autocapitalize="off"' : '')
             + (AUTO[d.id] ? ` autocomplete="${AUTO[d.id]}"` : '')
             + (d.minlength ? ` minlength="${d.minlength}" maxlength="${d.maxlength}"` : '');
@@ -210,6 +214,12 @@
         }
         form.addEventListener('change', refresh);
         refresh();
+        // a phone number must be 10 digits; tidy it into (250) 261-9502 when the customer leaves the box
+        form.querySelectorAll('input[type=tel]').forEach((t) => {
+            const check = () => t.setCustomValidity(!t.value || phoneOk(t.value) ? '' : 'Enter a 10-digit phone number, like (250) 261-9502');
+            t.addEventListener('input', check);
+            t.addEventListener('blur', () => { if (phoneOk(t.value)) t.value = fmtPhone(t.value); check(); });
+        });
 
         // everything the customer already told us: the truck picked in the store, the vehicle typed in a walkthrough, and the
         // details from their last request on this device. Fill it in so nothing is typed twice.
@@ -379,7 +389,10 @@
             cfg.fields.forEach((d) => { if (!box(d.id).hidden) v[d.id] = d.type === 'check' ? 'Yes' : val(d.id).join(', '); });
             const rows = [];
             const add = (l, x) => x && rows.push([l, x]);
-            const name = (v.name || `${v.first || ''} ${v.last || ''}`).trim();
+            if (v.first) v.first = cap(v.first);
+            if (v.last) v.last = cap(v.last);
+            const name = cap(v.name || `${v.first || ''} ${v.last || ''}`);
+            v.phone = fmtPhone(v.phone);
             add('Name', name);
             add('Phone', v.phone); add('Email', v.email);
             add('Vehicle', [v.year, v.make, v.model].filter(Boolean).join(' '));
@@ -392,6 +405,27 @@
             if (h) add('Walkthrough summary', h.summary);
             add('Off-road disclaimer agreed', v.offroad); add('SMS consent', v.consent);
 
+            // The email Eric reads: name, phone and email come from the Web3Forms header, so the body holds only what is new.
+            const choices = rows.filter(([l]) => !['Name', 'Phone', 'Email', 'Vehicle', 'VIN', 'Primary Service Requested', 'Service Requested', 'Walkthrough summary', 'Off-road disclaimer agreed', 'SMS consent'].includes(l));
+            const est = h && h.est;
+            const when = new Date().toLocaleString('en-CA', { timeZone: 'America/Dawson_Creek', dateStyle: 'medium', timeStyle: 'short' }) + ' (Fort St. John time)';
+            const vehicle = [v.year, v.make, v.model].filter(Boolean).join(' ');
+            const calName = v.service === 'Premium Detailing' ? 'Detailing Drop-off' : 'Eric Services';
+            const mail = [
+                `REQUEST: ${v.service}`,
+                vehicle && `VEHICLE: ${vehicle}${v.vin ? ` (VIN ${v.vin})` : ''}`,
+                est && `ESTIMATE: ${est.total} (starting price)\n${est.lines.map((l) => `  ${l.label}: ${l.price}`).join('\n')}`,
+                choices.length && `CHOICES\n${choices.map(([l, x]) => `  ${l}: ${x}`).join('\n')}`,
+                h && `WALKTHROUGH SUMMARY: ${h.summary}`,
+                `NEXT: the customer is picking a time on the Cal.com "${calName}" page now. A Cal.com booking email means they booked, and the $50 deposit is paid in that step. No booking email yet means they have not booked.`,
+                `CAME FROM: ${!h ? 'the form only (no walkthrough or quote tool used)' : h.src === 'quote' ? 'the instant quote tool on the contact page' : `the walkthrough on ${(h.url || '').split('#')[0] || 'a service page'}`}`,
+                `SENT: ${when}`,
+                v.offroad && 'OFF-ROAD DISCLAIMER: agreed',
+                v.consent && `SMS CONSENT: Yes, agreed ${when}`,
+            ].filter(Boolean).join('\n\n');
+            const SHORT = { 'Premium Detailing': 'Detailing', 'Window Tinting': 'Tint', 'Custom Lighting': 'Lighting', 'Other / Custom Install': 'Install' };
+            const subject = [SHORT[v.service] || v.service, vehicle, est && est.total.replace(/\s*CAD$/, ''), name].filter(Boolean).join(' | ');
+
             const btn = form.querySelector('button[type=submit]');
             const msg = form.querySelector('[data-msg]');
             btn.disabled = true; btn.textContent = 'Sending…'; msg.hidden = true;
@@ -399,7 +433,7 @@
                 const r = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-                    body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject: `THE LAB: New ${cfg.title} - ${name}`, from_name: 'THE LAB Website', name, email: v.email, phone: v.phone, message: messageBody(cfg.title, rows) }),
+                    body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject, from_name: 'THE LAB Website', name, email: v.email, phone: v.phone, message: mail }),
                 });
                 const j = await r.json();
                 if (!j.success) throw new Error(j.message);

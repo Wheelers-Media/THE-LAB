@@ -16,7 +16,7 @@
         .then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); })
         .then((t) => parse(new DOMParser().parseFromString(t, 'text/html'))));
 
-    const FOCUS = { interior: 'Interior', exterior: 'Exterior', complete: 'Complete' };
+    const FOCUS = { interior: 'Interior', exterior: 'Exterior', complete: 'Complete', refresh: 'Quick refresh' };
     const parseDetail = (doc) => {
         const tiers = {};
         Object.keys(FOCUS).forEach((k) => {
@@ -78,23 +78,23 @@
     const T = { film: 'ceramic', veh: 'truck', shade: '', front: false, side: false, quarter: false, rear: false, ws: false, browOn: false, brow: '1', roofOn: false, roof: 'sunroof', sxsBrow: false };
     const VEH = { sedan: 'Sedan', truck: 'Crew cab truck', suv: 'SUV', sxs: 'Side-by-side (SxS)' };
     const SHADES = [['35', '35% Light'], ['25', '25%'], ['18', '18% Popular'], ['5', '5% Limo'], ['?', 'Not sure']];
-    const SHADE_FORM = { 35: '35', 25: '25', 18: '18', 5: '5% (Limo)', '?': 'Not sure yet - need a recommendation' };
+    const SHADE_FORM = { 35: '35%', 25: '25%', 18: '18%', 5: '5% (Limo)', '?': 'Not sure yet - need a recommendation' };
 
     /* ---------- compute ---------- */
     function computeDetail(P) {
         const tier = D.focus && D.tier != null ? P.tiers[D.focus][D.tier] : null;
         if (!tier) return null;
-        const lines = [{ label: FOCUS[D.focus] + ' focus: ' + tier.name, price: tier.prices[D.size].n }];
+        const lines = [{ label: (D.focus === 'refresh' ? '' : FOCUS[D.focus] + ' focus: ') + tier.name, price: tier.prices[D.size].n }];
         let total = tier.prices[D.size].n, from = false;
         P.addons.forEach((a) => { if (D.add[a.name]) { lines.push({ label: a.name, price: a.n, from: a.from }); total += a.n; if (a.from) from = true; } });
         const size = tier.prices[D.size].label;
         const extras = P.addons.filter((a) => D.add[a.name]);
-        const summary = FOCUS[D.focus] + ' Focus, ' + tier.name + ', ' + size + (extras.length ? '. Extras: ' + extras.map((a) => a.name).join(', ') : '') + '. Estimate ' + (from ? 'from ' : '') + money(total);
-        const FORM_ADDON = { 'Pet Hair Removal': 'Heavy Pet Hair Extraction Clean', 'Odour Elimination': 'Odor Neutralizing Ozone Air Cleansing', 'Headlight Restoration': 'Headlight Restoration', 'Engine Bay Detail': 'Engine Bay Detail & Component Dressing' };
+        const summary = (D.focus === 'refresh' ? 'Quick refresh' : FOCUS[D.focus] + ' Focus') + ', ' + tier.name + ', ' + size + (extras.length ? '. Extras: ' + extras.map((a) => a.name).join(', ') : '') + '. Estimate ' + (from ? 'from ' : '') + money(total);
+        const FORM_ADDON = { 'Pet Hair Removal': 'Heavy Pet Hair Extraction Clean', 'Odour Elimination': 'Odor Neutralizing Ozone Air Cleansing', 'Headlight Restoration': 'Headlight Restoration', 'Engine Bay Detail': 'Engine Bay Detail & Component Dressing', 'Bio Bomb Deodorization': 'Bio Bomb Vehicle Deodorization', 'Extra Time (30 min)': 'Extra Detailing Time (30 min)' };
         return {
             est: { total: (from ? 'from ' : '') + money(total), lines: lines.map((l) => ({ label: l.label, price: (l.from ? 'from ' : '') + money(l.price) })) },
             summary,
-            set: { detail_pkg: FOCUS[D.focus] + ': ' + tier.name, protection: extras.map((a) => FORM_ADDON[a.name]).filter(Boolean) },
+            set: { detail_pkg: (D.focus === 'refresh' ? 'Refresh' : FOCUS[D.focus]) + ': ' + tier.name, protection: extras.map((a) => FORM_ADDON[a.name]).filter(Boolean) },
         };
     }
 
@@ -130,10 +130,14 @@
         if (T.shade) set.tint_shade = SHADE_FORM[T.shade];
         if (full) set.tint_pref = T.film === 'ceramic' ? 'Full Vehicle (Premium Ceramic)' : 'Full Vehicle (Carbon Tint)';
         else if (T.front) set.tint_pref = T.film === 'ceramic' ? 'Premium Ceramic Tint (Front Roll-Ups)' : 'Standard Carbon Tint (Front Roll-Ups)';
-        if (T.browOn && T.brow === '1') set.tint_addons.push('Windshield Brow (1-Piece Custom Cut)');
-        if (T.roofOn && T.roof === 'pano') set.tint_addons.push('Panoramic Roof');
+        if (T.browOn) set.tint_addons.push(T.brow === '1' ? 'Windshield Brow (1-Piece Custom Cut)' : 'Windshield Brow (2-Piece)');
+        if (T.roofOn) set.tint_addons.push(T.roof === 'pano' ? 'Panoramic Roof' : 'Sunroof');
         if (T.ws) set.tint_addons.push('Full Windshield');
-        if (!full && T.rear) set.tint_addons.push('Rear Glass Standard');
+        if (!full) {
+            if (T.side) set.tint_addons.push('Rear Side Windows');
+            if (T.quarter) set.tint_addons.push('Quarter Glass');
+            if (T.rear) set.tint_addons.push('Rear Glass Standard');
+        }
         const shadeTxt = T.shade ? (T.shade === '?' ? 'Shade: not sure yet; ' : 'Shade ' + T.shade + '%; ') : '';
         return {
             est: { total: rng(lo, hi, from), lines: items.map((i) => ({ label: i.label, price: rng(i.lo, i.hi, i.from) })) },
@@ -236,6 +240,9 @@
             if (g === 'all') { const on = !(T.front && T.side && T.quarter && T.rear); T.front = T.side = T.quarter = T.rear = on; }
             else if (g === 'film' || g === 'veh' || g === 'shade' || g === 'brow' || g === 'roof') T[g] = v;
             else T[g] = el.checked;
+            // the brow is a strip of the windshield: never charge for both
+            if (g === 'ws' && T.ws) T.browOn = false;
+            if (g === 'browOn' && T.browOn) T.ws = false;
         },
     };
 
