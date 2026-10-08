@@ -1,12 +1,11 @@
-// Intake forms. On submit the site emails the request to Eric (Web3Forms), then the
-// form is replaced by a confirmation with the matching Google Calendar booking page embedded. The customer sends nothing.
-// Mount with <div data-intake="boutique|build">.
+// Intake forms. On submit the site emails the request to the team (Web3Forms). A quote request ends on a confirmation that
+// says the team will email a quote; a booking request embeds the booking calendar. Mount with <div data-intake="boutique|build">.
 (function () {
     const SHOP_PHONE = '(250) 261-9502';
     const TEXT_TO = '+12502619502';  // shop number; only shown as a call/text fallback if sending fails
     // Web3Forms public key (safe in client code). Submissions go to the email it was registered with.
     const WEB3FORMS_KEY = '947b4a0a-5af7-480b-9aca-5f81e25e834e';
-    // Google Calendar appointment schedule links. detailing = the Detailing Bay team; eric = everything Eric does himself
+    // Google Calendar appointment schedule links. detailing = the Detailing Bay team; eric = everything the team prices to the vehicle
     // (tint, lighting, tuning, the whole Build Request form).
     const BOOKING = { detailing: 'https://calendar.app.google/xqP3H8QFGh7AKuGv6', eric: 'https://calendar.app.google/9FUs5TMTG7aPKhdt6' };
     // Cal.com booking pages (same two routes). When set they replace the Google links above, and the customer's
@@ -32,11 +31,14 @@
     const f = (id, label, type, o = {}) => ({ id, label, type, ...o });
     const TUNE = ['Custom Tuning', 'EGR Solutions'];
     const svc = (...v) => ['service', v];
+    // priced services let the customer choose; everything else is priced to the vehicle, so it is always a quote first
+    const INTENT = { quote: 'Get a quote by email, no booking yet', book: 'Book now: pick a time and pay the $50 deposit' };
+    const PRICED = ['Premium Detailing', 'Window Tinting'];
 
     const FORMS = {
         boutique: {
             title: 'Boutique Quote and Booking',
-            submit: 'Send my request',
+            submit: 'Request my quote',
             // one group of fields per screen; contact details come last. A step with nothing to show is skipped.
             steps: [
                 { title: 'What do you need?', ids: ['service'] },
@@ -44,17 +46,17 @@
                 { title: 'Your quote', ids: [], quote: 1 },
                 { title: 'Your options', ids: ['tint_shade', 'tint_pref', 'tint_addons', 'detail_pkg', 'drop_note', 'lighting', 'protection', 'other_notes'], skipWhenHandoff: true },
                 { title: 'Your vehicle', ids: ['year', 'make', 'model'] },
-                { title: 'Your details', ids: ['first', 'last', 'phone', 'email', 'consent'] },
+                { title: 'Your details', ids: ['intent', 'quote_note', 'first', 'last', 'phone', 'email', 'consent'] },
             ],
             fields: [
                 f('year', 'Vehicle Year', 'text', { req: 1, ph: '2019', half: 1 }),
                 f('make', 'Vehicle Make', 'text', { req: 1, ph: 'Ford', half: 1 }),
                 f('model', 'Vehicle Model', 'text', { req: 1, ph: 'F-350 Super Duty' }),
                 f('service', 'Primary Service Requested', 'select', { req: 1, opts: ['Premium Detailing', 'Window Tinting', 'Custom Lighting', 'Other / Custom Install'], tiles: [
-                    { v: 'Premium Detailing', t: 'Premium detailing', d: 'Interior, exterior or complete', b: 'Instant quote' },
-                    { v: 'Window Tinting', t: 'Window tint', d: 'Carbon or ceramic for cars, trucks and side-by-sides', b: 'Instant quote' },
-                    { v: 'Custom Lighting', t: 'Custom lighting', d: 'Morimoto, Baja Designs, BMC, Diode Dynamics, starlight headliners', b: 'Quoted by Eric' },
-                    { v: 'Other / Custom Install', t: 'Installs and other', d: 'Mud flaps, bumpers, polishing, decal removal, custom parts', b: 'Quoted by Eric' },
+                    { v: 'Premium Detailing', t: 'Premium detailing', d: 'Interior, exterior or complete', b: 'Starting prices shown' },
+                    { v: 'Window Tinting', t: 'Window tint', d: 'Carbon or ceramic for cars, trucks and side-by-sides', b: 'Starting prices shown' },
+                    { v: 'Custom Lighting', t: 'Custom lighting', d: 'Morimoto, Baja Designs, BMC, Diode Dynamics, starlight headliners', b: 'Quoted by our team' },
+                    { v: 'Other / Custom Install', t: 'Installs and other', d: 'Mud flaps, bumpers, polishing, decal removal, custom parts', b: 'Quoted by our team' },
                     // tuning needs the VIN, goals and off-road acknowledgement, so it opens the parts form instead of a thin copy of it
                     { v: 'Custom Tuning', t: 'Tuning, exhaust and parts', d: 'EZ LYNK, HP Tuners and AMDP tunes, EGR, exhaust, CCV, lift kits', b: 'Opens the parts form', route: 'build' },
                 ] }),
@@ -63,10 +65,12 @@
                 f('tint_addons', 'Tint Add-Ons & Glass Coverage', 'multi', { when: ['service', ['Window Tinting']], opts: ['Windshield Brow (1-Piece Custom Cut)', 'Windshield Brow (2-Piece)', 'Full Windshield', 'Sunroof', 'Panoramic Roof', 'Rear Side Windows', 'Quarter Glass', 'Rear Glass Standard'] }),
                 // package names mirror the detailing page; prices live only on that page so they can never disagree
                 f('detail_pkg', 'Detailing Package', 'select', { req: 1, when: ['service', ['Premium Detailing']], opts: ['As chosen in my walkthrough (see summary)', 'Interior: Standard', 'Interior: De-Luxx', 'Exterior: Standard', 'Exterior: De-Luxx', 'Complete: Standard Signature', 'Complete: De-Luxx Signature', 'Refresh: Exterior Wash', 'Refresh: Maintenance Detail', 'Membership: The Monthly Signature', 'Membership: The LAB Syndicate'] }),
-                f('drop_note', 'Drop-off', 'note', { when: ['service', ['Premium Detailing']], html: '<strong>Detailing drop-off is 8:00 to 9:00 AM, Monday to Friday.</strong> We take 2 details per day, so spots fill up. Need a different time? Just let us know and Eric will confirm.' }),
+                f('drop_note', 'Drop-off', 'note', { when: ['service', ['Premium Detailing']], html: '<strong>Detailing drop-off is 8:00 to 9:00 AM, Monday to Friday.</strong> We take 2 details per day, so spots fill up. Need a different time? Just let us know and we will confirm.' }),
                 f('lighting', 'Custom Lighting Upgrades', 'multi', { when: ['service', ['Custom Lighting']], opts: ['Morimoto Headlight/Taillight Assemblies', 'Off-Road & Auxiliary (Baja Designs / BMC)', 'Accent & Replacement Bulbs (Diode Dynamics)', 'Starlight Headliner Installation'] }),
                 f('protection', 'Detailing Add-Ons', 'multi', { when: ['service', ['Premium Detailing']], opts: ['Heavy Pet Hair Extraction Clean', 'Odor Neutralizing Ozone Air Cleansing', 'Engine Bay Detail & Component Dressing', 'Paint Pore Clay Bar Finish Treatment', 'Headlight Restoration', 'Single-Stage Machine Gloss Polish', 'Decal Removal', 'Rim Polishing', 'Full Truck Polish', 'Bio Bomb Vehicle Deodorization', 'Extra Detailing Time (30 min)'] }),
                 f('other_notes', 'What do you need?', 'textarea', { req: 1, when: ['service', ['Other / Custom Install']], ph: 'e.g., mud flap install, fender flares or other custom parts, gift certificate question' }),
+                f('intent', 'What would you like to do?', 'radio', { req: 1, when: svc(...PRICED), opts: [INTENT.quote, INTENT.book] }),
+                f('quote_note', 'Quote', 'note', { when: svc('Custom Lighting', 'Other / Custom Install'), html: '<strong>We price this to your vehicle.</strong> Send your request and our team will email you a quote. Book a time once you are happy with the price.' }),
                 f('first', 'First Name', 'text', { req: 1, ph: 'Enter your first name', half: 1 }),
                 f('last', 'Last Name', 'text', { req: 1, ph: 'Enter your last name', half: 1 }),
                 f('phone', 'Phone', 'tel', { req: 1, ph: '(250) 555-0123', half: 1 }),
@@ -76,7 +80,7 @@
         },
         build: {
             title: 'Build Request',
-            submit: 'Send build request',
+            submit: 'Request my quote',
             steps: [
                 { title: 'What do you need?', ids: ['service'] },
                 { title: 'Your options', ids: ['deleted', 'hp', 'idle', 'straight', 'diameter', 'tip', 'accessories'] },
@@ -126,7 +130,7 @@
         if (d.type === 'select') return `<select ${attrs} class="lf-input lf-select"><option value="">Select…</option>${d.opts.map((o) => `<option>${esc(o)}</option>`).join('')}</select>`;
         if (d.type === 'multi' || d.type === 'radio') {
             const t = d.type === 'multi' ? 'checkbox' : 'radio';
-            return `<div class="lf-opts">${d.opts.map((o) => `<label class="lf-opt"><input type="${t}" name="${d.id}" value="${esc(o)}"><span>${esc(o)}</span></label>`).join('')}</div>`;
+            return `<div class="lf-opts">${d.opts.map((o) => `<label class="lf-opt"><input type="${t}" name="${d.id}" value="${esc(o)}"${t === 'radio' && d.req ? ' required' : ''}><span>${esc(o)}</span></label>`).join('')}</div>`;
         }
         if (d.type === 'note') return `<div class="lf-note">${d.html}</div>`;
         if (d.type === 'check') return `<label class="lf-consent"><input type="checkbox" name="${d.id}" ${d.req ? 'required' : ''}><span>${d.html}</span></label>`;
@@ -166,7 +170,7 @@
             <p data-veh-note data-step="${stepOf.year}" hidden class="lf-fine">Filled in from what you picked earlier. Change anything that is not right.</p>
             <p data-me data-step="${last}" hidden class="lf-fine">Filled in from your last request on this device. <a href="#" data-me-clear>Not you? Clear</a></p>
             <div data-recap data-step="0" hidden class="lf-field lf-recap">
-                <p class="lf-label">Your walkthrough choices (sent to Eric)</p>
+                <p class="lf-label">Your walkthrough choices (sent to our team)</p>
                 <p data-recap-text></p>
                 <div data-recap-est hidden class="lf-est">
                     <p class="lf-label">Your estimate</p>
@@ -258,6 +262,13 @@
             return true;
         }
         const picked = preset(pre);
+        // ?intent=quote|book (from a "Get a quote" or "Book" link) preselects the choice for priced services
+        const want = INTENT[new URLSearchParams(location.search).get('intent')];
+        const wantBox = want && [...form.querySelectorAll('[name="intent"]')].find((c) => c.value === want);
+        if (wantBox) wantBox.checked = true;
+        // quote = the team emails a price first; book = pick a time and pay the deposit now
+        const intentOf = () => (key === 'build' || !box('intent') || box('intent').hidden || val('intent')[0] !== INTENT.book ? 'quote' : 'book');
+        const submitLabel = () => (intentOf() === 'book' ? 'Send and pick a time' : 'Request my quote');
 
         // choices made in a service-page walkthrough (wizard.js labHandoff): tick the matching options, show the recap
         function saved() {
@@ -331,7 +342,7 @@
             head.querySelector('.lf-steps-count').textContent = cfg.steps.some((s) => s.quote !== undefined) && !val('service')[0] ? 'Step 1' : `Step ${pos + 1} of ${L.length}`;
             head.querySelector('.lf-steps-title').textContent = t;
             head.querySelector('.lf-bar i').style.transform = `scaleX(${(pos + 1) / L.length})`;
-            back.hidden = pos === 0; next.hidden = final; sub.hidden = !final;
+            back.hidden = pos === 0; next.hidden = final; sub.hidden = !final; sub.textContent = submitLabel();
             const h = saved();
             mini.hidden = !(h && h.est);
             mini.textContent = h && h.est ? `Your estimate: ${h.est.total} (starting price).` : '';
@@ -387,8 +398,11 @@
 
             const v = {};
             cfg.fields.forEach((d) => { if (!box(d.id).hidden) v[d.id] = d.type === 'check' ? 'Yes' : val(d.id).join(', '); });
+            const intent = intentOf();
+            const title = key === 'build' ? 'Parts and Tuning Quote Request' : intent === 'book' ? 'Booking Request' : 'Quote Request';
             const rows = [];
             const add = (l, x) => x && rows.push([l, x]);
+            add('Request type', intent === 'book' ? 'BOOKING: customer is picking a time and paying the $50 deposit now' : 'QUOTE ONLY: customer wants a price before booking. Email them a quote.');
             if (v.first) v.first = cap(v.first);
             if (v.last) v.last = cap(v.last);
             const name = cap(v.name || `${v.first || ''} ${v.last || ''}`);
@@ -398,33 +412,37 @@
             add('Vehicle', [v.year, v.make, v.model].filter(Boolean).join(' '));
             add('VIN', v.vin);
             cfg.fields.forEach((d) => {
-                if (['name', 'first', 'last', 'phone', 'email', 'year', 'make', 'model', 'vin', 'consent', 'offroad'].includes(d.id)) return;
+                if (['name', 'first', 'last', 'phone', 'email', 'year', 'make', 'model', 'vin', 'consent', 'offroad', 'intent', 'quote_note'].includes(d.id)) return;
                 add(d.label, v[d.id]);
             });
             const h = saved();
             if (h) add('Walkthrough summary', h.summary);
+            if (h && h.est) add('Starting price shown to customer', h.est.total);
             add('Off-road disclaimer agreed', v.offroad); add('SMS consent', v.consent);
 
             // The email Eric reads: name, phone and email come from the Web3Forms header, so the body holds only what is new.
-            const choices = rows.filter(([l]) => !['Name', 'Phone', 'Email', 'Vehicle', 'VIN', 'Primary Service Requested', 'Service Requested', 'Walkthrough summary', 'Off-road disclaimer agreed', 'SMS consent'].includes(l));
+            const choices = rows.filter(([l]) => !['Request type', 'Name', 'Phone', 'Email', 'Vehicle', 'VIN', 'Primary Service Requested', 'Service Requested', 'Starting price shown to customer', 'Walkthrough summary', 'Off-road disclaimer agreed', 'SMS consent'].includes(l));
             const est = h && h.est;
             const when = new Date().toLocaleString('en-CA', { timeZone: 'America/Dawson_Creek', dateStyle: 'medium', timeStyle: 'short' }) + ' (Fort St. John time)';
             const vehicle = [v.year, v.make, v.model].filter(Boolean).join(' ');
             const calName = v.service === 'Premium Detailing' ? 'Detailing Drop-off' : 'Eric Services';
             const mail = [
+                intent === 'book' ? 'BOOKING: the customer is picking a time and paying the $50 deposit now.' : 'QUOTE ONLY: the customer wants a price before booking. Email them a quote.',
                 `REQUEST: ${v.service}`,
                 vehicle && `VEHICLE: ${vehicle}${v.vin ? ` (VIN ${v.vin})` : ''}`,
                 est && `ESTIMATE: ${est.total} (starting price)\n${est.lines.map((l) => `  ${l.label}: ${l.price}`).join('\n')}`,
                 choices.length && `CHOICES\n${choices.map(([l, x]) => `  ${l}: ${x}`).join('\n')}`,
                 h && `WALKTHROUGH SUMMARY: ${h.summary}`,
-                `NEXT: the customer is picking a time on the Cal.com "${calName}" page now. A Cal.com booking email means they booked, and the $50 deposit is paid in that step. No booking email yet means they have not booked.`,
+                intent === 'book'
+                    ? `NEXT: the customer is picking a time on the Cal.com "${calName}" page now. A Cal.com booking email means they booked, and the $50 deposit is paid in that step. No booking email yet means they have not booked.`
+                    : 'NEXT: reply to the customer with a quote. They have not picked a time and will book by replying to your email.',
                 `CAME FROM: ${!h ? 'the form only (no walkthrough or quote tool used)' : h.src === 'quote' ? 'the instant quote tool on the contact page' : `the walkthrough on ${(h.url || '').split('#')[0] || 'a service page'}`}`,
                 `SENT: ${when}`,
                 v.offroad && 'OFF-ROAD DISCLAIMER: agreed',
                 v.consent && `SMS CONSENT: Yes, agreed ${when}`,
             ].filter(Boolean).join('\n\n');
             const SHORT = { 'Premium Detailing': 'Detailing', 'Window Tinting': 'Tint', 'Custom Lighting': 'Lighting', 'Other / Custom Install': 'Install' };
-            const subject = [SHORT[v.service] || v.service, vehicle, est && est.total.replace(/\s*CAD$/, ''), name].filter(Boolean).join(' | ');
+            const subject = [intent === 'book' ? 'Booking' : 'Quote', SHORT[v.service] || v.service, vehicle, est && est.total.replace(/\s*CAD$/, ''), name].filter(Boolean).join(' | ');
 
             const btn = form.querySelector('button[type=submit]');
             const msg = form.querySelector('[data-msg]');
@@ -445,32 +463,42 @@
                     sessionStorage.setItem('labVehicle', JSON.stringify(veh));
                 } catch (err) { /* storage unavailable */ }
                 done(el, v.service === 'Premium Detailing' ? 'detailing' : 'eric', {
-                    name, email: v.email, phone: v.phone,
+                    intent, name, email: v.email, phone: v.phone,
                     est: (saved() || {}).est || null,
                     notes: rows.filter(([l]) => !['Name', 'Phone', 'Email', 'SMS consent'].includes(l)).map(([l, x]) => `${l}: ${x}`).join('\n'),
                 });
             } catch (err) {
                 msg.innerHTML = `We couldn't send that. Please call or text us at <a href="tel:${TEXT_TO}">${textDisplay}</a> or try again.`;
                 msg.hidden = false;
-                btn.disabled = false; btn.textContent = cfg.submit;
+                btn.disabled = false; btn.textContent = submitLabel();
             }
         });
     }
 
-    // Replaces the form once Eric has the request. The booking calendar is embedded right here, no redirect.
+    // Replaces the form once the team has the request. A quote request ends here; a booking embeds the calendar, no redirect.
     function done(el, route, c) {
-        const { url, prefilled } = bookingUrl(route, c);
-        const drop = route === 'detailing';
-        el.innerHTML = `<div class="lf-done" role="status" tabindex="-1">
-            <p class="lf-done-h"><strong>Got it!</strong> Eric has your request.</p>
+        const call = `<p class="lf-fine">Questions? Call or text <a href="tel:${TEXT_TO}">${textDisplay}</a>.</p>`;
+        if (c.intent !== 'book') {
+            el.innerHTML = `<div class="lf-done" role="status" tabindex="-1">
+            <p class="lf-done-h"><strong>Got it!</strong> Your quote request is in.</p>
+            ${c.est ? `<p class="lf-est-done">Your starting price: <strong>${esc(c.est.total)}</strong>.</p>` : ''}
+            <p>Our team will review your request and email your quote to <strong>${esc(c.email)}</strong>. When you are ready to book, just reply to that email.</p>
+            ${call}
+        </div>`;
+        } else {
+            const { url, prefilled } = bookingUrl(route, c);
+            const drop = route === 'detailing';
+            el.innerHTML = `<div class="lf-done" role="status" tabindex="-1">
+            <p class="lf-done-h"><strong>Got it!</strong> Our team has your request.</p>
             ${c.est ? `<p class="lf-est-done">Your estimate: <strong>${esc(c.est.total)}</strong> (starting price).</p>` : ''}
-            <p>${url ? `Pick ${drop ? 'your drop-off' : 'a'} time below and pay the $50 deposit in the booking step to lock in your spot (100% credited to your final invoice).` : 'Call or text us to book your time.'}</p>
-            ${url && !prefilled ? `<p class="lf-note">Book under <strong>${esc(c.name)}</strong> and <strong>${esc(c.email)}</strong> (same as above) so Eric can match your time to your request.</p>` : ''}
+            <p>${url ? `Pick ${drop ? 'your drop-off' : 'a'} time below. ` : ''}Pay the $50 deposit in the booking form to lock in your spot (100% credited to your final invoice).</p>
+            ${url && !prefilled ? `<p class="lf-note">Book under <strong>${esc(c.name)}</strong> and <strong>${esc(c.email)}</strong> (same as above) so we can match your time to your request.</p>` : ''}
             ${drop ? '<p class="lf-fine">Drop-off is 8:00 to 9:00 AM, Monday to Friday (Fort St. John time).</p>' : ''}
             ${url ? `<iframe src="${esc(url)}" title="Pick a time" loading="lazy" class="lf-cal"></iframe>
             <a class="lf-fallback" href="${esc(url)}" target="_blank" rel="noopener">Calendar not loading? Open it in a new tab</a>` : ''}
-            <p class="lf-fine">Questions? Call or text <a href="tel:${TEXT_TO}">${textDisplay}</a>.</p>
+            ${call}
         </div>`;
+        }
         el.scrollIntoView({ block: 'start', behavior: 'smooth' });
         const d = el.querySelector('.lf-done'); if (d) d.focus({ preventScroll: true });
     }

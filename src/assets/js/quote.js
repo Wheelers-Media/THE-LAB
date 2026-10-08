@@ -261,7 +261,7 @@
             box.innerHTML = '<p class="lq-ph">Loading prices…</p>';
             let P;
             try { P = await tool.data(); } catch (e) {
-                box.innerHTML = '<p class="lf-note">We could not load prices just now. Tap Next and Eric will quote it for you.</p>';
+                box.innerHTML = '<p class="lf-note">We could not load prices just now. Tap Next and our team will quote it for you.</p>';
                 box.dataset.ready = '1';
                 return;
             }
