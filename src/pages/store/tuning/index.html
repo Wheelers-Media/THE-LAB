@@ -233,9 +233,9 @@
                 <div class="flex items-center gap-3">
                     <div id="byt-vehicle-pill" class="hidden items-center gap-2 bg-labBlue/10 border border-labBlue/30 rounded-lg px-3 py-1.5">
                         <svg class="w-3.5 h-3.5 text-labBlue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <span id="byt-vehicle-pill-text" class="text-[10px] font-bold text-labBlue uppercase tracking-widest">No Vehicle</span>
+                        <span id="byt-vehicle-pill-text" class="text-xs font-bold text-[#CFE3FF] uppercase tracking-widest">No Vehicle</span>
                     </div>
-                    <button type="button" id="byt-toggle" aria-expanded="true" aria-controls="byt-gateway-body" class="flex items-center gap-2 text-[10px] font-bold text-zinc-400 hover:text-white uppercase tracking-widest border border-edge hover:border-zinc-500 rounded-lg px-4 py-2.5 transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-labBlue">
+                    <button type="button" id="byt-toggle" aria-expanded="true" aria-controls="byt-gateway-body" class="flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-white uppercase tracking-widest border border-edge hover:border-zinc-500 rounded-lg px-4 py-2.5 transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-labBlue">
                         <span id="byt-toggle-label">Collapse</span>
                         <svg id="byt-toggle-icon" class="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
                     </button>
@@ -251,7 +251,7 @@
                         <!-- Year -->
                         <div>
                             <label for="byt-year" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
-                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-labBlue text-[8px] font-black text-white mr-1">1</span>Year
+                                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-labBlue text-[11px] font-black text-white mr-1">1</span>Year
                             </label>
                             <div class="byt-select-wrap">
                                 <select id="byt-year" class="byt-select" aria-label="Select vehicle year">
@@ -262,7 +262,7 @@
                         <!-- Make -->
                         <div>
                             <label for="byt-make" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
-                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-edge text-[8px] font-black text-zinc-400 mr-1" id="byt-step2-badge">2</span>Make
+                                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-edge text-[11px] font-black text-zinc-400 mr-1" id="byt-step2-badge">2</span>Make
                             </label>
                             <div class="byt-select-wrap">
                                 <select id="byt-make" class="byt-select" disabled aria-label="Select vehicle make">
@@ -273,7 +273,7 @@
                         <!-- Model -->
                         <div>
                             <label for="byt-model" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
-                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-edge text-[8px] font-black text-zinc-400 mr-1" id="byt-step3-badge">3</span>Model
+                                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-edge text-[11px] font-black text-zinc-400 mr-1" id="byt-step3-badge">3</span>Model
                             </label>
                             <div class="byt-select-wrap">
                                 <select id="byt-model" class="byt-select" disabled aria-label="Select vehicle model">
@@ -284,7 +284,7 @@
                         <!-- Engine -->
                         <div>
                             <label for="byt-engine" class="block text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-2">
-                                <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-edge text-[8px] font-black text-zinc-400 mr-1" id="byt-step4-badge">4</span>Engine
+                                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-edge text-[11px] font-black text-zinc-400 mr-1" id="byt-step4-badge">4</span>Engine
                             </label>
                             <div class="byt-select-wrap">
                                 <select id="byt-engine" class="byt-select" disabled aria-label="Select engine">
@@ -300,10 +300,10 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                             Find My Parts
                         </button>
-                        <button type="button" id="byt-clear" class="hidden text-[10px] font-bold text-zinc-400 hover:text-red-400 uppercase tracking-widest border border-edge hover:border-red-900/50 rounded-lg px-4 py-2.5 transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-red-900" aria-label="Clear vehicle selection">
+                        <button type="button" id="byt-clear" class="hidden text-xs font-bold text-zinc-400 hover:text-red-400 uppercase tracking-widest border border-edge hover:border-red-900/50 rounded-lg px-4 py-2.5 transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-red-900" aria-label="Clear vehicle selection">
                             × Clear Vehicle
                         </button>
-                        <p class="text-[10px] text-zinc-600 uppercase tracking-wider">Compatible parts filter automatically. <a href="/contact/" class="text-zinc-500 hover:text-white transition-colors">Can't find your truck?</a></p>
+                        <p class="text-xs text-zinc-400 uppercase tracking-wider">Compatible parts filter automatically. <a href="/contact/" class="text-zinc-300 hover:text-white transition-colors">Can't find your truck?</a></p>
                     </div>
 
                     <!-- Removed Platform Split as requested -->

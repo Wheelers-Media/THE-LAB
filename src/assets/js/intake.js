@@ -164,8 +164,10 @@
         const stepOf = {};
         cfg.steps.forEach((s, i) => s.ids.forEach((id) => { stepOf[id] = i; }));
         cfg.fields.forEach((d) => { if (stepOf[d.id] === undefined) console.warn('[intake] field is in no step:', d.id); });
+        // the step title is an H3 under a section H2, or the page's first H2 when nothing above the form is one (contact)
+        const lvl = [...document.querySelectorAll('h2')].some((h) => h.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) ? 'h3' : 'h2';
         el.innerHTML = `<form novalidate class="lf" autocomplete="on" aria-label="${cfg.title}">
-            <div class="lf-steps-head" tabindex="-1"><p class="lf-steps-count" aria-live="polite"></p><h3 class="display lf-steps-title"></h3><div class="lf-bar" aria-hidden="true"><i></i></div></div>
+            <div class="lf-steps-head" tabindex="-1"><p class="lf-steps-count" aria-live="polite"></p><${lvl} class="display lf-steps-title"></${lvl}><div class="lf-bar" aria-hidden="true"><i></i></div></div>
             <p data-recap-mini data-step="${last}" hidden class="lf-note"></p>
             <p data-veh-note data-step="${stepOf.year}" hidden class="lf-fine">Filled in from what you picked earlier. Change anything that is not right.</p>
             <p data-me data-step="${last}" hidden class="lf-fine">Filled in from your last request on this device. <a href="#" data-me-clear>Not you? Clear</a></p>
