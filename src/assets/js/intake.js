@@ -475,8 +475,12 @@
                     email: v.email, phone: v.phone,
                     year: v.year, make: v.make, model: v.model, vin: v.vin,
                     service: v.service,
-                    estimate: est ? { total: est.total } : null,
+                    // the priced lines, choices and walkthrough summary go on the job in the CRM
+                    estimate: est ? { total: est.total, lines: (est.lines || []).map((l) => ({ label: l.label, price: l.price })) } : null,
                     details: choices.map(([l, x]) => `${l}: ${x}`).join('\n'),
+                    choices: choices.map(([l, x]) => ({ label: l, value: String(x) })),
+                    summary: h ? h.summary : '',
+                    source: !h ? 'form' : h.src === 'quote' ? 'quote' : 'walkthrough',
                     sms_consent: v.consent === 'Yes',
                     page: location.pathname,
                 });
