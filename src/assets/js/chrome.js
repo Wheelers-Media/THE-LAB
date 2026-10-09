@@ -67,6 +67,25 @@
             if (window.ResizeObserver) new ResizeObserver(setH).observe(hdr); else window.addEventListener('resize', setH);
         }
 
+        // phones: the header slides away on the way down and comes back on the way up (CSS .is-away); it stays put near the top,
+        // while the menu or search is open, while it holds focus, and for reduced motion
+        if (hdr && window.matchMedia) {
+            var phone = window.matchMedia('(max-width:767px)'), calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+            var lastY = window.scrollY, pending = false;
+            var settle = function () {
+                pending = false;
+                var y = window.scrollY, dy = y - lastY;
+                var menuOpen = document.getElementById('mob-menu') && !document.getElementById('mob-menu').hidden;
+                var pinned = !phone.matches || calm.matches || y < 120 || menuOpen || hdr.contains(document.activeElement) || document.querySelector('.site-search.is-open');
+                if (pinned) hdr.classList.remove('is-away');
+                else if (dy > 6) hdr.classList.add('is-away');
+                else if (dy < -6) hdr.classList.remove('is-away');
+                if (Math.abs(dy) > 6 || pinned) lastY = y;
+            };
+            window.addEventListener('scroll', function () { if (!pending) { pending = true; requestAnimationFrame(settle); } }, { passive: true });
+            hdr.addEventListener('focusin', function () { hdr.classList.remove('is-away'); });
+        }
+
         // apply the saved currency to static prices and set the toggle state
         if (document.querySelector('[data-cur],[data-price-cad],[data-price-from-cad]')) window.setCurrency(readCurrency());
         document.addEventListener('click', function (e) {

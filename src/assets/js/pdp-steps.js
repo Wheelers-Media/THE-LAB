@@ -183,8 +183,32 @@
         ['input', 'change', 'click'].forEach((t) => root.removeEventListener(t, schedule, true));
     }
 
+    // phones: while the steps are still below the first screen, a bar keeps the price in view with a way to them
+    function stickyBar() {
+        const priceEl = root.querySelector('p[data-price-cad]');
+        if (!priceEl || !ui) return;
+        const bar = document.createElement('div');
+        bar.className = 'pdp-sticky';
+        bar.hidden = true;
+        bar.innerHTML = '<span class="pdp-sticky-price"></span><button type="button">Choose options</button>';
+        document.body.appendChild(bar);
+        bar.querySelector('button').addEventListener('click', () => {
+            if (window.labScrollTo) window.labScrollTo(ui.head);
+            else ui.head.scrollIntoView({ block: 'start', behavior: calm() ? 'auto' : 'smooth' });
+            ui.head.focus({ preventScroll: true });
+        });
+        const show = () => {
+            const away = matchMedia('(max-width:767px)').matches && ui.head.getBoundingClientRect().top > innerHeight * 0.9;
+            if (away) bar.querySelector('.pdp-sticky-price').textContent = priceEl.textContent.trim();
+            bar.hidden = !away;
+        };
+        addEventListener('scroll', show, { passive: true });
+        addEventListener('resize', show);
+        show();
+    }
+
     function start() {
-        try { if (build()) render(); } catch (e) { bail(e); }
+        try { if (build()) { render(); stickyBar(); } } catch (e) { bail(e); }
     }
 
     // store.js renders the product after the catalog loads; wait for its Add button, then run once
