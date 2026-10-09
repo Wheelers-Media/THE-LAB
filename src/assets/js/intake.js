@@ -5,6 +5,19 @@
     const TEXT_TO = '+12502619502';  // shop number; only shown as a call/text fallback if sending fails
     // Web3Forms public key (safe in client code). Submissions go to the email it was registered with.
     const WEB3FORMS_KEY = '947b4a0a-5af7-480b-9aca-5f81e25e834e';
+    // THE LAB CRM: each request is also filed as a contact and deal (lead_intake edge function).
+    // Sent after the email succeeds and never blocks the customer; if it fails, Eric still has the email.
+    const CRM_LEADS_URL = 'https://mxoqwwdpclfkoydfofug.supabase.co/functions/v1/lead_intake';
+    function sendToCrm(lead) {
+        try {
+            fetch(CRM_LEADS_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(lead),
+                keepalive: true,
+            }).catch(() => { /* the email already reached the shop */ });
+        } catch (err) { /* older browsers without keepalive */ }
+    }
     // Google Calendar appointment schedule links. detailing = the Detailing Bay team; eric = everything the team prices to the vehicle
     // (tint, lighting, tuning, the whole Build Request form).
     const BOOKING = { detailing: 'https://calendar.app.google/xqP3H8QFGh7AKuGv6', eric: 'https://calendar.app.google/9FUs5TMTG7aPKhdt6' };
@@ -457,6 +470,16 @@
                 });
                 const j = await r.json();
                 if (!j.success) throw new Error(j.message);
+                sendToCrm({
+                    form: key, intent, name, first: v.first, last: v.last,
+                    email: v.email, phone: v.phone,
+                    year: v.year, make: v.make, model: v.model, vin: v.vin,
+                    service: v.service,
+                    estimate: est ? { total: est.total } : null,
+                    details: choices.map(([l, x]) => `${l}: ${x}`).join('\n'),
+                    sms_consent: v.consent === 'Yes',
+                    page: location.pathname,
+                });
                 // remember them for next time: contact details on this device, the vehicle for the rest of this visit
                 try {
                     const [first, ...rest] = name.split(/\s+/);
