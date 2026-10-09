@@ -90,7 +90,7 @@
         const size = tier.prices[D.size].label;
         const extras = P.addons.filter((a) => D.add[a.name]);
         const summary = (D.focus === 'refresh' ? 'Quick refresh' : FOCUS[D.focus] + ' Focus') + ', ' + tier.name + ', ' + size + (extras.length ? '. Extras: ' + extras.map((a) => a.name).join(', ') : '') + '. Estimate ' + (from ? 'from ' : '') + money(total);
-        const FORM_ADDON = { 'Pet Hair Removal': 'Heavy Pet Hair Extraction Clean', 'Odour Elimination': 'Odor Neutralizing Ozone Air Cleansing', 'Headlight Restoration': 'Headlight Restoration', 'Engine Bay Detail': 'Engine Bay Detail & Component Dressing', 'Bio Bomb Deodorization': 'Bio Bomb Vehicle Deodorization', 'Extra Time (30 min)': 'Extra Detailing Time (30 min)' };
+        const FORM_ADDON = { 'Pet Hair Removal': 'Heavy Pet Hair Extraction Clean', 'Headlight Restoration': 'Headlight Restoration', 'Engine Bay Detail': 'Engine Bay Detail & Component Dressing', 'Bio Bomb Deodorization': 'Bio Bomb Vehicle Deodorization', 'Extra Time (30 min)': 'Extra Detailing Time (30 min)' };
         return {
             est: { total: (from ? 'from ' : '') + money(total), lines: lines.map((l) => ({ label: l.label, price: (l.from ? 'from ' : '') + money(l.price) })) },
             summary,
