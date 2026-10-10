@@ -116,7 +116,7 @@
                 f('service', 'Service Requested', 'multi', { req: 1, opts: ['Custom Tuning', 'EGR Solutions', 'Exhaust Systems', 'CCV Reroutes', 'Bumpers & Accessories', 'Head Lights', 'Lift Kits'] }),
                 f('usage', 'How do you use the truck?', 'multi', { when: svc(...TUNE, 'Exhaust Systems', 'Lift Kits'), opts: ['Daily driver', 'Work truck', 'Hot shot / commercial hauling', 'Weekend / show truck', 'Off-road'] }),
                 f('tow', 'Do you tow?', 'radio', { req: 1, when: svc(...TUNE), opts: ['No', 'Light (under 10,000 lb)', 'Heavy (10,000 lb and up)', 'Gooseneck / 5th wheel'] }),
-                f('tires', 'Tire size', 'text', { when: svc(...TUNE, 'Lift Kits'), ph: 'e.g. 35x12.50R20 or 295/70R18 (stock is fine)' }),
+                f('tires', 'Tire size', 'text', { when: svc(...TUNE, 'Lift Kits'), ph: 'e.g. 35x12.50R20 or 295/70R18' }),
                 f('gears', 'Axle gear ratio (if you know it)', 'text', { when: svc(...TUNE), ph: 'e.g. 3.73 or 4.10, or "not sure"' }),
                 f('prev_tune', 'Has the truck been tuned before?', 'radio', { when: svc(...TUNE), opts: ['No, factory tune', 'Yes', 'Not sure'] }),
                 f('device', 'Tuning device you already own', 'radio', { when: svc(...TUNE), opts: ['None', 'EZ LYNK', 'HP Tuners', 'EFILive', 'Other / not sure'] }),
