@@ -28,7 +28,6 @@
         if (S.brow) { const b = brow(); estLines.push({ label: 'Windshield sun-strip (visor brow)', price: money(b.lo, 'CAD') + ' to ' + money(b.hi, 'CAD') }); }
         window.labHandoff('Window Tinting', 'SxS: ' + name + ' film' + (S.brow ? ' + sun-strip' : '') + '. Estimate from ' + money(total, 'CAD'), {
             tint_pref: 'Off-Road SxS & Equipment Film',
-            category: 'Side-by-Side (SxS) / Off-Road',
         }, { total: 'from ' + money(total, 'CAD'), lines: estLines });
     }
 

@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="/assets/css/lab.css">
     <link rel="stylesheet" href="/assets/css/tailwind.css">
     <script src="/assets/js/chrome.js"></script>
+    <script src="/assets/js/reveal.js" defer></script>
 </head>
 <body class="bg-void text-zinc-400 antialiased overflow-x-hidden">
 
@@ -122,55 +123,78 @@
 </header>
 
     <main id="main" class="lab-page">
-        <section class="page-hero" aria-labelledby="ab-h1">
-            <img class="page-hero-img" src="/assets/HERO-IMAGE.jpg" width="1024" height="527" fetchpriority="high" alt="THE LAB shop at dusk with a lifted GMC, a Ford pickup, an SUV and a side-by-side parked out front">
-            <div class="wrap page-hero-body">
-                <p class="cred">Our story</p>
+        <section class="ab-hero" aria-labelledby="ab-h1">
+            <picture>
+                <source media="(min-width:700px)" srcset="/assets/about-hero.jpg" width="1600" height="900">
+                <img src="/assets/about-hero-m.jpg" width="800" height="1000" fetchpriority="high" alt="A white Ford Super Duty with a Gridiron winch bumper parked at the front door of THE LAB, 10219 95 Ave">
+            </picture>
+            <div class="wrap ab-hero-body">
                 <h1 id="ab-h1" class="display page-h1">WHERE GRIT<br>MEETS LUXURY.</h1>
                 <p class="lede">Hey everyone, we are Eric and Christine Wheeler, and we want to welcome you to Luxx Automotive Boutique, better known to our community as <strong>THE LAB</strong>.</p>
             </div>
         </section>
 
-        <section class="wrap about-story" aria-labelledby="st-h">
-            <figure class="about-photo"><img src="/assets/about-us.jpg" width="2048" height="1548" loading="lazy" alt="Eric, Christine, and the family"></figure>
+        <section class="wrap ab-story" aria-labelledby="st-h">
+            <figure class="ab-print"><img src="/assets/about-family.jpg" width="800" height="1000" loading="lazy" alt="Eric, Christine, and the family"></figure>
             <div>
                 <h2 id="st-h" class="display bay-title">Where we started.</h2>
-                <ol class="story">
-                    <li><span class="story-n" aria-hidden="true">01</span><h3 class="display">A home-based start</h3><p>THE LAB didn't start out as a massive operation. We originally launched it as a home-based business called <strong>Luxx Diamond Detail</strong>. The vision at the beginning was simple and deeply personal: it was just a way for Christine to stay home with our Little One and earn an income without having to return to work.</p></li>
-                    <li><span class="story-n" aria-hidden="true">02</span><h3 class="display">It blew up</h3><p>What started as a modest detailing venture completely blew up and got incredibly busy. Seeing the potential of what we were building together, we decided to go all-in.</p></li>
-                    <li><span class="story-n" aria-hidden="true">03</span><h3 class="display">Eric joins full-time</h3><p>Eric had always been super passionate about trucks, spending his free time doing deletes and working on builds with buddies as a hobby. So, he left his full-time job as a ticketed Millwright at the local OSB Mill to join the shop full-time.</p></li>
-                    <li><span class="story-n" aria-hidden="true">04</span><h3 class="display">Luxx Automotive Boutique</h3><p>With our expanded capabilities, we officially rebranded to <strong>Luxx Automotive Boutique</strong> to offer window tinting, LED headlights, custom light bar installs, and diesel performance work alongside our premium detailing.</p></li>
+                <ol class="ab-timeline">
+                    <li><h3 class="display">A home-based start</h3><p>THE LAB didn't start out as a massive operation. We originally launched it as a home-based business called <strong>Luxx Diamond Detail</strong>. The vision at the beginning was simple and deeply personal: it was just a way for Christine to stay home with our Little One and earn an income without having to return to work.</p></li>
+                    <li><h3 class="display">It blew up</h3><p>What started as a modest detailing venture completely blew up and got incredibly busy. Seeing the potential of what we were building together, we decided to go all-in.</p></li>
+                    <li><h3 class="display">Eric joins full-time</h3><p>Eric had always been super passionate about trucks, spending his free time doing deletes and working on builds with buddies as a hobby. So, he left his full-time job as a ticketed Millwright at the local OSB Mill to join the shop full-time.</p></li>
+                    <li><h3 class="display">Luxx Automotive Boutique</h3><p>With our expanded capabilities, we officially rebranded to <strong>Luxx Automotive Boutique</strong> to offer window tinting, LED headlights, custom light bar installs, and diesel performance work alongside our premium detailing.</p></li>
                 </ol>
+                <figure class="ab-pair">
+                    <div><img src="/assets/headrest-before.jpg" width="750" height="1000" loading="lazy" alt="A cloth headrest, stained and dirty, before an interior detail"><figcaption>Before</figcaption></div>
+                    <div><img src="/assets/headrest-after.jpg" width="750" height="1000" loading="lazy" alt="The same headrest after the detail, clean and even"><figcaption>After</figcaption></div>
+                </figure>
             </div>
         </section>
 
-        <section class="wrap pull" aria-labelledby="hu-h">
-            <h2 id="hu-h" class="cred">The reality of the hustle</h2>
-            <p>Everyone talks about starting a business with your best friend... but nobody talks about what it actually takes to keep it alive. The long days. The stress. The uncomfortable conversations. The moments you both question everything.</p>
-            <p class="display pull-q">But if you can push through that, you don&rsquo;t just build a business. You build something most people never will.</p>
-            <p class="display pull-q">A life. A legacy. A team that&rsquo;s unbreakable.</p>
-            <p>We are incredibly grateful for where we are today, and a massive part of that is thanks to our <strong>Expanding Team</strong>. As we continue to grow, we're surrounded by dedicated professionals who share our passion for trucks, our commitment to excellence, and our vision for THE LAB. They are the backbone of what makes this place so special.</p>
+        <section class="ab-hustle" aria-labelledby="hu-h">
+            <div class="wrap ab-hustle-grid">
+                <div>
+                    <h2 id="hu-h" class="display bay-title">The reality of the hustle</h2>
+                    <p>Everyone talks about starting a business with your best friend... but nobody talks about what it actually takes to keep it alive. The long days. The stress. The uncomfortable conversations. The moments you both question everything.</p>
+                    <p class="display ab-q">But if you can push through that, you don&rsquo;t just build a business. You build something most people never will.</p>
+                    <p class="display ab-q ab-q--ice">A life. A legacy. A team that&rsquo;s unbreakable.</p>
+                </div>
+                <figure class="ab-work"><img src="/assets/tuning.jpg" width="1024" height="1024" loading="lazy" alt="Eric tuning a truck from a laptop in the driver's seat"></figure>
+            </div>
+            <div class="wrap ab-team">
+                <p>We are incredibly grateful for where we are today, and a massive part of that is thanks to our <strong>Expanding Team</strong>. As we continue to grow, we're surrounded by dedicated professionals who share our passion for trucks, our commitment to excellence, and our vision for THE LAB. They are the backbone of what makes this place so special.</p>
+            </div>
         </section>
 
-        <section class="wrap store-sec" aria-labelledby="pr-h">
-            <div class="bay-head"><h2 id="pr-h" class="display bay-title">Our promise<br>to you.</h2></div>
-            <div class="duo">
-                <article class="duo-item bay--boutique">
-                    <h3 class="display">The Boutique</h3>
-                    <p>Right here in Fort St. John, BC, we offer premium vehicle detailing, window tinting and custom lighting, with ceramic coatings and paint protection film coming soon.</p>
-                    <a class="textlink" href="/boutique/">Explore the Boutique</a>
+        <section class="wrap ab-promise" aria-labelledby="pr-h">
+            <h2 id="pr-h" class="display bay-title">Our promise<br>to you.</h2>
+            <div class="ab-bays">
+                <article class="ab-bay bay--boutique">
+                    <img src="/assets/boutique-detailing.jpg" width="1024" height="572" loading="lazy" alt="Detailing a truck in the Boutique bay at THE LAB">
+                    <div class="ab-bay-body">
+                        <h3 class="display">The Boutique</h3>
+                        <p>Right here in Fort St. John, BC, we offer premium vehicle detailing, window tinting and custom lighting, with ceramic coatings and paint protection film coming soon.</p>
+                        <a class="textlink" href="/boutique/">Explore the Boutique</a>
+                    </div>
                 </article>
-                <article class="duo-item bay--parts">
-                    <h3 class="display">The Parts Store</h3>
-                    <p>Across North America, we distribute premium diesel delete kits, EZ LYNK tuning, and performance hardware for Powerstroke, Cummins, and Duramax.</p>
-                    <a class="textlink" href="/store/">Shop parts</a>
+                <article class="ab-bay bay--parts">
+                    <img src="/assets/exhuast-systems.jpg" width="1024" height="1024" loading="lazy" alt="Polished stainless exhaust pipes laid out on a work mat in the shop">
+                    <div class="ab-bay-body">
+                        <h3 class="display">The Parts Store</h3>
+                        <p>Across North America, we distribute premium diesel delete kits, EZ LYNK tuning, and performance hardware for Powerstroke, Cummins, and Duramax.</p>
+                        <a class="textlink" href="/store/">Shop parts</a>
+                    </div>
                 </article>
             </div>
-            <div class="promise-text">
-                <p>At our core, our goal is to bring back what honest work and a good, firm handshake mean, ensuring you always know your hard-earned money is going toward a valuable job.</p>
-                <p>We want to give you that undeniable confidence boost: that feeling of walking a little taller every time you step into a fresh, perfectly customized ride that you are proud to look back at in the parking lot.</p>
-                <p class="display pull-q" style="margin:28px 0 20px;font-size:clamp(1.8rem,6.5vw,2.8rem)">We&rsquo;re still in it. Still learning. Still building. And we wouldn't want to do it with anyone else.</p>
-                <p class="sign">Eric &amp; Christine Wheeler</p>
+            <div class="ab-note">
+                <div>
+                    <p>At our core, our goal is to bring back what honest work and a good, firm handshake mean, ensuring you always know your hard-earned money is going toward a valuable job.</p>
+                    <p>We want to give you that undeniable confidence boost: that feeling of walking a little taller every time you step into a fresh, perfectly customized ride that you are proud to look back at in the parking lot.</p>
+                </div>
+                <div>
+                    <p class="display ab-q ab-q--sig">We&rsquo;re still in it. Still learning. Still building. And we wouldn't want to do it with anyone else.</p>
+                    <p class="sign">Eric &amp; Christine Wheeler</p>
+                </div>
             </div>
         </section>
 
@@ -180,6 +204,7 @@
             <div class="btns">
                 <a class="btn btn-primary" href="/contact/#form">Book a service</a>
                 <a class="btn btn-ghost" href="/contact/#build">Request a build</a>
+                <a class="btn btn-ghost" href="tel:+12502619502">Call (250) 261-9502</a>
             </div>
         </section>
     </main>
@@ -219,6 +244,7 @@
                 <li><a href="/store/catalog/?category=Exhaust">Exhaust Systems</a></li>
                 <li><a href="/store/catalog/?category=CCV">CCV Solutions</a></li>
                 <li><a href="/store/catalog/?category=Accessories">Bumpers &amp; Accessories</a></li>
+                <li><a href="/gridiron/">Gridiron Bumpers</a></li>
                 <li><a href="/store/catalog/">All performance parts</a></li>
             </ul>
         </div>

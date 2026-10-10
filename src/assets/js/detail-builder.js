@@ -6,7 +6,7 @@
     const root = $('[data-wz]');
     if (!root || !$('#detail-board')) return;
 
-    const FOCUS = { interior: 'Interior Focus', exterior: 'Exterior Focus', complete: 'Complete' };
+    const FOCUS = { interior: 'Interior Focus', exterior: 'Exterior Focus', complete: 'Complete', refresh: 'Quick Refresh' };
     const DATA = {};
     Object.keys(FOCUS).forEach((k) => {
         DATA[k] = $$('.tier', $('#panel-' + k)).map((t) => ({
@@ -78,8 +78,8 @@
             ? FOCUS[S.focus] + ', ' + c.t.name + ', ' + sizeNow + (S.add.size ? '. Extras: ' + [...S.add].join(', ') : '') + '. Estimate ' + (c.from ? 'from ' : '') + money(c.total, 'CAD')
             : '';
         // option names must match the booking form's own labels (intake.js)
-        const FORM_ADDON = { 'Pet Hair Removal': 'Heavy Pet Hair Extraction Clean', 'Odour Elimination': 'Odor Neutralizing Ozone Air Cleansing', 'Headlight Restoration': 'Headlight Restoration', 'Engine Bay Detail': 'Engine Bay Detail & Component Dressing' };
-        const pkg = c.t ? { interior: 'Interior', exterior: 'Exterior', complete: 'Complete' }[S.focus] + ': ' + c.t.name : 'As chosen in my walkthrough (see summary)';
+        const FORM_ADDON = { 'Pet Hair Removal': 'Heavy Pet Hair Extraction Clean', 'Headlight Restoration': 'Headlight Restoration', 'Engine Bay Detail': 'Engine Bay Detail & Component Dressing', 'Bio Bomb Deodorization': 'Bio Bomb Vehicle Deodorization', 'Extra Time (30 min)': 'Extra Detailing Time (30 min)' };
+        const pkg = c.t ? { interior: 'Interior', exterior: 'Exterior', complete: 'Complete', refresh: 'Refresh' }[S.focus] + ': ' + c.t.name : 'As chosen in my walkthrough (see summary)';
         const est = c.t ? { total: (c.from ? 'from ' : '') + money(c.total, 'CAD'), lines: c.lines.map((l) => ({ label: l.label, price: (l.from ? 'from ' : '') + money(l.price, 'CAD') })) } : null;
         window.labHandoff('Premium Detailing', summary, { detail_pkg: pkg, protection: [...S.add].map((n) => FORM_ADDON[n]).filter(Boolean) }, est);
     }

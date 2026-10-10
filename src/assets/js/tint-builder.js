@@ -12,7 +12,7 @@
         { pct: 100, label: 'None', name: 'No tint', note: 'Factory glass. This is the view you have now.' },
         { pct: 35, label: '35%', name: 'Light Smoke', note: 'Subtle upgrade: adds comfort and UV protection without a heavily tinted look.' },
         { pct: 25, label: '25%', name: 'Balanced Smoke', note: 'Daily-driver balance: keeps the vehicle clean, dark, and usable.' },
-        { pct: 18, label: '18%', name: 'Popular Privacy', note: 'Daily-driver balance with strong privacy.' },
+        { pct: 18, label: '18%', name: 'Popular Privacy', note: 'Our most popular shade. Daily-driver balance with strong privacy.' },
         { pct: 5, label: '5%', name: 'Limo Dark', note: 'Maximum privacy: the darkest look.' },
     ];
     const range = $('#shade-range'), img = $('#shade-img'), chips = $$('.shade-chip');
@@ -29,7 +29,7 @@
     }
     range.addEventListener('input', () => setShade(+range.value));
     chips.forEach((c, k) => c.addEventListener('click', () => setShade(k)));
-    setShade(0);
+    setShade(3); // 18%, the shade customers pick most
 
     const sheet = $('#shade-help');
     $('#shade-info').addEventListener('click', () => (sheet.showModal ? sheet.showModal() : sheet.setAttribute('open', '')));
@@ -150,14 +150,19 @@
         const full = BASE.every((id) => S.sel.has(id));
         const set = {};
         const pct = SHADES[shadeIdx].pct;
-        if (pct < 100) set.tint_shade = pct === 5 ? '5% (Limo)' : String(pct);
+        if (pct < 100) set.tint_shade = pct === 5 ? '5% (Limo)' : pct + '%';
         if (full) set.tint_pref = S.film === 'ceramic' ? 'Full Vehicle (Premium Ceramic)' : 'Full Vehicle (Carbon Tint)';
         else if (S.sel.has('fl')) set.tint_pref = S.film === 'ceramic' ? 'Premium Ceramic Tint (Front Roll-Ups)' : 'Standard Carbon Tint (Front Roll-Ups)';
         set.tint_addons = [];
-        if (S.sel.has('brow') && S.brow === '1') set.tint_addons.push('Windshield Brow (1-Piece Custom Cut)');
-        if (S.sel.has('sun') && S.roof === 'pano') set.tint_addons.push('Panoramic Roof');
+        // every glass choice gets a form option, so the fields always match the summary
+        if (S.sel.has('brow')) set.tint_addons.push(S.brow === '1' ? 'Windshield Brow (1-Piece Custom Cut)' : 'Windshield Brow (2-Piece)');
+        if (S.sel.has('sun')) set.tint_addons.push(S.roof === 'pano' ? 'Panoramic Roof' : 'Sunroof');
         if (S.sel.has('ws')) set.tint_addons.push('Full Windshield');
-        if (!full && S.sel.has('rear')) set.tint_addons.push('Rear Glass Standard');
+        if (!full) {
+            if (S.sel.has('rl') || S.sel.has('rr')) set.tint_addons.push('Rear Side Windows');
+            if (S.sel.has('ql') || S.sel.has('qr')) set.tint_addons.push('Quarter Glass');
+            if (S.sel.has('rear')) set.tint_addons.push('Rear Glass Standard');
+        }
         const est = c.items.length ? { total: rng(c.lo, c.hi, c.from, 'CAD'), lines: c.items.map((i) => ({ label: i.label + (i.n > 1 && i.label.indexOf('package') < 0 ? ' x' + i.n : ''), price: rng(i.lo, i.hi, i.from, 'CAD') })) } : null;
         window.labHandoff('Window Tinting', summary, set, est);
     }
@@ -167,6 +172,8 @@
             const on = !S.sel.has('fl');
             ['fl', 'fr'].forEach((i) => (on ? S.sel.add(i) : S.sel.delete(i)));
         } else if (S.sel.has(id)) S.sel.delete(id); else S.sel.add(id);
+        // the brow is a strip of the windshield: never charge for both
+        if (S.sel.has('ws') && S.sel.has('brow')) S.sel.delete(id === 'ws' ? 'brow' : 'ws');
         render();
     };
     $$('.win', car).forEach((w) => {
@@ -182,7 +189,7 @@
     $$('[data-roof]').forEach((b) => b.addEventListener('click', () => { S.roof = b.dataset.roof; render(); }));
     $('#bd-all').addEventListener('click', () => { BASE.forEach((i) => S.sel.add(i)); render(); });
     $('#bd-clear').addEventListener('click', () => { S.sel.clear(); render(); });
-    $('#wz-restart').addEventListener('click', () => { S.sel.clear(); setShade(0); S.film = 'ceramic'; render(); root.dispatchEvent(new CustomEvent('wz:goto', { detail: 0 })); });
+    $('#wz-restart').addEventListener('click', () => { S.sel.clear(); setShade(3); S.film = 'ceramic'; render(); root.dispatchEvent(new CustomEvent('wz:goto', { detail: 0 })); });
     root.addEventListener('wz:enter', render);
 
     // the header currency toggle re-renders prices too

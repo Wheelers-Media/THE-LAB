@@ -77,8 +77,9 @@
 
         ui = { head, nav, recap, fields, finalUnit: { key: 'final', title: 'Review and add to cart', els: finalEls, live: () => true, ok: () => true } };
 
-        nav.querySelector('.pdp-back').addEventListener('click', () => go(-1));
-        nav.querySelector('.pdp-next').addEventListener('click', () => go(1));
+        // e.detail > 1 is the second click of a double-click: ignore it so a step is never skipped
+        nav.querySelector('.pdp-back').addEventListener('click', (e) => { if (e.detail < 2) go(-1); });
+        nav.querySelector('.pdp-next').addEventListener('click', (e) => { if (e.detail < 2) go(1); });
         ['input', 'change', 'click'].forEach((t) => root.addEventListener(t, schedule, true));
         new MutationObserver(schedule).observe(root, { subtree: true, attributes: true, attributeFilter: ['class'] });
         $('pdp-add-btn').addEventListener('click', () => setTimeout(routeErrors, 80));
@@ -95,7 +96,9 @@
         const i = Math.max(0, Math.min(list.length - 1, list.findIndex((u) => u.key === state.key) + step));
         state.key = list[i].key;
         render();
-        ui.head.scrollIntoView({ block: 'start', behavior: calm() ? 'auto' : 'smooth' });
+        if (window.labStepIn) window.labStepIn(list[i].els);
+        if (window.labScrollTo) window.labScrollTo(ui.head);
+        else ui.head.scrollIntoView({ block: 'start', behavior: calm() ? 'auto' : 'smooth' });
         ui.head.focus({ preventScroll: true });
     }
 
@@ -162,7 +165,12 @@
         try {
             for (const u of units()) {
                 const bad = u.els.some((e) => e.querySelector && (e.querySelector('[role="alert"]:not(.hidden)') || e.querySelector('input[style*="239, 68, 68"],select[style*="239, 68, 68"]')));
-                if (bad && u.key !== state.key) { state.key = u.key; render(); ui.head.scrollIntoView({ block: 'start' }); return; }
+                if (bad && u.key !== state.key) {
+                    state.key = u.key; render();
+                    if (window.labScrollTo) window.labScrollTo(ui.head);
+                    else ui.head.scrollIntoView({ block: 'start' });
+                    return;
+                }
             }
         } catch (e) { bail(e); }
     }
@@ -175,8 +183,32 @@
         ['input', 'change', 'click'].forEach((t) => root.removeEventListener(t, schedule, true));
     }
 
+    // phones: while the steps are still below the first screen, a bar keeps the price in view with a way to them
+    function stickyBar() {
+        const priceEl = root.querySelector('p[data-price-cad]');
+        if (!priceEl || !ui) return;
+        const bar = document.createElement('div');
+        bar.className = 'pdp-sticky';
+        bar.hidden = true;
+        bar.innerHTML = '<span class="pdp-sticky-price"></span><button type="button">Choose options</button>';
+        document.body.appendChild(bar);
+        bar.querySelector('button').addEventListener('click', () => {
+            if (window.labScrollTo) window.labScrollTo(ui.head);
+            else ui.head.scrollIntoView({ block: 'start', behavior: calm() ? 'auto' : 'smooth' });
+            ui.head.focus({ preventScroll: true });
+        });
+        const show = () => {
+            const away = matchMedia('(max-width:767px)').matches && ui.head.getBoundingClientRect().top > innerHeight * 0.9;
+            if (away) bar.querySelector('.pdp-sticky-price').textContent = priceEl.textContent.trim();
+            bar.hidden = !away;
+        };
+        addEventListener('scroll', show, { passive: true });
+        addEventListener('resize', show);
+        show();
+    }
+
     function start() {
-        try { if (build()) render(); } catch (e) { bail(e); }
+        try { if (build()) { render(); stickyBar(); } } catch (e) { bail(e); }
     }
 
     // store.js renders the product after the catalog loads; wait for its Add button, then run once

@@ -85,7 +85,7 @@ function initCart() {
     // Inject Cart Flyout DOM
     const flyoutHTML = `
         <div id="cart-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] hidden opacity-0 transition-opacity"></div>
-        <div id="cart-flyout" role="dialog" aria-label="Your cart" class="cart fixed top-0 right-0 h-full w-full max-w-md shadow-2xl z-[201] transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div id="cart-flyout" role="dialog" aria-modal="true" aria-label="Your cart" inert class="cart fixed top-0 right-0 h-full w-full max-w-md shadow-2xl z-[201] transform translate-x-full transition-transform duration-300 flex flex-col">
             <div class="cart-head">
                 <h2 class="cart-title">Your Cart</h2>
                 <button onclick="closeCart()" class="cart-x" aria-label="Close cart">
@@ -116,17 +116,43 @@ function initCart() {
     if (new URLSearchParams(location.search).get('cart') === '1') openCart();
 }
 
+var cartReturnFocus = null;
+
+// Tab stays inside the open cart and Escape closes it; the closed cart is inert so the keyboard cannot reach it off-screen
+function cartKeys(e) {
+    if (e.key === 'Escape') { closeCart(); return; }
+    if (e.key !== 'Tab') return;
+    const fly = document.getElementById("cart-flyout");
+    const f = [...fly.querySelectorAll('button:not([disabled]), a[href]')].filter((b) => b.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
 function openCart() {
+    const fly = document.getElementById("cart-flyout");
+    cartReturnFocus = document.activeElement;
     document.getElementById("cart-overlay").classList.remove("hidden");
     // trigger reflow
     void document.getElementById("cart-overlay").offsetWidth;
     document.getElementById("cart-overlay").classList.remove("opacity-0");
-    document.getElementById("cart-flyout").classList.remove("translate-x-full");
+    fly.inert = false;
+    fly.classList.remove("translate-x-full");
+    document.documentElement.classList.add("cart-open");
+    document.addEventListener("keydown", cartKeys);
+    const x = fly.querySelector(".cart-x");
+    if (x) x.focus({ preventScroll: true });
 }
 
 function closeCart() {
     document.getElementById("cart-overlay").classList.add("opacity-0");
-    document.getElementById("cart-flyout").classList.add("translate-x-full");
+    const fly = document.getElementById("cart-flyout");
+    fly.classList.add("translate-x-full");
+    fly.inert = true;
+    document.documentElement.classList.remove("cart-open");
+    document.removeEventListener("keydown", cartKeys);
+    if (cartReturnFocus && cartReturnFocus.focus) cartReturnFocus.focus({ preventScroll: true });
     setTimeout(() => document.getElementById("cart-overlay").classList.add("hidden"), 300);
 }
 
@@ -147,8 +173,12 @@ function updateCartUI() {
     const itemsContainer = document.getElementById("cart-items");
     if (!itemsContainer) return;
 
+    // nothing to check out: the button is off and the empty cart points at the parts
+    const go = document.querySelector("#cart-flyout .cart-go");
+    if (go) go.disabled = cart.length === 0;
+
     if (cart.length === 0) {
-        itemsContainer.innerHTML = `<p class="cart-empty">Your cart is empty.</p>`;
+        itemsContainer.innerHTML = `<p class="cart-empty">Your cart is empty.</p><a class="cart-shop" href="/store/catalog/">Shop all parts</a>`;
         document.getElementById("cart-subtotal").innerHTML = `<span data-price-cad="0.00">$0.00 CAD</span>`;
         return;
     }
@@ -1220,9 +1250,9 @@ function initPDP() {
         const fits = makeMatch && yearMatch && engMatch && modelMatch;
         
         if (fits) {
-            fitmentBadge = `<div class="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 text-green-500 font-bold uppercase tracking-widest text-[10px] px-3 py-1.5 rounded-lg mb-4"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Guaranteed Fitment for ${vyear} ${vmake} ${vengine}</div>`;
+            fitmentBadge = `<div class="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 text-green-500 font-bold uppercase tracking-widest text-xs px-3 py-1.5 rounded-lg mb-4"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Guaranteed Fitment for ${vyear} ${vmake} ${vengine}</div>`;
         } else {
-            fitmentBadge = `<div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-500 font-bold uppercase tracking-widest text-[10px] px-3 py-1.5 rounded-lg mb-4"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Does Not Fit Your ${vyear} ${vmake} ${vengine}</div>`;
+            fitmentBadge = `<div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-500 font-bold uppercase tracking-widest text-xs px-3 py-1.5 rounded-lg mb-4"><svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg> Does Not Fit Your ${vyear} ${vmake} ${vengine}</div>`;
         }
     }
 
@@ -1314,7 +1344,7 @@ function initPDP() {
                         ${pTitleLower.includes('tune') || pTitleLower.includes('tuning') || pTitleLower.includes('delete') || pTitleLower.includes('off-road') || pTitleLower.includes('race') || pTitleLower.includes('sotf') || pTitleLower.includes('package') || pTitleLower.includes('ez lynk') || pTitleLower.includes('hp tuners') || pTitleLower.includes('efi live') || pTitleLower.includes('mm3') ? `
                         <div class="mb-6 flex items-start gap-2 border-l-4 border-red-600 pl-3 py-1 bg-red-900/10">
                             <svg class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                            <p class="text-[10px] text-zinc-400 font-bold uppercase tracking-widest leading-relaxed">
+                            <p class="text-xs text-zinc-400 font-bold uppercase tracking-widest leading-relaxed">
                                 <strong class="text-red-500">Legal Disclaimer:</strong> Intended for Off-Road / Competition Racing Use Only. Not legal for use on public highways or street-registered vehicles.
                             </p>
                         </div>
@@ -1331,7 +1361,7 @@ function initPDP() {
 
                     ${product.category === 'Merch' && product.variants && product.variants.filter(v => v.title && v.title !== 'Default Title').length > 0 ? `
                     <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mb-6" id="pdp-size-wrap">
-                        <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">
+                        <label class="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">
                             Select size <span class="text-red-500 ml-1" aria-label="required">*</span>
                         </label>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" role="group" aria-label="Select size">
@@ -1347,7 +1377,7 @@ function initPDP() {
                             </button>
                             `).join('')}
                         </div>
-                        <p id="pdp-size-error" class="text-red-500 text-[10px] font-bold uppercase tracking-wider mt-3 hidden" role="alert">
+                        <p id="pdp-size-error" class="text-red-500 text-xs font-bold uppercase tracking-wider mt-3 hidden" role="alert">
                             Please select a size before adding to cart.
                         </p>
                     </div>
@@ -1362,7 +1392,7 @@ function initPDP() {
                         <!-- 2.0 POWER / TUNE LEVEL SELECTOR (Shopify Variants) -->
                         ${product.variants && product.variants.filter(v => v.title && v.title !== 'Default Title').length > 0 ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-tune-level-wrap">
-                            <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">
+                            <label class="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">
                                 Power Level
                                 <span class="text-red-500 ml-1" aria-label="required">*</span>
                             </label>
@@ -1387,7 +1417,7 @@ function initPDP() {
                                 </button>
                                 `).join('')}
                             </div>
-                            <p id="pdp-tune-level-error" class="text-red-500 text-[10px] font-bold uppercase tracking-wider mt-2 hidden" role="alert">
+                            <p id="pdp-tune-level-error" class="text-red-500 text-xs font-bold uppercase tracking-wider mt-2 hidden" role="alert">
                                 ✕ Please select a power level before adding to cart.
                             </p>
                         </div>
@@ -1395,7 +1425,7 @@ function initPDP() {
 
                         ${isTransmissionTuning ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-transmission-wrap">
-                            <label for="pdp-transmission" class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">
+                            <label for="pdp-transmission" class="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">
                                 Transmission Strategy
                             </label>
                             <div class="relative">
@@ -1414,7 +1444,7 @@ function initPDP() {
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                                 </div>
                             </div>
-                            <p class="text-[10px] text-zinc-600 mt-2 uppercase tracking-wider">Determines when your transmission changes gears under load.</p>
+                            <p class="text-xs text-zinc-400 mt-2 uppercase tracking-wider">Determines when your transmission changes gears under load.</p>
                         </div>
                         ` : ''}
 
@@ -1422,7 +1452,7 @@ function initPDP() {
                         ${showHardwareBlock ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4" id="pdp-hardware-wrap" data-hw-ez="${hwEZ_ID}" data-hw-hp="${hwHP_ID}" data-hw-efi="${hwEFI_ID}" data-is-hp="${isHP}" data-is-ez="${isEZ}" data-is-efi="${isEFILive}">
                             <fieldset>
-                                <legend class="block text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">Hardware Requirement</legend>
+                                <legend class="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Hardware Requirement</legend>
                                 <div class="space-y-3">
 
                                     <!-- Option 1: Need the Device -->
@@ -1440,7 +1470,7 @@ function initPDP() {
                                             <p class="text-sm font-bold text-white mb-0.5">
                                                 ${isHP ? 'I need the HP Tuners Interface' : isMM3 ? 'I need the MM3 Display' : isEFILive ? 'I need the EFI Live AutoCal' : isSCT ? 'I need an SCT Device' : isGDP ? 'I need the GDP Commander' : 'I need the EZ LYNK AutoAgent 3'}
                                             </p>
-                                            <p class="text-[10px] text-zinc-500 uppercase tracking-wider" id="hw-need-desc">
+                                            <p class="text-xs text-zinc-400 uppercase tracking-wider" id="hw-need-desc">
                                                 ${isHP ? 'Include the MPVI interface with my tune order. Universal Credits are required to flash.' : isMM3 ? 'Include MM3 hardware device with my tune order.' : 'Include hardware device with my tune order.'}
                                             </p>
                                         </div>
@@ -1459,7 +1489,7 @@ function initPDP() {
                                         </div>
                                         <div>
                                             <p class="text-sm font-bold text-white mb-0.5">I already own a device</p>
-                                            <p class="text-[10px] text-zinc-500 uppercase tracking-wider" id="hw-own-desc">Tune files only - I have my own ${isHP ? 'HP Tuners' : isMM3 ? 'MM3' : isEFILive ? 'EFI Live' : isSCT ? 'SCT' : isGDP ? 'GDP' : 'EZ LYNK'} interface.</p>
+                                            <p class="text-xs text-zinc-400 uppercase tracking-wider" id="hw-own-desc">Tune files only - I have my own ${isHP ? 'HP Tuners' : isMM3 ? 'MM3' : isEFILive ? 'EFI Live' : isSCT ? 'SCT' : isGDP ? 'GDP' : 'EZ LYNK'} interface.</p>
                                         </div>
                                     </label>
 
@@ -1471,24 +1501,24 @@ function initPDP() {
                         <!-- 2C. PRIMARY IDENTIFIER INPUT -->
                         ${isSCT ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-sct-wrap">
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">
                                 ECU Strategy Code <span class="text-red-500 ml-1">*</span>
                             </label>
                             <input type="text" id="pdp-sct-ecu" placeholder="e.g. VXA1234" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-3" aria-required="true">
                             
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">
                                 TCU Strategy Code <span class="text-zinc-500 ml-1 font-normal lowercase">(Optional)</span>
                             </label>
                             <input type="text" id="pdp-sct-tcu" placeholder="If applicable" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm">
                         </div>
                         ` : isGDP && !isCredit ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-gdp-wrap">
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">
                                 ECU Serial Number <span class="text-red-500 ml-1">*</span>
                             </label>
                             <input type="text" id="pdp-gdp-ecu" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-3" aria-required="true">
                             
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">
                                 TCU Serial Number <span class="text-zinc-500 ml-1 font-normal lowercase">(Must start with '59')</span>
                             </label>
                             <input type="text" id="pdp-gdp-tcu" placeholder="59..." class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm">
@@ -1496,11 +1526,11 @@ function initPDP() {
                         ` : (isEZ || isMM3 || isTunePackage) ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 relative overflow-hidden mt-5" id="pdp-vin-wrap">
                             <div class="absolute top-0 left-0 w-1 h-full bg-labBlue rounded-l-xl"></div>
-                            <label for="pdp-vin-input" class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1 pl-2">
+                            <label for="pdp-vin-input" class="block text-xs font-bold text-white uppercase tracking-widest mb-1 pl-2">
                                 Vehicle Identification Number (VIN)
                                 <span class="text-red-500 ml-1" aria-label="required">*</span>
                             </label>
-                            <p class="text-[10px] text-zinc-500 mb-3 pl-2 uppercase tracking-wider">A 17-digit VIN is strictly required to configure this tuning product.</p>
+                            <p class="text-xs text-zinc-400 mb-3 pl-2 uppercase tracking-wider">A 17-digit VIN is strictly required to configure this tuning product.</p>
                             <input
                                 type="text"
                                 id="pdp-vin-input"
@@ -1520,30 +1550,30 @@ function initPDP() {
                         <!-- 2D. SECONDARY AUTHENTICATION / SERIALS -->
                         ${isEFILive ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-efi-wrap">
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">
                                 Device Serial Number <span class="text-red-500 ml-1">*</span>
                             </label>
                             <input type="text" id="pdp-efi-serial" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-3" aria-required="true">
                             
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">
                                 Authentication Code (20 Chars) <span class="text-red-500 ml-1">*</span>
                             </label>
                             <input type="text" id="pdp-efi-auth" maxlength="20" placeholder="e.g. ABC123DEF456GHI789JK" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm" aria-required="true">
                         </div>
                         ` : isCredit ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-credit-wrap">
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">
                                 Device Serial Number <span class="text-red-500 ml-1">*</span>
                             </label>
                             <input type="text" id="pdp-credit-serial" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-3" aria-required="true">
                         </div>
                         ` : `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 relative overflow-hidden hidden mt-5" id="pdp-serial-wrap">
-                            <label for="pdp-serial-input" class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                            <label for="pdp-serial-input" class="block text-xs font-bold text-white uppercase tracking-widest mb-1">
                                 Device Serial Number
                                 <span class="text-zinc-500 ml-1 font-normal lowercase tracking-normal">(Optional)</span>
                             </label>
-                            <p class="text-[10px] text-zinc-500 mb-3 uppercase tracking-wider">Link this tune to your existing hardware device.</p>
+                            <p class="text-xs text-zinc-400 mb-3 uppercase tracking-wider">Link this tune to your existing hardware device.</p>
                             <input type="text" id="pdp-serial-input" placeholder="e.g. 1234567890" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm transition-all duration-200">
                         </div>
                         `}
@@ -1551,22 +1581,22 @@ function initPDP() {
                         <!-- 2E. VEHICLE MODIFICATIONS / TIRE SIZE -->
                         ${isMM3 ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-mm3-mods-wrap">
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">Tire Size <span class="text-red-500 ml-1">*</span></label>
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">Tire Size <span class="text-red-500 ml-1">*</span></label>
                             <input type="text" id="pdp-mm3-tire" placeholder="e.g. 35x12.50R20" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-3" aria-required="true">
                             
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">STOCK.MM3 File Upload <span class="text-red-500 ml-1">*</span></label>
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">STOCK.MM3 File Upload <span class="text-red-500 ml-1">*</span></label>
                             <input type="file" id="pdp-mm3-file" accept=".mm3" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-zinc-400 text-sm mb-3" aria-required="true">
-                            <p class="text-[10px] text-zinc-500 mb-3 uppercase tracking-wider">Note: You will receive email instructions on how to submit your STOCK.MM3 file after purchase.</p>
+                            <p class="text-xs text-zinc-400 mb-3 uppercase tracking-wider">Note: You will receive email instructions on how to submit your STOCK.MM3 file after purchase.</p>
                             
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">Vehicle Modifications</label>
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">Vehicle Modifications</label>
                             <textarea id="pdp-mods-input" rows="2" placeholder="Injectors, Turbo..." class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-body text-sm resize-y"></textarea>
                         </div>
                         ` : isEZ || isTunePackage ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-mods-wrap">
-                            <label for="pdp-mods-input" class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                            <label for="pdp-mods-input" class="block text-xs font-bold text-white uppercase tracking-widest mb-1">
                                 Vehicle Modifications
                             </label>
-                            <p class="text-[10px] text-zinc-500 mb-3 uppercase tracking-wider">List all performance modifications (e.g., Injectors, Turbo, Exhaust) so our tuners can build your file accurately.</p>
+                            <p class="text-xs text-zinc-400 mb-3 uppercase tracking-wider">List all performance modifications (e.g., Injectors, Turbo, Exhaust) so our tuners can build your file accurately.</p>
                             <textarea id="pdp-mods-input" rows="3" placeholder="Stock Turbo, 100% over Injectors, etc..." class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-body text-sm resize-y"></textarea>
                         </div>
                         ` : ''}
@@ -1574,7 +1604,7 @@ function initPDP() {
                         <!-- 2F. TRANSMISSION TUNING: SHIFT POINTS -->
                         ${isTransmissionTuning ? `
                         <div class="bg-[#000000] border border-[#1E1E28] rounded-xl p-4 mt-5" id="pdp-tcm-feel-wrap">
-                            <label class="block text-[10px] font-bold text-white uppercase tracking-widest mb-1">
+                            <label class="block text-xs font-bold text-white uppercase tracking-widest mb-1">
                                 Shift Points / Desired Feel <span class="text-red-500 ml-1">*</span>
                             </label>
                             <select id="pdp-tcm-feel" class="w-full bg-[#000000] border border-[#1E1E28] rounded-lg p-3 text-white font-mono uppercase text-sm mb-1 appearance-none" style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: .65em auto; cursor:pointer;" aria-required="true">
@@ -1584,7 +1614,7 @@ function initPDP() {
                                 <option value="Street / Sport (Aggressive)">Street / Sport (Aggressive & Quick Shifts)</option>
                                 <option value="Race / Competition (Max Pressure)">Race / Competition (Max Pressure, Hard Shifts)</option>
                             </select>
-                            <p class="text-[10px] text-zinc-500 mt-2 uppercase tracking-wider">Select the shift strategy that best matches your driving style.</p>
+                            <p class="text-xs text-zinc-400 mt-2 uppercase tracking-wider">Select the shift strategy that best matches your driving style.</p>
                         </div>
                         ` : ''}
 
@@ -1605,7 +1635,7 @@ function initPDP() {
                             <svg class="w-4 h-4 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                 <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
                             </svg>
-                            <p id="compliance-gate-title" class="text-[9px] font-black text-red-500 uppercase tracking-widest">Mandatory Compliance Acknowledgement</p>
+                            <p id="compliance-gate-title" class="text-[11px] font-black text-red-500 uppercase tracking-widest">Mandatory Compliance Acknowledgement</p>
                         </div>
                         <!-- Checkbox row -->
                         <label for="pdp-compliance-check" class="flex items-start gap-3 cursor-pointer group">
@@ -1623,7 +1653,7 @@ function initPDP() {
                                     </svg>
                                 </div>
                             </div>
-                            <p id="compliance-text" class="text-[10px] text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">
+                            <p id="compliance-text" class="text-xs text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">
                                 <strong class="text-white">MANDATORY COMPLIANCE:</strong> By checking this box, I confirm this product is for
                                 <strong class="text-red-400">Off-Road and Sanctioned Racing Use Only</strong>, and is not legal for use on
                                 pollution-controlled vehicles. I release <strong class="text-white">THE LAB</strong> from any liability regarding
@@ -1649,7 +1679,7 @@ function initPDP() {
                             </div>
                             <div>
                                 <p class="text-sm font-bold text-white mb-0.5">Add SOTF Switch & Bracket</p>
-                                <p class="text-[10px] text-zinc-500 uppercase tracking-wider">Required to change power levels on the fly.</p>
+                                <p class="text-xs text-zinc-400 uppercase tracking-wider">Required to change power levels on the fly.</p>
                             </div>
                         </label>
                         <span class="text-sm font-bold text-[#0066FF]">+$65.00</span>
@@ -1667,7 +1697,7 @@ function initPDP() {
                             </div>
                             <div>
                                 <p class="text-sm font-bold text-white mb-0.5">Add Security Bypass Cable</p>
-                                <p class="text-[10px] text-zinc-500 uppercase tracking-wider">Mandatory for flashing 2018+ Cummins.</p>
+                                <p class="text-xs text-zinc-400 uppercase tracking-wider">Mandatory for flashing 2018+ Cummins.</p>
                             </div>
                         </label>
                         <span class="text-sm font-bold text-[#0066FF]">+$70.00</span>
@@ -1684,15 +1714,15 @@ function initPDP() {
                         </h3>
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">Year / Make / Model <span class="text-red-500">*</span></label>
+                                <label class="block text-xs text-zinc-400 uppercase tracking-widest mb-1.5">Year / Make / Model <span class="text-red-500">*</span></label>
                                 <input type="text" id="gridiron-yymm" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" placeholder="e.g. 2022 Chevrolet Silverado 3500">
                             </div>
                             <div>
-                                <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">VIN <span class="text-red-500">*</span></label>
+                                <label class="block text-xs text-zinc-400 uppercase tracking-widest mb-1.5">VIN <span class="text-red-500">*</span></label>
                                 <input type="text" id="gridiron-vin" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors uppercase" placeholder="17-Digit Vehicle ID">
                             </div>
                             <div>
-                                <label for="gridiron-finish" class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">Bumper Finish <span class="text-red-500">*</span></label>
+                                <label for="gridiron-finish" class="block text-xs text-zinc-400 uppercase tracking-widest mb-1.5">Bumper Finish <span class="text-red-500">*</span></label>
                                 <div class="relative">
                                     <select id="gridiron-finish"
                                         class="w-full appearance-none bg-[#0D0D12] border border-[#1E1E28] text-white rounded-lg p-3 text-sm font-semibold min-h-[48px] outline-none cursor-pointer transition-all duration-200"
@@ -1717,20 +1747,20 @@ function initPDP() {
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">Main Bumper Color</label>
+                                    <label class="block text-xs text-zinc-400 uppercase tracking-widest mb-1.5">Main Bumper Color</label>
                                     <input type="text" id="gridiron-color-main" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" placeholder="e.g. Gloss Black or Paint Code">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">Center Overlay Color</label>
+                                    <label class="block text-xs text-zinc-400 uppercase tracking-widest mb-1.5">Center Overlay Color</label>
                                     <input type="text" id="gridiron-color-center" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" placeholder="Leave blank if standard">
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">D-Ring Color</label>
+                                <label class="block text-xs text-zinc-400 uppercase tracking-widest mb-1.5">D-Ring Color</label>
                                 <input type="text" id="gridiron-color-dring" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" placeholder="e.g. Candy Red, Gloss Black">
                             </div>
                             <div>
-                                <label class="block text-[10px] text-zinc-400 uppercase tracking-widest mb-1.5">Additional Notes</label>
+                                <label class="block text-xs text-zinc-400 uppercase tracking-widest mb-1.5">Additional Notes</label>
                                 <textarea id="gridiron-notes" rows="2" class="w-full bg-[#0D0D12] border border-[#1E1E28] rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-labBlue transition-colors" placeholder="Any specific requests or sensors?"></textarea>
                             </div>
                         </div>
@@ -1739,7 +1769,7 @@ function initPDP() {
 
                     <!-- Quantity & Add to Cart Row -->
                     <div class="flex flex-col gap-3 mt-4">
-                        <label for="pdp-qty-input" class="text-[10px] text-zinc-400 uppercase tracking-widest">Quantity</label>
+                        <label for="pdp-qty-input" class="text-xs text-zinc-400 uppercase tracking-widest">Quantity</label>
                         <div class="flex gap-4 items-center">
                             <div class="flex items-center bg-[#0D0D12] border border-[#1E1E28] rounded-xl h-[56px]">
                                 <button id="pdp-qty-minus" type="button" aria-label="Decrease quantity" class="w-12 h-full text-zinc-400 hover:text-white flex items-center justify-center transition-colors focus:outline-none">

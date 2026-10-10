@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!imgEl) {
                 imgEl = document.createElement('img');
                 imgEl.className = 'vs-header-icon w-8 h-8 object-contain transition-transform group-hover:scale-105';
+                imgEl.alt = ''; // decorative: the button text already names the truck
                 btn.insertBefore(imgEl, btn.children[0]);
             }
             

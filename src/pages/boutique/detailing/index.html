@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="/assets/css/lab.css">
     <link rel="stylesheet" href="/assets/css/tailwind.css">
     <script src="/assets/js/chrome.js"></script>
+    <script src="/assets/js/reveal.js" defer></script>
 </head>
 <body class="bg-void text-zinc-400 antialiased overflow-x-hidden">
 
@@ -134,7 +135,7 @@
                 <h1 id="svc-h1" class="display page-h1">EVERY INCH.<br>EVERY TIME.</h1>
                 <p class="cred">Interior &amp; Exterior Detailing</p>
                 <p class="lede">From daily drivers to show trucks, we detail every surface with the same obsessive attention to detail. Interior, exterior or complete, in Standard and De-Luxx packages, for every need and budget.</p>
-                <div class="btns"><a class="btn btn-primary" href="#build">Build your detail</a><a class="btn btn-ghost" href="/contact/#form">Get a quote</a></div>
+                <div class="btns"><a class="btn btn-primary" href="#build">Build your detail</a><a class="btn btn-ghost" href="/contact/?service=Premium%20Detailing&intent=quote#form">Get a quote</a></div>
             </div>
         </section>
 
@@ -151,10 +152,11 @@
                 <div class="wz-step" data-title="What are you here for?">
                     <h3 class="display wz-h">What are you here for?</h3>
                     <p class="wz-sub">Choose your focus. Every package is delivered with the same obsessive standard.</p>
-                    <div class="films films--3" role="group" aria-label="Detailing focus">
+                    <div class="films" role="group" aria-label="Detailing focus">
                         <div class="film" data-focus="interior" role="button" tabindex="0" aria-pressed="false"><strong class="display film-name">Interior Focus</strong><em>Deep clean to full restoration</em><p class="tier-desc">The essential reset, or the full interior restoration experience.</p></div>
                         <div class="film" data-focus="exterior" role="button" tabindex="0" aria-pressed="false"><strong class="display film-name">Exterior Focus</strong><em>Clean to full protection</em><p class="tier-desc">Refreshed and dressed, or fully decontaminated and protected.</p></div>
                         <div class="film" data-focus="complete" role="button" tabindex="0" aria-pressed="false"><strong class="display film-name">Complete</strong><em>Inside and out</em><p class="tier-desc">The complete transformation, interior and exterior together.</p></div>
+                        <div class="film" data-focus="refresh" role="button" tabindex="0" aria-pressed="false"><strong class="display film-name">Quick Refresh</strong><em>Between full details</em><p class="tier-desc">A hand wash, or a maintenance detail to keep it looking its best.</p></div>
                     </div>
                 </div>
 
@@ -172,7 +174,7 @@
                         <button type="button" data-size aria-pressed="false">Large SUV / Van</button>
                     </div>
                     <h4 class="display wz-h2">Anything extra?</h4>
-                    <div class="addon-picks"><label class="addon-pick"><input type="checkbox" data-addon="Pet Hair Removal" data-price="50" data-from="1"><span><strong class="display">Pet Hair Removal</strong><small>Heavy-duty pet hair extraction from carpets and upholstery. Billed at $100/hr for extreme severity. Starting at $50.</small></span></label><label class="addon-pick"><input type="checkbox" data-addon="Odour Elimination" data-price="70" data-from="0"><span><strong class="display">Odour Elimination</strong><small>Professional ozone treatment to eradicate smoke, food, or mildew odours at the molecular level. $70 flat rate.</small></span></label><label class="addon-pick"><input type="checkbox" data-addon="Headlight Restoration" data-price="150" data-from="0"><span><strong class="display">Headlight Restoration</strong><small>Multi-step wet sanding, compounding, and polishing to restore hazy, yellowed headlights to near-new clarity. $150.</small></span></label><label class="addon-pick"><input type="checkbox" data-addon="Engine Bay Detail" data-price="100" data-from="0"><span><strong class="display">Engine Bay Detail</strong><small>Meticulous degreasing, cleaning, and premium dressing for a show-quality engine bay presentation. $100.</small></span></label></div>
+                    <div class="addon-picks"><label class="addon-pick"><input type="checkbox" data-addon="Pet Hair Removal" data-price="50" data-from="1"><span><strong class="display">Pet Hair Removal</strong><small>Heavy-duty pet hair extraction from carpets and upholstery. Billed at $100/hr for extreme severity. Starting at $50.</small></span></label><label class="addon-pick"><input type="checkbox" data-addon="Headlight Restoration" data-price="150" data-from="0"><span><strong class="display">Headlight Restoration</strong><small>Multi-step wet sanding, compounding, and polishing to restore hazy, yellowed headlights to near-new clarity. $150.</small></span></label><label class="addon-pick"><input type="checkbox" data-addon="Engine Bay Detail" data-price="100" data-from="0"><span><strong class="display">Engine Bay Detail</strong><small>Meticulous degreasing, cleaning, and premium dressing for a show-quality engine bay presentation. $100.</small></span></label><label class="addon-pick"><input type="checkbox" data-addon="Bio Bomb Deodorization" data-price="70" data-from="0"><span><strong class="display">Bio Bomb Deodorization</strong><small>A Bio-Bomb treatment that breaks down odour molecules in the cabin instead of masking them. Labour included, and it comes with an air freshener. $70.</small></span></label><label class="addon-pick"><input type="checkbox" data-addon="Extra Time (30 min)" data-price="50" data-from="0"><span><strong class="display">Extra Time (30 min)</strong><small>Half an hour of added detailing labour for problem areas or custom requests. $50, or $100 per hour.</small></span></label></div>
                 </div>
 
                 <div class="wz-step" data-title="Your detail" hidden>
@@ -181,7 +183,7 @@
                     <div id="rc-incl" class="rc-incl"></div>
                     <ul id="est-lines" class="est-lines"></ul>
                     <p class="est-total"><span>Estimated total</span><strong id="est-total" class="display">$0 CAD</strong></p>
-                    <p class="fine">Additional labour charged at $100/hr &middot; Excessive personal belongings removal: $25 &middot; Prices confirmed upon vehicle inspection</p>
+                    <p class="fine">Additional labour charged at $100/hr &middot; Excessive personal belongings removal: $25</p>
                     <div class="btns">
                         <a id="bd-book" class="btn btn-primary" href="/contact/?service=Premium%20Detailing#form">Book this detail</a>
                         <button type="button" id="wz-restart" class="btn btn-ghost">Start over</button>
@@ -189,7 +191,7 @@
                     <p class="fine upsell">Keep it that way: see the <a href="#maintenance">monthly maintenance programs</a>.</p>
                     <details class="fulllist">
                         <summary>See every package and price</summary>
-                        <div id="detail-board"><div class="tabs" role="tablist" aria-label="Detailing package categories"><button type="button" id="tab-interior" role="tab" aria-selected="true" aria-controls="panel-interior" onclick="switchTab('interior')" style="background:#0066FF;color:#fff">Interior Focus</button><button type="button" id="tab-exterior" role="tab" aria-selected="false" aria-controls="panel-exterior" onclick="switchTab('exterior')" style="color:#B4B8BF">Exterior Focus</button><button type="button" id="tab-complete" role="tab" aria-selected="false" aria-controls="panel-complete" onclick="switchTab('complete')" style="color:#B4B8BF">Complete</button></div>
+                        <div id="detail-board"><div class="tabs" role="tablist" aria-label="Detailing package categories"><button type="button" id="tab-interior" role="tab" aria-selected="true" aria-controls="panel-interior" onclick="switchTab('interior')" style="background:#0066FF;color:#fff">Interior Focus</button><button type="button" id="tab-exterior" role="tab" aria-selected="false" aria-controls="panel-exterior" onclick="switchTab('exterior')" style="color:#B4B8BF">Exterior Focus</button><button type="button" id="tab-complete" role="tab" aria-selected="false" aria-controls="panel-complete" onclick="switchTab('complete')" style="color:#B4B8BF">Complete</button><button type="button" id="tab-refresh" role="tab" aria-selected="false" aria-controls="panel-refresh" onclick="switchTab('refresh')" style="color:#B4B8BF">Quick Refresh</button></div>
             <p class="legend">Small = 5 &amp; 6 seat vehicles &nbsp;&middot;&nbsp; Large = 7 &amp; 8 seat vehicles / vans</p>
             <div id="panel-interior" role="tabpanel" aria-labelledby="tab-interior" class="tier-list">
 <article class="tier">
@@ -257,10 +259,33 @@
     <div class="tier-price"><div class="price-line"><span>Small SUV / Truck</span><span class="price" data-price-cad="499.00">$499 CAD</span></div><div class="price-line"><span>Large SUV / Van</span><span class="price" data-price-cad="579.00">$579 CAD</span></div><a class="btn btn-primary" href="/contact/#form">Book De-Luxx Signature</a></div>
 </article>
 </div>
-            <p class="fine">Additional labour charged at $100/hr &middot; Excessive personal belongings removal: $25 &middot; Prices confirmed upon vehicle inspection</p>
+<div id="panel-refresh" role="tabpanel" aria-labelledby="tab-refresh" class="tier-list hidden">
+<article class="tier">
+    <div class="tier-main">
+        <h3 class="display tier-name">Exterior Wash </h3>
+        <p class="tier-kick">Quick clean</p>
+        <p class="tier-desc">A thorough hand wash, top to bottom.</p>
+        <p class="tier-label">What's included</p>
+        <ul class="checks"><li>Full exterior hand wash</li><li>Wheel &amp; tire cleaning</li><li>Exterior windows cleaned</li><li>Door jambs wiped down</li></ul>
+    </div>
+    <div class="tier-price"><div class="price-line"><span>Small SUV / Truck</span><span class="price" data-price-cad="60.00">$60 CAD</span></div><div class="price-line"><span>Large SUV / Van</span><span class="price" data-price-cad="60.00">$60 CAD</span></div><a class="btn btn-primary" href="/contact/?service=Premium%20Detailing#form">Book a wash</a></div>
+</article>
+<article class="tier tier--feature">
+    <div class="tier-main">
+        <h3 class="display tier-name">Maintenance Detail <span class="tier-badge">Between full details</span></h3>
+        <p class="tier-kick">Upkeep</p>
+        <p class="tier-desc">Keeps a vehicle we have already detailed looking its best.</p>
+        <p class="tier-label">What's included</p>
+        <ul class="checks"><li>Quick interior wipe-down &amp; vacuum</li><li>Exterior rinse &amp; hand wash</li><li>Window cleaning</li><li>Tire &amp; trim dressing</li></ul>
+        <p class="fine">Want it every month? <a href="#maintenance">See the monthly maintenance programs</a>.</p>
+    </div>
+    <div class="tier-price"><div class="price-line"><span>Small SUV / Truck</span><span class="price" data-price-cad="149.00">$149 CAD</span></div><div class="price-line"><span>Large SUV / Van</span><span class="price" data-price-cad="170.00">$170 CAD</span></div><a class="btn btn-primary" href="/contact/?service=Premium%20Detailing#form">Book Maintenance</a></div>
+</article>
+</div>
+            <p class="fine">Additional labour charged at $100/hr &middot; Excessive personal belongings removal: $25</p>
             <script>
                 function switchTab(tab) {
-                    ['interior','exterior','complete'].forEach(function(t) {
+                    ['interior','exterior','complete','refresh'].forEach(function(t) {
                         var btn = document.getElementById('tab-' + t);
                         var panel = document.getElementById('panel-' + t);
                         if (t === tab) {
@@ -326,7 +351,7 @@
             <h2 id="cl-h" class="display close-title">Book your detail.</h2>
             <p>Drop off or arrange pickup. We'll have your vehicle looking - and smelling - better than the day you bought it.</p>
             <div class="btns">
-                <a class="btn btn-primary" href="/contact/#form">Get an estimated price</a>
+                <a class="btn btn-primary" href="/contact/?service=Premium%20Detailing#form">Get an estimated price</a>
                 <a class="btn btn-ghost" href="/boutique/">All Boutique services</a>
             </div>
         </section>
@@ -368,6 +393,7 @@
                 <li><a href="/store/catalog/?category=Exhaust">Exhaust Systems</a></li>
                 <li><a href="/store/catalog/?category=CCV">CCV Solutions</a></li>
                 <li><a href="/store/catalog/?category=Accessories">Bumpers &amp; Accessories</a></li>
+                <li><a href="/gridiron/">Gridiron Bumpers</a></li>
                 <li><a href="/store/catalog/">All performance parts</a></li>
             </ul>
         </div>
@@ -422,7 +448,6 @@
 <script src="/assets/js/wizard.js"></script>
 <script src="/assets/js/detail-builder.js"></script>
 </body>
-<script src="/assets/js/estimator.js"></script>
 </html>
 
 

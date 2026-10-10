@@ -14,6 +14,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PAGES = os.path.join(ROOT, "src", "pages")
 COMP = os.path.join(ROOT, "src", "components")
 CHROME_JS = '<script src="/assets/js/chrome.js"></script>'
+REVEAL_JS = '<script src="/assets/js/reveal.js" defer></script>'
 TAILWIND_LINK = '<link rel="stylesheet" href="/assets/css/tailwind.css">'
 FONTS = "https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800&display=swap"
 
@@ -100,9 +101,11 @@ def sync(path):
                 raise SystemExit("no products.js include in " + rel)
             s = s[:pj] + modal + '\n    <script src="/assets/js/vehicle-selector.js"></script>\n    ' + s[pj:]
 
-    # 6. chrome.js in <head>, once
+    # 6. chrome.js in <head>, once; reveal.js (scroll reveals) deferred right after it
     if "/assets/js/chrome.js" not in s:
         s = s.replace("</head>", "    " + CHROME_JS + "\n</head>", 1)
+    if "/assets/js/reveal.js" not in s:
+        s = s.replace("</head>", "    " + REVEAL_JS + "\n</head>", 1)
 
     open(path, "w", encoding="utf8", newline="").write(s.replace("\n", nl))
     return rel, flags
