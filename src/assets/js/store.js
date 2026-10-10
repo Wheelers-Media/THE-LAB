@@ -1863,32 +1863,47 @@ function initPDP() {
                             ${(() => {
                                 const t = product.tags || [];
                                 const lowerT = t.map(x => x.toLowerCase().trim());
-                                const isOversized = lowerT.some(x => x.includes('exhaust') || x.includes('delete pipe'));
+                                // Mirrors the Polar Diesel delivery profiles in Shopify; everything else uses the rate shown at checkout
+                                const isPolar = /\bpolar\b/i.test(product.name) && !/light bar/i.test(product.name);
+                                const polarKind = !isPolar ? null
+                                    : lowerT.includes('shipping: deletepipe') && /delete pipe/i.test(product.name) ? 'delete'
+                                    : lowerT.includes('full exhaust') ? 'exhaust'
+                                    : lowerT.includes('shipping: standard') ? 'standard'
+                                    : null;
                                 const isEmissions = lowerT.some(x => ['dpf', 'def', 'egr', 'delete pipe', 'exhaust', 'tune', 'tuner', 'tuning'].some(k => x.includes(k)));
-                                
+                                const remote = '<p class="italic text-xs">Remote addresses are checked before shipping and may need a freight quote. No PO boxes or APO/FPO addresses.</p>';
+
                                 let html = '<div class="space-y-2"><h4 class="text-[#FFFFFF] font-bold uppercase tracking-widest text-xs mb-3">Shipping Rates</h4>';
-                                
-                                if (isOversized) {
+
+                                if (polarKind === 'exhaust' || polarKind === 'delete') {
+                                    const ca = polarKind === 'exhaust' ? '$80 CAD per kit' : '$65 CAD per kit';
+                                    const us = polarKind === 'exhaust' ? '$111 USD per kit' : '$74 USD per kit';
                                     html += `
-                                        <div class="space-y-4">
-                                            <p class="text-[#FFFFFF] font-bold">Oversized Freight Rules Apply:</p>
-                                            <ul class="space-y-2 pl-5 list-disc marker:text-[#0066FF]">
-                                                <li><span class="text-[#FFFFFF] font-bold">Canada:</span> $80 CAD/Full System or $65 CAD/Delete Pipe <span class="italic text-xs text-[#A0A0AB]">(10+ pieces ship skid freight free)</span>.</li>
-                                                <li><span class="text-[#FFFFFF] font-bold">US:</span> $111 USD/Full System or $74 USD/Delete Pipe <span class="italic text-xs text-[#A0A0AB]">(10+ pieces: $500 USD first skid, $250 USD additional)</span>.</li>
-                                            </ul>
-                                            <p class="italic text-xs">Remote locations are subject to manual freight adjustments.</p>
+                                        <div class="space-y-2">
+                                            <p><span class="text-[#FFFFFF] font-bold">Canada:</span> ${ca} <span class="italic text-xs text-[#A0A0AB]">(10+ exhaust pieces ship on a skid free)</span>.</p>
+                                            <p><span class="text-[#FFFFFF] font-bold">United States:</span> ${us} <span class="italic text-xs text-[#A0A0AB]">(10+ pieces: $500 USD first skid, $250 USD each additional)</span>.</p>
+                                            <p>Ships by standard ground to Canada and the US only. Not included in free shipping over $1000 CAD.</p>
+                                            ${remote}
+                                        </div>
+                                    `;
+                                } else if (polarKind === 'standard') {
+                                    html += `
+                                        <div class="space-y-2">
+                                            <p><span class="text-[#FFFFFF] font-bold">Canada:</span> $20 CAD flat rate, free on orders over $1000 CAD (exhaust not included).</p>
+                                            <p><span class="text-[#FFFFFF] font-bold">United States:</span> $37 USD flat rate.</p>
+                                            <p>Ships by standard ground to Canada and the US only.</p>
+                                            ${remote}
                                         </div>
                                     `;
                                 } else {
                                     html += `
                                         <div class="space-y-2">
-                                            <p><span class="text-[#FFFFFF] font-bold">Canadian Orders:</span> $20 CAD flat rate (Free over $1000 CAD).</p>
-                                            <p><span class="text-[#FFFFFF] font-bold">North American Orders:</span> $37 USD flat rate.</p>
-                                            <p class="italic text-xs">Remote locations are subject to manual freight adjustments prior to fulfillment.</p>
+                                            <p>The shipping rate for this item is shown at checkout.</p>
+                                            <p><a href="/shipping/" class="text-[#FFFFFF] underline">Shipping &amp; Returns</a> has the full policy.</p>
                                         </div>
                                     `;
                                 }
-                                
+
                                 html += `</div>
                                     <div class="bg-[#1E1E28] p-4 rounded-lg border border-[#1E1E28]/50 mt-6">
                                         <p class="text-[#FFFFFF] text-xs leading-relaxed">
