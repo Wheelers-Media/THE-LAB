@@ -18,6 +18,16 @@
         return { url: `${CAL[route]}${CAL[route].includes('?') ? '&' : '?'}${q}`, prefilled: true };
     }
 
+    // THE LAB CRM: every request also lands there as a customer, their truck and a job with a "Send quote" task.
+    // Public endpoint (origin allow-list, honeypot and rate limit on the CRM side).
+    const CRM_INTAKE = 'https://mxoqwwdpclfkoydfofug.supabase.co/functions/v1/lead_intake';
+    function sendToCrm(payload) {
+        // Never blocks the customer: the email to Eric already went out, so a CRM hiccup only gets logged
+        return fetch(CRM_INTAKE, { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+            .then((r) => { if (!r.ok) console.warn('[intake] CRM did not accept the request', r.status); })
+            .catch((err) => console.warn('[intake] CRM unreachable', err));
+    }
+
     const messageBody = (title, rows) => [`THE LAB - New ${title}`, ...rows.map(([l, v]) => `${l}: ${v}`)].join('\n');
     const textDisplay = TEXT_TO.replace(/^\+1(\d{3})(\d{3})(\d{4})$/, '($1) $2-$3');
 
@@ -67,9 +77,12 @@
             submit: 'Book Service Date',
             steps: [
                 { title: 'What do you need?', ids: ['service'] },
-                { title: 'Your options', ids: ['deleted', 'hp', 'idle', 'straight', 'diameter', 'tip', 'accessories'] },
+                { title: 'Your truck', ids: ['vin', 'year', 'make', 'model', 'engine', 'trans', 'km'] },
+                { title: 'How you use it', ids: ['usage', 'tow', 'tires', 'gears'] },
+                { title: "What's on it now", ids: ['prev_tune', 'device', 'mods'] },
+                { title: 'Your options', ids: ['deleted', 'hp', 'trans_tune', 'sotf', 'idle', 'straight', 'diameter', 'tip', 'accessories'] },
                 { title: 'Your goals', ids: ['goals', 'notes'] },
-                { title: 'Your truck', ids: ['vin', 'year', 'make', 'model', 'engine'] },
+                { title: 'Budget and timing', ids: ['install', 'budget', 'timeline', 'pay_note'] },
                 { title: 'Your details', ids: ['name', 'phone', 'email', 'offroad', 'consent'] },
             ],
             fields: [
@@ -79,8 +92,20 @@
                 f('model', 'Vehicle Model', 'text', { req: 1, ph: 'F-350 Super Duty' }),
                 f('engine', 'Engine Type', 'text', { ph: '(e.g. 6.7L Powerstroke)' }),
                 f('service', 'Service Requested', 'multi', { req: 1, opts: ['Custom Tuning', 'EGR Solutions', 'Exhaust Systems', 'CCV Reroutes', 'Bumpers & Accessories', 'Head Lights', 'Lift Kits'] }),
+                // Questions a tuner needs before a quote is accurate: what's already on the truck, how it's used, and gearing
+                f('trans', 'Transmission', 'select', { when: svc(...TUNE, 'Exhaust Systems', 'CCV Reroutes'), opts: ['Automatic (stock)', 'Automatic (built or upgraded)', 'Manual', 'Not sure'] }),
+                f('km', 'Approximate mileage (km)', 'text', { ph: 'e.g. 145,000' }),
+                f('usage', 'How do you use the truck?', 'multi', { when: svc(...TUNE, 'Exhaust Systems', 'Lift Kits'), opts: ['Daily driver', 'Work truck', 'Hot shot / commercial hauling', 'Weekend / show truck', 'Off-road'] }),
+                f('tow', 'Do you tow?', 'radio', { req: 1, when: svc(...TUNE), opts: ['No', 'Light (under 10,000 lb)', 'Heavy (10,000 lb and up)', 'Gooseneck / 5th wheel'] }),
+                f('tires', 'Tire size', 'text', { when: svc(...TUNE, 'Lift Kits'), ph: 'e.g. 35x12.50R20 or 295/70R18 (stock is fine)' }),
+                f('gears', 'Axle gear ratio (if you know it)', 'text', { when: svc(...TUNE), ph: 'e.g. 3.73 or 4.10, or "not sure"' }),
+                f('prev_tune', 'Has the truck been tuned before?', 'radio', { when: svc(...TUNE), opts: ['No, factory tune', 'Yes', 'Not sure'] }),
+                f('device', 'Tuning device you already own', 'radio', { when: svc(...TUNE), opts: ['None', 'EZ LYNK', 'HP Tuners', 'EFILive', 'Other / not sure'] }),
+                f('mods', 'Mods already on the truck', 'multi', { when: svc(...TUNE, 'Exhaust Systems', 'CCV Reroutes'), opts: ["None, it's stock", 'DPF / EGR / DEF removed', 'Aftermarket exhaust', 'Cold air intake', 'Upgraded turbo', 'Upgraded injectors', 'Lift pump', 'Built transmission', 'Lift or level kit'] }),
                 f('deleted', 'Is the vehicle currently deleted?', 'radio', { when: svc(...TUNE, 'Exhaust Systems'), opts: ['Yes', 'No', 'Unsure'] }),
                 f('hp', 'Desired Horsepower', 'multi', { when: svc(...TUNE), opts: ['Towing/Economy', 'Street/Daily', 'Max Effort'] }),
+                f('trans_tune', 'Do you want a transmission tune too?', 'radio', { when: svc('Custom Tuning'), opts: ['Yes', 'No', 'Not sure, recommend one'] }),
+                f('sotf', 'Switch-on-the-fly (change power levels from the cab)?', 'radio', { when: svc('Custom Tuning'), opts: ['Yes', 'No, one tune is fine', 'Not sure'] }),
                 f('idle', 'Desired Idle Type', 'multi', { when: svc(...TUNE), opts: ['Factory', 'Hiss', 'Choppy/Lope'] }),
                 f('straight', 'Exhaust: Straight Pipe?', 'radio', { when: svc(...TUNE, 'Exhaust Systems'), opts: ['Yes', 'No', 'I need muffler', 'Unsure'] }),
                 f('diameter', 'Exhaust: Diameter Size', 'select', { when: svc('Exhaust Systems'), opts: ['Full 3"', 'Full 4"', 'Full 5"'] }),
@@ -88,6 +113,10 @@
                 f('accessories', 'Bumpers & Accessories Requested', 'textarea', { when: svc('Bumpers & Accessories', 'Head Lights', 'Lift Kits'), ph: "e.g., gridiron bumpers, custom lighting, mirrors, lift kits, or anything accessories-related. Please explain what you're looking for." }),
                 f('goals', 'Overall Vehicle Goals', 'textarea', { req: 1, when: svc(...TUNE, 'Exhaust Systems', 'Bumpers & Accessories', 'Head Lights', 'Lift Kits'), ph: 'More information the better we can help bring your goals to the road' }),
                 f('notes', 'Additional Notes', 'textarea', { when: svc(...TUNE, 'Exhaust Systems', 'Bumpers & Accessories', 'Head Lights', 'Lift Kits', 'CCV Reroutes') }),
+                f('install', 'Install', 'radio', { req: 1, opts: ['Install at THE LAB', 'Ship the parts to me'] }),
+                f('budget', 'Rough budget', 'select', { opts: ['Under $1,500', '$1,500 to $3,000', '$3,000 to $6,000', '$6,000 and up', 'Not sure yet'] }),
+                f('timeline', 'When do you want it done?', 'radio', { opts: ['As soon as possible', 'Within a month', "I'm flexible"] }),
+                f('pay_note', 'How paying works', 'note', { html: "Eric builds your quote and texts you a secure link. Pay for the parts up front so we can order them, and the labour at pickup, or pay it all at once. It's all under your name." }),
                 f('name', 'Full Name', 'text', { req: 1, ph: 'Enter your full name', half: 1 }),
                 f('phone', 'Phone', 'tel', { req: 1, ph: '+1 (555) 000-0000', half: 1 }),
                 f('email', 'Email', 'email', { req: 1, ph: 'your@email.com' }),
@@ -314,6 +343,16 @@
                 });
                 const j = await r.json();
                 if (!j.success) throw new Error(j.message);
+                const details = rows.filter(([l]) => !['Name', 'Phone', 'Email'].includes(l));
+                sendToCrm({
+                    form: key, intent: key === 'boutique' ? 'book' : 'quote', source: h ? 'walkthrough' : 'form',
+                    name, first: v.first, last: v.last, email: v.email, phone: v.phone,
+                    year: v.year, make: v.make, model: v.model, vin: v.vin, service: v.service,
+                    details: details.map(([l, x]) => `${l}: ${x}`).join('\n'),
+                    choices: details.map(([label, value]) => ({ label, value })),
+                    estimate: h && h.est ? h.est : undefined, summary: h ? h.summary : undefined,
+                    sms_consent: !!v.consent, page: location.pathname, website: form.elements.website.value,
+                });
                 done(el, v.service === 'Premium Detailing' ? 'detailing' : 'eric', {
                     name, email: v.email, phone: v.phone,
                     est: (saved() || {}).est || null,
