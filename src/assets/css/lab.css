@@ -1174,3 +1174,20 @@ body:has(.pdp-sticky:not([hidden])) .te-fab { bottom:88px; }
 
 /* catalog: the count keeps its own row on phones so the sort control does not move when the number replaces "Loading..." */
 @media (max-width:767px) { .cat-count { flex:1 0 100%; } }
+
+/* ── Mobile store pass ── */
+/* catalog "Show more" row (store.js renderProducts) spans the whole grid */
+.pgrid-more { grid-column:1 / -1; display:flex; justify-content:center; padding:var(--sp-4) 0 var(--sp-2); }
+.pgrid-more .btn { width:100%; max-width:360px; }
+@media (max-width:767px) {
+    /* parts pages: the first product sits higher (headline on one line, tighter head and spacing) */
+    .lab-parts .pg-head { padding-top:var(--sp-5); padding-bottom:var(--sp-4); }
+    .lab-parts .pg-kick { margin-bottom:var(--sp-2); }
+    .lab-parts .pg-h1 { margin-bottom:var(--sp-2); }
+    .lab-parts .pg-h1 br { display:none; }
+    .lab-parts .cat-shell { padding-top:var(--sp-4); gap:var(--sp-3); }
+    .lab-parts .cat-bar { margin-bottom:var(--sp-3); }
+    /* Text Us slides out while scrolling down so it never sits over a card's Add button (text-eric.js) */
+    .te-fab.is-away { translate:0 calc(100% + 24px); opacity:0; visibility:hidden; }
+}
+@media (prefers-reduced-motion: reduce) { .te-fab { transition:none; } }

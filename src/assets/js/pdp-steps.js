@@ -207,8 +207,31 @@
         show();
     }
 
+    // products with no option steps (most of the catalog): keep price and Add to Cart in reach while the real button is off screen.
+    // The bar only clicks the real button, so store.js stays the one place that validates and adds.
+    function buyBar() {
+        const add = $('pdp-add-btn');
+        const priceEl = root.querySelector('p[data-price-cad]');
+        if (!add || !priceEl) return;
+        const bar = document.createElement('div');
+        bar.className = 'pdp-sticky';
+        bar.hidden = true;
+        bar.innerHTML = '<span class="pdp-sticky-price"></span><button type="button">Add to cart</button>';
+        document.body.appendChild(bar);
+        bar.querySelector('button').addEventListener('click', () => add.click());
+        const show = () => {
+            const r = add.getBoundingClientRect();
+            const away = matchMedia('(max-width:767px)').matches && (r.top > innerHeight || r.bottom < 0);
+            if (away) bar.querySelector('.pdp-sticky-price').textContent = priceEl.textContent.trim();
+            bar.hidden = !away;
+        };
+        addEventListener('scroll', show, { passive: true });
+        addEventListener('resize', show);
+        show();
+    }
+
     function start() {
-        try { if (build()) { render(); stickyBar(); } } catch (e) { bail(e); }
+        try { if (build()) { render(); stickyBar(); } else buyBar(); } catch (e) { bail(e); }
     }
 
     // store.js renders the product after the catalog loads; wait for its Add button, then run once

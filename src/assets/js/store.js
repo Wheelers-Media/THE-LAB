@@ -924,6 +924,23 @@ window.zoomReset = function(container) {
     img.style.transform = 'scale(1)';
 };
 
+// Shopify's CDN resizes on request: ask for what a card actually shows instead of the 1500px original
+function cardImg(src) {
+    try {
+        const u = new URL(src, location.href);
+        if (u.hostname !== 'cdn.shopify.com' || src.includes(',')) return `src="${src}"`;
+        const at = (w) => { u.searchParams.set('width', w); return u.href; };
+        return `src="${at(640)}" srcset="${at(360)} 360w, ${at(640)} 640w, ${at(960)} 960w" sizes="(min-width:1180px) 22vw, (min-width:768px) 30vw, 50vw"`;
+    } catch (e) { return `src="${src}"`; }
+}
+
+// Back from a product page: re-open as many cards as were showing (renderProducts uses it once)
+let catShownRestore = 0;
+try {
+    const nav = performance.getEntriesByType('navigation')[0];
+    if (nav && nav.type === 'back_forward') catShownRestore = parseInt(sessionStorage.getItem('lab_cat_shown'), 10) || 0;
+} catch (e) { /* storage unavailable */ }
+
 function renderProducts() {
     const grid = document.getElementById("product-grid");
     if (!grid) return;
@@ -1115,7 +1132,7 @@ function renderProducts() {
         return;
     }
 
-    grid.innerHTML = filtered.map(p => {
+    const card = p => {
         let productUrl = `/store/product/?id=${encodeURIComponent(p.id)}`;
         if (activeVehicle) {
             productUrl += `&vmake=${encodeURIComponent(activeVehicle.make)}&vengine=${encodeURIComponent(activeVehicle.engine)}&vyear=${activeVehicle.year}&vmodel=${encodeURIComponent(activeVehicle.model)}`;
@@ -1135,7 +1152,7 @@ function renderProducts() {
         <article class="pcard">
             <a href="${productUrl}" class="pcard-img" tabindex="-1" aria-hidden="true">
                 ${p.isPopular ? '<span class="pcard-tag">Popular</span>' : ''}
-                <img src="${p.image}" alt="" loading="lazy">
+                <img ${cardImg(p.image)} width="640" height="480" alt="" loading="lazy" decoding="async">
             </a>
             <div class="pcard-body">
                 <p class="pcard-meta"><span>${p.brand}</span><span>${p.category}</span></p>
@@ -1174,14 +1191,51 @@ function renderProducts() {
                 </div>
             </div>
         </article>
-    `}).join("");
+    `};
 
-    // Scroll jump removed as requested by user
-    
-    // Apply currency format to newly rendered prices
-    if (window.setCurrency) {
-        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
+    // The whole catalog on one page is ~65 phone screens, so it shows 24 at a time (24 fills the 2 and 3 column grids evenly).
+    const PAGE = 24;
+    const applyCurrency = () => {
+        if (window.setCurrency) window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
+    };
+    const remember = (n) => { try { sessionStorage.setItem('lab_cat_shown', String(n)); } catch (e) { /* storage unavailable */ } };
+
+    let shown = Math.min(filtered.length, Math.max(PAGE, catShownRestore));
+    catShownRestore = 0;
+    grid.innerHTML = filtered.slice(0, shown).map(card).join('');
+
+    if (shown < filtered.length) {
+        const wrap = document.createElement('div');
+        wrap.className = 'pgrid-more';
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn btn-ghost';
+        wrap.appendChild(btn);
+        grid.appendChild(wrap);
+        const label = () => {
+            const left = filtered.length - shown;
+            btn.textContent = `Show ${Math.min(PAGE, left)} more (${left} left)`;
+            if (countEl) countEl.textContent = `Showing ${shown} of ${filtered.length} products`;
+        };
+        label();
+        btn.addEventListener('click', () => {
+            const from = shown;
+            shown = Math.min(filtered.length, shown + PAGE);
+            wrap.insertAdjacentHTML('beforebegin', filtered.slice(from, shown).map(card).join(''));
+            remember(shown);
+            applyCurrency();
+            if (shown < filtered.length) { label(); return; }
+            // last batch: the button goes away, so hand focus to the first new card
+            wrap.remove();
+            if (countEl) countEl.textContent = `${filtered.length} products`;
+            const next = grid.querySelectorAll('.pcard-name a')[from];
+            if (next) next.focus({ preventScroll: true });
+        });
     }
+    remember(shown);
+
+    // Apply currency format to newly rendered prices
+    applyCurrency();
 }
 
 /* --- PDP LOGIC --- */

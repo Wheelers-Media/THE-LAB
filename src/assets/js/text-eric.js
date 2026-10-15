@@ -15,9 +15,17 @@
     wrap.setAttribute('aria-label', 'Quick contact');
     wrap.appendChild(a);
     document.body.appendChild(wrap);
-    // once past the first screen the pill folds to an icon so it stops covering copy (lab.css .te-fab)
-    let ticking = false;
-    const fold = () => { ticking = false; a.classList.toggle('is-compact', window.scrollY > window.innerHeight * 0.8); };
+    // once past the first screen the pill folds to an icon so it stops covering copy (lab.css .te-fab).
+    // On phones it also slides out of the way while scrolling down (it sat over the product cards' Add buttons) and returns on the way up.
+    let ticking = false, lastY = window.scrollY;
+    const fold = () => {
+        ticking = false;
+        const y = window.scrollY, dy = y - lastY, past = y > window.innerHeight * 0.8;
+        a.classList.toggle('is-compact', past);
+        if (!past || dy < -6) a.classList.remove('is-away');
+        else if (dy > 6) a.classList.add('is-away');
+        if (Math.abs(dy) > 6) lastY = y;
+    };
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(fold); } }, { passive: true });
     fold();
 })();
