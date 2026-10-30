@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /boutique-success/
 Disallow: /build-success/
+Disallow: /status/
 
 Sitemap: https://thelabfsj.ca/sitemap.xml
