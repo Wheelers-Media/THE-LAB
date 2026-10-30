@@ -133,4 +133,40 @@
             if (typeof window.openCart !== 'function') location.href = '/store/catalog/?cart=1';
         });
     });
+
+    // ── First touch ──────────────────────────────────────────────────────────
+    // Remembers, for 30 days, where a visitor first came from (Instagram, Facebook, Google) so intake.js can send it
+    // with the form and the CRM can say which channel each lead started on. Direct visits store nothing, so a later
+    // real touch is still recorded. Nothing personal is kept: a channel, a campaign name and a landing path.
+    var TOUCH_KEY = 'theLab_firstTouch', TOUCH_MS = 30 * 864e5;
+    var CHANNELS = { instagram: 'Instagram', facebook: 'Facebook', google: 'Google' };
+    function touchChannel(q, host) {
+        var src = (q.get('utm_source') || '').toLowerCase();
+        if (/instagram|^ig$/.test(src) || /(^|\.)instagram\.com$/.test(host)) return 'instagram';
+        if (/facebook|^fb$|^meta$/.test(src) || /(^|\.)(facebook|fb)\.com$/.test(host) || q.get('fbclid')) return 'facebook';
+        if (src === 'google' || q.get('gclid') || /(^|\.)google\.[a-z.]+$/.test(host)) return 'google';
+        return '';
+    }
+    function recordTouch() {
+        try {
+            var saved = JSON.parse(localStorage.getItem(TOUCH_KEY) || 'null');
+            if (saved && Date.now() - saved.at < TOUCH_MS) return;
+            var host = '';
+            try { host = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, '') : ''; } catch (e) { /* bad referrer */ }
+            if (host === location.hostname.replace(/^www\./, '')) return; // moving around the site is not a new visit
+            var q = new URLSearchParams(location.search), channel = touchChannel(q, host);
+            if (!channel) return;
+            localStorage.setItem(TOUCH_KEY, JSON.stringify({
+                at: Date.now(), channel: channel, label: CHANNELS[channel],
+                campaign: (q.get('utm_campaign') || '').slice(0, 60), landing: location.pathname,
+            }));
+        } catch (e) { /* storage unavailable */ }
+    }
+    window.labFirstTouch = function () {
+        try {
+            var t = JSON.parse(localStorage.getItem(TOUCH_KEY) || 'null');
+            return t && Date.now() - t.at < TOUCH_MS ? { channel: t.channel, label: t.label, campaign: t.campaign, landing: t.landing } : null;
+        } catch (e) { return null; }
+    };
+    recordTouch();
 })();

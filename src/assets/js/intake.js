@@ -13,7 +13,7 @@
             fetch(CRM_LEADS_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(lead),
+                body: JSON.stringify({ ...lead, attribution: window.labFirstTouch ? window.labFirstTouch() : null }),
                 keepalive: true,
             }).catch(() => { /* the email already reached the shop */ });
         } catch (err) { /* older browsers without keepalive */ }
