@@ -1116,9 +1116,12 @@ function renderProducts() {
     }
 
     grid.innerHTML = filtered.map(p => {
-        let productUrl = `/store/product/?id=${encodeURIComponent(p.id)}`;
+        // A part with its own page links there (Google can list it); a part added
+        // since the last deploy falls back to the shared product page
+        const partSlug = window.LAB_PART_PAGES && window.LAB_PART_PAGES[p.id];
+        let productUrl = partSlug ? `/store/parts/${partSlug}/` : `/store/product/?id=${encodeURIComponent(p.id)}`;
         if (activeVehicle) {
-            productUrl += `&vmake=${encodeURIComponent(activeVehicle.make)}&vengine=${encodeURIComponent(activeVehicle.engine)}&vyear=${activeVehicle.year}&vmodel=${encodeURIComponent(activeVehicle.model)}`;
+            productUrl += `${partSlug ? '?' : '&'}vmake=${encodeURIComponent(activeVehicle.make)}&vengine=${encodeURIComponent(activeVehicle.engine)}&vyear=${activeVehicle.year}&vmodel=${encodeURIComponent(activeVehicle.model)}`;
         }
         // Fitment badge for cards (compact)
         let cardFitment = '';
@@ -1187,22 +1190,25 @@ function renderProducts() {
 /* --- PDP LOGIC --- */
 function initPDP() {
     const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+    const container = document.getElementById("pdp-container");
+    // A part's own page (/store/parts/<slug>/) names its product on the container
+    const id = params.get("id") || container.dataset.productId;
     const vmake = params.get("vmake");
     const vengine = params.get("vengine");
     const vyear = params.get("vyear");
     const vmodel = params.get("vmodel");
 
     const product = window.storeCatalog.find(p => p.id === id);
-    const container = document.getElementById("pdp-container");
 
     if (!product) {
+        // A part's own page already shows the product; keep it when the live catalog is unavailable
+        if (container.dataset.productId) return;
         container.innerHTML = `<div class="py-20 text-center text-white text-xl">Product not found. <a href="/store/" class="text-labBlue hover:underline mt-4 block">Return to Store</a></div>`;
         return;
     }
 
     // Set page title
-    document.title = `${product.name} | THE LAB`;
+    document.title = `${product.name} | THE LAB Parts Store`;
 
     let fitmentBadge = "";
     if (vmake && vengine && vyear) {
