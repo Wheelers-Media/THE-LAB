@@ -1,0 +1,7 @@
+
+# Built on deploy by tools/build_parts.mjs
+src/pages/store/parts/
+src/pages/store/egr/
+src/pages/store/exhaust/
+src/pages/store/ccv/
+src/pages/store/accessories/

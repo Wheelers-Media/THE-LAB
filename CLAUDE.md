@@ -12,6 +12,7 @@ Luxx Automotive Boutique Inc., Fort St. John BC. Owners Eric and Christine Wheel
 - Shared header, footer, search overlay and truck-selector modal live once in `src/components/site-*.html`. After editing one, run `python tools/sync_chrome.py` (idempotent). It stamps all pages and normalizes `<head>`. Never hand-edit chrome on a single page.
 - Tailwind is prebuilt: after adding classes run `cd tools/tailwind && npm run build` (`npm install` first; `node_modules` is gitignored).
 - Local server: `node dev-server.js` (port 3000, mimics `vercel.json` rewrites).
+- Part pages (`/store/parts/<handle>/`), the parts category pages (`/store/egr/`, `/exhaust/`, `/ccv/`, `/accessories/`), `parts-index.js` and the parts half of `sitemap.xml` are built on every Vercel deploy by `node tools/build_parts.mjs` from the live Shopify catalog. They are gitignored; run the script locally to see them (it needs Shopify access, or `--fixture <storefront-response.json>`), and do not commit its changes to `sitemap.xml` or `parts-index.js`.
 - Test in a background browser tab; the user often clicks in the shared pane and cancels long scripts. Block the Web3Forms call when testing forms so nothing is emailed to Eric.
 - After any change: no console errors, forms/cart/checkout still work, step changes land below the sticky header.
 
