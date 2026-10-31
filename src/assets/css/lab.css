@@ -459,7 +459,7 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .book-grid > * { min-width:0; }
 .info { margin:28px 0 0; border-top:1px solid var(--line); }
 .map-embed { margin:var(--sp-5,24px) 0 0; border:1px solid var(--line); background:var(--panel); aspect-ratio:2 / 1; }
-.map-embed iframe { display:block; width:100%; height:100%; border:0; filter:grayscale(1) invert(.9) contrast(.9); }
+.map-embed iframe { display:block; width:100%; height:100%; border:0; }
 .info > div { display:grid; grid-template-columns:96px minmax(0,1fr); gap:12px; padding:16px 0; border-bottom:1px solid var(--line); }
 .info dt { font-weight:700; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); padding-top:3px; }
 .info dd { margin:0; color:var(--text); overflow-wrap:anywhere; }
