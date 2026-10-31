@@ -6,6 +6,7 @@ Safe to re-run: it replaces whatever sits between <body> and <main>, the <footer
 Conditional blocks in the header use <!--if:store--> ... <!--/if:store--> and <!--if:price--> ... <!--/if:price-->.
 """
 import glob
+import hashlib
 import os
 import re
 import sys
@@ -24,6 +25,30 @@ def read(path):
         return f.read().replace("\r\n", "\n")
 
 
+ASSET_REF = re.compile(r'((?:href|src)=")(/assets/(?:css|js)/[^"?#]+\.(?:css|js))(?:\?v=[0-9a-f]+)?(")')
+_versions = {}
+
+
+def asset_version(web_path):
+    """Short content hash of a site CSS or JS file, so a changed file gets a new URL and browsers never pair new HTML with an old cached copy."""
+    if web_path not in _versions:
+        fs = os.path.join(ROOT, "src", web_path[1:])
+        if os.path.exists(fs):
+            with open(fs, "rb") as f:
+                data = f.read().replace(b"\r\n", b"\n")
+            _versions[web_path] = hashlib.sha1(data).hexdigest()[:8]
+        else:
+            _versions[web_path] = None
+    return _versions[web_path]
+
+
+def stamp_assets(s):
+    def one(m):
+        v = asset_version(m.group(2))
+        return m.group(1) + m.group(2) + ("?v=" + v if v else "") + m.group(3)
+    return ASSET_REF.sub(one, s)
+
+
 def render(template, flags):
     def block(m):
         return m.group(2) if flags.get(m.group(1)) else ""
@@ -37,6 +62,9 @@ def sync(path):
     raw = open(path, encoding="utf8", newline="").read()
     nl = "\r\n" if "\r\n" in raw else "\n"
     s = raw.replace("\r\n", "\n")
+
+    # asset versions are re-stamped at the end; strip them here so the exact-string checks below still match
+    s = re.sub(r'(/assets/(?:css|js)/[^"?#]+\.(?:css|js))\?v=[0-9a-f]+', r"\1", s)
 
     # drop explanatory notes that earlier runs copied in from the component files
     s = re.sub(r"<!-- (?:Site (?:header|footer|search overlay)|Truck selector modal): single source of truth[^\n]*-->\n", "", s)
@@ -106,6 +134,9 @@ def sync(path):
         s = s.replace("</head>", "    " + CHROME_JS + "\n</head>", 1)
     if "/assets/js/reveal.js" not in s:
         s = s.replace("</head>", "    " + REVEAL_JS + "\n</head>", 1)
+
+    # 7. version every local stylesheet and script by content hash
+    s = stamp_assets(s)
 
     open(path, "w", encoding="utf8", newline="").write(s.replace("\n", nl))
     return rel, flags

@@ -10,6 +10,7 @@ Luxx Automotive Boutique Inc., Fort St. John BC. Owners Eric and Christine Wheel
 
 ## Build and test
 - Shared header, footer, search overlay and truck-selector modal live once in `src/components/site-*.html`. After editing one, run `python tools/sync_chrome.py` (idempotent). It stamps all pages and normalizes `<head>`. Never hand-edit chrome on a single page.
+- Every local CSS and JS link carries `?v=<content hash>` so browsers never pair new HTML with an old cached file. `sync_chrome.py` stamps it. After editing any file in `src/assets/css` or `src/assets/js`, run `python tools/sync_chrome.py` before committing, or the old version stays cached.
 - Tailwind is prebuilt: after adding classes run `cd tools/tailwind && npm run build` (`npm install` first; `node_modules` is gitignored).
 - Local server: `node dev-server.js` (port 3000, mimics `vercel.json` rewrites).
 - Part pages (`/store/parts/<handle>/`), the parts category pages (`/store/egr/`, `/exhaust/`, `/ccv/`, `/accessories/`), `parts-index.js` and the parts half of `sitemap.xml` are built on every Vercel deploy by `node tools/build_parts.mjs` from the live Shopify catalog. They are gitignored; run the script locally to see them (it needs Shopify access, or `--fixture <storefront-response.json>`), and do not commit its changes to `sitemap.xml` or `parts-index.js`.
