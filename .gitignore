@@ -5,3 +5,6 @@ src/pages/store/egr/
 src/pages/store/exhaust/
 src/pages/store/ccv/
 src/pages/store/accessories/
+
+# Built on deploy by tools/build_reviews.mjs
+src/assets/data/reviews.json
