@@ -200,6 +200,7 @@
         const lvl = [...document.querySelectorAll('h2')].some((h) => h.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) ? 'h3' : 'h2';
         el.innerHTML = `<form novalidate class="lf" autocomplete="on" aria-label="${cfg.title}">
             <div class="lf-steps-head" tabindex="-1"><p class="lf-steps-count" aria-live="polite"></p><${lvl} class="display lf-steps-title"></${lvl}><div class="lf-bar" aria-hidden="true"><i></i></div></div>
+            <p data-arrived hidden class="lf-fine">Requesting: <strong data-arrived-service></strong>. <a href="#" data-arrived-change>Change</a></p>
             <p data-recap-mini data-step="${last}" hidden class="lf-note"></p>
             <p data-veh-note data-step="${stepOf.year}" hidden class="lf-fine">Filled in from what you picked earlier. Change anything that is not right.</p>
             <p data-me data-step="${last}" hidden class="lf-fine">Filled in from your last request on this device. <a href="#" data-me-clear>Not you? Clear</a></p>
@@ -335,6 +336,9 @@
         }
         form.addEventListener('change', (e) => { if (e.target.name === 'service') handoff(); });
         handoff();
+        // Arriving with the service already chosen (a ?service= link or a service-page walkthrough): skip the service step
+        // and its tiles. "Change" brings them back.
+        let arrived = !!(picked || saved());
 
         // step-by-step: show one group of fields at a time. Same fields, same validation, same submit.
         const head = form.querySelector('.lf-steps-head');
@@ -358,7 +362,8 @@
         // walkthrough the options are already filled in, so that step is skipped unless something there is missing.
         const live = () => cfg.steps.map((s, i) => i).filter((i) => {
             const s = cfg.steps[i];
-            if (i === 0 || i === last) return true;
+            if (i === 0) return !arrived;
+            if (i === last) return true;
             if (s.quote !== undefined) { const lq = window.labQuote, h = saved(); return !!(lq && lq.steps(val('service')[0]) > s.quote && (!h || h.src === 'quote')); }
             if (!s.ids.some((id) => !box(id).hidden)) return false;
             return !(s.skipWhenHandoff && saved() && !invalid(i));
@@ -368,6 +373,11 @@
             const L = live();
             if (!L.includes(cur)) { const n = L.find((i) => i > cur); cur = n === undefined ? L[L.length - 1] : n; }
             const pos = L.indexOf(cur), final = pos === L.length - 1;
+            // the estimate card normally sits on the service step; with that step skipped it opens the first one left
+            form.querySelector('[data-recap]').dataset.step = arrived ? L[0] : 0;
+            const note = form.querySelector('[data-arrived]');
+            note.hidden = !arrived;
+            note.querySelector('[data-arrived-service]').textContent = val('service')[0] || '';
             form.querySelectorAll('[data-step]').forEach((b) => b.classList.toggle('lf-step-off', +b.dataset.step !== cur));
             let t = cfg.steps[cur].title;
             if (cur === 0 && !form.querySelector('[data-recap]').hidden) t = 'Your estimate';
@@ -418,8 +428,11 @@
             if (window.labQuote) window.labQuote.prefetch(t.dataset.tile);
             go(1);
         });
-        // arriving from a "Get a quote" button with the service already chosen: open straight on its next step
-        if (picked && !saved()) { const L0 = live(); if (L0.length > 1) cur = L0[1]; }
+        form.querySelector('[data-arrived-change]').addEventListener('click', (e) => {
+            e.preventDefault();
+            arrived = false; cur = 0; render();
+            head.focus({ preventScroll: true });
+        });
         render();
         enterQuote();
 
