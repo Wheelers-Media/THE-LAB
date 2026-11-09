@@ -99,6 +99,20 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://thelabfsj.ca/store/power-packages/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://thelabfsj.ca/store/power-packages/2023-2026-ford-powerstroke-6-7l/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://thelabfsj.ca/store/tuning/</loc>
     <lastmod>2026-10-05</lastmod>
     <changefreq>weekly</changefreq>
