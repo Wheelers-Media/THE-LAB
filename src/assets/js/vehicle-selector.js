@@ -1,3 +1,21 @@
+// Engines that have a guided power package page. One list for the truck picker and the catalog banner.
+// A truck with none goes straight to the filtered catalog.
+window.labPackageMap = {
+    '2019+ 6.7L Cummins (HO)': ['cummins-2019-2021', 'cummins-2022-2024'],
+    '2019+ 6.7L Cummins (SO)': ['cummins-2019-2021', 'cummins-2022-2024'],
+    '2013-2018 6.7L Cummins': ['cummins-2013-2018'],
+    '2017+ 6.6L L5P Duramax': ['l5p-2017-2019', 'l5p-2020-2023', 'l5p-2024-2026'],
+    '2020+ 6.7L Powerstroke': ['powerstroke-2020-2022', 'powerstroke-2023-2026'],
+    '2017-2019 6.7L Powerstroke': ['powerstroke-2011-2019'],
+    '2011-2016 6.7L Powerstroke': ['powerstroke-2011-2019']
+};
+// URL of the power package page (or short list of years) for an engine, or null.
+window.labPackageUrl = function (engine) {
+    const pkgs = window.labPackageMap[engine];
+    if (!pkgs) return null;
+    return pkgs.length === 1 ? '/diesel/' + pkgs[0] + '/' : '/diesel/?show=' + pkgs.join(',');
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     const triggerBtns = [
         document.getElementById('vehicle-selector-trigger'),
@@ -11,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const makeBtns = document.querySelectorAll('.vs-make-btn');
     const step2 = document.getElementById('vs-step-2');
+    const mainPane = document.getElementById('vs-main');
+    const choicePane = document.getElementById('vs-choice');
     const engineSelect = document.getElementById('vs-engine-select');
     
     let selectedMake = null;
@@ -65,17 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
     
-    // Engines that have a guided power package page. A truck with none goes to the filtered catalog.
-    const packageMap = {
-        '2019+ 6.7L Cummins (HO)': ['cummins-2019-2021', 'cummins-2022-2024'],
-        '2019+ 6.7L Cummins (SO)': ['cummins-2019-2021', 'cummins-2022-2024'],
-        '2013-2018 6.7L Cummins': ['cummins-2013-2018'],
-        '2017+ 6.6L L5P Duramax': ['l5p-2017-2019', 'l5p-2020-2023', 'l5p-2024-2026'],
-        '2020+ 6.7L Powerstroke': ['powerstroke-2020-2022', 'powerstroke-2023-2026'],
-        '2017-2019 6.7L Powerstroke': ['powerstroke-2011-2019'],
-        '2011-2016 6.7L Powerstroke': ['powerstroke-2011-2019']
-    };
-
     // OEM Logo mapping for UI
     const logoMap = {
         'Cummins': '/assets/ram-logo.png',
@@ -153,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openModal() {
+        showMainPane();
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         
@@ -323,17 +333,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
         
         updateHeaderUI(payload.make, payload.engine);
-        closeModal();
-        
+
         // Optional: Trigger a custom event for the store to filter products
         window.dispatchEvent(new CustomEvent('truckSelected', { detail: payload }));
-        
-        // A truck with a power package goes to its page (or a short list of years); anything else
-        // goes to the catalog, which filters to the truck stored above.
-        const pkgs = packageMap[engineSelect.value];
-        if (pkgs && pkgs.length === 1) window.location.href = '/diesel/' + pkgs[0] + '/';
-        else if (pkgs) window.location.href = '/diesel/?show=' + pkgs.join(',');
-        else window.location.href = '/store/catalog/';
+
+        // A truck with a power package gets a choice. The visitor says whether they want the whole
+        // build or just the parts. A truck with none goes straight to the catalog, filtered to it.
+        const pkgUrl = window.labPackageUrl(engineSelect.value);
+        if (pkgUrl && choicePane && mainPane) {
+            document.getElementById('vs-choice-truck').textContent = engineSelect.value;
+            document.getElementById('vs-choice-pkg').setAttribute('href', pkgUrl);
+            mainPane.hidden = true;
+            choicePane.hidden = false;
+            const first = document.getElementById('vs-choice-parts');
+            if (first) first.focus();
+            return;
+        }
+        closeModal();
+        window.location.href = '/store/catalog/';
+    }
+
+    function showMainPane() {
+        if (mainPane) mainPane.hidden = false;
+        if (choicePane) choicePane.hidden = true;
     }
 
     // Event Listeners
@@ -343,6 +365,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
     if (resetBtn) resetBtn.addEventListener('click', resetModal);
+    const choiceBack = document.getElementById('vs-choice-back');
+    if (choiceBack) choiceBack.addEventListener('click', showMainPane);
     
     makeBtns.forEach(btn => {
         btn.addEventListener('click', () => {

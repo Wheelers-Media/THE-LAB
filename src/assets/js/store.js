@@ -443,6 +443,25 @@ window.setActiveVehicle = function(vehicle) {
     activeVehicle = vehicle;
 };
 
+// One quiet line above the catalog when the chosen truck has a power package. It never hides parts.
+// The engine-to-package list lives in vehicle-selector.js (window.labPackageUrl).
+function renderPackageBanner() {
+    const el = document.getElementById('pp-banner');
+    if (!el) return;
+    let engine = '';
+    try { engine = (JSON.parse(sessionStorage.getItem('lab_active_vehicle')) || {}).engine || ''; } catch (e) {}
+    const url = typeof window.labPackageUrl === 'function' ? window.labPackageUrl(engine) : null;
+    if (!url) { el.hidden = true; el.textContent = ''; return; }
+    el.textContent = '';
+    el.appendChild(document.createTextNode('Want the whole build? '));
+    const a = document.createElement('a');
+    a.href = url;
+    a.textContent = 'Start a power package for your truck';
+    el.appendChild(a);
+    el.appendChild(document.createTextNode('.'));
+    el.hidden = false;
+}
+
 /* Currency: window.setCurrency lives in chrome.js (loaded on every page). */
 
 function initVehicleSelector() {
@@ -522,6 +541,7 @@ function initVehicleSelector() {
         if (window.location.pathname.includes('/catalog')) {
             window.activeVehicle = vehicle;
             if (typeof populateSidebarFilters === 'function') populateSidebarFilters();
+            renderPackageBanner();
             
             // Re-apply checked states
             document.querySelectorAll('.store-filter').forEach(cb => {
@@ -720,6 +740,7 @@ function updateActiveChips() {
 function initStore() {
     // 1. Populate sidebar from catalog data
     populateSidebarFilters();
+    renderPackageBanner();
     initAccordions();
 
     const params = new URLSearchParams(window.location.search);
@@ -865,6 +886,7 @@ function initStore() {
             activeFilters = { makes: [], categories: [], engines: [], brands: [], year: null, searchQuery: "", sortBy: 'featured' };
             activeVehicle = null;
             sessionStorage.removeItem('lab_active_vehicle');
+            renderPackageBanner();
             document.querySelectorAll('.store-filter').forEach(cb => cb.checked = false);
             const yi = document.getElementById('filter-year');
             if (yi) yi.value = '';
