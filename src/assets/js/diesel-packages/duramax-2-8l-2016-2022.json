@@ -1,0 +1,52 @@
+{
+  "id": "duramax-2-8l-2016-2022",
+  "title": "2016-2022 2.8L Duramax (Colorado / Canyon)",
+  "make": "Chevy / GMC",
+  "engine": "2.8L Duramax (Colorado / Canyon)",
+  "years": "2016-2022",
+  "steps": [
+    {
+      "id": "tune",
+      "title": "Tuning",
+      "required": true,
+      "mode": "one",
+      "text": "The tune is the heart of the build. Your tune is custom written for your truck and the parts you choose below. Add transmission tuning here if you want it.",
+      "options": [
+        {
+          "handle": "amdp-2016-2018-canyon-colorado-2-8l-diesel-custom-tuning",
+          "brand": "AMDP",
+          "name": "Colorado / Canyon 2.8L Custom Tuning",
+          "note": "Choose your VIN licence, tune level and transmission tuning."
+        }
+      ]
+    },
+    {
+      "id": "exhaust",
+      "title": "Exhaust",
+      "required": true,
+      "mode": "one",
+      "text": "Choose the exhaust that goes with your tune. 5 inch moves the most air. A muffler keeps the cab quieter.",
+      "options": [
+        {
+          "handle": "2016-2022-2-8l-duramax-colorado-canyon-polar-exhaust",
+          "brand": "Polar",
+          "name": "3\" Exhaust"
+        }
+      ]
+    },
+    {
+      "id": "egr",
+      "title": "EGR",
+      "required": false,
+      "mode": "many",
+      "text": "EGR kit. Optional. Skip it if you don't need it.",
+      "options": [
+        {
+          "handle": "2016-2022-duramax-2-8l-polar-egr-delete-kit",
+          "brand": "Polar",
+          "name": "EGR Delete Kit"
+        }
+      ]
+    }
+  ]
+}

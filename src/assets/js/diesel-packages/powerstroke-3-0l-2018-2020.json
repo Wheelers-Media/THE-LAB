@@ -1,0 +1,46 @@
+{
+  "id": "powerstroke-3-0l-2018-2020",
+  "title": "2018-2020 3.0L Powerstroke",
+  "make": "Ford",
+  "engine": "3.0L Powerstroke",
+  "years": "2018-2020",
+  "steps": [
+    {
+      "id": "tune",
+      "title": "Tuning",
+      "required": true,
+      "mode": "one",
+      "text": "The tune is the heart of the build. Pick the tuning platform you want to run: EZ LYNK or SCT / Bully Dog. Your tune is custom written for your truck and the parts you choose below. Add transmission tuning here if you want it.",
+      "options": [
+        {
+          "handle": "amdp-2018-2019-3-0l-powerstroke-ez-lynk-custom-tuning-support-package",
+          "brand": "AMDP",
+          "name": "EZ LYNK Custom Tuning Support Package",
+          "note": "Limited is a 4-week support window. Full is longer support.",
+          "runner": "EZ LYNK"
+        },
+        {
+          "handle": "amdp-2018-2019-3-0l-powerstroke-sct-bully-dog-custom-tuning",
+          "brand": "AMDP",
+          "name": "SCT / Bully Dog Custom Tuning",
+          "note": "Needs your SCT or Bully Dog device. Pick your tune level.",
+          "runner": "SCT / Bully Dog"
+        }
+      ]
+    },
+    {
+      "id": "downpipe",
+      "title": "Delete Pipe",
+      "required": false,
+      "mode": "one",
+      "text": "The pipe that replaces the factory emissions section between the turbo and the exhaust.",
+      "options": [
+        {
+          "handle": "2018-2020-ford-powerstroke-3-0l-polar-delete-pipe",
+          "brand": "Polar",
+          "name": "3.0L Powerstroke Delete Pipe"
+        }
+      ]
+    }
+  ]
+}
