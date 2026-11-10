@@ -439,7 +439,7 @@
         const services = [...new Set(chosen().map((c) => SERVICE_BY_STEP[c.step.id]).filter(Boolean))];
         if (services.indexOf('Custom Tuning') < 0) services.unshift('Custom Tuning');
         const tuneVar = chosen().filter((c) => c.step.id === 'tune').map((c) => c.variant.title).join(' ');
-        const set = { service: services, install: 'Install at THE LAB', trans_tune: /Add Transmission/i.test(tuneVar) ? 'Yes' : 'No' };
+        const set = { service: services, install: 'Install at THE LAB', trans_tune: /Add\b.*Transmission/i.test(tuneVar) ? 'Yes' : 'No' };
         window.labHandoff('Custom Tuning', summaryText(), set, null);
         location.href = '/contact/?service=Custom%20Tuning#form';
     }
