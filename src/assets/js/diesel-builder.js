@@ -160,6 +160,9 @@
         const anyOk = vs.some((v) => v.availableForSale);
         const c = el('article', 'db-card');
         if (sel) c.classList.add('is-on');
+        const tick = el('span', 'db-tick');
+        tick.setAttribute('aria-hidden', 'true');
+        tick.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
         const fig = el('div', 'db-card-img');
         if (p.featuredImage && p.featuredImage.url) {
@@ -219,7 +222,7 @@
             body.append(btn, a);
         } else {
             btn.classList.add(sel ? 'btn-ghost' : 'btn-primary');
-            btn.textContent = sel ? 'Selected. Tap to remove' : (step.mode === 'one' ? 'Choose this' : 'Add');
+            btn.textContent = sel ? 'Selected' : (step.mode === 'one' ? 'Choose this' : 'Add');
             btn.setAttribute('aria-pressed', sel ? 'true' : 'false');
             btn.addEventListener('click', () => {
                 if (sel) unchoose(step, opt.handle); else choose(step, opt.handle, cur.id);
@@ -227,7 +230,9 @@
             });
             body.append(btn);
         }
-        c.append(fig, body);
+        c.append(tick, fig, body);
+        // tap anywhere on the card to choose it (the option menu and the buttons keep their own behaviour)
+        if (anyOk) c.addEventListener('click', (e) => { if (!e.target.closest('select, label, a, button')) btn.click(); });
         return c;
     }
 
