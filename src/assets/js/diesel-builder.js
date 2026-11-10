@@ -442,7 +442,22 @@
         });
         const tot = el('div', 'db-side-tot');
         tot.append(el('span', null, 'Total (CAD)'), el('strong', null, money(total())));
-        box.append(tot, el('p', 'db-off', OFFROAD));
+        box.append(tot);
+        // Desktop: Back / Next also live here, next to the total, so they are always in view.
+        const cur = S.steps[S.i];
+        const sn = el('div', 'db-side-nav');
+        const sb = el('button', 'btn btn-ghost', 'Back');
+        sb.type = 'button'; sb.disabled = S.i === 0;
+        sb.addEventListener('click', () => go(S.i - 1, true));
+        sn.append(sb);
+        if (S.i < S.steps.length - 1) {
+            const done = stepDone(cur);
+            const sx = el('button', 'btn btn-primary', !cur.required && !done ? 'Skip' : 'Next');
+            sx.type = 'button'; sx.disabled = cur.required && !done;
+            sx.addEventListener('click', () => go(S.i + 1, true));
+            sn.append(sx);
+        }
+        box.append(sn, el('p', 'db-off', OFFROAD));
         refs.side.append(box);
     }
 
