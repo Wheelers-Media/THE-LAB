@@ -122,12 +122,9 @@
         refs.side = el('aside', 'db-side');
         refs.side.setAttribute('aria-label', 'Your power package');
         refs.sticky = el('div', 'db-sticky');
-        refs.tab = el('button', 'db-tabbar');
-        refs.tab.type = 'button';
-        refs.tab.addEventListener('click', () => go(S.steps.length - 1, true));
         const layout = el('div', 'db-layout');
         layout.append(refs.main, refs.side);
-        root.append(refs.bar, layout, refs.tab);
+        root.append(refs.bar, layout);
     }
 
     function renderPills() {
@@ -251,6 +248,19 @@
             const grid = el('div', 'db-grid');
             step.options.forEach((o) => grid.append(card(step, o)));
             wrap.append(grid);
+            if (step.options.length > 1) {
+                const ctr = el('p', 'db-swipe');
+                ctr.setAttribute('aria-hidden', 'true');
+                const upd = () => {
+                    const first = grid.firstElementChild, second = grid.children[1];
+                    const w = second ? second.offsetLeft - first.offsetLeft : first.offsetWidth;
+                    const k = Math.min(step.options.length, Math.round(grid.scrollLeft / (w || 1)) + 1);
+                    ctr.textContent = k + ' of ' + step.options.length + '. Swipe for more.';
+                };
+                grid.addEventListener('scroll', upd, { passive: true });
+                upd();
+                wrap.append(ctr);
+            }
         }
         return wrap;
     }
@@ -432,9 +442,6 @@
         tot.append(el('span', null, 'Total (CAD)'), el('strong', null, money(total())));
         box.append(tot, el('p', 'db-off', OFFROAD));
         refs.side.append(box);
-        refs.tab.textContent = '';
-        refs.tab.append(el('span', null, items.length + (items.length === 1 ? ' part' : ' parts')), el('strong', null, money(total())), el('span', 'db-tab-go', 'Review'));
-        refs.tab.hidden = !items.length || S.steps[S.i].kind === 'review';
     }
 
     function renderNav() {
@@ -442,6 +449,10 @@
         if (old) old.remove();
         const s = S.steps[S.i];
         const nav = el('div', 'db-nav');
+        const n = chosen().length;
+        const line = el('p', 'db-nav-tot');
+        line.append(el('span', null, n + (n === 1 ? ' part' : ' parts')), el('strong', null, money(total())));
+        nav.append(line);
         const back = el('button', 'btn btn-ghost', 'Back');
         back.type = 'button';
         back.disabled = S.i === 0;
@@ -454,14 +465,18 @@
             next.disabled = s.required && !done;
             next.addEventListener('click', () => go(S.i + 1, true));
             nav.append(next);
-            if (s.required && !done) nav.append(el('p', 'db-hint', s.kind === 'truck' ? 'Enter a 17 character VIN to continue.' : 'Choose one to continue.'));
+            if (s.required && !done) line.insertAdjacentElement('beforebegin', el('p', 'db-nav-hint', s.kind === 'truck' ? 'Enter a 17 character VIN to continue.' : 'Choose one to continue.'));
         }
         refs.main.append(nav);
     }
 
+    let lastStep = -1;
     function render(scroll) {
         const s = S.steps[S.i];
         S.seen.add(s.id);
+        const prev = refs.main.querySelector('.db-grid');
+        const keep = prev && lastStep === S.i ? prev.scrollLeft : 0;
+        lastStep = S.i;
         refs.main.textContent = '';
         const disclaimer = el('p', 'db-off db-off-top', OFFROAD);
         refs.main.append(disclaimer);
@@ -469,6 +484,8 @@
         renderNav();
         renderPills();
         renderSide();
+        const g = refs.main.querySelector('.db-grid');
+        if (g && keep) { g.style.scrollBehavior = 'auto'; g.scrollLeft = keep; g.dispatchEvent(new Event('scroll')); }
         if (scroll) {
             const top = refs.bar.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 66) - 8;
             window.scrollTo({ top: Math.max(0, top), behavior: calm() ? 'auto' : 'smooth' });

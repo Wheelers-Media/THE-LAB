@@ -21,7 +21,8 @@
 .db-pill button:disabled { opacity: .45; cursor: not-allowed; }
 .db-pill button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
-.db-layout { display: grid; gap: var(--sp-5); }
+.db-layout { display: grid; gap: var(--sp-5); grid-template-columns: minmax(0, 1fr); }
+.db-layout > * { min-width: 0; }
 @media (min-width: 960px) { .db-layout { grid-template-columns: minmax(0, 1fr) 340px; align-items: start; } }
 .db-sticky { background: var(--panel); border: 1px solid var(--line); padding: var(--sp-5); }
 @media (min-width: 960px) { .db-sticky { position: sticky; top: calc(var(--header-h) + 16px); } }
@@ -64,8 +65,11 @@ textarea.db-input { padding: var(--sp-3); min-height: 96px; }
 .db-form { display: grid; gap: var(--sp-4); margin-top: var(--sp-4); max-width: 560px; }
 .db-row { display: grid; gap: var(--sp-1); }
 
-.db-nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); margin-top: var(--sp-6); }
-.db-nav .btn { min-width: 130px; min-height: 48px; }
+.db-nav { position: sticky; bottom: env(safe-area-inset-bottom, 0px); z-index: 30; display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-3); margin-top: var(--sp-5); padding: var(--sp-3) 0; background: linear-gradient(to top, #0A0A0B 78%, rgba(10,10,11,0)); }
+.db-nav .btn { min-width: 130px; min-height: 52px; }
+.db-nav-tot { display: none; flex: 1 0 100%; justify-content: space-between; margin: 0; color: var(--text); font-size: 15px; }
+.db-nav-hint { flex: 1 0 100%; margin: 0; font-size: 13.5px; color: var(--amber); }
+.db-swipe { display: none; margin: var(--sp-2) 0 0; font-size: 13.5px; color: var(--mute); text-align: center; }
 .db-nav .btn:disabled { opacity: .4; cursor: not-allowed; }
 
 .db-rev { list-style: none; margin: var(--sp-4) 0; padding: 0; border: 1px solid var(--line); background: var(--panel); }
@@ -78,13 +82,8 @@ textarea.db-input { padding: var(--sp-3); min-height: 96px; }
 .db-finish .btn { min-height: 52px; flex: 1 1 220px; }
 .db-fail { padding: var(--sp-6) 0; }
 
-/* mobile total bar */
-.db-tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: flex; align-items: center; gap: var(--sp-3); min-height: 56px; padding: 0 var(--sp-4); background: var(--panel); border: 0; border-top: 1px solid var(--line); color: var(--text); font: inherit; cursor: pointer; text-align: left; }
-.db-tabbar strong { margin-left: auto; font-size: 1.15rem; }
-.db-tab-go { background: var(--brand); color: #fff; padding: 8px 14px; font-weight: 700; }
-.db-tabbar[hidden] { display: none; }
-@media (min-width: 960px) { .db-tabbar { display: none; } }
-@media (max-width: 959px) { .db-side { display: none; } .db-wrap { padding-bottom: 96px; } }
+/* mobile */
+@media (max-width: 959px) { .db-side { display: none; } }
 
 /* index */
 .db-plats { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); margin-bottom: var(--sp-5); }
@@ -93,3 +92,18 @@ textarea.db-input { padding: var(--sp-3); min-height: 96px; }
 .db-plat-t { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; text-transform: uppercase; font-size: 1.75rem; line-height: 1.05; }
 .db-plat-p { color: var(--mute); }
 .db-plat .btn { margin-top: var(--sp-3); text-align: center; }
+
+/* Phones: products swipe sideways, and Back / Next stay on screen with the running total. */
+@media (max-width: 767px) {
+    .db-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 0; gap: var(--sp-3); margin-right: calc(var(--sp-4) * -1); padding-right: var(--sp-4); padding-bottom: var(--sp-2); scrollbar-width: none; overscroll-behavior-x: contain; }
+    .db-grid::-webkit-scrollbar { display: none; }
+    .db-card { flex: 0 0 82%; scroll-snap-align: start; }
+    .db-card-img { aspect-ratio: 4 / 3; }
+    .db-swipe { display: block; }
+    .db-nav { margin-left: calc(var(--sp-4) * -1); margin-right: calc(var(--sp-4) * -1); padding-left: var(--sp-4); padding-right: var(--sp-4); }
+    .db-nav .btn { flex: 1; min-width: 0; }
+    .db-nav-tot { display: flex; }
+    .db-nav-tot strong { font-size: 1.15rem; }
+}
+/* The Text Us button would sit on top of Next on phones; the review step and the hints already carry the number. */
+@media (max-width: 767px) { body:has(.db-nav) a[aria-label^="Text us"] { display: none; } }
