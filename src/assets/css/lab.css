@@ -1208,3 +1208,14 @@ body:has(.pdp-sticky:not([hidden])) .te-fab { bottom:88px; }
 
 /* catalog: the count keeps its own row on phones so the sort control does not move when the number replaces "Loading..." */
 @media (max-width:767px) { .cat-count { flex:1 0 100%; } }
+
+/* Power packages block on the store landing page */
+.pp-picks { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: var(--sp-5) 0; }
+.pp-pick { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-5); background: #141517; border: 1px solid #26282C; border-radius: 14px; text-decoration: none; color: inherit; transition: border-color .2s var(--ease-out), transform .2s var(--ease-out); }
+.pp-pick:hover, .pp-pick:focus-visible { border-color: #0066FF; transform: translateY(-2px); }
+.pp-pick img { height: 44px; width: auto; max-width: 120px; object-fit: contain; align-self: flex-start; }
+.pp-pick-t { font-size: var(--fs-h3); }
+.pp-pick-d { color: #B9BEC6; }
+.pp-note { margin-top: var(--sp-4); font-size: 13.5px; color: #B9BEC6; max-width: var(--measure); }
+.pp-note a { color: #F2F4F7; }
+@media (prefers-reduced-motion: reduce) { .pp-pick { transition: none; } .pp-pick:hover { transform: none; } }
