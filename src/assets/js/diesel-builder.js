@@ -249,17 +249,35 @@
         } else {
             const grid = el('div', 'db-grid');
             step.options.forEach((o) => grid.append(card(step, o)));
-            wrap.append(grid);
+            const rail = el('div', 'db-rail');
+            rail.append(grid);
+            wrap.append(rail);
             if (step.options.length > 1) {
+                const mk = (dir, label) => {
+                    const b = el('button', 'db-arrow db-arrow-' + (dir < 0 ? 'prev' : 'next'));
+                    b.type = 'button';
+                    b.setAttribute('aria-label', label);
+                    b.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + (dir < 0 ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7') + '"/></svg>';
+                    b.addEventListener('click', () => grid.scrollBy({ left: dir * grid.clientWidth * 0.85, behavior: calm() ? 'auto' : 'smooth' }));
+                    return b;
+                };
+                const prev = mk(-1, 'Previous products'), next = mk(1, 'More products');
+                rail.append(prev, next);
                 const ctr = el('p', 'db-swipe');
                 ctr.setAttribute('aria-hidden', 'true');
                 const upd = () => {
                     const first = grid.firstElementChild, second = grid.children[1];
-                    const w = second ? second.offsetLeft - first.offsetLeft : first.offsetWidth;
-                    const k = Math.min(step.options.length, Math.round(grid.scrollLeft / (w || 1)) + 1);
-                    ctr.textContent = k + ' of ' + step.options.length + '. Swipe for more.';
+                    const w = (second ? second.offsetLeft - first.offsetLeft : first.offsetWidth) || 1;
+                    const n = step.options.length;
+                    const k = Math.min(n, Math.round(grid.scrollLeft / w) + 1);
+                    const shown = Math.max(1, Math.round((grid.clientWidth + 16) / w));
+                    ctr.textContent = (shown > 1 ? k + '-' + Math.min(n, k + shown - 1) : k) + ' of ' + n + (matchMedia('(max-width: 767px)').matches ? '. Swipe for more.' : '');
+                    const atStart = grid.scrollLeft <= 2, atEnd = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 2;
+                    prev.disabled = atStart; next.disabled = atEnd;
+                    rail.classList.toggle('is-flat', atStart && atEnd);
                 };
                 grid.addEventListener('scroll', upd, { passive: true });
+                requestAnimationFrame(upd);
                 upd();
                 wrap.append(ctr);
             }
@@ -444,37 +462,22 @@
         tot.append(el('span', null, 'Total (CAD)'), el('strong', null, money(total())));
         box.append(tot);
         // Desktop: Back / Next also live here, next to the total, so they are always in view.
-        const cur = S.steps[S.i];
         const sn = el('div', 'db-side-nav');
-        const sb = el('button', 'btn btn-ghost', 'Back');
-        sb.type = 'button'; sb.disabled = S.i === 0;
-        sb.addEventListener('click', () => go(S.i - 1, true));
-        sn.append(sb);
-        if (S.i < S.steps.length - 1) {
-            const done = stepDone(cur);
-            const sx = el('button', 'btn btn-primary', !cur.required && !done ? 'Skip' : 'Next');
-            sx.type = 'button'; sx.disabled = cur.required && !done;
-            sx.addEventListener('click', () => go(S.i + 1, true));
-            sn.append(sx);
-        }
         box.append(sn, el('p', 'db-off', OFFROAD));
         refs.side.append(box);
     }
 
-    function renderNav() {
-        const old = refs.main.querySelector('.db-nav');
-        if (old) old.remove();
+    function buildNav(cls) {
         const s = S.steps[S.i];
-        const nav = el('div', 'db-nav');
+        const nav = el('div', 'db-nav ' + cls);
         const n = chosen().length;
         const line = el('p', 'db-nav-tot');
         line.append(el('span', null, n + (n === 1 ? ' part' : ' parts')), el('strong', null, money(total())));
-        nav.append(line);
         const back = el('button', 'btn btn-ghost', 'Back');
         back.type = 'button';
         back.disabled = S.i === 0;
         back.addEventListener('click', () => go(S.i - 1, true));
-        nav.append(back);
+        nav.append(line, back);
         if (S.i < S.steps.length - 1) {
             const done = stepDone(s);
             const next = el('button', 'btn btn-primary', !s.required && !done ? 'Skip this step' : 'Next');
@@ -484,7 +487,14 @@
             nav.append(next);
             if (s.required && !done) line.insertAdjacentElement('beforebegin', el('p', 'db-nav-hint', s.kind === 'truck' ? 'Enter a 17 character VIN to continue.' : 'Choose one to continue.'));
         }
-        refs.main.append(nav);
+        return nav;
+    }
+
+    function renderNav() {
+        root.querySelectorAll('.db-nav').forEach((n) => n.remove());
+        refs.main.append(buildNav('db-nav-main'));
+        const slot = refs.side.querySelector('.db-side-nav');
+        if (slot) slot.append(buildNav('db-nav-side'));
     }
 
     let lastStep = -1;
@@ -498,9 +508,9 @@
         const disclaimer = el('p', 'db-off db-off-top', OFFROAD);
         refs.main.append(disclaimer);
         refs.main.append(s.kind === 'truck' ? truckStep(s) : s.kind === 'review' ? reviewStep(s) : optionStep(s));
-        renderNav();
         renderPills();
         renderSide();
+        renderNav();
         const g = refs.main.querySelector('.db-grid');
         if (g && keep) { g.style.scrollBehavior = 'auto'; g.scrollLeft = keep; g.dispatchEvent(new Event('scroll')); }
         if (scroll) {
