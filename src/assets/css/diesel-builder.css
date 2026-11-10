@@ -53,6 +53,7 @@
 .db-card-body { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-4); flex: 1; }
 .db-brand { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--amber); margin: 0; }
 .db-card-t { font-size: 1.25rem; line-height: 1.15; margin: 0; }
+.db-chip { align-self: flex-start; margin: 0; padding: 2px 8px; border: 1px solid var(--ice); color: var(--ice); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .db-card-n { font-size: 13.5px; color: var(--mute); margin: 0; }
 .db-price { font-size: 1.25rem; font-weight: 700; color: var(--text); margin: auto 0 0; padding-top: var(--sp-2); }
 .db-lab { font-size: 13px; color: var(--mute); }

@@ -171,6 +171,8 @@
         }
         const body = el('div', 'db-card-body');
         body.append(el('p', 'db-brand', opt.brand || p.vendor), el('h3', 'display db-card-t', opt.name));
+        // A platform with two tuning platforms (EZ LYNK and HP Tuners) lists both as separate cards, each tagged here.
+        if (opt.runner) body.append(el('p', 'db-chip', 'Runs on ' + opt.runner));
         if (opt.note) body.append(el('p', 'db-card-n', opt.note));
 
         let cur = (sel && vOf(opt.handle, sel)) || firstOk(opt.handle) || vs[0];
