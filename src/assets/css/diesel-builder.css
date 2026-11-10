@@ -137,3 +137,15 @@ body:has(.db-nav) a[aria-label^="Text us"] { display: none; }
 @media (min-width: 960px) { .db-card-img { aspect-ratio: 1 / 1; } }
 
 .db-grp { margin: var(--sp-6) 0 var(--sp-3); }
+
+/* Truck make icon (same logos as the truck selector) */
+.db-mk { display: block; height: 44px; width: auto; max-width: 140px; object-fit: contain; margin-bottom: var(--sp-3); }
+.db-mk-sm { height: 28px; width: auto; max-width: 64px; object-fit: contain; vertical-align: middle; margin-right: var(--sp-2); }
+.db-brand { display: flex; align-items: center; }
+/* Why a power package */
+.db-why { margin-top: var(--section-y); }
+.db-why-grid { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.db-why-c { background: #141517; border: 1px solid #26282C; border-radius: 14px; padding: var(--sp-5); }
+.db-why-c h3 { font-size: var(--fs-h3); margin: 0 0 var(--sp-2); }
+.db-why-c p { margin: 0; color: #B9BEC6; }
+.db-why-logos { margin-top: var(--sp-5); }
