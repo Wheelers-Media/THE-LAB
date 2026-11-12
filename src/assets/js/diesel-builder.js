@@ -25,6 +25,7 @@
         pick: {},           // stepId -> { handle: variantId }
         truck: {},          // field -> value
         ack: false,
+        ship: 'shop',       // 'shop' = parts ship to THE LAB and we install; 'home' = ship to the buyer
         i: 0,
         seen: new Set()     // steps the person has passed (so an optional step skipped shows a tick)
     };
@@ -378,7 +379,23 @@
         tot.append(el('span', null, 'Parts total (CAD)'), el('span', null, money(total())));
         list.append(tot);
         wrap.append(list);
-        wrap.append(el('p', 'db-step-p', 'Shipping and taxes are worked out at checkout. If you want us to fit it, request an install quote and our team will price the labour to your truck.'));
+        const how = el('fieldset', 'db-ship');
+        how.append(el('legend', 'db-ship-l', 'Where should the parts go?'));
+        const mk = (val, title, sub) => {
+            const lab = el('label', 'db-ship-o');
+            const r = document.createElement('input');
+            r.type = 'radio'; r.name = 'db-ship'; r.value = val; r.checked = S.ship === val;
+            r.addEventListener('change', () => { S.ship = val; renderShip(); });
+            const t = el('span', 'db-ship-t');
+            t.append(el('strong', null, title), el('span', null, sub));
+            lab.append(r, t);
+            return lab;
+        };
+        how.append(mk('shop', 'Ship to THE LAB and we install it', 'Parts come to our Fort St. John shop. We fit them for you.'), mk('home', 'Ship to me', 'I will fit the parts myself or have them fitted elsewhere.'));
+        wrap.append(how);
+        const note = el('div', 'db-ship-n');
+        refs.shipNote = note;
+        wrap.append(note);
 
         const ackWrap = el('label', 'db-ack');
         const cb = document.createElement('input');
@@ -388,20 +405,36 @@
         wrap.append(ackWrap);
 
         const row = el('div', 'db-finish');
-        const buy = el('button', 'btn btn-primary', 'Buy the parts');
+        const buy = el('button', 'btn btn-primary', 'Pay for the parts');
         buy.type = 'button'; buy.dataset.act = 'buy';
-        const quote = el('button', 'btn btn-ghost', 'Request my install quote');
-        quote.type = 'button'; quote.dataset.act = 'quote';
-        row.append(buy, quote);
+        row.append(buy);
         const status = el('p', 'db-hint');
         status.setAttribute('role', 'status');
         refs.status = status;
         wrap.append(row, status);
         buy.addEventListener('click', doBuy);
-        quote.addEventListener('click', doQuote);
-        refs.buy = buy; refs.quote = quote;
+        refs.buy = buy;
+        renderShip();
         wrap.append(el('p', 'db-hint', 'Not sure about a part? Call or text ' + SHOP_TXT + '.'));
         return wrap;
+    }
+
+    function renderShip() {
+        const n = refs.shipNote;
+        if (!n) return;
+        n.textContent = '';
+        if (S.ship === 'shop') {
+            n.append(el('p', 'db-ship-h', 'How it works'));
+            const ol = el('ol', 'db-ship-ol');
+            ['Pay for the parts now. They ship to our shop, so the address at checkout is already filled in.',
+             'We contact you when the parts arrive. You pick your install day then, so you never hold a slot for parts that are still on the way.',
+             'Plan for one to two days in the shop, depending on the build. Labour is billed at the shop rate after the install. No deposit is needed, because the parts are already paid for.'
+            ].forEach((t) => ol.append(el('li', null, t)));
+            n.append(ol, el('p', 'db-hint', 'Shipping and taxes are worked out at checkout.'));
+        } else {
+            n.append(el('p', 'db-hint', 'Shipping and taxes are worked out at checkout. Parts ship across Canada and to the US. Duties and taxes outside Canada are the buyer\u2019s.'));
+        }
+        if (refs.buy) refs.buy.textContent = S.ship === 'shop' ? 'Pay for the parts' : 'Buy the parts';
     }
 
     function gate() {
@@ -422,26 +455,17 @@
         if (t.axle) attrs['Axle ratio'] = t.axle;
         if (t.mods) attrs.Mods = t.mods;
         attrs['Off-road acknowledgement'] = 'Accepted';
+        const install = S.ship === 'shop';
+        attrs.Fulfilment = install ? 'Ship to THE LAB, install at THE LAB' : 'Ship to customer';
         const lines = chosen().map((c, k) => ({
             variantId: c.variant.id, quantity: 1,
             customAttributes: k === 0 ? attrs : { Build: S.pkg.title }
         }));
+        const opts = { attributes: [{ key: 'Fulfilment', value: attrs.Fulfilment }, { key: 'Build', value: S.pkg.title }] };
+        if (install) opts.address = { address1: '10219 95 Ave', city: 'Fort St. John', province: 'BC', country: 'CA', zip: 'V1J 5J5', company: 'THE LAB (Luxx Automotive Boutique)' };
         refs.buy.disabled = true;
         refs.status.textContent = 'Taking you to checkout...';
-        window.createShopifyCheckout(lines).then(() => { refs.buy.disabled = false; }, () => { refs.buy.disabled = false; });
-    }
-
-    const SERVICE_BY_STEP = { tune: 'Custom Tuning', exhaust: 'Exhaust Systems', tips: 'Exhaust Systems', downpipe: 'Exhaust Systems', egr: 'EGR Solutions', ccv: 'CCV Reroutes' };
-
-    function doQuote() {
-        const g = gate();
-        if (g) { refs.status.textContent = g; return; }
-        const services = [...new Set(chosen().map((c) => SERVICE_BY_STEP[c.step.id]).filter(Boolean))];
-        if (services.indexOf('Custom Tuning') < 0) services.unshift('Custom Tuning');
-        const tuneVar = chosen().filter((c) => c.step.id === 'tune').map((c) => c.variant.title).join(' ');
-        const set = { service: services, install: 'Install at THE LAB', trans_tune: /Add\b.*Transmission/i.test(tuneVar) ? 'Yes' : 'No' };
-        window.labHandoff('Custom Tuning', summaryText(), set, null);
-        location.href = '/contact/?service=Custom%20Tuning#form';
+        window.createShopifyCheckout(lines, opts).then(() => { refs.buy.disabled = false; }, () => { refs.buy.disabled = false; });
     }
 
     function renderSide() {

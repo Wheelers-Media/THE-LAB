@@ -149,3 +149,15 @@ body:has(.db-nav) a[aria-label^="Text us"] { display: none; }
 .db-why-c h3 { font-size: var(--fs-h3); margin: 0 0 var(--sp-2); }
 .db-why-c p { margin: 0; color: #B9BEC6; }
 .db-why-logos { margin-top: var(--sp-5); }
+
+.db-ship { border: 0; margin: var(--sp-5) 0 var(--sp-3); padding: 0; display: grid; gap: var(--sp-3); }
+.db-ship-l { font: 600 13px/1 'Barlow', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #F2F4F7; margin-bottom: var(--sp-2); padding: 0; }
+.db-ship-o { display: flex; gap: 12px; align-items: flex-start; padding: 16px; min-height: 52px; border: 1px solid var(--line); background: var(--panel); cursor: pointer; }
+.db-ship-o:has(input:checked) { border-color: var(--brand); }
+.db-ship-o input { margin-top: 4px; accent-color: var(--brand); }
+.db-ship-t { display: grid; gap: 2px; }
+.db-ship-t strong { color: #F2F4F7; font-weight: 600; }
+.db-ship-t span { color: #B9BEC6; font-size: 15px; }
+.db-ship-n { margin: 0 0 var(--sp-4); }
+.db-ship-h { margin: 0 0 8px; font: 600 13px/1 'Barlow', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #F2F4F7; }
+.db-ship-ol { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 8px; color: #B9BEC6; max-width: var(--measure); }

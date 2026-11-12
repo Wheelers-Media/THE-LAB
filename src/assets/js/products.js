@@ -488,7 +488,8 @@ function buildFilterOptions(catalog) {
 }
 
 // ── Checkout via Shopify Storefront API ─────────────────────────
-window.createShopifyCheckout = async function (cartItems) {
+// opts (optional): { attributes: [{key,value}], address: MailingAddressInput } sets cart attributes and a pre-filled delivery address.
+window.createShopifyCheckout = async function (cartItems, opts) {
     if (!cartItems || cartItems.length === 0) return;
 
     const lines = cartItems.map(item => {
@@ -511,7 +512,15 @@ window.createShopifyCheckout = async function (cartItems) {
     }`;
 
     try {
-        const data = await shopifyGraphQL(query, { input: { lines } });
+        const input = { lines };
+        if (opts && opts.attributes && opts.attributes.length) input.attributes = opts.attributes;
+        if (opts && opts.address) input.buyerIdentity = { deliveryAddressPreferences: [{ deliveryAddress: opts.address }] };
+        let data = await shopifyGraphQL(query, { input });
+        // If Shopify rejects the pre-filled address, check out without it rather than losing the sale.
+        if (data.cartCreate.userErrors.length > 0 && input.buyerIdentity) {
+            delete input.buyerIdentity;
+            data = await shopifyGraphQL(query, { input });
+        }
         if (data.cartCreate.userErrors.length > 0) {
             console.error(data.cartCreate.userErrors);
             alert("Error creating checkout. Please try again.");
