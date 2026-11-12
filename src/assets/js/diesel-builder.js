@@ -503,7 +503,7 @@
             variantId: c.variant.id, quantity: 1,
             customAttributes: k === 0 ? attrs : { Build: S.pkg.title }
         }));
-        const opts = { email: S.contact.email, attributes: [{ key: 'Fulfilment', value: attrs.Fulfilment }, { key: 'Build', value: S.pkg.title }, { key: 'Name', value: S.contact.name }, { key: 'Phone', value: S.contact.phone }] };
+        const opts = { email: S.contact.email, attributes: [{ key: 'Fulfilment', value: attrs.Fulfilment }, { key: 'Build', value: S.pkg.title }, { key: 'VIN', value: (S.truck && S.truck.vin || '').toUpperCase() }, { key: 'Name', value: S.contact.name }, { key: 'Phone', value: S.contact.phone }] };
         if (install) opts.address = { address1: '10219 95 Ave', city: 'Fort St. John', province: 'BC', country: 'CA', zip: 'V1J 5J5', company: 'THE LAB (Luxx Automotive Boutique)', firstName: S.contact.name.split(' ')[0], lastName: S.contact.name.split(' ').slice(1).join(' ') || '-', phone: undefined };
         if (opts.address) delete opts.address.phone;
         refs.buy.disabled = true;
