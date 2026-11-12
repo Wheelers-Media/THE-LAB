@@ -53,6 +53,12 @@
         S.steps = S.pkg.steps
             .map((s) => Object.assign({}, s, { options: s.options.filter((o) => S.products[o.handle]) }))
             .filter((s) => s.options.length);
+        // Parts the truck needs to be tuned are added for the customer (option "preselect": true in the package file).
+        // They show in the summary from the start and can be removed. A part that is out of stock is not added.
+        S.steps.forEach((s) => s.options.forEach((o) => {
+            const v = o.preselect && firstOk(o.handle);
+            if (v) choose(s, o.handle, v.id);
+        }));
         S.steps.push({ id: 'truck', title: 'Your Truck', required: true, kind: 'truck' });
         S.steps.push({ id: 'review', title: 'Review', required: true, kind: 'review' });
     }
@@ -180,6 +186,7 @@
         body.append(el('p', 'db-brand', opt.brand || p.vendor), el('h3', 'display db-card-t', opt.name));
         // A platform with two tuning platforms (EZ LYNK and HP Tuners) lists both as separate cards, each tagged here.
         if (opt.runner) body.append(el('p', 'db-chip', 'Runs on ' + opt.runner));
+        if (opt.preselect && sel) body.append(el('p', 'db-chip is-added', 'Added for your truck'));
         if (opt.note) body.append(el('p', 'db-card-n', opt.note));
 
         let cur = (sel && vOf(opt.handle, sel)) || firstOk(opt.handle) || vs[0];
