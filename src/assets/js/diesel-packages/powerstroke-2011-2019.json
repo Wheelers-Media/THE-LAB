@@ -22,6 +22,20 @@
       ]
     },
     {
+      "id": "device",
+      "title": "Tuning Device",
+      "required": false,
+      "mode": "one",
+      "text": "The device loads your tune onto the truck. Already have one? Skip this step.",
+      "options": [
+        {
+          "handle": "ez-lynk-autoagent-3",
+          "brand": "EZ LYNK",
+          "name": "AutoAgent 3"
+        }
+      ]
+    },
+    {
       "id": "exhaust",
       "title": "Exhaust",
       "required": true,

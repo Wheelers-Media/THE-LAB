@@ -29,6 +29,40 @@
       ]
     },
     {
+      "id": "device",
+      "title": "Tuning Device",
+      "required": false,
+      "mode": "one",
+      "text": "The device loads your tune onto the truck. Already have one? Skip this step. Choose the device that matches the tune you picked.",
+      "options": [
+        {
+          "handle": "ez-lynk-autoagent-3",
+          "brand": "EZ LYNK",
+          "name": "AutoAgent 3"
+        },
+        {
+          "handle": "hp-tuners-mpvi3",
+          "brand": "HP Tuners",
+          "name": "MPVI4 Interface"
+        }
+      ]
+    },
+    {
+      "id": "canbus",
+      "title": "CAN Bus Plugs",
+      "required": false,
+      "mode": "one",
+      "text": "CAN bus plugs are needed to tune a 2020-2023 L5P, so we added them for you. Remove them if you already have a set.",
+      "options": [
+        {
+          "handle": "2020-duramax-can-bus-connector",
+          "brand": "Polar",
+          "name": "2020+ Duramax CAN Bus Connector",
+          "preselect": true
+        }
+      ]
+    },
+    {
       "id": "exhaust",
       "title": "Exhaust",
       "required": true,

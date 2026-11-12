@@ -22,6 +22,36 @@
       ]
     },
     {
+      "id": "device",
+      "title": "Tuning Device",
+      "required": false,
+      "mode": "one",
+      "text": "The device loads your tune onto the truck. Already have one? Skip this step.",
+      "options": [
+        {
+          "handle": "hp-tuners-mpvi3",
+          "brand": "HP Tuners",
+          "name": "MPVI4 Interface"
+        }
+      ]
+    },
+    {
+      "id": "unlock",
+      "title": "ECM Unlock",
+      "required": false,
+      "mode": "one",
+      "text": "The 2024-2026 L5P computer is locked. It has to be unlocked before HP Tuners can tune it, so we added the unlock service for you. Remove it if your truck is already unlocked.",
+      "options": [
+        {
+          "handle": "2024-2026-6-6l-duramax-e42-ecm-unlock-service",
+          "brand": "AMDP",
+          "name": "E42 ECM Unlock Service",
+          "note": "Send-in service for AMDP custom tuning.",
+          "preselect": true
+        }
+      ]
+    },
+    {
       "id": "exhaust",
       "title": "Exhaust",
       "required": true,
