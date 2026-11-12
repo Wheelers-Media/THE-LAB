@@ -488,7 +488,7 @@ function buildFilterOptions(catalog) {
 }
 
 // ── Checkout via Shopify Storefront API ─────────────────────────
-// opts (optional): { attributes: [{key,value}], address: MailingAddressInput } sets cart attributes and a pre-filled delivery address.
+// opts (optional): { attributes: [{key,value}], email, address: MailingAddressInput } sets cart attributes and a pre-filled delivery address.
 window.createShopifyCheckout = async function (cartItems, opts) {
     if (!cartItems || cartItems.length === 0) return;
 
@@ -514,7 +514,11 @@ window.createShopifyCheckout = async function (cartItems, opts) {
     try {
         const input = { lines };
         if (opts && opts.attributes && opts.attributes.length) input.attributes = opts.attributes;
-        if (opts && opts.address) input.buyerIdentity = { deliveryAddressPreferences: [{ deliveryAddress: opts.address }] };
+        if (opts && (opts.address || opts.email)) {
+            input.buyerIdentity = {};
+            if (opts.email) input.buyerIdentity.email = opts.email;
+            if (opts.address) input.buyerIdentity.deliveryAddressPreferences = [{ deliveryAddress: opts.address }];
+        }
         let data = await shopifyGraphQL(query, { input });
         // If Shopify rejects the pre-filled address, check out without it rather than losing the sale.
         if (data.cartCreate.userErrors.length > 0 && input.buyerIdentity) {

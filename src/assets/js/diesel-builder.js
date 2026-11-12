@@ -5,6 +5,8 @@
     const root = document.getElementById('db-app');
     if (!root) return;
 
+    // Web3Forms public key (same one intake.js uses; safe in client code). Emails the build to the shop inbox.
+    const WEB3FORMS_KEY = '947b4a0a-5af7-480b-9aca-5f81e25e834e';
     const OFFROAD = 'Off-Road and Sanctioned Racing Use Only. Not legal for use on pollution-controlled vehicles driven on public roads.';
     const SHOP_TEL = '+12502619502';
     const SHOP_TXT = '(250) 261-9502';
@@ -25,6 +27,7 @@
         pick: {},           // stepId -> { handle: variantId }
         truck: {},          // field -> value
         ack: false,
+        contact: {},        // name, email, phone: asked on the review step, before checkout
         ship: 'shop',       // 'shop' = parts ship to THE LAB and we install; 'home' = ship to the buyer
         i: 0,
         seen: new Set()     // steps the person has passed (so an optional step skipped shows a tick)
@@ -397,6 +400,22 @@
         refs.shipNote = note;
         wrap.append(note);
 
+        const who = el('fieldset', 'db-ship db-who');
+        who.append(el('legend', 'db-ship-l', 'Your details'));
+        [['name', 'Full name', 'text', 'name'], ['email', 'Email', 'email', 'email'], ['phone', 'Phone', 'tel', 'tel']].forEach(([k, label, type, ac]) => {
+            const row = el('div', 'db-row');
+            const lab = el('label', 'db-lab', label);
+            lab.htmlFor = 'ct-' + k;
+            const inp = el('input', 'db-input');
+            inp.type = type; inp.id = 'ct-' + k; inp.autocomplete = ac; inp.value = S.contact[k] || '';
+            if (k === 'email') inp.inputMode = 'email';
+            inp.addEventListener('input', () => { S.contact[k] = inp.value.trim(); });
+            row.append(lab, inp);
+            who.append(row);
+        });
+        who.append(el('p', 'db-hint', 'We use these to confirm your build and to book your install. Nothing else.'));
+        wrap.append(who);
+
         const ackWrap = el('label', 'db-ack');
         const cb = document.createElement('input');
         cb.type = 'checkbox'; cb.checked = S.ack;
@@ -439,8 +458,30 @@
 
     function gate() {
         if (!truckOk()) return 'Add your VIN on the Your Truck step first.';
+        const c = S.contact;
+        if (!c.name || c.name.length < 2) return 'Add your name above.';
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c.email || '')) return 'Add a valid email above.';
+        if ((c.phone || '').replace(/\D/g, '').length < 10) return 'Add a phone number above, with area code.';
         if (!S.ack) return 'Tick the box above to continue.';
         return '';
+    }
+
+    // Email the full build and contact details to the shop before the customer reaches checkout, so an abandoned
+    // checkout still leaves a lead.
+    function emailBuild(install) {
+        const c = S.contact;
+        const body = [
+            (install ? 'Parts ship to THE LAB and we install.' : 'Parts ship to the customer.'),
+            summaryText(),
+            'Customer was sent to checkout. Look for the order with this email. Off-road acknowledgement accepted.'
+        ].join('\n\n');
+        try {
+            return fetch('https://api.web3forms.com/submit', {
+                method: 'POST', keepalive: true,
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({ access_key: WEB3FORMS_KEY, subject: 'Power package build: ' + S.pkg.title + ' - ' + c.name, from_name: 'THE LAB Website', name: c.name, email: c.email, phone: c.phone, message: body })
+            }).catch(() => {});
+        } catch (e) { return Promise.resolve(); }
     }
 
     function doBuy() {
@@ -454,6 +495,7 @@
         if (t.tank) attrs['Fuel tank'] = t.tank;
         if (t.axle) attrs['Axle ratio'] = t.axle;
         if (t.mods) attrs.Mods = t.mods;
+        attrs.Name = S.contact.name; attrs.Phone = S.contact.phone; attrs.Email = S.contact.email;
         attrs['Off-road acknowledgement'] = 'Accepted';
         const install = S.ship === 'shop';
         attrs.Fulfilment = install ? 'Ship to THE LAB, install at THE LAB' : 'Ship to customer';
@@ -461,10 +503,12 @@
             variantId: c.variant.id, quantity: 1,
             customAttributes: k === 0 ? attrs : { Build: S.pkg.title }
         }));
-        const opts = { attributes: [{ key: 'Fulfilment', value: attrs.Fulfilment }, { key: 'Build', value: S.pkg.title }] };
-        if (install) opts.address = { address1: '10219 95 Ave', city: 'Fort St. John', province: 'BC', country: 'CA', zip: 'V1J 5J5', company: 'THE LAB (Luxx Automotive Boutique)' };
+        const opts = { email: S.contact.email, attributes: [{ key: 'Fulfilment', value: attrs.Fulfilment }, { key: 'Build', value: S.pkg.title }, { key: 'Name', value: S.contact.name }, { key: 'Phone', value: S.contact.phone }] };
+        if (install) opts.address = { address1: '10219 95 Ave', city: 'Fort St. John', province: 'BC', country: 'CA', zip: 'V1J 5J5', company: 'THE LAB (Luxx Automotive Boutique)', firstName: S.contact.name.split(' ')[0], lastName: S.contact.name.split(' ').slice(1).join(' ') || '-', phone: undefined };
+        if (opts.address) delete opts.address.phone;
         refs.buy.disabled = true;
         refs.status.textContent = 'Taking you to checkout...';
+        emailBuild(install).finally(() => {}); // fire and forget: never hold up checkout
         window.createShopifyCheckout(lines, opts).then(() => { refs.buy.disabled = false; }, () => { refs.buy.disabled = false; });
     }
 
