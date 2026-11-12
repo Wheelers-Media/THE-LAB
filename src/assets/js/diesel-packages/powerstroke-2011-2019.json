@@ -10,7 +10,7 @@
       "title": "Tuning",
       "required": true,
       "mode": "one",
-      "text": "The tune is the heart of the build. Pick the tuning platform you want to run: EZ LYNK or SCT / Bully Dog. Your tune is custom written for your truck and the parts you choose below. Add transmission tuning here if you want it.",
+      "text": "The tune is the heart of the build. Ford tuning runs on EZ LYNK. Your tune is custom written for your truck and the parts you choose below. Add transmission tuning here if you want it.",
       "options": [
         {
           "handle": "amdp-2011-2019-6-7l-powerstroke-ez-lynk-custom-tuning-support-package",
@@ -18,13 +18,6 @@
           "name": "EZ LYNK Custom Tuning Support Package",
           "note": "Limited is a 4-week support window. Full is longer support.",
           "runner": "EZ LYNK"
-        },
-        {
-          "handle": "amdp-2011-2019-6-7l-powerstroke-sct-bully-dog-custom-tuning",
-          "brand": "AMDP",
-          "name": "SCT / Bully Dog Custom Tuning",
-          "note": "Needs your SCT or Bully Dog device. Pick your tune level.",
-          "runner": "SCT / Bully Dog"
         }
       ]
     },
