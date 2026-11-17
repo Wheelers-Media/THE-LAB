@@ -32,20 +32,32 @@
           "handle": "hp-tuners-mpvi3",
           "brand": "HP Tuners",
           "name": "MPVI4 Interface"
+        },
+        {
+          "handle": "amdp-hp-tuners-rtd-tuning-device",
+          "brand": "AMDP",
+          "name": "HP Tuners RTD4 Tuning Device"
         }
       ]
     },
     {
       "id": "unlock",
-      "title": "ECM Unlock",
+      "title": "Unlocks",
       "required": false,
-      "mode": "one",
-      "text": "The 2024-2026 L5P computer is locked. It has to be unlocked before HP Tuners can tune it, so we added the unlock service for you. Remove it if your truck is already unlocked.",
+      "mode": "many",
+      "text": "The 2024-2026 L5P engine and transmission computers are locked. Both have to be unlocked before HP Tuners can tune the truck, so we added both unlock services for you. Allow a minimum of 3 weeks. The unlock fee includes the return shipping. If you are not installing at our shop, you ship your computers to the unlock service at your own cost. Remove a service if that computer is already unlocked.",
       "options": [
         {
           "handle": "2024-2026-6-6l-duramax-e42-ecm-unlock-service",
           "brand": "AMDP",
           "name": "E42 ECM Unlock Service",
+          "note": "Send-in service for AMDP custom tuning.",
+          "preselect": true
+        },
+        {
+          "handle": "2024-2026-duramax-l5p-hp-tuners-tcm-send-in-unlock-service-for-amdp-custom-tuning",
+          "brand": "AMDP",
+          "name": "T93 TCM Global B Unlock Service",
           "note": "Send-in service for AMDP custom tuning.",
           "preselect": true
         }
@@ -171,5 +183,6 @@
         }
       ]
     }
-  ]
+  ],
+  "installNote": "The engine and transmission unlock takes a minimum of 3 weeks, so allow for that before your install day."
 }

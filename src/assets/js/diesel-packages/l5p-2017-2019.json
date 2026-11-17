@@ -44,6 +44,11 @@
           "handle": "hp-tuners-mpvi3",
           "brand": "HP Tuners",
           "name": "MPVI4 Interface"
+        },
+        {
+          "handle": "amdp-hp-tuners-rtd-tuning-device",
+          "brand": "AMDP",
+          "name": "HP Tuners RTD4 Tuning Device"
         }
       ]
     },

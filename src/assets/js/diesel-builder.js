@@ -186,7 +186,7 @@
         body.append(el('p', 'db-brand', opt.brand || p.vendor), el('h3', 'display db-card-t', opt.name));
         // A platform with two tuning platforms (EZ LYNK and HP Tuners) lists both as separate cards, each tagged here.
         if (opt.runner) body.append(el('p', 'db-chip', 'Runs on ' + opt.runner));
-        if (opt.preselect && sel) body.append(el('p', 'db-chip is-added', 'Added for your truck'));
+        if (opt.preselect && sel) body.append(el('p', 'db-chip is-added', opt.locked ? 'Required for your truck' : 'Added for your truck'));
         if (opt.note) body.append(el('p', 'db-card-n', opt.note));
 
         let cur = (sel && vOf(opt.handle, sel)) || firstOk(opt.handle) || vs[0];
@@ -233,9 +233,10 @@
             body.append(btn, a);
         } else {
             btn.classList.add(sel ? 'btn-ghost' : 'btn-primary');
-            btn.textContent = sel ? 'Selected' : (step.mode === 'one' ? 'Choose this' : 'Add');
+            btn.textContent = sel ? (opt.locked ? 'Required' : 'Selected') : (step.mode === 'one' ? 'Choose this' : 'Add');
             btn.setAttribute('aria-pressed', sel ? 'true' : 'false');
             btn.addEventListener('click', () => {
+                if (sel && opt.locked) return;
                 if (sel) unchoose(step, opt.handle); else choose(step, opt.handle, cur.id);
                 render(false);
             });
@@ -454,7 +455,7 @@
             const ol = el('ol', 'db-ship-ol');
             ['Pay for the parts now. They ship to our shop, so the address at checkout is already filled in.',
              'We contact you when the parts arrive. You pick your install day then, so you never hold a slot for parts that are still on the way.',
-             'Plan for one to two days in the shop, depending on the build. Labour is billed at the shop rate after the install. No deposit is needed, because the parts are already paid for.'
+             (S.pkg.installNote || 'Plan for one to two days in the shop, depending on the build.') + ' No deposit is needed, because the parts are already paid for.'
             ].forEach((t) => ol.append(el('li', null, t)));
             n.append(ol, el('p', 'db-hint', 'Shipping and taxes are worked out at checkout.'));
         } else {

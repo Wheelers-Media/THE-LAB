@@ -150,12 +150,14 @@
       "title": "EGR",
       "required": false,
       "mode": "many",
-      "text": "EGR kit and fittings. Optional. Skip it if you don't need it.",
+      "text": "On the 2023 and newer 6.7L the EGR has to come out before the downpipe goes in, so the EGR kit is added and required. Add the extras below if you want them.",
       "options": [
         {
           "handle": "2011-2026-ford-powerstroke-6-7l-egr-delete-kit",
           "brand": "Polar",
-          "name": "EGR Delete Kit"
+          "name": "EGR Delete Kit",
+          "preselect": true,
+          "locked": true
         },
         {
           "handle": "polar-diesel-egt-probe-adapter-fitting",
