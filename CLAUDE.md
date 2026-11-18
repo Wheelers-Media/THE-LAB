@@ -30,7 +30,7 @@ Luxx Automotive Boutique Inc., Fort St. John BC. Owners Eric and Christine Wheel
 Form (`intake.js`) -> Web3Forms email to the shop inbox -> confirmation with Cal.com embedded and pre-filled (`cal.com/the-lab/detailing-drop-off` for detailing, `cal.com/the-lab/eric-services` for everything else) -> the customer pays the $50 deposit inside the Cal.com booking step (do not say Eric texts a deposit link, and do not say Eric confirms the final price after seeing the vehicle). Shop number for Text Us and fallbacks: (250) 261-9502. GoHighLevel is fully removed; do not reintroduce it.
 
 ## Claims
-Do not publish these until Eric confirms them: "authorized dealer for every brand", "certified specialists", "satisfaction guarantee". Do not state anything about legality of delete/emissions products beyond "off-road use only"; legality questions go to Eric. Do not describe SMS marketing, lead magnets or a fitment gallery as live.
+Do not publish these until Eric confirms them: "authorized dealer for every brand", "certified specialists". Eric confirmed "satisfaction guarantee" (2026-11-18). Push in-shop service; mobile detailing exists but is never advertised. UV claims max "up to 99%" (never 99.9%). Do not state anything about legality of delete/emissions products beyond "off-road use only"; legality questions go to Eric. Do not describe SMS marketing, lead magnets or a fitment gallery as live.
 
 ## Never
 - Enter credentials, payment data or API keys anywhere.
