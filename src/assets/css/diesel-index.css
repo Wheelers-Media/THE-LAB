@@ -1,0 +1,71 @@
+/* Power packages landing page (/diesel/). Tokens come from the Foundation block in lab.css. Phone first. */
+.dx-page { padding-bottom: var(--sp-8); }
+
+/* Head: title, one line of help, three big brand buttons, the legal line */
+.dx-head { padding-top: var(--sp-6); }
+.dx-h1 { font-size: clamp(2.5rem, 9.5vw, 5.25rem); max-width: 16ch; margin: 0 0 var(--sp-3); }
+.dx-lede { max-width: 46ch; margin: 0 0 var(--sp-5); font-size: clamp(1rem, 2.4vw, 1.2rem); color: var(--text); }
+.dx-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-2); margin-bottom: var(--sp-4); }
+.dx-pick { display: grid; justify-items: center; align-content: center; gap: 2px; min-height: 112px; padding: var(--sp-3) var(--sp-2); background: var(--panel); color: var(--text); text-align: center; text-decoration: none; transition: background .25s var(--ease-out), transform .25s var(--ease-out); }
+.dx-pick img { height: 30px; width: auto; max-width: 64px; object-fit: contain; margin-bottom: var(--sp-2); }
+.dx-pick-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; text-transform: uppercase; font-size: 1.15rem; line-height: 1.05; }
+.dx-pick-s { font-size: 13.5px; color: var(--mute); }
+.dx-pick:hover { background: #1c1e22; }
+.dx-pick:active { transform: scale(.98); }
+.dx-pick:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.dx-off { font-size: 13.5px; line-height: 1.45; color: var(--mute); max-width: 70ch; margin: 0; }
+
+/* One panel per brand: a real truck from the shop, then its model years as big tappable rows */
+.dx-brand { margin-top: var(--section-y); border-top: 3px solid var(--amber); padding-top: var(--sp-5); }
+.dx-grid { display: grid; gap: var(--sp-5); grid-template-columns: minmax(0, 1fr); }
+.dx-photo { margin: 0; background: var(--panel); }
+.dx-photo img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.dx-brand-h { font-size: var(--fs-h2); margin: 0 0 var(--sp-2); }
+.dx-brand-p { margin: 0 0 var(--sp-4); max-width: 40ch; }
+.dx-rows { border-top: 1px solid var(--line); }
+.dx-row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "yr go" "mid mid"; align-items: center; gap: var(--sp-2) var(--sp-4); padding: var(--sp-4) 0; border-bottom: 1px solid var(--line); color: var(--text); text-decoration: none; transition: background .25s var(--ease-out), padding .25s var(--ease-out); }
+.dx-yr { grid-area: yr; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(2.4rem, 10vw, 3rem); line-height: 1; letter-spacing: .005em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dx-mid { grid-area: mid; display: grid; gap: 2px; min-width: 0; }
+.dx-t { font-weight: 700; font-size: 1.05rem; color: var(--text); }
+.dx-p { max-width: 52ch; }
+.dx-p { font-size: 14.5px; line-height: 1.4; color: var(--mute); }
+.dx-go { grid-area: go; display: grid; place-items: center; width: 48px; height: 48px; background: var(--brand); color: #fff; transition: background .25s var(--ease-out), transform .25s var(--ease-out); }
+.dx-go svg { width: 22px; height: 22px; }
+.dx-row:hover { background: var(--panel); padding-left: var(--sp-3); padding-right: var(--sp-3); }
+.dx-row:hover .dx-go { background: #0052cc; transform: translateX(2px); }
+.dx-row:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+
+/* Ship it or fit it */
+.dx-how { margin-top: var(--section-y); }
+.dx-steps { list-style: none; counter-reset: dx; margin: 0 0 var(--sp-7); padding: 0; display: grid; gap: var(--sp-5); }
+.dx-steps li { counter-increment: dx; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-4); align-items: baseline; max-width: 58ch; }
+.dx-steps li::before { content: counter(dx); font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 2.6rem; line-height: 1; color: var(--amber); }
+.dx-steps strong { color: var(--text); }
+.dx-brands-h { margin: 0 0 var(--sp-4); color: var(--text); font-weight: 700; }
+.dx-brands ul { list-style: none; margin: 0 0 var(--sp-6); padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-5) var(--sp-7); }
+.dx-brands li { display: flex; align-items: center; }
+.dx-brands img { height: 56px; width: auto; max-width: 150px; object-fit: contain; background: none; filter: brightness(0) invert(1); opacity: .85; }
+
+/* Desktop: truck on one side, years on the other; Ram flips so the page does not repeat itself */
+@media (min-width: 900px) {
+    .dx-head { padding-top: var(--sp-7); }
+    .dx-picker { gap: var(--sp-4); }
+    .dx-pick { grid-template-columns: auto 1fr; grid-template-areas: "logo name" "logo sub"; justify-items: start; text-align: left; column-gap: var(--sp-4); min-height: 96px; padding: var(--sp-4) var(--sp-5); }
+    .dx-pick img { grid-area: logo; height: 40px; max-width: 72px; margin: 0; }
+    .dx-pick-n { grid-area: name; align-self: end; font-size: 1.4rem; }
+    .dx-pick-s { grid-area: sub; align-self: start; }
+    .dx-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--sp-7); align-items: center; }
+    .dx-flip .dx-photo { order: 2; }
+    .dx-photo img { aspect-ratio: 4 / 3; }
+    .dx-brand { padding-top: var(--sp-7); }
+    .dx-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-7); }
+    .dx-steps li { grid-template-columns: minmax(0, 1fr); gap: var(--sp-2); }
+    .dx-steps li::before { font-size: 4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .dx-pick, .dx-row, .dx-go { transition: none; }
+    .dx-pick:active { transform: none; }
+    .dx-row:hover .dx-go { transform: none; }
+}
+
+.dx-pick[hidden], .dx-row[hidden], .dx-brand[hidden] { display: none; }

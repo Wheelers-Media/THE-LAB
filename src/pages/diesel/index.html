@@ -22,6 +22,7 @@
         .prose-lab strong { color: #e4e4e7; font-weight: 600; }
     </style>
     <link rel="stylesheet" href="/assets/css/lab.css?v=dfd16b4c">
+    <link rel="stylesheet" href="/assets/css/diesel-index.css?v=5b74b019">
     <link rel="stylesheet" href="/assets/css/diesel-builder.css?v=6e632d38">
     <link rel="stylesheet" href="/assets/css/tailwind.css?v=52be1a73">
     <script src="/assets/js/chrome.js?v=e995c427"></script>
@@ -119,76 +120,117 @@
     </div>
 </header>
 
-    <main id="main" class="lab-page">
-        <div class="site-wrap db-wrap">
-            <h1 class="display pg-h1 db-h1">Build your diesel power package</h1>
-            <p class="lede db-lede">Pick your truck and we walk you through the parts that fit it, one step at a time. No guessing which parts go together.</p>
-            <p class="db-off db-off-top">Off-Road and Sanctioned Racing Use Only. Not legal for use on pollution-controlled vehicles driven on public roads.</p>
-            <h2 class="display db-grp">Ford Powerstroke</h2>
-            <div class="db-plats">
-                <a class="db-plat" href="/diesel/powerstroke-2011-2019/">
-                    <span class="db-brand"><img class="db-mk-sm" src="/assets/ford-logo.png" width="1004" height="362" alt="" loading="lazy">Ford</span>
-                    <span class="db-plat-t">2011-2019 6.7L Powerstroke</span>
-                    <span class="db-plat-p">Tune, exhaust, delete pipe, EGR, CCV, fuel and monitoring.</span>
-                    <span class="btn btn-primary">Build your package</span>
-                </a>
-                <a class="db-plat" href="/diesel/powerstroke-2020-2022/">
-                    <span class="db-brand"><img class="db-mk-sm" src="/assets/ford-logo.png" width="1004" height="362" alt="" loading="lazy">Ford</span>
-                    <span class="db-plat-t">2020-2022 6.7L Powerstroke</span>
-                    <span class="db-plat-p">Tune, exhaust, downpipe, EGR, CCV, fuel and monitoring.</span>
-                    <span class="btn btn-primary">Build your package</span>
-                </a>
-                <a class="db-plat" href="/diesel/powerstroke-2023-2026/">
-                    <span class="db-brand"><img class="db-mk-sm" src="/assets/ford-logo.png" width="1004" height="362" alt="" loading="lazy">Ford</span>
-                    <span class="db-plat-t">2023-2026 6.7L Powerstroke</span>
-                    <span class="db-plat-p">Tune, exhaust, EGR, CCV, fuel and monitoring.</span>
-                    <span class="btn btn-primary">Build your package</span>
-                </a>
+    <main id="main" class="lab-page dx-page">
+        <header class="site-wrap dx-head">
+            <h1 class="display pg-h1 dx-h1">Build your diesel power package</h1>
+            <p class="lede dx-lede">Pick your truck and we walk you through the parts that fit it, one step at a time. No guessing which parts go together.</p>
+            <nav class="dx-picker" aria-label="Pick your truck brand">
+                <a class="dx-pick" href="#ford" data-brand="ford"><img src="/assets/ford-logo.png" width="1004" height="362" alt=""><span class="dx-pick-n">Ford</span><span class="dx-pick-s">Powerstroke</span></a>
+                <a class="dx-pick" href="#ram" data-brand="ram"><img src="/assets/ram-logo.png" width="2500" height="2250" alt=""><span class="dx-pick-n">Ram</span><span class="dx-pick-s">Cummins</span></a>
+                <a class="dx-pick" href="#gm" data-brand="gm"><img src="/assets/gm-logo.png" width="394" height="394" alt=""><span class="dx-pick-n">Chevy / GMC</span><span class="dx-pick-s">Duramax</span></a>
+            </nav>
+            <p class="dx-off">Off-Road and Sanctioned Racing Use Only. Not legal for use on pollution-controlled vehicles driven on public roads.</p>
+        </header>
+
+        <section class="dx-brand" id="ford" aria-labelledby="dx-ford-h" data-brand="ford">
+            <div class="site-wrap dx-grid">
+                <figure class="dx-photo"><img src="/assets/gridiron-ford-fulltube.jpg" width="900" height="600" alt="White Ford Super Duty dually with a Gridiron bumper parked outside the shop" loading="lazy" style="object-position:50% 55%"></figure>
+                <div class="dx-list">
+                    <h2 class="display dx-brand-h" id="dx-ford-h">Ford Powerstroke</h2>
+                    <p class="dx-brand-p">6.7L Powerstroke, 2011 to 2026. Pick your year.</p>
+                    <div class="dx-rows">
+                        <a class="dx-row" href="/diesel/powerstroke-2011-2019/">
+                            <span class="dx-yr">2011-2019</span>
+                            <span class="dx-mid"><span class="dx-t">6.7L Powerstroke</span><span class="dx-p">Tune, exhaust, delete pipe, EGR, CCV, fuel and monitoring.</span></span>
+                            <span class="dx-go"><span class="sr-only">Build your package</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                        </a>
+                        <a class="dx-row" href="/diesel/powerstroke-2020-2022/">
+                            <span class="dx-yr">2020-2022</span>
+                            <span class="dx-mid"><span class="dx-t">6.7L Powerstroke</span><span class="dx-p">Tune, exhaust, downpipe, EGR, CCV, fuel and monitoring.</span></span>
+                            <span class="dx-go"><span class="sr-only">Build your package</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                        </a>
+                        <a class="dx-row" href="/diesel/powerstroke-2023-2026/">
+                            <span class="dx-yr">2023-2026</span>
+                            <span class="dx-mid"><span class="dx-t">6.7L Powerstroke</span><span class="dx-p">Tune, exhaust, EGR, CCV, fuel and monitoring.</span></span>
+                            <span class="dx-go"><span class="sr-only">Build your package</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <h2 class="display db-grp">Ram Cummins</h2>
-            <div class="db-plats">
-                <a class="db-plat" href="/diesel/cummins-2013-2018/">
-                    <span class="db-brand"><img class="db-mk-sm" src="/assets/ram-logo.png" width="2500" height="2250" alt="" loading="lazy">Ram</span>
-                    <span class="db-plat-t">2013-2018 6.7L Cummins</span>
-                    <span class="db-plat-p">Tune, exhaust, delete pipe, EGR, CCV, grid heater and shift-on-the-fly.</span>
-                    <span class="btn btn-primary">Build your package</span>
-                </a>
-                <a class="db-plat" href="/diesel/cummins-2019-2021/">
-                    <span class="db-brand"><img class="db-mk-sm" src="/assets/ram-logo.png" width="2500" height="2250" alt="" loading="lazy">Ram</span>
-                    <span class="db-plat-t">2019-2021 6.7L Cummins</span>
-                    <span class="db-plat-p">Tune, exhaust, delete pipe, EGR, CCV, grid heater and shift-on-the-fly.</span>
-                    <span class="btn btn-primary">Build your package</span>
-                </a>
-                <a class="db-plat" href="/diesel/cummins-2022-2024/">
-                    <span class="db-brand"><img class="db-mk-sm" src="/assets/ram-logo.png" width="2500" height="2250" alt="" loading="lazy">Ram</span>
-                    <span class="db-plat-t">2022-2024 6.7L Cummins</span>
-                    <span class="db-plat-p">EZ LYNK or HP Tuners tune, exhaust, EGR, CCV and grid heater.</span>
-                    <span class="btn btn-primary">Build your package</span>
-                </a>
+        </section>
+
+        <section class="dx-brand dx-flip" id="ram" aria-labelledby="dx-ram-h" data-brand="ram">
+            <div class="site-wrap dx-grid">
+                <figure class="dx-photo"><img src="/assets/gridiron-ram-fulltube.jpg" width="900" height="600" alt="White Ram heavy duty with a black Gridiron bumper on a snowy lot" loading="lazy" style="object-position:40% 50%"></figure>
+                <div class="dx-list">
+                    <h2 class="display dx-brand-h" id="dx-ram-h">Ram Cummins</h2>
+                    <p class="dx-brand-p">6.7L Cummins, 2013 to 2024. Pick your year.</p>
+                    <div class="dx-rows">
+                        <a class="dx-row" href="/diesel/cummins-2013-2018/">
+                            <span class="dx-yr">2013-2018</span>
+                            <span class="dx-mid"><span class="dx-t">6.7L Cummins</span><span class="dx-p">Tune, exhaust, delete pipe, EGR, CCV, grid heater and shift-on-the-fly.</span></span>
+                            <span class="dx-go"><span class="sr-only">Build your package</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                        </a>
+                        <a class="dx-row" href="/diesel/cummins-2019-2021/">
+                            <span class="dx-yr">2019-2021</span>
+                            <span class="dx-mid"><span class="dx-t">6.7L Cummins</span><span class="dx-p">Tune, exhaust, delete pipe, EGR, CCV, grid heater and shift-on-the-fly.</span></span>
+                            <span class="dx-go"><span class="sr-only">Build your package</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                        </a>
+                        <a class="dx-row" href="/diesel/cummins-2022-2024/">
+                            <span class="dx-yr">2022-2024</span>
+                            <span class="dx-mid"><span class="dx-t">6.7L Cummins</span><span class="dx-p">EZ LYNK or HP Tuners tune, exhaust, EGR, CCV and grid heater.</span></span>
+                            <span class="dx-go"><span class="sr-only">Build your package</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <h2 class="display db-grp">Chevy / GMC Duramax</h2>
-            <div class="db-plats">
-                <a class="db-plat" href="/diesel/l5p-2017-2019/">
-                    <span class="db-brand"><img class="db-mk-sm" src="/assets/gm-logo.png" width="394" height="394" alt="" loading="lazy">Chevy / GMC</span>
-                    <span class="db-plat-t">2017-2019 6.6L L5P Duramax</span>
-                    <span class="db-plat-p">Tune, exhaust, downpipe, EGR and extras.</span>
-                    <span class="btn btn-primary">Build your package</span>
-                </a>
-                <a class="db-plat" href="/diesel/l5p-2020-2023/">
-                    <span class="db-brand"><img class="db-mk-sm" src="/assets/gm-logo.png" width="394" height="394" alt="" loading="lazy">Chevy / GMC</span>
-                    <span class="db-plat-t">2020-2023 6.6L L5P Duramax</span>
-                    <span class="db-plat-p">EZ LYNK or HP Tuners tune, exhaust, downpipe, EGR and extras.</span>
-                    <span class="btn btn-primary">Build your package</span>
-                </a>
-                <a class="db-plat" href="/diesel/l5p-2024-2026/">
-                    <span class="db-brand"><img class="db-mk-sm" src="/assets/gm-logo.png" width="394" height="394" alt="" loading="lazy">Chevy / GMC</span>
-                    <span class="db-plat-t">2024-2026 6.6L L5P Duramax</span>
-                    <span class="db-plat-p">Tune, exhaust, downpipe and EGR.</span>
-                    <span class="btn btn-primary">Build your package</span>
-                </a>
+        </section>
+
+        <section class="dx-brand" id="gm" aria-labelledby="dx-gm-h" data-brand="gm">
+            <div class="site-wrap dx-grid">
+                <figure class="dx-photo"><img src="/assets/gridiron-gmc-fulltube.jpg" width="900" height="600" alt="Blue GMC Sierra HD with a Gridiron bumper outside the Gridiron shop" loading="lazy" style="object-position:50% 50%"></figure>
+                <div class="dx-list">
+                    <h2 class="display dx-brand-h" id="dx-gm-h">Chevy / GMC Duramax</h2>
+                    <p class="dx-brand-p">6.6L L5P Duramax, 2017 to 2026. Pick your year.</p>
+                    <div class="dx-rows">
+                        <a class="dx-row" href="/diesel/l5p-2017-2019/">
+                            <span class="dx-yr">2017-2019</span>
+                            <span class="dx-mid"><span class="dx-t">6.6L L5P Duramax</span><span class="dx-p">Tune, exhaust, downpipe, EGR and extras.</span></span>
+                            <span class="dx-go"><span class="sr-only">Build your package</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                        </a>
+                        <a class="dx-row" href="/diesel/l5p-2020-2023/">
+                            <span class="dx-yr">2020-2023</span>
+                            <span class="dx-mid"><span class="dx-t">6.6L L5P Duramax</span><span class="dx-p">EZ LYNK or HP Tuners tune, exhaust, downpipe, EGR and extras.</span></span>
+                            <span class="dx-go"><span class="sr-only">Build your package</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                        </a>
+                        <a class="dx-row" href="/diesel/l5p-2024-2026/">
+                            <span class="dx-yr">2024-2026</span>
+                            <span class="dx-mid"><span class="dx-t">6.6L L5P Duramax</span><span class="dx-p">Tune, exhaust, downpipe and EGR.</span></span>
+                            <span class="dx-go"><span class="sr-only">Build your package</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <p class="db-hint">Don&rsquo;t see your truck? <a href='/store/catalog/'>Browse all parts</a>, call or text <a href="tel:+12502619502">(250) 261-9502</a> or <a href="/contact/?service=Custom%20Tuning#form">request a quote</a>.</p>
-        </div>
+        </section>
+
+        <section class="site-wrap dx-how" aria-labelledby="dx-how-h">
+            <h2 class="display bay-title" id="dx-how-h">Ship it or fit it</h2>
+            <ol class="dx-steps">
+                <li><strong>Pick your truck.</strong> Only the tunes and parts that fit it show up.</li>
+                <li><strong>Build your package.</strong> Parts your truck needs are added for you, and the total updates as you go.</li>
+                <li><strong>Get it your way.</strong> Parts ship across Canada, or we fit them at our shop in Fort St. John.</li>
+            </ol>
+            <div class="dx-brands">
+                <p class="dx-brands-h">Tunes and parts from</p>
+                <ul>
+                    <li><img src="/assets/EZ-Lynk-Logo.png" width="400" height="400" alt="EZ LYNK" loading="lazy"></li>
+                    <li><img src="/assets/HPTuners-Logo.png" width="500" height="144" alt="HP Tuners" loading="lazy"></li>
+                    <li><img src="/assets/AMDP-Logo.png" width="1200" height="628" alt="AMDP Custom Tuning" loading="lazy"></li>
+                    <li><img src="/assets/Polar-Diesel-Logo.webp" width="600" height="600" alt="Polar Diesel" loading="lazy"></li>
+                </ul>
+            </div>
+            <p class="db-hint">Don&rsquo;t see your truck? <a href="/store/catalog/">Browse all parts</a>, call or text <a href="tel:+12502619502">(250) 261-9502</a> or <a href="/contact/?service=Custom%20Tuning#form">request a quote</a>.</p>
+        </section>
     </main>
 
     <!-- FOOTER -->
@@ -279,7 +321,7 @@
 
 
 <script src="/assets/js/text-eric.js?v=a6eb6a38"></script>
-<script src="/assets/js/diesel-index.js?v=5c8e8b12" defer></script>
+<script src="/assets/js/diesel-index.js?v=b10ebd70" defer></script>
 </body>
 </html>
 
