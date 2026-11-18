@@ -1,0 +1,61 @@
+/* Home promo slideshow ("What's on now"). Content and dates live in promo-slides.js.
+   Phones: photo on top, copy below. Desktop (900px+): copy over the photo.
+   Native horizontal scroll with snap, so swipe works without a library. */
+.promo { position:relative; background:var(--ink); }
+.promo-track { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain; }
+.promo-track::-webkit-scrollbar { display:none; }
+.promo-slide { position:relative; flex:0 0 100%; scroll-snap-align:start; scroll-snap-stop:always; display:flex; flex-direction:column; background:var(--panel); }
+.promo-slide::before { content:''; position:absolute; left:0; top:0; width:100%; height:3px; background:var(--bay,var(--brand)); z-index:3; }
+.promo-slide--parts { --bay:var(--amber); }
+.promo-slide--boutique { --bay:var(--ice); }
+.promo-media { position:relative; aspect-ratio:16/9; overflow:hidden; background:#000; }
+.promo-media img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.promo-body { position:relative; z-index:2; flex:1; padding:20px 16px 24px; display:flex; flex-direction:column; gap:12px; max-width:640px; }
+.promo-eyebrow { margin:0; display:flex; flex-wrap:wrap; align-items:center; gap:8px; color:var(--bay); font-weight:800; font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; }
+.promo-title { margin:0; font-size:clamp(2rem,8.4vw,3.6rem); text-wrap:balance; }
+.promo-text { margin:0; color:#DADDE2; font-size:16px; line-height:1.45; max-width:46ch; text-wrap:pretty; }
+.promo-bonus { margin:0; padding:10px 12px; border-left:3px solid var(--bay); background:rgba(255,255,255,.05); color:var(--text); font-size:15px; max-width:46ch; }
+.promo-bonus strong { color:var(--bay); }
+.promo-fine { margin:auto 0 0; color:var(--mute); font-size:12.5px; line-height:1.4; max-width:60ch; }
+.promo-clock { display:inline-flex; gap:6px; align-items:baseline; font-variant-numeric:tabular-nums; color:var(--text); font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:clamp(1.5rem,5.5vw,2.1rem); letter-spacing:.02em; text-transform:uppercase; }
+.promo-clock small { font-family:'Barlow',sans-serif; font-size:12px; font-weight:700; letter-spacing:.12em; color:var(--mute); }
+.promo-chips { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:8px; max-width:560px; }
+.promo-chip a { height:100%; box-sizing:border-box; display:flex; flex-direction:column; gap:2px; min-height:64px; padding:10px 12px; border:1px solid var(--line); background:rgba(10,10,11,.72); color:var(--text); text-decoration:none; border-radius:3px; transition:border-color .2s; }
+.promo-chip a:hover { border-color:var(--bay); }
+.promo-chip-name { font-size:13px; font-weight:600; line-height:1.25; color:#DADDE2; }
+.promo-chip-price { display:flex; flex-direction:column; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:19px; line-height:1.15; white-space:nowrap; }
+.promo-chip-price s { color:var(--mute); font-size:13.5px; font-weight:700; }
+.promo-chip:nth-child(n+3) { display:none; }
+.promo-chip-tag { color:var(--bay); font-size:11.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.promo [data-src]:empty { display:none; }
+.promo-hide { display:none !important; }
+
+/* controls */
+.promo-nav { position:absolute; left:0; right:0; top:calc(56.25vw - 52px); z-index:4; display:flex; align-items:center; justify-content:flex-start; gap:12px; padding:0 16px; pointer-events:none; }
+.promo-dots { display:flex; gap:6px; pointer-events:auto; }
+.promo-dot { width:44px; height:44px; padding:0; border:0; background:none; cursor:pointer; display:grid; place-items:center; }
+.promo-dot::after { content:''; display:block; width:22px; height:4px; border-radius:2px; background:rgba(255,255,255,.45); box-shadow:0 0 0 1px rgba(0,0,0,.35); transition:background-color .2s, width .2s; }
+.promo-dot[aria-current="true"]::after { width:34px; background:#fff; }
+.promo-ctrl { display:flex; gap:6px; pointer-events:auto; }
+.promo-btn { width:44px; height:44px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.35); background:rgba(10,10,11,.6); color:#fff; border-radius:3px; cursor:pointer; }
+.promo-btn:hover { border-color:#fff; }
+.promo-btn svg { width:18px; height:18px; }
+[data-promo-prev], [data-promo-next] { display:none; }   /* phones swipe; arrows from 900px */
+.promo-dot:focus-visible, .promo-btn:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+
+@media (min-width:900px) {
+    .promo-slide { min-height:clamp(480px,64vh,620px); justify-content:flex-end; }
+    .promo-media { position:absolute; inset:0; aspect-ratio:auto; }
+    .promo-media::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg, rgba(10,10,11,.96) 0%, rgba(10,10,11,.86) 38%, rgba(10,10,11,.25) 72%, rgba(10,10,11,.1) 100%), linear-gradient(to top, rgba(10,10,11,.7), transparent 40%); }
+    .promo-body { padding:56px 0 88px; margin-left:max(16px, calc((100vw - 1200px) / 2 + 16px)); gap:14px; max-width:720px; flex:0 0 auto; }
+    .promo-nav { padding:0 max(16px, calc((100vw - 1200px) / 2 + 16px)); top:auto; bottom:20px; }
+    .promo-fine { margin:0; }
+    .promo-chips { grid-template-columns:repeat(4,1fr); max-width:none; width:min(780px, 62vw); }
+    [data-promo-prev], [data-promo-next] { display:grid; }
+    .promo-chip:nth-child(n+3) { display:block; }
+    .promo-chip.promo-hide { display:none; }
+}
+@media (prefers-reduced-motion: reduce) { .promo-track { scroll-behavior:auto; } .promo-dot::after { transition:none; } }
+/* hold the space until promo-slides.js fills it, so the page below does not jump */
+.promo:empty { min-height:calc(56.25vw + 430px); }
+@media (min-width:900px) { .promo:empty { min-height:clamp(480px,64vh,620px); } }
