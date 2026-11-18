@@ -45,7 +45,7 @@
       "title": "Unlocks",
       "required": false,
       "mode": "many",
-      "text": "The 2024-2026 L5P engine and transmission computers are locked. Both have to be unlocked before HP Tuners can tune the truck, so we added both unlock services for you. Allow a minimum of 3 weeks. The unlock fee includes the return shipping. If you are not installing at our shop, you ship your computers to the unlock service at your own cost. Remove a service if that computer is already unlocked.",
+      "text": "The 2024-2026 L5P engine and transmission computers are locked. Both have to be unlocked before HP Tuners can tune the truck, so we added both unlock services for you. HP Tuners takes a minimum of 3 weeks to unlock. If we install, your truck stays at our shop and we send the computers out for you. If you ship them yourself, it is the same 3 weeks and the shipping is at your cost. Remove a service if that computer is already unlocked.",
       "options": [
         {
           "handle": "2024-2026-6-6l-duramax-e42-ecm-unlock-service",
@@ -184,5 +184,5 @@
       ]
     }
   ],
-  "installNote": "The engine and transmission unlock takes a minimum of 3 weeks, so allow for that before your install day."
+  "installNote": "The engine and transmission unlock takes a minimum of 3 weeks, and your truck stays in our shop while it is out."
 }

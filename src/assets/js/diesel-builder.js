@@ -455,7 +455,7 @@
             const ol = el('ol', 'db-ship-ol');
             ['Pay for the parts now. They ship to our shop, so the address at checkout is already filled in.',
              'We contact you when the parts arrive. You pick your install day then, so you never hold a slot for parts that are still on the way.',
-             (S.pkg.installNote || 'Plan for one to two days in the shop, depending on the build.') + ' No deposit is needed, because the parts are already paid for.'
+             (S.pkg.installNote || 'Plan for one to two days in the shop, depending on the build.') + ' Labour is quoted separately, depending on the build. No deposit is needed, because the parts are already paid for.'
             ].forEach((t) => ol.append(el('li', null, t)));
             n.append(ol, el('p', 'db-hint', 'Shipping and taxes are worked out at checkout.'));
         } else {
