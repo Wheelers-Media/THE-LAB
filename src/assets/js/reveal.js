@@ -6,7 +6,7 @@
     if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     // grids whose children should appear one after another instead of as one block
-    var GRIDS = '.gi-cards,.gi-trucks,.gi-road-grid,.gi-gallery-grid,.results-grid,.quotes,.addons,.plans,.story,.checks';
+    var GRIDS = '.gx-cards,.gx-trucks,.gx-grid,.gx-ss-shots,.gx-finish,.gi-cards,.gi-trucks,.gi-road-grid,.gi-gallery-grid,.results-grid,.quotes,.addons,.plans,.story,.checks';
     // sections that are interactive or manage their own motion
     var SKIP = '.page-hero,.wz,[data-wz],.book,.lf,[data-intake],.hero,.door';
 

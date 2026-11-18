@@ -8,7 +8,7 @@ let catalogHTML = fs.readFileSync(catalogPath, 'utf8');
 let tuningHTML = fs.readFileSync(tuningPath, 'utf8');
 
 // The block to replace in catalog (Regex to handle whitespace)
-const catalogRegex = /<div class="flex justify-between items-center mb-6">\s*<div class="flex items-center gap-4">\s*<h1 class="text-3xl font-heading font-extrabold text-white uppercase">The Parts Store<\/h1>\s*<span data-product-count class="text-xs font-mono text-zinc-500 bg-edge px-3 py-1 rounded-full hidden sm:inline-block">Loading\.\.\.<\/span>\s*<\/div>\s*<span class="text-xs font-mono text-zinc-500 uppercase tracking-widest hidden sm:block">Performance Parts & Tuning<\/span>\s*<\/div>/g;
+const catalogRegex = /<div class="flex justify-between items-center mb-6">\s*<div class="flex items-center gap-4">\s*<h1 class="text-3xl font-heading font-extrabold text-white uppercase">The Performance Shop<\/h1>\s*<span data-product-count class="text-xs font-mono text-zinc-500 bg-edge px-3 py-1 rounded-full hidden sm:inline-block">Loading\.\.\.<\/span>\s*<\/div>\s*<span class="text-xs font-mono text-zinc-500 uppercase tracking-widest hidden sm:block">Performance Parts & Tuning<\/span>\s*<\/div>/g;
 
 const catalogReplace = `<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
                     <div class="flex items-center gap-4">
@@ -16,7 +16,7 @@ const catalogReplace = `<div class="flex flex-col sm:flex-row sm:items-center ju
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                             <span id="toggle-filters-text">Hide Filters</span>
                         </button>
-                        <h1 class="text-2xl md:text-3xl font-heading font-extrabold text-white uppercase">The Parts Store</h1>
+                        <h1 class="text-2xl md:text-3xl font-heading font-extrabold text-white uppercase">The Performance Shop</h1>
                         <span data-product-count class="text-xs font-mono text-zinc-500 bg-edge px-3 py-1 rounded-full hidden lg:inline-block">Loading...</span>
                     </div>
                     <div class="flex items-center gap-3 self-end sm:self-auto w-full sm:w-auto">

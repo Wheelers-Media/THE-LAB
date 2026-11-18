@@ -56,7 +56,7 @@ const newMain = `<main>
             <!-- Product Grid -->
             <div class="flex-1">
                 <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-3xl font-heading font-extrabold text-white uppercase">The Parts Store</h1>
+                    <h1 class="text-3xl font-heading font-extrabold text-white uppercase">The Performance Shop</h1>
                     <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest hidden sm:block">Performance Parts & Tuning</span>
                 </div>
                 <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

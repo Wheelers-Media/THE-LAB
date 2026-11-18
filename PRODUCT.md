@@ -17,7 +17,7 @@ Two audiences share one site:
 Both reach the shop mostly from a phone, often arriving from Instagram or Facebook.
 
 ## Product Purpose
-THE LAB (Luxx Automotive Boutique Inc., Fort St. John, BC) is a local shop with two arms under one roof: **The Boutique** (aesthetics and protection, run by the detailing team) and **The Parts Store / performance work** (diesel performance, run by Eric). The site turns visitors into booked jobs and parts orders. Success: more bookings and requests reaching the shop's phone, more parts sold, and more people following the shop on Instagram and Facebook.
+THE LAB (Luxx Automotive Boutique Inc., Fort St. John, BC) is a local shop with two arms under one roof: **The Boutique** (aesthetics and protection, run by the detailing team) and **The Performance Shop / performance work** (diesel performance, run by Eric). The site turns visitors into booked jobs and parts orders. Success: more bookings and requests reaching the shop's phone, more parts sold, and more people following the shop on Instagram and Facebook.
 
 ## Positioning
 A local shop that does both grit and luxury: hardcore diesel performance and show-quality detailing in one place, with authorized-brand credibility (EZ LYNK, HP Tuners, AMDP, Gridiron, Morimoto, Baja Designs, Diode Dynamics, Suntek).
@@ -30,7 +30,7 @@ A local shop that does both grit and luxury: hardcore diesel performance and sho
 - Social is a major channel: the shop is large on Instagram and Facebook and wants to grow both.
 
 ## Capabilities and Constraints
-- Must keep working through any redesign: intake forms (`intake.js`), booking flow, the cost estimator (`estimator.js`), parts store, cart and checkout (`store.js`, `products.js`), global search, vehicle selector, guided tuning, and the Text Us button. Keep their element ids, classes and `data-` hooks.
+- Must keep working through any redesign: intake forms (`intake.js`), booking flow, the cost estimator (`estimator.js`), performance shop, cart and checkout (`store.js`, `products.js`), global search, vehicle selector, guided tuning, and the Text Us button. Keep their element ids, classes and `data-` hooks.
 - Mobile is primary. A sticky mobile bottom nav exists.
 - Emissions-related products are for off-road and sanctioned racing use only; the legal wording on the site and forms must stay.
 - No GoHighLevel/LeadConnector code anywhere. All leads go to the shop's email and phone.

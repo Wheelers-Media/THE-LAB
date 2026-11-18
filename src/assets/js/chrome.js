@@ -115,7 +115,7 @@
 
         // ── Current page ─────────────────────────────────────────────────────
         var p = location.pathname;
-        var key = p.indexOf('/boutique') === 0 ? 'boutique' : p.indexOf('/store') === 0 ? 'store' : p.indexOf('/about') === 0 ? 'about' : (p.indexOf('/contact') === 0 || p.indexOf('-success') > -1) ? 'contact' : '';
+        var key = p.indexOf('/boutique') === 0 ? 'boutique' : p.indexOf('/gridiron') === 0 ? 'gridiron' : p.indexOf('/store') === 0 ? 'store' : p.indexOf('/about') === 0 ? 'about' : (p.indexOf('/contact') === 0 || p.indexOf('-success') > -1) ? 'contact' : '';
         if (key) document.querySelectorAll('.site-nav-link[data-nav="' + key + '"]').forEach(function (a) { a.setAttribute('aria-current', 'page'); });
 
         // ── Cart ─────────────────────────────────────────────────────────────

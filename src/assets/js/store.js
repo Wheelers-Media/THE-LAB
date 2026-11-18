@@ -1230,7 +1230,7 @@ function initPDP() {
     }
 
     // Set page title
-    document.title = `${product.name} | THE LAB Parts Store`;
+    document.title = `${product.name} | THE LAB Performance Shop`;
 
     let fitmentBadge = "";
     if (vmake && vengine && vyear) {

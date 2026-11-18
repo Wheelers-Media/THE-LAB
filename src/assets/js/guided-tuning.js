@@ -255,7 +255,7 @@
 
         hidePlatformSplit();
         updateDots(1);
-        document.title = 'The Parts Store | THE LAB Performance';
+        document.title = 'The Performance Shop | THE LAB Performance';
     });
 
     // ── Platform split show/hide ─────────────────────────────────────────────

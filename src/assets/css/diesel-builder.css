@@ -1,4 +1,4 @@
-/* Diesel power package builder (diesel-builder.js). Tokens come from the Foundation block in lab.css. Parts Store pages use the amber accent. */
+/* Diesel power package builder (diesel-builder.js). Tokens come from the Foundation block in lab.css. Performance Shop pages use the amber accent. */
 .db-wrap { padding-top: var(--sp-5); padding-bottom: var(--sp-8); --bay: var(--amber); }
 .db-crumb { font-size: 14px; color: var(--mute); margin-bottom: var(--sp-2); }
 .db-crumb a { color: var(--text); }

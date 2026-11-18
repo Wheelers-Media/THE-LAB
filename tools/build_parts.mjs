@@ -35,7 +35,7 @@ export const CATEGORIES = [
     slug: "egr",
     filter: "EGR",
     name: "EGR Solutions",
-    title: "EGR Kits for Diesel Trucks | THE LAB Parts Store",
+    title: "EGR Kits for Diesel Trucks | THE LAB Performance Shop",
     h1: "EGR SOLUTIONS.",
     intro:
       "EGR kits and coolers for Duramax, Cummins and Powerstroke trucks, shipped from Fort St. John, BC across Canada. Off-road and sanctioned racing use only.",
@@ -45,7 +45,7 @@ export const CATEGORIES = [
     slug: "exhaust",
     filter: "Exhaust",
     name: "Exhaust Systems",
-    title: "Diesel Exhaust Systems | THE LAB Parts Store",
+    title: "Diesel Exhaust Systems | THE LAB Performance Shop",
     h1: "EXHAUST SYSTEMS.",
     intro:
       "Diesel exhaust systems, downpipes, tips and mufflers for Duramax, Cummins and Powerstroke trucks, shipped from Fort St. John, BC across Canada.",
@@ -55,7 +55,7 @@ export const CATEGORIES = [
     slug: "ccv",
     filter: "CCV",
     name: "CCV Solutions",
-    title: "CCV Reroute Kits for Diesel Trucks | THE LAB Parts Store",
+    title: "CCV Reroute Kits for Diesel Trucks | THE LAB Performance Shop",
     h1: "CCV SOLUTIONS.",
     intro:
       "CCV reroute kits and crankcase ventilation upgrades for diesel trucks, shipped from Fort St. John, BC across Canada.",
@@ -65,7 +65,7 @@ export const CATEGORIES = [
     slug: "accessories",
     filter: "Accessories",
     name: "Bumpers & Accessories",
-    title: "Truck Bumpers & Accessories | THE LAB Parts Store",
+    title: "Truck Bumpers & Accessories | THE LAB Performance Shop",
     h1: "BUMPERS & ACCESSORIES.",
     intro:
       "Steel bumpers, lighting and truck accessories, installed at THE LAB in Fort St. John, BC or shipped across Canada.",
@@ -215,7 +215,7 @@ export const productJsonLd = (p, slug) => {
 export const productPage = (template, p, slug) => {
   const cat = categoryOf(p);
   const fit = fitmentLine(p);
-  const title = `${plain(p.name)} | THE LAB Parts Store`;
+  const title = `${plain(p.name)} | THE LAB Performance Shop`;
   const description = clip(p.description) || clip(`${plain(p.name)}. ${fit}. Shipped from Fort St. John, BC across Canada.`);
   const image = /^https:\/\//.test(p.image) ? p.image : "";
   const priceText = p.price > 0 ? `${money(p.price)} CAD` : "Contact us for pricing";
@@ -276,7 +276,7 @@ export const categoryPage = (template, cat, items) => {
     },
   };
   const inner = `    <section class="wrap pg-head" aria-labelledby="cat-h1">
-        <p class="pg-kick"><a href="/store/catalog/">The Parts Store</a></p>
+        <p class="pg-kick"><a href="/store/catalog/">The Performance Shop</a></p>
         <h1 id="cat-h1" class="display pg-h1">${esc(cat.h1)}</h1>
         <p class="pg-meta">${esc(cat.intro)}</p>
         <p class="pg-meta"><a href="/store/catalog/?category=${encodeURIComponent(cat.filter)}">Filter by your truck</a></p>

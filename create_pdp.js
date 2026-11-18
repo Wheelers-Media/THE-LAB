@@ -24,7 +24,7 @@ const newMain = `<main class="min-h-[80vh] flex items-center justify-center pt-2
 content = content.substring(0, mainStart) + newMain + content.substring(mainEnd);
 
 // Fix title just in case
-content = content.replace('<title>The Parts Store | THE LAB Performance</title>', '<title>Product | THE LAB Performance</title>');
+content = content.replace('<title>The Performance Shop | THE LAB Performance</title>', '<title>Product | THE LAB Performance</title>');
 
 fs.writeFileSync(pdpIndexPath, content, 'utf8');
 console.log('PDP created successfully.');

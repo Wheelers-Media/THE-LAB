@@ -1,0 +1,115 @@
+/* Gridiron page. Tokens come from lab.css Foundation; amber is the parts-bay accent. */
+.gx-sec { padding-top:var(--section-y); }
+.gx-sec .bay-title { margin-bottom:var(--sp-4); }
+.gx-sec > .lede { margin-bottom:var(--sp-5); }
+.gx-sec a:not(.btn):not(.gx-truck) { color:var(--text); text-decoration:underline; text-underline-offset:3px; }
+.gx-kick { margin:0 0 var(--sp-3); color:var(--amber); font:800 12px/1.3 'Barlow',sans-serif; letter-spacing:.14em; text-transform:uppercase; }
+
+/* Proof strip right under the hero */
+.gx-proof { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,1fr); border-bottom:1px solid var(--line); }
+.gx-proof li { padding:var(--sp-5) var(--sp-4); border-top:1px solid var(--line); border-right:1px solid var(--line); }
+.gx-proof li:nth-child(2n) { border-right:0; }
+.gx-proof b { display:block; font:800 clamp(2rem,8vw,3rem)/1 'Barlow Condensed',sans-serif; color:var(--text); text-transform:uppercase; }
+.gx-proof span { display:block; margin-top:var(--sp-2); font-size:14px; color:var(--mute); }
+
+/* Story */
+.gx-story { display:grid; gap:var(--sp-6); }
+.gx-story p { margin:0 0 var(--sp-3); max-width:var(--measure); text-wrap:pretty; }
+.gx-photo { margin:0; border-top:3px solid var(--amber); }
+.gx-photo img { width:100%; height:auto; display:block; }
+
+/* Range cards */
+.gx-cards { display:grid; gap:var(--sp-4); margin-top:var(--sp-5); }
+.gx-card { display:flex; flex-direction:column; background:var(--panel); border:1px solid var(--line); }
+.gx-card img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+.gx-card-body { display:grid; gap:var(--sp-2); padding:var(--sp-5); }
+.gx-card h3 { font-size:2rem; margin:0 0 var(--sp-1); }
+.gx-card .price { font-size:1.6rem; }
+.gx-card .btn { margin-top:var(--sp-3); width:100%; }
+
+/* Street Series feature */
+.gx-ss { margin-top:var(--sp-7); display:grid; gap:var(--sp-5); border-top:3px solid var(--amber); padding-top:var(--sp-5); }
+.gx-ss h3 { font-size:clamp(2rem,7vw,3rem); margin:0 0 var(--sp-3); }
+.gx-ss p { margin:0 0 var(--sp-3); max-width:var(--measure); text-wrap:pretty; }
+.gx-ss-shots { display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-2); }
+.gx-ss-shots figure { margin:0; }
+.gx-ss-shots figure:first-child { grid-column:1 / -1; }
+.gx-ss-shots img { width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; display:block; }
+.gx-sec figcaption { margin-top:var(--sp-2); font-size:13.5px; color:var(--mute); }
+.gx-fits { list-style:none; margin:var(--sp-4) 0 var(--sp-5); padding:0; border-top:1px solid var(--line); }
+.gx-fits li { display:flex; justify-content:space-between; gap:var(--sp-4); padding:var(--sp-3) 0; border-bottom:1px solid var(--line); color:#E4E6EA; font-weight:600; }
+.gx-fits li span { color:var(--mute); font-weight:500; text-align:right; }
+
+/* Finishes */
+.gx-finish { display:grid; gap:var(--sp-3); margin-top:var(--sp-5); }
+.gx-finish > div { padding:var(--sp-5); background:var(--panel); border:1px solid var(--line); border-top:3px solid var(--amber); }
+.gx-finish h3 { font-size:1.5rem; margin:0 0 var(--sp-2); }
+.gx-finish p { margin:0; font-size:15.5px; max-width:52ch; }
+
+/* Weights with proportional bars */
+.gx-weights { list-style:none; margin:var(--sp-5) 0 0; padding:0; }
+.gx-weights li { display:grid; grid-template-columns:1fr auto; gap:var(--sp-1) var(--sp-4); padding:var(--sp-3) 0; border-bottom:1px solid var(--line); color:#E4E6EA; font-weight:600; }
+.gx-weights li span { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.4rem; color:var(--text); }
+.gx-weights li i { grid-column:1 / -1; display:block; height:4px; background:var(--line); }
+.gx-weights li i::after { content:''; display:block; height:100%; width:var(--w); background:var(--amber); }
+
+/* Install times */
+.gx-times { list-style:none; margin:var(--sp-5) 0 0; padding:0; border-top:1px solid var(--line); }
+.gx-times li { display:flex; justify-content:space-between; gap:var(--sp-4); padding:var(--sp-3) 0; border-bottom:1px solid var(--line); }
+.gx-times li b { color:var(--text); font-weight:700; }
+.gx-times li span { color:var(--mute); text-align:right; }
+
+/* Fitment links */
+.gx-trucks { display:grid; gap:var(--sp-3); margin-top:var(--sp-5); }
+.gx-truck { display:flex; justify-content:space-between; align-items:center; gap:var(--sp-3); min-height:60px; padding:var(--sp-3) var(--sp-4); border:1px solid var(--line); background:var(--panel); color:var(--text); font-weight:600; text-decoration:none; }
+.gx-truck small { display:block; margin-top:2px; color:var(--mute); font-weight:500; font-size:14px; }
+.gx-truck [aria-hidden] { color:var(--amber); font-size:22px; transition:transform .3s cubic-bezier(.16,1,.3,1); }
+.gx-truck:hover { border-color:var(--amber); }
+.gx-truck:hover [aria-hidden] { transform:translateX(4px); }
+.gx-ask { margin-top:var(--sp-5); padding:var(--sp-5); border:1px solid var(--line); background:var(--panel); }
+.gx-ask h3 { font-size:1.5rem; margin:0 0 var(--sp-3); }
+.gx-ask ul { margin:0; padding-left:1.2em; }
+.gx-ask li { padding:var(--sp-1) 0; }
+
+/* Gallery */
+.gx-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:var(--sp-2); margin-top:var(--sp-5); }
+.gx-grid figure { margin:0; }
+.gx-grid img { width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; display:block; }
+.gx-grid--tall img { aspect-ratio:4/5; }
+.gx-grid--tall figure:first-child { grid-column:1 / -1; }
+.gx-grid--tall figure:first-child img { aspect-ratio:16/10; }
+
+/* FAQ */
+.gx-faq { margin-top:var(--sp-5); border-top:1px solid var(--line); }
+.gx-faq details { border-bottom:1px solid var(--line); }
+.gx-faq summary { display:flex; justify-content:space-between; align-items:center; gap:var(--sp-4); min-height:56px; padding:var(--sp-3) 0; cursor:pointer; list-style:none; color:var(--text); font-weight:700; font-size:17px; }
+.gx-faq summary::-webkit-details-marker { display:none; }
+.gx-faq summary::after { content:'+'; flex-shrink:0; color:var(--amber); font-size:26px; font-weight:400; line-height:1; transition:transform .3s cubic-bezier(.16,1,.3,1); }
+.gx-faq details[open] summary::after { transform:rotate(45deg); }
+.gx-faq details > p { margin:0 0 var(--sp-4); max-width:var(--measure); text-wrap:pretty; }
+
+.gx-list { list-style:none; margin:var(--sp-5) 0 0; padding:0; border-top:1px solid var(--line); }
+.gx-list li { max-width:70ch; padding:var(--sp-3) 0; border-bottom:1px solid var(--line); }
+.gx-install p { max-width:58ch; margin:0 0 var(--sp-5); }
+
+@media (min-width:900px) {
+    .gx-proof { grid-template-columns:repeat(4,1fr); }
+    .gx-proof li { border-top:0; border-right:1px solid var(--line); }
+    .gx-proof li:nth-child(2n) { border-right:1px solid var(--line); }
+    .gx-proof li:last-child { border-right:0; }
+    .gx-story { grid-template-columns:1.15fr .85fr; align-items:center; gap:var(--sp-8); }
+    .gx-cards { grid-template-columns:repeat(3,1fr); }
+    .gx-ss { grid-template-columns:.9fr 1.1fr; gap:var(--sp-7); align-items:start; }
+    .gx-finish { grid-template-columns:repeat(2,1fr); }
+    .gx-two { display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-8); align-items:start; }
+    .gx-trucks { grid-template-columns:repeat(2,1fr); }
+    .gx-grid { grid-template-columns:repeat(4,1fr); gap:var(--sp-4); }
+    .gx-grid--tall { grid-template-columns:repeat(3,1fr); }
+    .gx-grid--tall figure:first-child { grid-column:auto; }
+    .gx-grid--tall figure:first-child img { aspect-ratio:4/5; }
+}
+@media (prefers-reduced-motion:reduce) { .gx-truck [aria-hidden], .gx-faq summary::after { transition:none; } }
+@media (prefers-reduced-motion:no-preference) {
+    .gx-card, .gx-truck { transition:transform .35s var(--ease-out,cubic-bezier(.16,1,.3,1)), border-color .25s; }
+    .gx-card:hover { transform:translateY(-3px); border-color:var(--amber); }
+}

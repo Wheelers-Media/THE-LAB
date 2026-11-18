@@ -7,7 +7,7 @@ replacements = [
         r'<a href="/boutique/"\1>\2</a>'
     ),
     (
-        r'<button([^>]*)>([\s\n]*The Parts Store[\s\n]*<svg[^>]*>[\s\S]*?</svg>[\s\n]*)</button>',
+        r'<button([^>]*)>([\s\n]*The Performance Shop[\s\n]*<svg[^>]*>[\s\S]*?</svg>[\s\n]*)</button>',
         r'<a href="/store/"\1>\2</a>'
     ),
     (
@@ -15,7 +15,7 @@ replacements = [
         r'<a href="/boutique/" class="block text-[10px] text-zinc-600 hover:text-white uppercase tracking-widest font-bold px-1 pb-2 transition-colors">\2</a>'
     ),
     (
-        r'<p([^>]*class="[^"]*text-\[10px\][^"]*"[^>]*)>([\s\n]*The Parts Store[\s\n]*)</p>',
+        r'<p([^>]*class="[^"]*text-\[10px\][^"]*"[^>]*)>([\s\n]*The Performance Shop[\s\n]*)</p>',
         r'<a href="/store/" class="block text-[10px] text-zinc-600 hover:text-white uppercase tracking-widest font-bold px-1 pb-2 transition-colors">\2</a>'
     )
 ]
