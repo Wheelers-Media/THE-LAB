@@ -5,11 +5,12 @@
 .dx-head { padding-top: var(--sp-6); }
 .dx-h1 { font-size: clamp(2.5rem, 9.5vw, 5.25rem); max-width: 16ch; margin: 0 0 var(--sp-3); }
 .dx-lede { max-width: 46ch; margin: 0 0 var(--sp-5); font-size: clamp(1rem, 2.4vw, 1.2rem); color: var(--text); }
-.dx-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-2); margin-bottom: var(--sp-4); }
+.dx-picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-2); margin-bottom: var(--sp-4); }
 .dx-pick { display: grid; justify-items: center; align-content: center; gap: 2px; min-height: 112px; padding: var(--sp-3) var(--sp-2); background: var(--panel); color: var(--text); text-align: center; text-decoration: none; transition: background .25s var(--ease-out), transform .25s var(--ease-out); }
 .dx-pick img { height: 30px; width: auto; max-width: 64px; object-fit: contain; margin-bottom: var(--sp-2); }
 .dx-pick-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; text-transform: uppercase; font-size: 1.15rem; line-height: 1.05; }
 .dx-pick-s { font-size: 13.5px; color: var(--mute); }
+.dx-pick img.dx-pick-sil { filter: brightness(0) invert(1); }
 .dx-pick:hover { background: #1c1e22; }
 .dx-pick:active { transform: scale(.98); }
 .dx-pick:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
@@ -49,7 +50,7 @@
 /* Desktop: truck on one side, years on the other; Ram flips so the page does not repeat itself */
 @media (min-width: 900px) {
     .dx-head { padding-top: var(--sp-7); }
-    .dx-picker { gap: var(--sp-4); }
+    .dx-picker { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-4); }
     .dx-pick { grid-template-columns: auto 1fr; grid-template-areas: "logo name" "logo sub"; justify-items: start; text-align: left; column-gap: var(--sp-4); min-height: 96px; padding: var(--sp-4) var(--sp-5); }
     .dx-pick img { grid-area: logo; height: 40px; max-width: 72px; margin: 0; }
     .dx-pick-n { grid-area: name; align-self: end; font-size: 1.4rem; }

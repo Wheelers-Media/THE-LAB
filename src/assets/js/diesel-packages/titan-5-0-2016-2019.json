@@ -1,0 +1,44 @@
+{
+  "id": "titan-5-0-2016-2019",
+  "title": "2016-2019 Nissan Titan XD 5.0L Cummins",
+  "make": "Nissan",
+  "engine": "5.0L Cummins",
+  "years": "2016-2019",
+  "steps": [
+    {
+      "id": "tune",
+      "title": "Tuning",
+      "required": true,
+      "mode": "one",
+      "text": "The tune is the heart of the build. Your tune is custom written for your truck and the parts you choose below. The Titan tunes through EZ LYNK. Ask us which EZ LYNK device and cable your truck needs: (250) 261-9502.",
+      "options": [
+        {
+          "handle": "amdp-2016-2019-5-0l-titan-ez-lynk-custom-tuning-support-package",
+          "brand": "AMDP",
+          "name": "EZ LYNK Custom Tuning Support Package",
+          "note": "Limited support gives 4 weeks of tune access. Full support lasts as long as AMDP supports the truck.",
+          "runner": "EZ LYNK"
+        }
+      ]
+    },
+    {
+      "id": "exhaust",
+      "title": "Exhaust",
+      "required": false,
+      "mode": "one",
+      "text": "A 5 inch exhaust for the Titan. A muffler keeps the cab quieter. Optional.",
+      "options": [
+        {
+          "handle": "2016-2019-5-0l-cummins-nissan-titan",
+          "brand": "Polar Diesel",
+          "name": "5\" Exhaust"
+        },
+        {
+          "handle": "2016-2019-5-0l-cummins-nissan-titan-5-polar-exhaust-with-muffler",
+          "brand": "Polar Diesel",
+          "name": "5\" Exhaust With Muffler"
+        }
+      ]
+    }
+  ]
+}

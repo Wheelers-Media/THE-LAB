@@ -1,0 +1,61 @@
+{
+  "id": "powerstroke-3-0-2018-2020",
+  "title": "2018-2020 Ford F-150 3.0L Powerstroke",
+  "make": "Ford",
+  "engine": "3.0L Powerstroke",
+  "years": "2018-2020",
+  "steps": [
+    {
+      "id": "tune",
+      "title": "Tuning",
+      "required": true,
+      "mode": "one",
+      "text": "The tune is the heart of the build. Your tune is custom written for your truck and the parts you choose below. Run it on EZ LYNK, or pick the SCT / Bully Dog tune if you already own one of those tuners.",
+      "options": [
+        {
+          "handle": "amdp-2018-2019-3-0l-powerstroke-ez-lynk-custom-tuning-support-package",
+          "brand": "AMDP",
+          "name": "EZ LYNK Custom Tuning Support Package",
+          "note": "Limited support gives 4 weeks of tune access. Full support lasts as long as AMDP supports the truck.",
+          "runner": "EZ LYNK"
+        },
+        {
+          "handle": "amdp-2018-2019-3-0l-powerstroke-sct-bully-dog-custom-tuning",
+          "brand": "AMDP",
+          "name": "SCT / Bully Dog Custom Tuning",
+          "note": "For your own SCT or Bully Dog tuner. Choose a level or the 5 tune package.",
+          "runner": "SCT / Bully Dog"
+        }
+      ]
+    },
+    {
+      "id": "device",
+      "title": "Tuning Device",
+      "required": false,
+      "mode": "one",
+      "text": "The device loads your tune onto the truck. Already have one? Skip this step. Only needed for the EZ LYNK tune.",
+      "options": [
+        {
+          "handle": "ez-lynk-autoagent-3",
+          "brand": "EZ LYNK",
+          "name": "AutoAgent 3",
+          "note": "For the EZ LYNK tune."
+        }
+      ]
+    },
+    {
+      "id": "pipe",
+      "title": "Delete Pipe",
+      "required": false,
+      "mode": "one",
+      "text": "The pipe that replaces the factory DPF section. Optional.",
+      "options": [
+        {
+          "handle": "2018-2020-ford-powerstroke-3-0l-polar-delete-pipe",
+          "brand": "Polar Diesel",
+          "name": "3.0L Powerstroke Delete Pipe"
+        }
+      ]
+    }
+  ]
+}

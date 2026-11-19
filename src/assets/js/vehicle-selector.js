@@ -7,7 +7,15 @@ window.labPackageMap = {
     '2017+ 6.6L L5P Duramax': ['l5p-2017-2019', 'l5p-2020-2023', 'l5p-2024-2026'],
     '2020+ 6.7L Powerstroke': ['powerstroke-2020-2022', 'powerstroke-2023-2026'],
     '2017-2019 6.7L Powerstroke': ['powerstroke-2011-2019'],
-    '2011-2016 6.7L Powerstroke': ['powerstroke-2011-2019']
+    '2011-2016 6.7L Powerstroke': ['powerstroke-2011-2019'],
+    '3.0L LM2/LZ0 Duramax': ['duramax-3-0-2020-2022'],
+    '2019-2022 Duramax 3.0L LM2/LZ0': ['duramax-3-0-2020-2022'],
+    '3.0L EcoDiesel': ['ecodiesel-2014-2023'],
+    '2014-2023 EcoDiesel 3.0L': ['ecodiesel-2014-2023'],
+    '3.0L Powerstroke': ['powerstroke-3-0-2018-2020'],
+    '2018-2021 Powerstroke 3.0L': ['powerstroke-3-0-2018-2020'],
+    '2016-2022 Duramax 2.8L LWN': ['duramax-2-8-2016-2022'],
+    '2016-2019 Nissan Titan 5.0L Cummins': ['titan-5-0-2016-2019']
 };
 // URL of the power package page (or short list of years) for an engine, or null.
 window.labPackageUrl = function (engine) {

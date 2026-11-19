@@ -1,0 +1,72 @@
+{
+  "id": "ecodiesel-2014-2023",
+  "title": "2014-2023 Ram 1500 3.0L EcoDiesel",
+  "make": "Ram",
+  "engine": "3.0L EcoDiesel",
+  "years": "2014-2023",
+  "steps": [
+    {
+      "id": "tune",
+      "title": "Tuning",
+      "required": true,
+      "mode": "one",
+      "text": "The tune is the heart of the build. Your tune is custom written for your truck and the parts you choose below. EcoDiesel tuning runs on HP Tuners. 2014-2019 trucks need 4 credits and 2020-2023 trucks need 6. 2018 and newer trucks also need extra HP Tuners hardware or an unlock, so ask us what your year needs: (250) 261-9502.",
+      "options": [
+        {
+          "handle": "amdp-2014-2019-ecodiesel-hp-tuners-custom-tuning",
+          "brand": "AMDP",
+          "name": "HP Tuners Custom Tuning",
+          "note": "Choose your level and credits.",
+          "runner": "HP Tuners"
+        }
+      ]
+    },
+    {
+      "id": "device",
+      "title": "Tuning Device",
+      "required": false,
+      "mode": "one",
+      "text": "The device loads your tune onto the truck. Already have one? Skip this step.",
+      "options": [
+        {
+          "handle": "hp-tuners-mpvi3",
+          "brand": "HP Tuners",
+          "name": "MPVI4 Interface"
+        }
+      ]
+    },
+    {
+      "id": "pipe",
+      "title": "Delete Pipe",
+      "required": false,
+      "mode": "one",
+      "text": "The pipe that replaces the factory DPF section. Pick the one for your year. Optional.",
+      "options": [
+        {
+          "handle": "2014-2018-2019-classic-3-0l-ecodiesel-ram-1500-polar-delete-pipe",
+          "brand": "Polar Diesel",
+          "name": "Delete Pipe, 2014-2018 and 2019+ Classic"
+        },
+        {
+          "handle": "2020-2024-ram-1500-3-0l-polar-delete-pipe",
+          "brand": "Polar Diesel",
+          "name": "Delete Pipe, 2020-2023"
+        }
+      ]
+    },
+    {
+      "id": "egr",
+      "title": "EGR",
+      "required": false,
+      "mode": "many",
+      "text": "EGR kit for 2014-2018 trucks. Optional. Skip it if you don't need it.",
+      "options": [
+        {
+          "handle": "2014-2018-ecodiesel-polar-egr-delete-kit",
+          "brand": "Polar Diesel",
+          "name": "EcoDiesel EGR Delete Kit, 2014-2018"
+        }
+      ]
+    }
+  ]
+}
