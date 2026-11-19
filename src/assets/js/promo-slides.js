@@ -257,43 +257,39 @@
 
     // ── carousel ────────────────────────────────────────────────────
     function carousel(root, count) {
+        // Always moves on its own (Nathan, 2026-11-19): every 7 seconds. A tap, swipe, dot or arrow
+        // only pauses it for 12 seconds. It also waits while scrolled off screen, the tab is hidden,
+        // or a keyboard user is inside it.
         const track = root.querySelector('.promo-track');
         const slides = [...track.children];
         const dots = [...root.querySelectorAll('.promo-dot')];
-        const toggle = root.querySelector('[data-promo-toggle]');
         const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let cur = 0, timer = null, stopped = reduced, hold = false, away = false;
+        let cur = 0, idleUntil = 0, hold = false, away = false;
 
         const go = (i) => { cur = (i + count) % count; track.scrollTo({ left: slides[cur].offsetLeft, behavior: reduced ? 'auto' : 'smooth' }); };
         const mark = (i) => { cur = i; dots.forEach((d, k) => d.setAttribute('aria-current', String(k === i))); };
         const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && e.intersectionRatio > 0.6) mark(slides.indexOf(e.target)); }), { root: track, threshold: [0.6] });
         slides.forEach((s) => io.observe(s));
 
-        const setToggle = () => { toggle.setAttribute('aria-label', stopped ? 'Play slideshow' : 'Pause slideshow'); toggle.innerHTML = stopped ? ICON.play : ICON.pause; };
-        const run = () => { clearInterval(timer); if (!stopped && count > 1) timer = setInterval(() => { if (!hold && !away && !document.hidden) go(cur + 1); }, 7000); };
-        const stop = () => { stopped = true; clearInterval(timer); setToggle(); };
+        const touched = () => { idleUntil = Date.now() + 12000; };
+        if (count > 1) setInterval(() => { if (!hold && !away && !document.hidden && Date.now() > idleUntil) go(cur + 1); }, 7000);
 
-        root.querySelector('[data-promo-prev]').addEventListener('click', () => { stop(); go(cur - 1); });
-        root.querySelector('[data-promo-next]').addEventListener('click', () => { stop(); go(cur + 1); });
-        dots.forEach((d, k) => d.addEventListener('click', () => { stop(); go(k); }));
-        toggle.addEventListener('click', () => { stopped = !stopped; setToggle(); run(); });
-        track.addEventListener('pointerdown', stop, { passive: true });
-        track.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) stop(); }, { passive: true });
-        root.addEventListener('mouseenter', () => { hold = true; });
-        root.addEventListener('mouseleave', () => { hold = false; });
-        root.addEventListener('focusin', () => { hold = true; });
+        root.querySelector('[data-promo-prev]').addEventListener('click', () => { touched(); go(cur - 1); });
+        root.querySelector('[data-promo-next]').addEventListener('click', () => { touched(); go(cur + 1); });
+        dots.forEach((d, k) => d.addEventListener('click', () => { touched(); go(k); }));
+        track.addEventListener('pointerdown', touched, { passive: true });
+        track.addEventListener('wheel', (e) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) touched(); }, { passive: true });
+        root.addEventListener('focusin', (e) => { if (e.target.matches(':focus-visible')) hold = true; });
         root.addEventListener('focusout', () => { hold = false; });
-        root.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { stop(); go(cur + 1); } if (e.key === 'ArrowLeft') { stop(); go(cur - 1); } });
+        root.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { touched(); go(cur + 1); } if (e.key === 'ArrowLeft') { touched(); go(cur - 1); } });
         new IntersectionObserver((es) => { away = !es[0].isIntersecting; }, { threshold: 0.5 }).observe(root);   // no sliding while scrolled away
-        mark(0); setToggle(); run();
+        mark(0);
         if (count < 2) root.querySelector('.promo-nav').hidden = true;
     }
 
     const ICON = {
         prev: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
-        next: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>',
-        pause: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>',
-        play: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5v14l12-7z"/></svg>'
+        next: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>'
     };
 
     function init() {
@@ -304,7 +300,7 @@
         root.innerHTML =
             '<div class="promo-track" tabindex="-1">' + list.map((s, i) => slideHTML(s, i, list.length)).join('') + '</div>' +
             '<div class="promo-nav"><div class="promo-dots">' + list.map((s, i) => '<button type="button" class="promo-dot" aria-label="Slide ' + (i + 1) + ': ' + s.eyebrow.replace(/&middot;/g, '-').replace(/&\w+;/g, '') + '" aria-controls="promo-' + s.id + '"></button>').join('') + '</div>' +
-            '<div class="promo-ctrl"><button type="button" class="promo-btn" data-promo-toggle></button><button type="button" class="promo-btn" data-promo-prev aria-label="Previous slide">' + ICON.prev + '</button><button type="button" class="promo-btn" data-promo-next aria-label="Next slide">' + ICON.next + '</button></div></div>';
+            '<div class="promo-ctrl"><button type="button" class="promo-btn" data-promo-prev aria-label="Previous slide">' + ICON.prev + '</button><button type="button" class="promo-btn" data-promo-next aria-label="Next slide">' + ICON.next + '</button></div></div>';
         carousel(root, list.length);
         tick(root);
         if (root.querySelector('[data-clock]')) setInterval(() => tick(root), 20000);
