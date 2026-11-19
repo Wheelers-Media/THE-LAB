@@ -11,6 +11,8 @@
     const SHOP_TEL = '+12502619502';
     const SHOP_TXT = '(250) 261-9502';
     const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // phones: parts stack as rows (photo beside the name) instead of a swipe rail
+    const ROWS = matchMedia('(max-width: 767px)');
     const money = (n) => new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(n);
 
     const el = (tag, cls, text) => {
@@ -157,9 +159,9 @@
             refs.bar.append(li);
         });
         const cur = refs.bar.querySelector('.is-now');
-        if (cur) {
+        if (cur && refs.bar.scrollWidth > refs.bar.clientWidth) {
             const d = cur.getBoundingClientRect().left - refs.bar.getBoundingClientRect().left;
-            if (d < 0 || d + cur.offsetWidth > refs.bar.clientWidth) refs.bar.scrollLeft += d - 8;
+            refs.bar.scrollLeft += d - (refs.bar.clientWidth - cur.offsetWidth) / 2;
         }
     }
 
@@ -182,7 +184,9 @@
             im.width = 240; im.height = 240; im.loading = 'lazy';
             fig.append(im);
         }
-        const body = el('div', 'db-card-body');
+        // top = photo + name and price; foot = option menu and button (rows on phones put the photo beside the name)
+        const body = el('div', 'db-card-meta');
+        const foot = el('div', 'db-card-foot');
         body.append(el('p', 'db-brand', opt.brand || p.vendor), el('h3', 'display db-card-t', opt.name));
         // A platform with two tuning platforms (EZ LYNK and HP Tuners) lists both as separate cards, each tagged here.
         if (opt.runner) body.append(el('p', 'db-chip', 'Runs on ' + opt.runner));
@@ -217,7 +221,7 @@
                 if ((S.pick[step.id] || {})[opt.handle]) { choose(step, opt.handle, cur.id); render(false); }
                 else showPrice();
             });
-            body.append(lab, select);
+            foot.append(lab, select);
         }
         showPrice();
         body.append(price);
@@ -230,7 +234,7 @@
             btn.classList.add('btn-ghost');
             const a = el('a', 'db-ask', 'Call or text ' + SHOP_TXT);
             a.href = 'tel:' + SHOP_TEL;
-            body.append(btn, a);
+            foot.append(btn, a);
         } else {
             btn.classList.add(sel ? 'btn-ghost' : 'btn-primary');
             btn.textContent = sel ? 'Selected' : (step.mode === 'one' ? 'Choose this' : 'Add');
@@ -239,9 +243,11 @@
                 if (sel) unchoose(step, opt.handle); else choose(step, opt.handle, cur.id);
                 render(false);
             });
-            body.append(btn);
+            foot.append(btn);
         }
-        c.append(tick, fig, body);
+        const top = el('div', 'db-card-top');
+        top.append(fig, body);
+        c.append(tick, top, foot);
         // tap anywhere on the card to choose it (the option menu and the buttons keep their own behaviour)
         if (anyOk) c.addEventListener('click', (e) => { if (!e.target.closest('select, label, a, button')) btn.click(); });
         return c;
@@ -264,6 +270,10 @@
             wrap.append(n);
         } else {
             const grid = el('div', 'db-grid');
+            const n = step.options.length;
+            grid.dataset.n = String(n);
+            if (ROWS.matches || n <= 2) grid.classList.add('is-rows');
+            else if (n === 3) grid.classList.add('is-three');
             step.options.forEach((o) => grid.append(card(step, o)));
             const rail = el('div', 'db-rail');
             rail.append(grid);
@@ -585,16 +595,18 @@
         const keep = prev && lastStep === S.i ? prev.scrollLeft : 0;
         lastStep = S.i;
         refs.main.textContent = '';
-        const disclaimer = el('p', 'db-off db-off-top', OFFROAD);
-        refs.main.append(disclaimer);
         refs.main.append(s.kind === 'truck' ? truckStep(s) : s.kind === 'review' ? reviewStep(s) : optionStep(s));
+        refs.main.append(el('p', 'db-off db-off-top', OFFROAD));
         renderPills();
         renderSide();
         renderNav();
         const g = refs.main.querySelector('.db-grid');
         if (g && keep) { g.style.scrollBehavior = 'auto'; g.scrollLeft = keep; g.dispatchEvent(new Event('scroll')); }
         if (scroll) {
-            const top = refs.bar.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 66) - 8;
+            // Phones land on the step title so the first parts are in view; larger screens land on the step bar.
+            const head = refs.h && refs.h.closest('.db-step-head');
+            const target = ROWS.matches && head ? head : refs.bar;
+            const top = target.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 66) - 12;
             window.scrollTo({ top: Math.max(0, top), behavior: calm() ? 'auto' : 'smooth' });
             if (refs.h) refs.h.focus({ preventScroll: true });
         }
@@ -613,6 +625,7 @@
     load().then(() => {
         if (!S.steps.some((s) => s.options)) throw new Error('no products');
         render(false);
+        ROWS.addEventListener('change', () => render(false));
     }).catch((e) => {
         console.error('[diesel-builder]', e);
         root.textContent = '';

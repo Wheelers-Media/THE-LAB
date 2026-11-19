@@ -52,7 +52,7 @@
 .db-card { flex: 0 0 calc((100% - var(--gap)) / 2); scroll-snap-align: start; }
 @media (min-width: 960px) { .db-card { flex-basis: calc((100% - 2 * var(--gap)) / 3); } }
 .db-card-img { aspect-ratio: 16 / 10; }
-@media (min-width: 960px) { .db-card-img { aspect-ratio: 2 / 1; } .db-off-top { display: none; } .db-card-body { padding: var(--sp-3) var(--sp-4) var(--sp-4); } }
+@media (min-width: 960px) { .db-off-top { display: none; } }
 .db-arrow { position: absolute; top: 22%; z-index: 5; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: #0A0A0B; color: var(--text); cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.5); }
 .db-arrow-prev { left: -14px; }
 .db-arrow-next { right: -14px; }
@@ -64,13 +64,12 @@
 .db-card.is-on { border-color: var(--brand); box-shadow: 0 0 0 1px var(--brand); }
 .db-card-img { background: #0A0A0B; display: grid; place-items: center; }
 .db-card-img img { width: 100%; height: 100%; object-fit: contain; }
-.db-card-body { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-4); flex: 1; }
 .db-brand { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--amber); margin: 0; }
 .db-card-t { font-size: 1.25rem; line-height: 1.15; margin: 0; }
 .db-chip { align-self: flex-start; margin: 0; padding: 2px 8px; border: 1px solid var(--ice); color: var(--ice); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .db-chip.is-added { border-color: var(--blue, #0066FF); color: #fff; background: rgba(0,102,255,.18); }
 .db-card-n { font-size: 13.5px; color: var(--mute); margin: 0; }
-.db-price { font-size: 1.25rem; font-weight: 700; color: var(--text); margin: auto 0 0; padding-top: var(--sp-2); }
+.db-price { font-size: 1.25rem; font-weight: 700; color: var(--text); margin: 0; padding-top: var(--sp-1); }
 .db-lab { font-size: 13px; color: var(--mute); }
 .db-select, .db-input { width: 100%; min-height: 52px; padding: 0 var(--sp-3); background: #0A0A0B; border: 1px solid var(--line); border-radius: 0; color: var(--text); font: inherit; font-size: 16px; }
 textarea.db-input { padding: var(--sp-3); min-height: 96px; }
@@ -130,12 +129,10 @@ body:has(.db-nav) a[aria-label^="Text us"] { display: none; }
 .db-tick { position: absolute; top: 10px; right: 10px; z-index: 2; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 2px solid #8a8f98; background: rgba(10,10,11,.6); color: transparent; }
 .db-card.is-on .db-tick { background: var(--brand); border-color: var(--brand); color: #fff; }
 .db-card-t { font-size: 1.05rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.db-card-body { gap: var(--sp-1); padding: var(--sp-3); }
 .db-price { font-size: 1.1rem; }
 .db-pick { min-height: 44px; }
 .db-select { min-height: 44px; font-size: 14px; }
 @media (min-width: 1100px) { .db-card { flex-basis: calc((100% - 3 * var(--gap)) / 4); } }
-@media (min-width: 960px) { .db-card-img { aspect-ratio: 1 / 1; } }
 
 .db-grp { margin: var(--sp-6) 0 var(--sp-3); }
 
@@ -162,3 +159,77 @@ body:has(.db-nav) a[aria-label^="Text us"] { display: none; }
 .db-ship-n { margin: 0 0 var(--sp-4); }
 .db-ship-h { margin: 0 0 8px; font: 600 13px/1 'Barlow', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #F2F4F7; }
 .db-ship-ol { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 8px; color: #B9BEC6; max-width: var(--measure); }
+
+/* ── Layout pass (2026-11-19): no cut-offs on phones, no dead space on desktop ── */
+
+/* Header: make logo beside the title, wider intro */
+.db-mk { float: left; height: 40px; max-width: 72px; margin: 0 var(--sp-3) 0 0; }
+.db-h1 { display: flow-root; min-height: 40px; }
+.db-lede { clear: both; max-width: 72ch; margin-top: var(--sp-3); }
+.db-hint { margin-bottom: var(--sp-4); }
+@media (max-width: 767px) {
+    .db-mk { height: 34px; max-width: 56px; }
+    .db-lede { font-size: 16px; margin-bottom: var(--sp-2); }
+}
+
+/* Card parts: top = photo + name and price, foot = option menu and button */
+.db-card-top { display: flex; flex-direction: column; }
+.db-card-meta { display: flex; flex-direction: column; gap: var(--sp-1); padding: var(--sp-3) var(--sp-3) 0; min-width: 0; }
+.db-card-foot { display: grid; gap: var(--sp-2); padding: var(--sp-3); margin-top: auto; }
+.db-card-foot .db-lab { margin-bottom: calc(var(--sp-2) * -1 + 2px); }
+
+/* Three parts: one row of three */
+.db-grid.is-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; scroll-snap-type: none; }
+.db-grid.is-three .db-card { flex-basis: auto; }
+
+/* Rows: phones always, and steps with one or two parts on larger screens. Photo beside the name, nothing hidden. */
+.db-grid.is-rows { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-3); overflow: visible; scroll-snap-type: none; margin-right: 0; padding-right: 0; }
+.is-rows .db-card { flex-basis: auto; }
+.is-rows .db-card-top { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: var(--sp-3); align-items: start; padding: var(--sp-3) var(--sp-3) 0; }
+.is-rows .db-card-img { aspect-ratio: 1 / 1; border: 1px solid var(--line); }
+.is-rows .db-card-img img { padding: 4px; }
+.is-rows .db-card-meta { padding: 0 30px 0 0; }
+.is-rows .db-card-t { font-size: 1.05rem; }
+.is-rows .db-price { font-size: 1.15rem; }
+.is-rows .db-card-foot { padding-top: var(--sp-3); }
+@media (min-width: 768px) {
+    .db-grid.is-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+    .db-grid.is-rows[data-n="1"] { grid-template-columns: minmax(0, 560px); }
+    .is-rows .db-card-top { grid-template-columns: 148px minmax(0, 1fr); gap: var(--sp-4); padding: var(--sp-4) var(--sp-4) 0; }
+    .is-rows .db-card-foot { padding: var(--sp-4); }
+}
+.db-rail.is-flat + .db-swipe { display: none; }
+
+/* Step bar */
+.db-pills { margin-bottom: var(--sp-5); }
+@media (min-width: 960px) {
+    /* desktop: every step visible, wraps to a second line when there are many */
+    .db-pills { flex-wrap: wrap; overflow: visible; gap: var(--sp-2); }
+    .db-pill button { min-height: 40px; padding: 0 var(--sp-3) 0 var(--sp-2); font-size: 14px; }
+}
+@media (max-width: 959px) {
+    /* phones and tablets: the current step shows its name, the others show their number, the bar fades at the edges */
+    .db-pills { gap: 6px; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent 100%); padding: 0 16px; margin-left: -16px; margin-right: -16px; }
+    .db-pills::-webkit-scrollbar { display: none; }
+    .db-pill:not(.is-now) button { padding: 0 10px; }
+    .db-pill:not(.is-now) .db-pill-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .db-pill button { position: relative; min-height: 44px; }
+}
+
+/* Step text: the step title is the scroll landing point */
+.db-step-head { scroll-margin-top: calc(var(--header-h) + 12px); }
+@media (max-width: 767px) {
+    .db-step-p { font-size: 15.5px; line-height: 1.45; margin-top: var(--sp-2); }
+    .db-choose { margin: var(--sp-2) 0 var(--sp-3); }
+    .db-off-top { margin: var(--sp-5) 0 0; padding: var(--sp-3); font-size: 12.5px; }
+}
+
+/* Phone bar: total, Back and Next on one line (was 141px tall and covered the part names) */
+@media (max-width: 959px) {
+    .db-nav-main { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 6px var(--sp-2); padding: 10px var(--sp-4) calc(10px + env(safe-area-inset-bottom, 0px)); bottom: 0; box-shadow: 0 -8px 24px rgba(0, 0, 0, .45); }
+    .db-nav-main .db-nav-hint { grid-column: 1 / -1; font-size: 12.5px; line-height: 1.2; }
+    .db-nav-main .db-nav-tot { display: flex; flex-direction: column; justify-content: center; gap: 0; font-size: 12.5px; color: var(--mute); line-height: 1.15; }
+    .db-nav-main .db-nav-tot strong { font-size: 1.15rem; color: var(--text); }
+    .db-nav-main .btn { flex: none; min-height: 48px; padding: 0 var(--sp-4); }
+    .db-nav-main .btn-ghost { padding: 0 var(--sp-3); }
+}
