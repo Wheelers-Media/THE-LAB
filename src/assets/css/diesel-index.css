@@ -38,7 +38,7 @@
 
 /* Ship it or fit it */
 .dx-how { margin-top: var(--section-y); }
-.dx-steps { list-style: none; counter-reset: dx; margin: 0 0 var(--sp-7); padding: 0; display: grid; gap: var(--sp-5); }
+.dx-steps { list-style: none; counter-reset: dx; margin: 0; padding: 0; display: grid; gap: var(--sp-4); }
 .dx-steps li { counter-increment: dx; position: relative; padding-left: 3rem; max-width: 58ch; }
 .dx-steps li::before { content: counter(dx); position: absolute; left: 0; top: -.15em; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 2.6rem; line-height: 1; color: var(--amber); }
 .dx-steps strong { color: var(--text); }
@@ -70,3 +70,17 @@
 }
 
 .dx-pick[hidden], .dx-row[hidden], .dx-brand[hidden] { display: none; }
+
+/* How it works sits between the title and the truck picker */
+.dx-intro { margin: 0 0 var(--sp-5); padding: var(--sp-4); background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--amber); }
+.dx-how-h { font-size: var(--fs-h3); margin: 0 0 var(--sp-3); }
+.dx-intro .dx-steps li { padding-left: 2.4rem; font-size: 15px; line-height: 1.45; }
+.dx-intro .dx-steps li::before { font-size: 2rem; }
+.dx-how { margin-top: var(--section-y); }
+@media (min-width: 900px) {
+    .dx-intro { padding: var(--sp-5) var(--sp-6); }
+    .dx-intro .dx-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-6); }
+}
+/* The Text Us pill would sit on the truck buttons; keep it to the round icon on this page */
+body:has(.dx-picker) .te-fab { width: 48px; padding: 0; justify-content: center; }
+body:has(.dx-picker) .te-fab .te-label, body:has(.dx-picker) .te-fab .te-num { display: none; }
