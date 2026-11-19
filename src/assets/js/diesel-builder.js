@@ -490,8 +490,9 @@
         const body = [
             (install ? 'Parts ship to THE LAB and we install.' : 'Parts ship to the customer.'),
             summaryText(),
-            'Customer was sent to checkout. Look for the order with this email. Off-road acknowledgement accepted.'
-        ].join('\n\n');
+            'Customer was sent to checkout. Look for the order with this email. Off-road acknowledgement accepted.',
+            window.labReferralText && window.labReferralText() && 'REFERRAL: ' + window.labReferralText()
+        ].filter(Boolean).join('\n\n');
         try {
             return fetch('https://api.web3forms.com/submit', {
                 method: 'POST', keepalive: true,

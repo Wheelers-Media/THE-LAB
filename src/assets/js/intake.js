@@ -13,7 +13,7 @@
             fetch(CRM_LEADS_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...lead, attribution: window.labFirstTouch ? window.labFirstTouch() : null }),
+                body: JSON.stringify({ ...lead, attribution: window.labFirstTouch ? window.labFirstTouch() : null, referral: window.labReferral ? window.labReferral() : null }),
                 keepalive: true,
             }).catch(() => { /* the email already reached the shop */ });
         } catch (err) { /* older browsers without keepalive */ }
@@ -27,6 +27,9 @@
     function bookingUrl(route, c) {
         if (!CAL[route]) return { url: BOOKING[route], prefilled: false };
         const q = new URLSearchParams({ embed: 'true', name: c.name, email: c.email, phone: c.phone, attendeePhoneNumber: c.phone, notes: c.notes.slice(0, 1200) });
+        // Cal.com hands metadata[...] params to the booking webhook, so the CRM sees the referral on the booking
+        const ref = window.labReferral && window.labReferral();
+        if (ref) { q.set('metadata[ref]', ref.code); if (ref.keyword) q.set('metadata[kw]', ref.keyword); }
         return { url: `${CAL[route]}${CAL[route].includes('?') ? '&' : '?'}${q}`, prefilled: true };
     }
 
@@ -491,6 +494,7 @@
                     ? `NEXT: the customer is picking a time on the Cal.com "${calName}" page now. A Cal.com booking email means they booked, and the $50 deposit is paid in that step. No booking email yet means they have not booked.`
                     : 'NEXT: reply to the customer with a quote. They have not picked a time and will book by replying to your email.',
                 `CAME FROM: ${!h ? 'the form only (no walkthrough or quote tool used)' : h.src === 'quote' ? 'the instant quote tool on the contact page' : `the walkthrough on ${(h.url || '').split('#')[0] || 'a service page'}`}`,
+                window.labReferralText && window.labReferralText() && `REFERRAL: ${window.labReferralText()}`,
                 `SENT: ${when}`,
                 v.offroad && 'OFF-ROAD DISCLAIMER: agreed',
                 v.consent && `SMS CONSENT: Yes, agreed ${when}`,

@@ -2,6 +2,18 @@
   "buildCommand": "node tools/build_parts.mjs && node tools/build_reviews.mjs",
   "outputDirectory": ".",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/nw",
+      "destination": "/diesel?ref=nw",
+      "permanent": false
+    },
+    {
+      "source": "/nw/:page",
+      "destination": "/diesel/:page?ref=nw&kw=:page",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/assets/(.*)",

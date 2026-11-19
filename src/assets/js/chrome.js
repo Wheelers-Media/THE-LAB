@@ -169,4 +169,31 @@
         } catch (e) { return null; }
     };
     recordTouch();
+
+    // ── Referral tag ─────────────────────────────────────────────────────────
+    // A partner link (?ref=nw&kw=L5P) is remembered for 90 days. The first tag sticks: a later visit, tagged or not,
+    // never replaces it. Checkout, the forms and the booking calendar pass it on so the CRM can credit the sale.
+    // It never changes a price.
+    var REF_KEY = 'theLab_ref', REF_MS = 90 * 864e5;
+    function readRef() {
+        try {
+            var r = JSON.parse(localStorage.getItem(REF_KEY) || 'null');
+            return r && Date.now() - r.at < REF_MS ? r : null;
+        } catch (e) { return null; }
+    }
+    try {
+        var rq = new URLSearchParams(location.search), code = (rq.get('ref') || '').toLowerCase();
+        if (/^[a-z0-9]{1,20}$/.test(code) && !readRef()) {
+            localStorage.setItem(REF_KEY, JSON.stringify({ code: code, kw: (rq.get('kw') || '').replace(/[^\w-]/g, '').slice(0, 40), at: Date.now() }));
+        }
+    } catch (e) { /* storage unavailable */ }
+    window.labReferral = function () {
+        var r = readRef();
+        return r ? { code: r.code, keyword: r.kw || '', at: new Date(r.at).toISOString() } : null;
+    };
+    // One line for emails to the shop: "nw (keyword L5P, first visit 2026-11-19)"
+    window.labReferralText = function () {
+        var r = window.labReferral();
+        return r ? r.code + ' (' + (r.keyword ? 'keyword ' + r.keyword + ', ' : '') + 'first visit ' + r.at.slice(0, 10) + ')' : '';
+    };
 })();
