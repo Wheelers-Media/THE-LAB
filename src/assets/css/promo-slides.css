@@ -59,3 +59,6 @@
 /* hold the space until promo-slides.js fills it, so the page below does not jump */
 .promo:empty { min-height:calc(56.25vw + 430px); }
 @media (min-width:900px) { .promo:empty { min-height:clamp(480px,64vh,620px); } }
+
+/* off-road line under the homepage parts rail (required on any delete copy) */
+.rail-offroad { margin:12px 0 0; color:var(--mute); font-size:12.5px; line-height:1.4; }
