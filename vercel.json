@@ -9,8 +9,13 @@
       "permanent": false
     },
     {
-      "source": "/nw/:page",
+      "source": "/nw/:page((?:l5p|cummins|powerstroke)-[0-9]{4}-[0-9]{4})",
       "destination": "/diesel/:page?ref=nw&kw=:page",
+      "permanent": false
+    },
+    {
+      "source": "/nw/:kw",
+      "destination": "/diesel?ref=nw&kw=:kw",
       "permanent": false
     }
   ],
