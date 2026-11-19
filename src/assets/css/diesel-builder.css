@@ -165,11 +165,11 @@ body:has(.db-nav) a[aria-label^="Text us"] { display: none; }
 /* Header: make logo beside the title, wider intro */
 .db-mk { float: left; height: 40px; max-width: 72px; margin: 0 var(--sp-3) 0 0; }
 .db-h1 { display: flow-root; min-height: 40px; }
-.db-lede { clear: both; max-width: 72ch; margin-top: var(--sp-3); }
+.db-wrap .db-lede { clear: both; max-width: 72ch; margin-top: var(--sp-3); }
 .db-hint { margin-bottom: var(--sp-4); }
 @media (max-width: 767px) {
     .db-mk { height: 34px; max-width: 56px; }
-    .db-lede { font-size: 16px; margin-bottom: var(--sp-2); }
+    .db-wrap .db-lede { font-size: 16px; margin-bottom: var(--sp-2); }
 }
 
 /* Card parts: top = photo + name and price, foot = option menu and button */
