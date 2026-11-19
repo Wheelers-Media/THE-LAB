@@ -70,12 +70,12 @@
             {
                 id: 'power', bay: 'parts', img: '/assets/promo-power.jpg', alt: 'THE LAB tuner working on a laptop calibration inside a Ford Super Duty',
                 versions: [
-                    {   // Black Friday bonus. Eric approved the $100 credit 2026-11-19. [CONFIRM how it is issued and whether it can expire]
+                    {   // Black Friday bonus. Eric approved 2026-11-19: issued as a $100 gift card at the till, no expiry
                         from: 'polar.start', to: 'polar.end', rank: 2,
                         eyebrow: 'Power Packages &middot; Black Friday bonus',
                         title: 'Build it here. Get $100 for the Boutique.',
                         text: 'Order a custom tuning package with Polar exhaust by December 4 and have it installed at THE LAB. Polar parts are {shopPct}% off in the shop.',
-                        bonus: '<strong>Bonus:</strong> a $100 Boutique credit for a detail or tint, good January 5 to March 31.',
+                        bonus: '<strong>Bonus:</strong> a $100 THE LAB gift card for a detail or tint in the new year.',
                         ctas: [['Build my package', '/diesel/'], ['Ask Eric about my truck', '/contact/?service=Custom%20Tuning#form']],
                         fine: 'Installs at our $125/hr shop rate, quoted by Eric. ' + OFFROAD
                     },
