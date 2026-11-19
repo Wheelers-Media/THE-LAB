@@ -487,6 +487,24 @@ function buildFilterOptions(catalog) {
     };
 }
 
+// ── Sale codes the website applies at checkout ─────────────────
+// Black Friday 2026 (Eric, 2026-11-19): 15% off Polar Diesel online. POLARBF15 only discounts products in the
+// Shopify collection "Polar Diesel (all)", so it is safe to send with every cart. The shop uses POLARSHOP10 at the register.
+// Times are Fort St. John (MST). Preview test: add ?checkout-test=1 on a Vercel preview (not thelabfsj.ca) to send LABTEST15.
+const LAB_CHECKOUT_CODES = [
+    { code: 'POLARBF15', from: '2026-11-23T00:00:00-07:00', to: '2026-12-04T23:59:59-07:00' }
+];
+function labCheckoutCodes() {
+    const now = Date.now();
+    const codes = LAB_CHECKOUT_CODES.filter(c => now >= Date.parse(c.from) && now <= Date.parse(c.to)).map(c => c.code);
+    try {
+        const preview = !/(^|\.)thelabfsj\.ca$/.test(location.hostname);
+        if (preview && new URLSearchParams(location.search).has('checkout-test')) sessionStorage.setItem('labCheckoutTest', '1');
+        if (preview && sessionStorage.getItem('labCheckoutTest') === '1') codes.push('LABTEST15');
+    } catch (e) { /* storage unavailable: no test code */ }
+    return codes;
+}
+
 // ── Checkout via Shopify Storefront API ─────────────────────────
 // opts (optional): { attributes: [{key,value}], email, address: MailingAddressInput } sets cart attributes and a pre-filled delivery address.
 window.createShopifyCheckout = async function (cartItems, opts) {
@@ -514,6 +532,8 @@ window.createShopifyCheckout = async function (cartItems, opts) {
     try {
         const input = { lines };
         if (opts && opts.attributes && opts.attributes.length) input.attributes = opts.attributes;
+        const codes = labCheckoutCodes();
+        if (codes.length) input.discountCodes = codes;
         if (opts && (opts.address || opts.email)) {
             input.buyerIdentity = {};
             if (opts.email) input.buyerIdentity.email = opts.email;
@@ -523,6 +543,11 @@ window.createShopifyCheckout = async function (cartItems, opts) {
         // If Shopify rejects the pre-filled address, check out without it rather than losing the sale.
         if (data.cartCreate.userErrors.length > 0 && input.buyerIdentity) {
             delete input.buyerIdentity;
+            data = await shopifyGraphQL(query, { input });
+        }
+        // A sale code should never block a checkout: retry without it.
+        if (data.cartCreate.userErrors.length > 0 && input.discountCodes) {
+            delete input.discountCodes;
             data = await shopifyGraphQL(query, { input });
         }
         if (data.cartCreate.userErrors.length > 0) {
