@@ -19,7 +19,10 @@
         polar: {
             start: '2026-11-23T00:00:00-07:00',
             end: '2026-12-04T23:59:59-07:00',
-            pct: 15,                       // [CONFIRM with Eric] Polar allows up to 15% (MAP window Nov 20 to Dec 7)
+            pct: 15,                       // online (website) discount. Eric, 2026-11-19: 15% online, 10% in the shop
+            shopPct: 10,                   // in-shop (register) discount, shown in the fine print
+            atCheckout: true,              // true = discount is an automatic discount applied at checkout, so the chips work out
+                                           // the sale price themselves. If compare-at prices are loaded in Shopify instead, those win.
             parts: [                       // Shopify handles; short names for the chips
                 { handle: '2011-2026-ford-powerstroke-6-7l-5-exhaust', name: '6.7 Powerstroke 5" exhaust' },
                 { handle: '2019-2024-cummins-6-7l-5-exhaust', name: '2019-24 Cummins 5" exhaust' },
@@ -37,41 +40,41 @@
                         to: 'polar.start', rank: 1,
                         eyebrow: 'Polar Diesel Black Friday &middot; Nov 23 to Dec 4',
                         title: 'Polar&rsquo;s biggest sale of the year starts November 23.',
-                        text: 'Up to {pct}% off Polar exhaust, tips and elbows. Plan your build now, then check out when the prices drop.',
+                        text: '{pct}% off Polar exhaust, tips and elbows online. Plan your build now, then check out when the prices drop.',
                         clock: { to: 'polar.start', label: 'Starts in' },
                         chips: 'teaser',
                         ctas: [['Plan my build', '/diesel/'], ['See Polar parts', '/store/catalog/?brand=Polar+Diesel']],
-                        fine: OFFROAD
+                        fine: 'In the shop: {shopPct}% off Polar from Nov 23. ' + OFFROAD
                     },
                     {   // last 48 hours
                         from: '2026-12-03T00:00:00-07:00', to: 'polar.end', rank: 1,
                         eyebrow: 'Polar Diesel Black Friday &middot; Last 2 days',
-                        title: 'Last call: {pct}% off Polar Diesel ends Friday night.',
+                        title: 'Last call: {pct}% off Polar Diesel online ends Friday night.',
                         text: 'Exhaust, tips and elbows at the lowest Polar pricing of the year. Ships across Canada and to the US, or installed here.',
                         clock: { to: 'polar.end', label: 'Ends in' },
                         chips: 'sale',
                         ctas: [['Shop the sale', '/store/catalog/?brand=Polar+Diesel'], ['Build a power package', '/diesel/']],
-                        fine: 'Sale ends December 4 at 11:59 p.m. MT. ' + OFFROAD
+                        fine: 'Online price applies at checkout; {shopPct}% off in the shop. Ends December 4 at 11:59 p.m. MT. ' + OFFROAD
                     },
                     {   // sale is on
                         from: 'polar.start', to: 'polar.end', rank: 1,
                         eyebrow: 'Polar Diesel Black Friday &middot; On now',
-                        title: '{pct}% off Polar Diesel. Now through December 4.',
+                        title: '{pct}% off Polar Diesel online. Now through December 4.',
                         text: 'Exhaust, tips and elbows at the lowest Polar pricing of the year. Ships across Canada and to the US, or installed here.',
                         chips: 'sale',
                         ctas: [['Shop the sale', '/store/catalog/?brand=Polar+Diesel'], ['Build a power package', '/diesel/']],
-                        fine: 'Sale ends December 4 at 11:59 p.m. MT. ' + OFFROAD
+                        fine: 'Online price applies at checkout; {shopPct}% off in the shop. Ends December 4 at 11:59 p.m. MT. ' + OFFROAD
                     }
                 ]
             },
             {
                 id: 'power', bay: 'parts', img: '/assets/promo-power.jpg', alt: 'THE LAB tuner working on a laptop calibration inside a Ford Super Duty',
                 versions: [
-                    {   // Black Friday bonus  [CONFIRM with Eric: the $100 Boutique credit and its terms]
+                    {   // Black Friday bonus. Eric approved the $100 credit 2026-11-19. [CONFIRM how it is issued and whether it can expire]
                         from: 'polar.start', to: 'polar.end', rank: 2,
                         eyebrow: 'Power Packages &middot; Black Friday bonus',
                         title: 'Build it here. Get $100 for the Boutique.',
-                        text: 'Order a custom tuning package with Polar exhaust by December 4 and have it installed at THE LAB. Polar parts at sale pricing.',
+                        text: 'Order a custom tuning package with Polar exhaust by December 4 and have it installed at THE LAB. Polar parts are {shopPct}% off in the shop.',
                         bonus: '<strong>Bonus:</strong> a $100 Boutique credit for a detail or tint, good January 5 to March 31.',
                         ctas: [['Build my package', '/diesel/'], ['Ask Eric about my truck', '/contact/?service=Custom%20Tuning#form']],
                         fine: 'Installs at our $125/hr shop rate, quoted by Eric. ' + OFFROAD
@@ -89,12 +92,12 @@
             {
                 id: 'winter', bay: 'boutique', img: '/assets/promo-winter.jpg', alt: 'Black Chevrolet Silverado being washed under white hex lights in THE LAB detailing bay',
                 versions: [
-                    {   // [CONFIRM with Eric: free Bio Bomb Deodorization with a De-Luxx Interior booked by Dec 4]
+                    {   // Eric, 2026-11-19: Bio Bomb for $50 with a De-Luxx Interior booked by Dec 4
                         to: 'polar.end', rank: 3,
                         eyebrow: 'The Boutique &middot; Winter reset',
                         title: 'Salt, slush and sand. Out.',
                         text: 'De-Luxx Interior: carpet shampoo, steam clean, leather conditioning and pet hair removal. {deluxx}',
-                        bonus: '<strong>Book by December 4:</strong> Bio Bomb Deodorization included{bioBomb}.',
+                        bonus: '<strong>Book by December 4:</strong> add Bio Bomb odour elimination for $50{bioBomb}.',
                         more: 'Then keep it that way: The Monthly Signature, {monthly}.',
                         ctas: [['Book a detail', '/contact/?service=Premium%20Detailing#form'], ['See memberships', '/boutique/detailing/#maintenance']],
                         fine: 'Two drop-offs a day, Monday to Friday, 8 to 9 a.m. Memberships need a Signature Detail in the last 30 days.'
@@ -143,7 +146,7 @@
     const PAGE_PRICES = {
         deluxx: ['/boutique/detailing/', '#panel-interior .tier--feature .price', 'From {x}.'],
         monthly: ['/boutique/detailing/', '#maintenance .plan .price', 'from {x} a month'],
-        bioBomb: ['/boutique/detailing/', '[data-addon="Bio Bomb Deodorization"]', ' ({x} value)', 'data-price'],
+        bioBomb: ['/boutique/detailing/', '[data-addon="Bio Bomb Deodorization"]', ' (regular {x})', 'data-price'],
         gridiron: ['/gridiron/', '[data-price-cad]', 'From {x}, installed here.']
     };
 
@@ -159,7 +162,7 @@
 
     const money = (n) => '$' + Number(n).toFixed(2) + ' CAD';
     const priceSpan = (n, tag) => '<' + (tag || 'span') + ' data-price-cad="' + Number(n).toFixed(2) + '">' + money(n) + '</' + (tag || 'span') + '>';
-    const fill = (s) => String(s || '').replace(/\{pct\}/g, PROMO.polar.pct).replace(/\{(\w+)\}/g, (m, k) => '<span data-src="' + k + '"></span>');
+    const fill = (s) => String(s || '').replace(/\{pct\}/g, PROMO.polar.pct).replace(/\{shopPct\}/g, PROMO.polar.shopPct).replace(/\{(\w+)\}/g, (m, k) => '<span data-src="' + k + '"></span>');
 
     // ── render ──────────────────────────────────────────────────────
     function pick() {
@@ -187,7 +190,7 @@
                 (s.bonus ? '<p class="promo-bonus">' + fill(s.bonus) + '</p>' : '') +
                 (s.more ? '<p class="promo-text">' + fill(s.more) + '</p>' : '') +
                 '<div class="btns">' + ctas + '</div>' +
-                (s.fine ? '<p class="promo-fine">' + s.fine + '</p>' : '') +
+                (s.fine ? '<p class="promo-fine">' + fill(s.fine) + '</p>' : '') +
             '</div></div>';
     }
 
@@ -229,8 +232,10 @@
             root.querySelectorAll('[data-handle="' + p.handle + '"]').forEach((li) => {
                 const mode = li.closest('[data-chips]').dataset.chips;
                 const onSale = was > min;
-                li.querySelector('.promo-chip-price').innerHTML = (onSale ? priceSpan(was, 's') : '') + priceSpan(min);
-                li.querySelector('.promo-chip-tag').textContent = onSale ? 'Save ' + Math.round((1 - min / was) * 100) + '%' : (mode === 'teaser' ? PROMO.polar.pct + '% off Nov 23' : '');
+                const checkout = !onSale && mode === 'sale' && PROMO.polar.atCheckout;   // automatic discount: work out the price shown at checkout
+                const now = checkout ? Math.round(min * (100 - PROMO.polar.pct)) / 100 : min;
+                li.querySelector('.promo-chip-price').innerHTML = (onSale ? priceSpan(was, 's') : checkout ? priceSpan(min, 's') : '') + priceSpan(now);
+                li.querySelector('.promo-chip-tag').textContent = onSale ? 'Save ' + Math.round((1 - min / was) * 100) + '%' : checkout ? PROMO.polar.pct + '% off at checkout' : (mode === 'teaser' ? PROMO.polar.pct + '% off online Nov 23' : '');
                 li.classList.remove('promo-hide');
             });
         });
