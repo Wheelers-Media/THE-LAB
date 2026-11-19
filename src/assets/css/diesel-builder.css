@@ -162,3 +162,27 @@ body:has(.db-nav) a[aria-label^="Text us"] { display: none; }
 .db-ship-n { margin: 0 0 var(--sp-4); }
 .db-ship-h { margin: 0 0 8px; font: 600 13px/1 'Barlow', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #F2F4F7; }
 .db-ship-ol { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 8px; color: #B9BEC6; max-width: var(--measure); }
+
+/* One menu per option (Tune / Transmission tuning / Credits) */
+.db-opts { display: grid; gap: var(--sp-2); }
+.db-opt { display: grid; gap: 2px; }
+
+/* Partner logos under "Why a power package": one row, same height */
+.db-why-logos { gap: var(--sp-4) var(--sp-6); }
+.db-why-logos img { height: 30px; max-width: 110px; }
+
+/* Phones: nothing runs off the edge. Cards stack (photo left, details right), step tabs become numbered dots. */
+@media (max-width: 767px) {
+    .db-pills { overflow: visible; flex-wrap: wrap; gap: 6px; }
+    .db-pill button { width: 40px; min-height: 40px; padding: 0; justify-content: center; }
+    .db-pill-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .db-pill-n { width: 26px; height: 26px; }
+    .db-grid { flex-direction: column; overflow: visible; scroll-snap-type: none; margin-right: 0; padding-right: 0; }
+    .db-card { flex-basis: auto; display: grid; grid-template-columns: 96px minmax(0, 1fr); }
+    .db-card-img { aspect-ratio: 1 / 1; align-self: start; margin: var(--sp-3) 0 0 var(--sp-3); }
+    .db-card-img img { padding: 4px; }
+    .db-card-body { padding: var(--sp-3); }
+    .db-card-t { -webkit-line-clamp: unset; display: block; }
+    .db-tick { top: 10px; right: 10px; width: 24px; height: 24px; }
+    .db-swipe { display: none; }
+}

@@ -191,14 +191,57 @@
 
         let cur = (sel && vOf(opt.handle, sel)) || firstOk(opt.handle) || vs[0];
         const price = el('p', 'db-price');
+        let touched = false;
         const showPrice = () => {
             const amt = parseFloat(cur.price.amount);
             const lo = Math.min.apply(null, vs.map((v) => parseFloat(v.price.amount)));
-            price.textContent = vs.length > 1 && !sel ? 'From ' + money(lo) : money(amt);
+            price.textContent = vs.length > 1 && !sel && !touched ? 'From ' + money(lo) : money(amt);
         };
 
         let select = null;
-        if (vs.length > 1) {
+        const parts = (v) => v.title.split(' / ');
+        const dims = vs.length > 1 ? parts(vs[0]).length : 0;
+        if (dims > 1 && vs.every((v) => parts(v).length === dims)) {
+            // Shopify joins options as "Level 1 / No Transmission Tuning / No Credits". One short menu per option
+            // reads better on a phone than one long menu that gets cut off.
+            const nameOf = (vals) => {
+                const s = vals.join(' ');
+                if (/transmission/i.test(s)) return 'Transmission tuning';
+                if (/credit/i.test(s)) return 'Credits';
+                if (/support/i.test(s)) return 'Support';
+                if (/vin licen/i.test(s)) return 'EFI Live licence';
+                if (/level|tune|package/i.test(s)) return 'Tune';
+                return 'Option';
+            };
+            const box = el('div', 'db-opts');
+            const sels = [];
+            for (let d = 0; d < dims; d++) {
+                const vals = [...new Set(vs.map((v) => parts(v)[d]))];
+                const id = 'v-' + step.id + '-' + opt.handle + '-' + d;
+                const lab = el('label', 'db-lab', nameOf(vals));
+                lab.htmlFor = id;
+                const s = el('select', 'db-select');
+                s.id = id;
+                vals.forEach((val) => { const o = document.createElement('option'); o.value = val; o.textContent = val; s.append(o); });
+                sels.push(s);
+                const row = el('div', 'db-opt');
+                row.append(lab, s);
+                box.append(row);
+            }
+            const sync = () => { const p = parts(cur); sels.forEach((s, d) => { s.value = p[d]; }); };
+            sels.forEach((s, d) => s.addEventListener('change', () => {
+                const want = sels.map((x) => x.value);
+                const same = (v) => parts(v).every((p, k) => p === want[k]);
+                const near = (v) => parts(v)[d] === want[d];
+                touched = true;
+                cur = vs.find((v) => same(v) && v.availableForSale) || vs.find((v) => near(v) && v.availableForSale) || vs.find(same) || cur;
+                sync();
+                if ((S.pick[step.id] || {})[opt.handle]) { choose(step, opt.handle, cur.id); render(false); }
+                else showPrice();
+            }));
+            sync();
+            body.append(box);
+        } else if (vs.length > 1) {
             const id = 'v-' + step.id + '-' + opt.handle;
             const lab = el('label', 'db-lab', 'Option');
             lab.htmlFor = id;
