@@ -233,3 +233,8 @@ body:has(.db-nav) a[aria-label^="Text us"] { display: none; }
     .db-nav-main .btn { flex: none; min-height: 48px; padding: 0 var(--sp-4); }
     .db-nav-main .btn-ghost { padding: 0 var(--sp-3); }
 }
+
+/* Platform banner photo (sub-pages) */
+.db-banner { margin: 0 0 var(--sp-5); background: var(--panel); overflow: hidden; }
+.db-banner img { display: block; width: 100%; height: auto; aspect-ratio: 10 / 3; object-fit: cover; }
+@media (max-width: 640px) { .db-banner img { aspect-ratio: 2 / 1; } }
