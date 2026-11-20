@@ -532,6 +532,9 @@ window.createShopifyCheckout = async function (cartItems, opts) {
     try {
         const input = { lines };
         if (opts && opts.attributes && opts.attributes.length) input.attributes = opts.attributes;
+        // A partner's referral tag rides on every cart as attributes (the order's note_attributes), never as a discount
+        const ref = window.labReferral && window.labReferral();
+        if (ref) input.attributes = [...(input.attributes || []), { key: 'Ref', value: ref.code }, ...(ref.keyword ? [{ key: 'Ref keyword', value: ref.keyword }] : [])];
         const codes = labCheckoutCodes();
         if (codes.length) input.discountCodes = codes;
         if (opts && (opts.address || opts.email)) {

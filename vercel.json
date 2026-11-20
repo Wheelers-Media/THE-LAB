@@ -2,6 +2,23 @@
   "buildCommand": "node tools/build_parts.mjs && node tools/build_reviews.mjs",
   "outputDirectory": ".",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/nw",
+      "destination": "/diesel?ref=nw",
+      "permanent": false
+    },
+    {
+      "source": "/nw/:page((?:l5p|cummins|powerstroke)-[0-9]{4}-[0-9]{4})",
+      "destination": "/diesel/:page?ref=nw&kw=:page",
+      "permanent": false
+    },
+    {
+      "source": "/nw/:kw",
+      "destination": "/diesel?ref=nw&kw=:kw",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/assets/(.*)",
