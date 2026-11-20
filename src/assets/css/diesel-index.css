@@ -55,6 +55,7 @@
     .dx-pick-n { grid-area: name; align-self: end; font-size: 1.4rem; }
     .dx-pick-s { grid-area: sub; align-self: start; }
     .dx-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--sp-7); align-items: center; }
+    .dx-flip .dx-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
     .dx-flip .dx-photo { order: 2; }
     .dx-photo img { aspect-ratio: 4 / 3; }
     .dx-brand { padding-top: var(--sp-7); }
