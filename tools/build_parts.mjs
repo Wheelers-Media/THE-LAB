@@ -145,6 +145,9 @@ const setHead = (html, { title, description, url, image, jsonLd, noindex }) => {
   const rep = (re, val) => {
     s = s.replace(re, val);
   };
+  // The template (/store/product/) is noindex so its ?id= URLs stay out of Google.
+  // Part pages are the real, indexable copies: drop that tag here.
+  rep(/\n\s*<meta name="robots" content="noindex, follow">/, "");
   rep(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`);
   rep(/(<meta name="description" content=")[^"]*(")/, `$1${esc(description)}$2`);
   rep(/(<meta property="og:title" content=")[^"]*(")/, `$1${esc(title)}$2`);
@@ -215,7 +218,7 @@ export const productJsonLd = (p, slug) => {
 export const productPage = (template, p, slug) => {
   const cat = categoryOf(p);
   const fit = fitmentLine(p);
-  const title = `${plain(p.name)} | THE LAB Performance Shop`;
+  const title = `${plain(p.name)} | THE LAB`;
   const description = clip(p.description) || clip(`${plain(p.name)}. ${fit}. Shipped from Fort St. John, BC across Canada.`);
   const image = /^https:\/\//.test(p.image) ? p.image : "";
   const priceText = p.price > 0 ? `${money(p.price)} CAD` : "Contact us for pricing";

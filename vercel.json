@@ -2,6 +2,7 @@
   "buildCommand": "node tools/build_parts.mjs && node tools/build_reviews.mjs",
   "outputDirectory": ".",
   "cleanUrls": true,
+  "trailingSlash": true,
   "redirects": [
     {
       "source": "/nw",

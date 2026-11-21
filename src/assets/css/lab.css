@@ -1234,3 +1234,7 @@ body:has(.pdp-sticky:not([hidden])) .te-fab { bottom:88px; }
 .faq details[open] summary::after { transform:rotate(45deg); }
 .faq details > p { margin:0 0 var(--sp-4); max-width:var(--measure); text-wrap:pretty; }
 @media (prefers-reduced-motion:reduce) { .faq summary::after { transition:none; } }
+
+/* SEO: keyword line inside the H1, styled as the page kicker */
+.lab-page .hero-kick { display:block; font-family:'Barlow',system-ui,sans-serif; line-height:1.4; margin-bottom:14px; }
+.lab-page .h1-place { display:block; font-size:.42em; line-height:1.1; margin-top:.35em; color:var(--mute); }
