@@ -40,7 +40,7 @@
 .dx-steps { list-style: none; counter-reset: dx; margin: 0 0 var(--sp-7); padding: 0; display: grid; gap: var(--sp-5); }
 .dx-steps li { counter-increment: dx; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-4); align-items: baseline; max-width: 58ch; }
 .dx-steps li::before { content: counter(dx); font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 2.6rem; line-height: 1; color: var(--amber); }
-.dx-steps strong { color: var(--text); }
+.dx-steps strong { display: block; color: var(--text); }
 .dx-brands-h { margin: 0 0 var(--sp-4); color: var(--text); font-weight: 700; }
 .dx-brands ul { list-style: none; margin: 0 0 var(--sp-6); padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-5) var(--sp-7); }
 .dx-brands li { display: flex; align-items: center; }
@@ -60,7 +60,7 @@
     .dx-photo img { aspect-ratio: 4 / 3; }
     .dx-brand { padding-top: var(--sp-7); }
     .dx-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-7); }
-    .dx-steps li { grid-template-columns: minmax(0, 1fr); gap: var(--sp-2); }
+    .dx-steps li { grid-template-columns: minmax(0, 1fr); gap: var(--sp-2); align-items: start; align-content: start; }
     .dx-steps li::before { font-size: 4rem; }
 }
 @media (prefers-reduced-motion: reduce) {
