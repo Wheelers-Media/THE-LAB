@@ -17,7 +17,10 @@
           "brand": "AMDP",
           "name": "EZ LYNK Custom Tuning Support Package",
           "note": "Limited is a 4-week support window. Full is longer support.",
-          "runner": "EZ LYNK"
+          "runner": "EZ LYNK",
+          "needs": [
+            "2018-cummins-ez-lynk-autoagent-3-obdii-patch-cable"
+          ]
         },
         {
           "handle": "amdp-2022-2024-6-7l-cummins-hp-tuners-custom-tuning",
@@ -46,6 +49,22 @@
           "brand": "HP Tuners",
           "name": "MPVI4 Interface",
           "runner": "HP Tuners"
+        }
+      ]
+    },
+    {
+      "id": "bypass",
+      "title": "Bypass Cable",
+      "required": false,
+      "mode": "one",
+      "text": "2018 and newer Cummins have a Security Gateway Module. EZ LYNK tunes need the EZ LYNK patch cable to connect. We add it with an EZ LYNK tune. Already have it? Remove it.",
+      "options": [
+        {
+          "handle": "2018-cummins-ez-lynk-autoagent-3-obdii-patch-cable",
+          "brand": "EZ LYNK",
+          "name": "AutoAgent 3 OBDII Patch Cable",
+          "note": "For EZ LYNK tunes.",
+          "runner": "EZ LYNK"
         }
       ]
     },

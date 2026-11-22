@@ -19,7 +19,7 @@
           "note": "Limited is a 4-week support window. Full is longer support.",
           "runner": "EZ LYNK",
           "needs": [
-            "2018-2021-cummins-bypass-cable"
+            "2018-cummins-ez-lynk-autoagent-3-obdii-patch-cable"
           ]
         },
         {
@@ -57,15 +57,23 @@
     },
     {
       "id": "bypass",
-      "title": "Bypass Cable",
+      "title": "Bypass or Patch Cable",
       "required": false,
       "mode": "one",
-      "text": "Every 2019-2021 Cummins has a Security Gateway Module that blocks the tune from loading. The bypass cable lets your device flash the truck, on EZ LYNK or EFILive. We add it with your tune. Already have one? Remove it.",
+      "text": "Every 2019-2021 Cummins has a Security Gateway Module that blocks the tune from loading, so you need one of these cables to flash it. The patch cable is plug and play for EZ LYNK. The bypass cable installs for good and works with EZ LYNK or EFILive. We add the one that matches your tune. Already have one? Remove it.",
       "options": [
+        {
+          "handle": "2018-cummins-ez-lynk-autoagent-3-obdii-patch-cable",
+          "brand": "EZ LYNK",
+          "name": "AutoAgent 3 OBDII Patch Cable",
+          "note": "Plug and play. Plugs in at the OBDII port when you flash, then comes back out.",
+          "runner": "EZ LYNK"
+        },
         {
           "handle": "2018-2021-cummins-bypass-cable",
           "brand": "FISH Tuning",
-          "name": "Security Gateway Bypass Cable"
+          "name": "Security Gateway Bypass Cable",
+          "note": "Permanent install behind the dash. Works with EZ LYNK and EFILive."
         }
       ]
     },

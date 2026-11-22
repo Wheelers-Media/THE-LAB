@@ -204,6 +204,11 @@
                 }
             }
         }
+        // a bypass cable for another tuning platform is dropped when the tune changes
+        const byp = stepById('bypass');
+        if (byp && byp.options && runner) {
+            Object.keys(S.pick.bypass || {}).forEach((h) => { if (!deviceFits(optOf(byp, h) || {})) unchoose(byp, h); });
+        }
         S.runner = runner;
 
         // tips follow the exhaust size
@@ -380,9 +385,10 @@
         wrap.append(el('p', 'db-choose', step.mode === 'one' ? 'Choose one.' : 'Choose as many as you like.' + (step.required ? '' : ' Skip it if you don\'t need it.')));
 
         // the device step shows only devices that run the chosen tune
-        const opts = step.id === 'device' ? step.options.filter(deviceFits) : step.options;
-        if (step.id === 'device' && opts.length < step.options.length) {
-            wrap.append(el('p', 'db-choose', 'Showing the device that runs your ' + tuneRunner() + ' tune.'));
+        const paired = step.id === 'device' || step.id === 'bypass';
+        const opts = paired ? step.options.filter(deviceFits) : step.options;
+        if (paired && opts.length < step.options.length) {
+            wrap.append(el('p', 'db-choose', 'Showing the ' + (step.id === 'device' ? 'device' : 'cable') + ' that runs your ' + tuneRunner() + ' tune.'));
         }
 
         const inc = included();
