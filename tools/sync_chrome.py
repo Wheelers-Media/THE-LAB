@@ -79,7 +79,9 @@ def sync(path):
         s = re.sub(r'([ \t]*<link rel="stylesheet" href="/assets/css/lab\.css">\n)', lambda m: m.group(1) + "    " + TAILWIND_LINK + "\n", s, count=1)
 
     store = rel.startswith("store/")
-    price = store or "data-price-cad" in s or "data-price-from-cad" in s
+    # The CAD/USD switch only shows where parts are sold. Boutique services and the shipping rates are CAD-only.
+    cad_only = rel.startswith(("boutique", "shipping/", "contact/"))
+    price = (store or rel.startswith(("diesel/", "gridiron/")) or "data-price-cad" in s or "data-price-from-cad" in s) and not cad_only
     flags = {"store": store, "price": price}
     header = render(read(os.path.join(COMP, "site-header.html")), flags)
     footer = render(read(os.path.join(COMP, "site-footer.html")), flags)

@@ -754,6 +754,14 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .site-currency button[aria-pressed="true"] { background:var(--text); border-color:var(--text); color:#000; }
 .site-currency--drawer { margin-top:24px; justify-content:space-between; }
 .site-currency--drawer button { min-height:44px; }
+/* phones: the currency sits in the header bar next to search and cart (the desktop switch lives in the top strip) */
+.site-cur-mini { min-width:48px; height:32px; margin-right:4px; padding:0 8px; border:1px solid var(--line); background:transparent; color:var(--text); cursor:pointer; font:700 12px "Barlow",sans-serif; letter-spacing:.08em; }
+.site-cur-mini:hover { border-color:var(--mute); }
+/* first visit from the US: one line under the header, closes for good */
+.cur-note { display:flex; align-items:center; gap:12px; padding:10px 16px; background:var(--panel); border-bottom:1px solid var(--line); color:var(--text); font-size:14px; }
+.cur-note p { margin:0; flex:1; }
+.cur-note button { min-height:44px; padding:0 12px; background:transparent; border:1px solid var(--line); color:var(--text); cursor:pointer; font:600 13px "Barlow",sans-serif; }
+.cur-note .cur-note-x { min-width:44px; border:0; font-size:22px; line-height:1; color:var(--mute); }
 
 .site-bar { display:flex; align-items:center; gap:16px; min-height:64px; }
 .site-logo { display:flex; align-items:center; flex-shrink:0; }
@@ -850,6 +858,7 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 
 @media (min-width:768px) {
     .site-util { display:block; }
+    .site-cur-mini { display:none; }
     .site-footer-grid { grid-template-columns:1.3fr 1fr 1fr 1fr; padding-top:72px; }
     .site-footer-brand { grid-column:auto; }
     .site-sub-search { display:block; }

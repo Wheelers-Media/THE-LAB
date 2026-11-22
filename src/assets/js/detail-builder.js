@@ -21,7 +21,7 @@
     });
 
     const S = { focus: null, tier: null, size: 0, add: new Set() };
-    const cur = () => { try { return localStorage.getItem('theLab_currency') === 'USD' ? 'USD' : 'CAD'; } catch (e) { return 'CAD'; } };
+    const cur = () => 'CAD'; // Boutique services are priced and paid in CAD only
     const money = (n, c) => '$' + (((c || cur()) === 'USD') ? Math.round(n * 0.74) : n).toLocaleString('en-CA') + ' ' + ((c || cur()) === 'USD' ? 'USD' : 'CAD');
 
     const addons = $$('[data-addon]').map((i) => ({ el: i, name: i.dataset.addon, n: parseFloat(i.dataset.price), from: i.dataset.from === '1' }));
@@ -95,6 +95,6 @@
     root.addEventListener('wz:enter', (e) => { if (e.detail.index === 1) renderTiers(); render(); });
 
     const orig = window.setCurrency;
-    if (orig) window.setCurrency = function (c) { orig(c); render(); };
+    if (orig) window.setCurrency = function (c, auto) { orig(c, auto); render(); };
     render();
 })();

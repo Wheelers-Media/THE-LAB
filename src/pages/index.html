@@ -26,10 +26,10 @@
         body { -webkit-overflow-scrolling: touch; background-color: #000000; font-family: 'Inter', sans-serif; }
         ::selection { background: #0066FF; color: #fff; }
     </style>
-    <link rel="stylesheet" href="/assets/css/lab.css?v=617518c3">
+    <link rel="stylesheet" href="/assets/css/lab.css?v=dfd0397c">
     <link rel="stylesheet" href="/assets/css/tailwind.css?v=52be1a73">
     <link rel="stylesheet" href="/assets/css/promo-slides.css?v=f37f8612">
-    <script src="/assets/js/chrome.js?v=d093cd67"></script>
+    <script src="/assets/js/chrome.js?v=2e3fd769"></script>
     <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "AutomotiveBusiness",
@@ -70,7 +70,7 @@
 }</script>
     <script src="/assets/js/reveal.js?v=912fb70a" defer></script>
     <script src="/assets/js/reviews.js?v=7a99ec24" defer></script>
-    <script src="/assets/js/promo-slides.js?v=6eef7d0d" defer></script>
+    <script src="/assets/js/promo-slides.js?v=2e490302" defer></script>
 </head>
 <body class="bg-void text-zinc-400 antialiased overflow-x-hidden">
 
@@ -118,7 +118,9 @@
             <a class="site-nav-link" href="/contact/" data-nav="contact">Contact</a>
         </nav>
         <div class="site-actions">
-            <button type="button" class="site-icon" onclick="toggleGlobalSearch()" aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
+            
+            <button type="button" class="site-cur-mini" data-cur-toggle aria-label="Prices in CAD. Switch to USD">CAD</button>
+                        <button type="button" class="site-icon" onclick="toggleGlobalSearch()" aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button>
             <button type="button" class="site-icon" id="cart-btn" aria-label="Open cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 7V6a3 3 0 016 0v1"/></svg><span id="cart-count" class="site-badge hidden" aria-live="polite">0</span></button>
             <a class="site-book" href="/contact/">Book now</a>
             <button type="button" class="site-icon site-burger" id="mob-btn" aria-expanded="false" aria-controls="mob-menu" aria-label="Open menu">

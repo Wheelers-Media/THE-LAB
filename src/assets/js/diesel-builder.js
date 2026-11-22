@@ -13,7 +13,13 @@
     const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
     // phones: parts stack as rows (photo beside the name) instead of a swipe rail
     const ROWS = matchMedia('(max-width: 767px)');
-    const money = (n) => new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(n);
+    // Prices show in the currency picked in the header. USD is Shopify's own US price for the variant (window.labUsd),
+    // so the totals match checkout. Until the US prices load, CAD shows.
+    const usdOn = () => !!(window.labCurrency && window.labCurrency() === 'USD' && window.labUsd && window.labUsd(1) != null);
+    const code = () => (usdOn() ? 'USD' : 'CAD');
+    const money = (n, vid) => usdOn()
+        ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(window.labUsd(n, vid))
+        : new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(n);
 
     const el = (tag, cls, text) => {
         const n = document.createElement(tag);
@@ -89,6 +95,10 @@
         return out;
     }
     const total = () => chosen().reduce((t, c) => t + parseFloat(c.variant.price.amount), 0);
+    // the total shown to the customer, in the header currency: each part's own price added up, as checkout does
+    const shownTotal = () => usdOn()
+        ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(chosen().reduce((t, c) => t + window.labUsd(parseFloat(c.variant.price.amount), c.variant.id), 0))
+        : money(total());
 
     function included() {
         const set = new Set();
@@ -302,7 +312,7 @@
             const lo = Math.min.apply(null, (fit.length ? fit : vs).map((v) => parseFloat(v.price.amount)));
             const pool = fit.length ? fit : vs;
             const varies = new Set(pool.map((v) => v.price.amount)).size > 1;
-            price.textContent = varies && !sel ? 'From ' + money(lo) : money(sel || !varies ? amt : lo);
+            price.textContent = varies && !sel ? 'From ' + money(lo) : money(sel || !varies ? amt : lo, sel || !varies ? cur.id : null);
         };
 
         let select = null;
@@ -316,7 +326,7 @@
                 const o = document.createElement('option');
                 o.value = v.id;
                 const fits = fitsInlet(v, inlet);
-                o.textContent = v.title + ' (' + money(parseFloat(v.price.amount)) + ')' + (!v.availableForSale ? ' - ask us' : !fits ? ' - not for a ' + inlet + '" exhaust' : '');
+                o.textContent = v.title + ' (' + money(parseFloat(v.price.amount), v.id) + ')' + (!v.availableForSale ? ' - ask us' : !fits ? ' - not for a ' + inlet + '" exhaust' : '');
                 o.disabled = !v.availableForSale || !fits;
                 if (v.id === cur.id) o.selected = true;
                 select.append(o);
@@ -483,7 +493,7 @@
         });
         const t = S.truck;
         const truck = [S.pkg.title, t.vin && 'VIN ' + t.vin, t.drive, t.tires && 'Tires ' + t.tires, t.tank, t.axle && 'Axle ' + t.axle, t.mods && 'Mods: ' + t.mods].filter(Boolean);
-        return 'Diesel power package build. Truck: ' + truck.join(' | ') + '. ' + lines.join('. ') + '. Parts total in the store when built: ' + money(total()) + ' CAD.';
+        return 'Diesel power package build. Truck: ' + truck.join(' | ') + '. ' + lines.join('. ') + '. Parts total in the store when built: ' + new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(total()) + ' CAD' + (usdOn() ? ' (customer saw ' + shownTotal() + ' USD)' : '') + '.';
     }
 
     function reviewStep(step) {
@@ -503,11 +513,11 @@
         const list = el('ul', 'db-rev');
         items.forEach((c) => {
             const li = el('li');
-            li.append(el('span', null, c.opt.name + (c.variant.title !== 'Default Title' ? ' - ' + c.variant.title : '')), el('span', null, money(parseFloat(c.variant.price.amount))));
+            li.append(el('span', null, c.opt.name + (c.variant.title !== 'Default Title' ? ' - ' + c.variant.title : '')), el('span', null, money(parseFloat(c.variant.price.amount), c.variant.id)));
             list.append(li);
         });
         const tot = el('li', 'db-rev-tot');
-        tot.append(el('span', null, 'Parts total (CAD)'), el('span', null, money(total())));
+        tot.append(el('span', null, 'Parts total (' + code() + ')'), el('span', null, shownTotal()));
         list.append(tot);
         wrap.append(list);
         const how = el('fieldset', 'db-ship');
@@ -655,13 +665,13 @@
             g.append(el('p', 'db-side-h', s.title));
             mine.forEach((c) => {
                 const r = el('div', 'db-side-i');
-                r.append(el('span', null, c.opt.name), el('span', null, money(parseFloat(c.variant.price.amount))));
+                r.append(el('span', null, c.opt.name), el('span', null, money(parseFloat(c.variant.price.amount), c.variant.id)));
                 g.append(r);
             });
             box.append(g);
         });
         const tot = el('div', 'db-side-tot');
-        tot.append(el('span', null, 'Total (CAD)'), el('strong', null, money(total())));
+        tot.append(el('span', null, 'Total (' + code() + ')'), el('strong', null, shownTotal()));
         box.append(tot);
         // Desktop: Back / Next also live here, next to the total, so they are always in view.
         const sn = el('div', 'db-side-nav');
@@ -674,7 +684,7 @@
         const nav = el('div', 'db-nav ' + cls);
         const n = chosen().length;
         const line = el('p', 'db-nav-tot');
-        line.append(el('span', null, n + (n === 1 ? ' part' : ' parts')), el('strong', null, money(total())));
+        line.append(el('span', null, n + (n === 1 ? ' part' : ' parts')), el('strong', null, shownTotal()));
         const back = el('button', 'btn btn-ghost', 'Back');
         back.type = 'button';
         back.disabled = S.i === 0;
@@ -738,6 +748,7 @@
         if (!S.steps.some((s) => s.options)) throw new Error('no products');
         render(false);
         ROWS.addEventListener('change', () => render(false));
+        document.addEventListener('lab:currency', () => render(false)); // header switch, or US prices finished loading
     }).catch((e) => {
         console.error('[diesel-builder]', e);
         root.textContent = '';
