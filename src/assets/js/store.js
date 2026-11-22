@@ -196,7 +196,7 @@ function updateCartUI() {
                 <div>
                     <h3 class="cart-name">${item.name}</h3>
                     ${attrHtml}
-                    <p class="cart-price" data-price-cad="${item.price}">$${item.price.toFixed(2)} CAD</p>
+                    <p class="cart-price" data-price-cad="${item.price}" data-variant-id="${item.variantId || ''}">$${item.price.toFixed(2)} CAD</p>
                     <div class="cart-qty">
                         <button onclick="updateQuantity('${item.cartItemId}', -1)" aria-label="Decrease quantity">-</button>
                         <span>${item.quantity}</span>
@@ -219,7 +219,7 @@ function updateCartUI() {
                             <img src="${u.image}" alt="${u.name}">
                             <div>
                                 <h5>${u.name}</h5>
-                                <div class="cart-price" data-price-cad="${u.price}">$${u.price.toFixed(2)} CAD</div>
+                                <div class="cart-price" data-price-cad="${u.price}" data-variant-id="${u.variantId || ''}">$${u.price.toFixed(2)} CAD</div>
                             </div>
                             <button onclick="addToCart('${u.id}')" class="cart-add">Add</button>
                         </div>
@@ -229,11 +229,11 @@ function updateCartUI() {
         `;
     }
 
-    document.getElementById("cart-subtotal").innerHTML = `<span data-price-cad="${subtotal.toFixed(2)}">$${subtotal.toFixed(2)} CAD</span>`;
+    document.getElementById("cart-subtotal").innerHTML = `<span data-price-cad="${subtotal.toFixed(2)}" data-price-items="${cart.map(i => (i.variantId || '') + ':' + i.price + ':' + i.quantity).join(',')}">$${subtotal.toFixed(2)} CAD</span>`;
     
     // Apply currency format to cart items
     if (window.setCurrency) {
-        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
+        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD', true);
     }
 }
 
@@ -1168,7 +1168,7 @@ function renderProducts() {
                 <p class="pcard-fit">${p.makes.filter(m => m !== 'Universal').join(', ') || 'Universal Fit'}${p.engine !== 'Universal' ? ' • ' + p.engine : ''}</p>
                 <div class="pcard-foot">
                     <div>
-                        <span class="pcard-price" data-price-cad="${p.price}">$${p.price.toFixed(2)} CAD</span>
+                        <span class="pcard-price" data-price-cad="${p.price}" data-variant-id="${p.variantId || ''}">$${p.price.toFixed(2)} CAD</span>
                         ${(() => {
                             if (p.price >= 50 && p.price <= 30000) {
                                 let msg = "";
@@ -1205,7 +1205,7 @@ function renderProducts() {
     
     // Apply currency format to newly rendered prices
     if (window.setCurrency) {
-        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
+        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD', true);
     }
 }
 
@@ -1380,7 +1380,7 @@ function initPDP() {
                         ${fitmentBadge}
                     </div>
                     <div class="mb-6 lg:mb-8">
-                        <p class="text-2xl font-extrabold text-white" data-price-cad="${product.price}">$${product.price.toFixed(2)} CAD</p>
+                        <p class="text-2xl font-extrabold text-white" data-price-cad="${product.price}" data-variant-id="${product.variantId || ''}">$${product.price.toFixed(2)} CAD</p>
                         <div id="pdp-affirm-container" class="flex items-center gap-2 mt-3 text-[13px] text-zinc-300 bg-[#1a1a24] border border-edge rounded-lg py-2 px-3 inline-flex ${product.price >= 50 && product.price <= 30000 ? '' : 'hidden'}">
                             <span data-affirm-cad-total="${product.price}">${shopPayMessaging || 'Calculating...'}</span>
                             <img src="/assets/affirm-logo.png" alt="Affirm" class="h-4 w-auto object-contain flex-shrink-0">
@@ -1441,7 +1441,7 @@ function initPDP() {
                                             <p class="text-sm font-bold text-white leading-tight">${variant.title}</p>
                                         </div>
                                     </div>
-                                    <span class="text-labBlue font-extrabold text-sm font-mono flex-shrink-0" data-price-cad="${variant.price}">$${parseFloat(variant.price).toFixed(2)} CAD</span>
+                                    <span class="text-labBlue font-extrabold text-sm font-mono flex-shrink-0" data-price-cad="${variant.price}" data-variant-id="${variant.id || ''}">$${parseFloat(variant.price).toFixed(2)} CAD</span>
                                 </button>
                                 `).join('')}
                             </div>
@@ -2015,7 +2015,7 @@ function initPDP() {
             }
 
             if (window.setCurrency) {
-                window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
+                window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD', true);
             }
         }
     };
@@ -2564,7 +2564,7 @@ function initPDP() {
 
     // Apply currency format to newly rendered PDP elements
     if (window.setCurrency) {
-        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD');
+        window.setCurrency(localStorage.getItem('theLab_currency') || 'CAD', true);
     }
 
     // ════════════════════════════════════════════════════════════

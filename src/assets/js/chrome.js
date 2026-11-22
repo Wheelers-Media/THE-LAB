@@ -4,30 +4,136 @@
     'use strict';
 
     // ── Currency ─────────────────────────────────────────────────────────────
-    // Prices carry data-price-cad / data-price-from-cad / data-affirm-cad-total; this rewrites them for the chosen currency.
-    var RATE = 0.74;
-    function readCurrency() { try { return localStorage.getItem('theLab_currency') === 'USD' ? 'USD' : 'CAD'; } catch (e) { return 'CAD'; } }
+    // Parts prices carry data-price-cad / data-price-from-cad / data-affirm-cad-total. In USD mode this swaps them for the
+    // exact US price Shopify charges at checkout (its United States market), read from the Storefront API and cached for
+    // 6 hours. Boutique services, shipping rates and anything inside [data-cad-only] always stay in CAD.
+    // A visitor's first currency comes from where they are (US -> USD, everywhere else CAD); the switch overrides it.
+    var CUR_KEY = 'theLab_currency', CUR_SET = 'theLab_currencyChosen', IDX_KEY = 'theLab_usdIndex', IDX_MS = 6 * 36e5;
+    var SF_URL = 'https://xr6pmx-y0.myshopify.com/api/2024-01/graphql.json', SF_TOKEN = '661b1009a0d85bfadfce9c52fcb3d87f';
+    function readCurrency() { try { return localStorage.getItem(CUR_KEY) === 'USD' ? 'USD' : 'CAD'; } catch (e) { return 'CAD'; } }
+    window.labCurrency = readCurrency;
+    var cadOnlyPage = /^\/(boutique|shipping|contact)/.test(location.pathname) || location.pathname.indexOf('-success') > -1;
+    function cadOnly(el) { return cadOnlyPage || !!(el.closest && el.closest('[data-cad-only]')); }
 
-    window.setCurrency = function (c) {
-        c = c === 'USD' ? 'USD' : 'CAD';
-        try { localStorage.setItem('theLab_currency', c); } catch (e) { /* storage unavailable */ }
+    // US price index: variant id -> [CAD, USD], both straight from Shopify
+    var idx = null, idxLoading = null;
+    function readIdx() {
+        try { var c = JSON.parse(localStorage.getItem(IDX_KEY) || 'null'); return c && Date.now() - c.at < IDX_MS ? c : null; } catch (e) { return null; }
+    }
+    async function fetchPrices(country) {
+        var out = {}, after = null, more = true;
+        while (more) {
+            var q = 'query($a:String) @inContext(country:' + country + ') { products(first:250, after:$a) { pageInfo { hasNextPage endCursor } nodes { variants(first:100) { nodes { id price { amount } } } } } }';
+            var r = await fetch(SF_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Shopify-Storefront-Access-Token': SF_TOKEN }, body: JSON.stringify({ query: q, variables: { a: after } }) });
+            var j = await r.json(), page = j.data && j.data.products;
+            if (!page) throw new Error('prices');
+            page.nodes.forEach(function (p) { p.variants.nodes.forEach(function (v) { out[v.id] = parseFloat(v.price.amount); }); });
+            more = page.pageInfo.hasNextPage; after = page.pageInfo.endCursor;
+        }
+        return out;
+    }
+    function buildIdx(c) {
+        var byCad = {}, ratios = [];
+        Object.keys(c.v).forEach(function (id) {
+            var cad = c.v[id][0], usd = c.v[id][1], k = cad.toFixed(2);
+            byCad[k] = byCad[k] === undefined || byCad[k] === usd ? usd : null; // null: same CAD price, different USD prices
+            if (cad >= 50) ratios.push(usd / cad);
+        });
+        ratios.sort(function (a, b) { return a - b; });
+        return { v: c.v, byCad: byCad, rate: ratios.length ? ratios[Math.floor(ratios.length / 2)] : null };
+    }
+    function loadIdx() {
+        if (idx) return Promise.resolve(idx);
+        var c = readIdx();
+        if (c) { idx = buildIdx(c); return Promise.resolve(idx); }
+        if (!idxLoading) idxLoading = Promise.all([fetchPrices('CA'), fetchPrices('US')]).then(function (r) {
+            var v = {};
+            Object.keys(r[1]).forEach(function (id) { if (r[0][id] != null) v[id] = [r[0][id], r[1][id]]; });
+            var c2 = { at: Date.now(), v: v };
+            try { localStorage.setItem(IDX_KEY, JSON.stringify(c2)); } catch (e) { /* full or unavailable */ }
+            idx = buildIdx(c2);
+            return idx;
+        }).catch(function () { idxLoading = null; return null; });
+        return idxLoading;
+    }
+    // The US price for a CAD amount: the variant's own US price, else the US price of any product at that CAD price,
+    // else Shopify's current rate (sale prices and totals). null = not ready, keep CAD.
+    window.labUsd = function (cad, variantId) {
+        if (!idx || isNaN(cad)) return null;
+        if (variantId && idx.v[variantId]) return idx.v[variantId][1];
+        var hit = idx.byCad[Number(cad).toFixed(2)];
+        if (hit != null) return hit;
+        return idx.rate ? Math.round(cad * idx.rate * 100) / 100 : null;
+    };
+    var fmt = function (n) { return '$' + Number(n).toFixed(2); };
+
+    function paint(c) {
         document.querySelectorAll('[data-cur]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-cur') === c)); });
+        document.querySelectorAll('[data-cur-toggle]').forEach(function (b) {
+            b.textContent = c; b.setAttribute('aria-label', 'Prices in ' + c + '. Switch to ' + (c === 'USD' ? 'CAD' : 'USD'));
+        });
+        var conv = function (el, cad) {
+            if (c !== 'USD' || cadOnly(el)) return { n: cad, cur: 'CAD' };
+            var items = el.getAttribute('data-price-items'), usd;
+            if (items) { // a cart total is the sum of each line's own US price, as checkout adds it up
+                usd = 0;
+                items.split(',').forEach(function (it) {
+                    var a = it.split(':'), u = window.labUsd(parseFloat(a[1]), a[0]);
+                    usd = usd == null || u == null ? null : usd + u * (parseInt(a[2], 10) || 1);
+                });
+            } else usd = window.labUsd(cad, el.getAttribute('data-variant-id'));
+            return usd == null ? { n: cad, cur: 'CAD' } : { n: usd, cur: 'USD' };
+        };
         document.querySelectorAll('[data-price-cad]').forEach(function (el) {
             var cad = parseFloat(el.getAttribute('data-price-cad'));
-            if (!isNaN(cad)) el.textContent = c === 'USD' ? '$' + (cad * RATE).toFixed(2) + ' USD' : '$' + cad.toFixed(2) + ' CAD';
+            if (isNaN(cad)) return;
+            var p = conv(el, cad), off = parseFloat(el.getAttribute('data-price-off'));
+            // a sale price taken off at checkout: Shopify takes the % off that currency's own price
+            if (!isNaN(off)) p.n = Math.round(p.n * (100 - off)) / 100;
+            el.textContent = fmt(p.n) + ' ' + p.cur;
         });
         document.querySelectorAll('[data-price-from-cad]').forEach(function (el) {
             var cad = parseFloat(el.getAttribute('data-price-from-cad'));
-            if (!isNaN(cad)) el.textContent = c === 'USD' ? 'From $' + (cad * RATE).toFixed(2) + ' USD' : 'From $' + cad.toFixed(2) + ' CAD';
+            if (!isNaN(cad)) { var p = conv(el, cad); el.textContent = 'From ' + fmt(p.n) + ' ' + p.cur; }
         });
         document.querySelectorAll('[data-affirm-cad-total]').forEach(function (el) {
             var base = parseFloat(el.getAttribute('data-affirm-cad-total'));
             if (isNaN(base)) return;
-            var cad = base * 1.12; // estimated tax, matches checkout
-            if (base >= 50 && base < 1000) el.innerHTML = 'Pay in 4 installments of <strong>$' + (c === 'USD' ? (cad / 4 * RATE) : (cad / 4)).toFixed(2) + ' ' + c + '</strong> with';
-            else if (base >= 1000) el.innerHTML = 'Pay in monthly installments as low as <strong>$' + (c === 'USD' ? (cad / 24 * RATE) : (cad / 24)).toFixed(2) + ' ' + c + '/mo</strong> with';
+            var p = conv(el, base), total = p.n * 1.12; // estimated tax, matches checkout
+            if (base >= 50 && base < 1000) el.innerHTML = 'Pay in 4 installments of <strong>' + fmt(total / 4) + ' ' + p.cur + '</strong> with';
+            else if (base >= 1000) el.innerHTML = 'Pay in monthly installments as low as <strong>' + fmt(total / 24) + ' ' + p.cur + '/mo</strong> with';
         });
+        try { document.dispatchEvent(new CustomEvent('lab:currency', { detail: c })); } catch (e) { /* old browsers */ }
+    }
+
+    window.setCurrency = function (c, auto) {
+        c = c === 'USD' ? 'USD' : 'CAD';
+        try { localStorage.setItem(CUR_KEY, c); if (!auto) localStorage.setItem(CUR_SET, '1'); } catch (e) { /* storage unavailable */ }
+        paint(c);
+        if (c === 'USD' && !idx) loadIdx().then(function () { if (readCurrency() === 'USD') paint('USD'); });
     };
+
+    // First visit: pick the currency from the visitor's country (Vercel geo, /api/geo). Never overrides a choice.
+    function autoCurrency() {
+        var chosen = false;
+        try { chosen = !!localStorage.getItem(CUR_SET) || !!localStorage.getItem('theLab_geoDone'); } catch (e) { return; }
+        if (chosen) return;
+        fetch('/api/geo', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (g) {
+            try { localStorage.setItem('theLab_geoDone', '1'); } catch (e) { /* storage unavailable */ }
+            if (g && g.country === 'US') { window.setCurrency('USD', true); showUsNote(); }
+        }).catch(function () { /* stays CAD */ });
+    }
+    function showUsNote() {
+        if (cadOnlyPage || document.getElementById('cur-note')) return;
+        var hdr = document.getElementById('site-header');
+        if (!hdr) return;
+        var n = document.createElement('div');
+        n.id = 'cur-note'; n.className = 'cur-note'; n.setAttribute('role', 'status');
+        n.innerHTML = '<p>Shopping from the US? Parts prices are in USD, the same price you pay at checkout.</p>' +
+            '<button type="button" data-cur="CAD">Switch to CAD</button><button type="button" class="cur-note-x" aria-label="Close">&times;</button>';
+        hdr.insertAdjacentElement('afterend', n);
+        n.addEventListener('click', function (e) { if (e.target.closest('button')) n.remove(); });
+    }
 
     // gives a step's content a short fade-and-rise each time it appears (CSS .step-in); skipped for reduced motion
     window.labStepIn = function (els) {
@@ -87,10 +193,13 @@
         }
 
         // apply the saved currency to static prices and set the toggle state
-        if (document.querySelector('[data-cur],[data-price-cad],[data-price-from-cad]')) window.setCurrency(readCurrency());
+        if (document.querySelector('[data-cur],[data-price-cad],[data-price-from-cad]')) window.setCurrency(readCurrency(), true);
+        autoCurrency();
         document.addEventListener('click', function (e) {
             var b = e.target.closest && e.target.closest('[data-cur]');
             if (b) window.setCurrency(b.getAttribute('data-cur'));
+            var t = e.target.closest && e.target.closest('[data-cur-toggle]');
+            if (t) window.setCurrency(readCurrency() === 'USD' ? 'CAD' : 'USD');
         });
 
         // ── Mobile menu ──────────────────────────────────────────────────────

@@ -92,7 +92,7 @@
     const BASE = ['fl', 'fr', 'rl', 'rr', 'ql', 'qr', 'rear'];
     const S = { film: 'ceramic', veh: 'truck', sel: new Set(), brow: '1', roof: 'sunroof' };
 
-    const cur = () => { try { return localStorage.getItem('theLab_currency') === 'USD' ? 'USD' : 'CAD'; } catch (e) { return 'CAD'; } };
+    const cur = () => 'CAD'; // Boutique services are priced and paid in CAD only
     const usd = (c) => (c || cur()) === 'USD';
     const num = (n, c) => '$' + (usd(c) ? Math.round(n * 0.74) : n).toLocaleString('en-CA');
     const money = (n, c) => num(n, c) + (usd(c) ? ' USD' : ' CAD');
@@ -194,6 +194,6 @@
 
     // the header currency toggle re-renders prices too
     const orig = window.setCurrency;
-    if (orig) window.setCurrency = function (c) { orig(c); render(); };
+    if (orig) window.setCurrency = function (c, auto) { orig(c, auto); render(); };
     render();
 })();

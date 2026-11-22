@@ -537,15 +537,16 @@ window.createShopifyCheckout = async function (cartItems, opts) {
         if (ref) input.attributes = [...(input.attributes || []), { key: 'Ref', value: ref.code }, ...(ref.keyword ? [{ key: 'Ref keyword', value: ref.keyword }] : [])];
         const codes = labCheckoutCodes();
         if (codes.length) input.discountCodes = codes;
-        if (opts && (opts.address || opts.email)) {
-            input.buyerIdentity = {};
-            if (opts.email) input.buyerIdentity.email = opts.email;
-            if (opts.address) input.buyerIdentity.deliveryAddressPreferences = [{ deliveryAddress: opts.address }];
-        }
+        // The country picks Shopify's market, so checkout charges the same currency and price the site showed
+        // (USD for the United States, CAD for Canada). An install at the shop is always Canada.
+        const country = (opts && opts.address && opts.address.country) || (window.labCurrency && window.labCurrency() === 'USD' ? 'US' : 'CA');
+        input.buyerIdentity = { countryCode: country };
+        if (opts && opts.email) input.buyerIdentity.email = opts.email;
+        if (opts && opts.address) input.buyerIdentity.deliveryAddressPreferences = [{ deliveryAddress: opts.address }];
         let data = await shopifyGraphQL(query, { input });
         // If Shopify rejects the pre-filled address, check out without it rather than losing the sale.
-        if (data.cartCreate.userErrors.length > 0 && input.buyerIdentity) {
-            delete input.buyerIdentity;
+        if (data.cartCreate.userErrors.length > 0 && (input.buyerIdentity.email || input.buyerIdentity.deliveryAddressPreferences)) {
+            input.buyerIdentity = { countryCode: country };
             data = await shopifyGraphQL(query, { input });
         }
         // A sale code should never block a checkout: retry without it.

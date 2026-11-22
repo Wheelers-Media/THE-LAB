@@ -170,7 +170,7 @@
         const chips = s.chips ? '<ul class="promo-chips" data-chips="' + s.chips + '">' + PROMO.polar.parts.map((p) =>
             '<li class="promo-chip promo-hide" data-handle="' + p.handle + '"><a href="/store/parts/' + p.handle + '/"><span class="promo-chip-name">' + p.name + '</span><span class="promo-chip-price"></span><span class="promo-chip-tag"></span></a></li>').join('') + '</ul>' : '';
         const clock = s.clock ? '<p class="promo-clock" data-clock="' + t(s.clock.to) + '"><small>' + s.clock.label + '</small><span aria-hidden="true"></span><span class="sr-only"></span></p>' : '';
-        return '<div class="promo-slide promo-slide--' + s.bay + '" role="group" aria-roledescription="slide" aria-label="' + (i + 1) + ' of ' + total + '" id="promo-' + s.id + '">' +
+        return '<div class="promo-slide promo-slide--' + s.bay + '"' + (s.bay === 'boutique' ? ' data-cad-only' : '') + ' role="group" aria-roledescription="slide" aria-label="' + (i + 1) + ' of ' + total + '" id="promo-' + s.id + '">' +
             '<div class="promo-media"><img src="' + s.img + '" width="1024" height="576" alt="' + s.alt + '"' + (i ? ' loading="lazy"' : ' fetchpriority="high"') + '></div>' +
             '<div class="promo-body">' +
                 '<p class="promo-eyebrow">' + s.eyebrow + '</p>' +
@@ -225,12 +225,12 @@
                 const onSale = was > min;
                 const checkout = !onSale && mode === 'sale' && PROMO.polar.atCheckout;   // automatic discount: work out the price shown at checkout
                 const now = checkout ? Math.round(min * (100 - PROMO.polar.pct)) / 100 : min;
-                li.querySelector('.promo-chip-price').innerHTML = (onSale ? priceSpan(was, 's') : checkout ? priceSpan(min, 's') : '') + priceSpan(now);
+                li.querySelector('.promo-chip-price').innerHTML = (onSale ? priceSpan(was, 's') : checkout ? priceSpan(min, 's') : '') + (checkout ? '<span data-price-cad="' + min.toFixed(2) + '" data-price-off="' + PROMO.polar.pct + '">' + money(now) + '</span>' : priceSpan(now));
                 li.querySelector('.promo-chip-tag').textContent = onSale ? 'Save ' + Math.round((1 - min / was) * 100) + '%' : checkout ? PROMO.polar.pct + '% off at checkout' : (mode === 'teaser' ? PROMO.polar.pct + '% off online Nov 23' : '');
                 li.classList.remove('promo-hide');
             });
         });
-        try { window.setCurrency && window.setCurrency(localStorage.getItem('theLab_currency') === 'USD' ? 'USD' : 'CAD'); } catch (e) { /* storage unavailable */ }
+        try { window.setCurrency && window.setCurrency(localStorage.getItem('theLab_currency') === 'USD' ? 'USD' : 'CAD', true); } catch (e) { /* storage unavailable */ }
     }
 
     // ── countdown ───────────────────────────────────────────────────

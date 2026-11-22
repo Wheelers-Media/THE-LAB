@@ -6,7 +6,7 @@
     if (!root || !$('[data-sxs-film]')) return;
 
     const S = { film: 'ceramic', brow: false };
-    const cur = () => { try { return localStorage.getItem('theLab_currency') === 'USD' ? 'USD' : 'CAD'; } catch (e) { return 'CAD'; } };
+    const cur = () => 'CAD'; // Boutique services are priced and paid in CAD only
     const money = (n, c) => '$' + (((c || cur()) === 'USD') ? Math.round(n * 0.74) : n).toLocaleString('en-CA') + ' ' + ((c || cur()) === 'USD' ? 'USD' : 'CAD');
     const card = () => $('[data-sxs-film="' + S.film + '"]');
     const browEl = $('#sxs-brow');
@@ -39,6 +39,6 @@
     $$('[data-sxs-brow]').forEach((b) => b.addEventListener('click', () => { S.brow = b.dataset.sxsBrow === '1'; render(); }));
     $('#wz-restart').addEventListener('click', () => { S.film = 'ceramic'; S.brow = false; render(); root.dispatchEvent(new CustomEvent('wz:goto', { detail: 0 })); });
     const orig = window.setCurrency;
-    if (orig) window.setCurrency = function (c) { orig(c); render(); };
+    if (orig) window.setCurrency = function (c, auto) { orig(c, auto); render(); };
     render();
 })();
