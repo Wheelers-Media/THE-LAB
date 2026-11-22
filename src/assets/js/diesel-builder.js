@@ -109,6 +109,8 @@
     function stepDone(s) {
         if (s.kind === 'truck') return truckOk();
         if (s.kind === 'review') return false;
+        // a cable step with no cable for the chosen tune is done: the note on the step says what to do
+        if (s.id === 'bypass' && s.options && tuneRunner() && !s.options.some(deviceFits)) return true;
         return Object.keys(S.pick[s.id] || {}).length > 0;
     }
     function truckOk() { return /^[A-HJ-NPR-Z0-9]{17}$/.test((S.truck.vin || '').toUpperCase()); }
@@ -387,10 +389,14 @@
         // the device step shows only devices that run the chosen tune
         const paired = step.id === 'device' || step.id === 'bypass';
         const opts = paired ? step.options.filter(deviceFits) : step.options;
-        if (paired && opts.length < step.options.length) {
+        if (paired && opts.length && opts.length < step.options.length) {
             wrap.append(el('p', 'db-choose', 'Showing the ' + (step.id === 'device' ? 'device' : 'cable') + ' that runs your ' + tuneRunner() + ' tune.'));
         }
 
+        if (step.id === 'bypass' && !opts.length) {
+            wrap.append(el('p', 'db-included', 'Your ' + tuneRunner() + ' tune needs a Security Gateway cable too. Call or text (250) 261-9502 and we\'ll match the right one. You can carry on.'));
+            return wrap;
+        }
         const inc = included();
         if (inc.has(step.id)) {
             const n = el('p', 'db-included', 'Your exhaust package already includes this part. You can skip this step.');
