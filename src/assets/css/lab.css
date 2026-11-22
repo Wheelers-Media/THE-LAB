@@ -540,6 +540,9 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 }
 
 /* ── Store: catalog shell, filters, product cards, cart drawer ── */
+/* Truck picker: the dialog grows to fit and the overlay scrolls like a page (no scroll box inside) */
+#vehicle-selector-modal { overflow-y:auto; align-items:flex-start; padding-top:24px; padding-bottom:24px; overscroll-behavior:contain; }
+#vehicle-selector-modal > div { margin-top:auto; margin-bottom:auto; }
 .cat-shell { display:flex; flex-direction:column; gap:24px; padding-top:32px; padding-bottom:72px; }
 .cat-main { flex:1; min-width:0; }
 .filters-panel { border:1px solid var(--line); background:var(--panel); }
@@ -548,7 +551,8 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .filters-title { margin:0; font:700 13px/1 'Barlow',sans-serif; letter-spacing:.08em; text-transform:uppercase; color:var(--text); }
 .filters-reset { min-height:40px; padding:0 12px; border:1px solid var(--line); background:transparent; color:var(--mute); cursor:pointer; font:700 12px/1 'Barlow',sans-serif; letter-spacing:.08em; text-transform:uppercase; }
 .filters-reset:hover { color:var(--text); border-color:var(--mute); }
-.filters-body { padding:8px 16px 16px; max-height:70vh; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
+/* The filter list runs the full length of the page: no inner scroll box on store pages */
+.filters-body { padding:8px 16px 16px; }
 .fgroup { padding:16px 0; border-bottom:1px solid var(--line); }
 .fgroup:last-child { border-bottom:0; }
 .fgroup-btn { width:100%; display:flex; align-items:center; justify-content:space-between; min-height:40px; margin:0 0 4px; padding:0; background:none; border:0; cursor:pointer; color:var(--text); font:700 12px/1 'Barlow',sans-serif; letter-spacing:.1em; text-transform:uppercase; }
@@ -621,7 +625,6 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 }
 @media (min-width:768px) {
     .cat-shell { flex-direction:row; gap:40px; padding-top:48px; }
-    .filters-panel { position:sticky; top:24px; }
     .pgrid { gap:16px; }
 }
 @media (min-width:1180px) { .pgrid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
