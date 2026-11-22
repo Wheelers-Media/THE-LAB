@@ -54,17 +54,18 @@
     },
     {
       "id": "bypass",
-      "title": "Bypass Cable",
-      "required": false,
+      "title": "Patch Cable",
+      "required": true,
       "mode": "one",
-      "text": "2018 and newer Cummins have a Security Gateway Module. EZ LYNK tunes need the EZ LYNK patch cable to connect. We add it with an EZ LYNK tune. Already have it? Remove it.",
+      "text": "Every 2022-2024 Cummins has a Security Gateway Module that blocks the tune from loading, so every EZ LYNK package includes the plug and play patch cable.",
       "options": [
         {
           "handle": "2018-cummins-ez-lynk-autoagent-3-obdii-patch-cable",
           "brand": "EZ LYNK",
           "name": "AutoAgent 3 OBDII Patch Cable",
-          "note": "For EZ LYNK tunes.",
-          "runner": "EZ LYNK"
+          "note": "Plug and play. Plugs in at the OBDII port when you flash, then comes back out.",
+          "runner": "EZ LYNK",
+          "preselect": true
         }
       ]
     },

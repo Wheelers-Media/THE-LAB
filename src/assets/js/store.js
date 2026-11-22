@@ -1311,6 +1311,10 @@ function initPDP() {
     const showHardwareBlock = product.category === 'Tuning & Electronics' && isTunePackage && !isHardwareDevice && (isEZ || isHP || isMM3 || isEFILive || isSCT || isGDP);
     const isSOTF = pTitleLower.includes('sotf') || (product.variants && product.variants.some(v => v.title && v.title.toLowerCase().includes('sotf')));
     const isCummins2018Plus = (product.makes.includes('Ram') || product.makes.includes('Dodge')) && product.years[1] >= 2018 && pTitleLower.includes('cummins') && product.category === 'Tuning & Electronics';
+    // Add-ons are real Shopify products, so the cart charges what the page shows
+    const PATCH_HANDLE = '2018-cummins-ez-lynk-autoagent-3-obdii-patch-cable';
+    const needsGatewayCable = isCummins2018Plus && !isHardwareDevice && product.handle !== PATCH_HANDLE && !pTitleLower.includes('cable');
+    const patchCable = needsGatewayCable && /ez[\s-]?lynk/.test(pTitleLower) ? window.storeCatalog.find(p => p.handle === PATCH_HANDLE) : null;
     const isGridiron = pTitleLower.includes('gridiron') || (product.vendor && product.vendor.toLowerCase().includes('gridiron'));
     
     // Hardware IDs for Auto-AddToCart
@@ -1697,38 +1701,32 @@ function initPDP() {
                     <!-- CROSS-SELLS                                             -->
                     <!-- ═══════════════════════════════════════════════════════ -->
                     ${isSOTF ? `
-                    <div class="mb-5 bg-[#111115] border border-[#1E1E28] rounded-xl p-4 flex items-center justify-between hover:border-[#0066FF]/50 transition-colors">
-                        <label for="upsell-sotf" class="flex items-center gap-3 cursor-pointer flex-1">
-                            <div class="relative flex-shrink-0">
-                                <input type="checkbox" id="upsell-sotf" class="sr-only peer upsell-checkbox" data-price="65.00" data-name="SOTF Switch & Bracket">
-                                <div class="w-5 h-5 rounded border-2 border-[#1E1E28] bg-[#000000] peer-checked:border-[#0066FF] peer-checked:bg-[#0066FF] flex items-center justify-center transition-all">
-                                    <svg class="w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                                </div>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-white mb-0.5">Add SOTF Switch & Bracket</p>
-                                <p class="text-xs text-zinc-400 uppercase tracking-wider">Required to change power levels on the fly.</p>
-                            </div>
-                        </label>
-                        <span class="text-sm font-bold text-[#0066FF]">+$65.00</span>
+                    <div class="mb-5 bg-[#111115] border border-[#1E1E28] rounded-xl p-4">
+                        <p class="text-sm font-bold text-white mb-0.5">Needs a SOTF switch</p>
+                        <p class="text-xs text-zinc-400">Switching power levels on the fly takes a switch made for your truck. <a href="/store/parts/amdp-shift-on-the-fly-switch/" class="text-[#0066FF] underline">Pick yours here</a>, or call or text <a href="tel:+12502619502" class="text-[#0066FF] underline">(250) 261-9502</a>.</p>
                     </div>
                     ` : ''}
 
-                    ${isCummins2018Plus ? `
+                    ${patchCable ? `
                     <div class="mb-5 bg-[#111115] border border-[#1E1E28] rounded-xl p-4 flex items-center justify-between hover:border-[#0066FF]/50 transition-colors">
                         <label for="upsell-sgm" class="flex items-center gap-3 cursor-pointer flex-1">
                             <div class="relative flex-shrink-0">
-                                <input type="checkbox" id="upsell-sgm" class="sr-only peer upsell-checkbox" data-price="70.00" data-name="Cummins SGM Bypass Cable">
+                                <input type="checkbox" id="upsell-sgm" class="sr-only peer upsell-checkbox" ${product.years[0] >= 2018 ? 'checked' : ''} data-price="${patchCable.price}" data-product-id="${patchCable.id}" data-name="${patchCable.name}">
                                 <div class="w-5 h-5 rounded border-2 border-[#1E1E28] bg-[#000000] peer-checked:border-[#0066FF] peer-checked:bg-[#0066FF] flex items-center justify-center transition-all">
                                     <svg class="w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                                 </div>
                             </div>
                             <div>
-                                <p class="text-sm font-bold text-white mb-0.5">Add Security Bypass Cable</p>
-                                <p class="text-xs text-zinc-400 uppercase tracking-wider">Mandatory for flashing 2018+ Cummins.</p>
+                                <p class="text-sm font-bold text-white mb-0.5">Add the EZ LYNK Patch Cable</p>
+                                <p class="text-xs text-zinc-400 uppercase tracking-wider">Needed to flash 2018+ Cummins. Plug and play.</p>
                             </div>
                         </label>
-                        <span class="text-sm font-bold text-[#0066FF]">+$70.00</span>
+                        <span class="text-sm font-bold text-[#0066FF]" data-price-cad="${patchCable.price}">+$${Number(patchCable.price).toFixed(2)}</span>
+                    </div>
+                    ` : needsGatewayCable ? `
+                    <div class="mb-5 bg-[#111115] border border-[#1E1E28] rounded-xl p-4">
+                        <p class="text-sm font-bold text-white mb-0.5">2018+ Cummins need a Security Gateway cable</p>
+                        <p class="text-xs text-zinc-400">The truck won't take the tune without one. Call or text <a href="tel:+12502619502" class="text-[#0066FF] underline">(250) 261-9502</a> and we'll match the right cable to your tune.</p>
                     </div>
                     ` : ''}
 
@@ -2029,6 +2027,8 @@ function initPDP() {
     document.querySelectorAll('input[name="pdp-hardware"]').forEach(radio => {
         radio.addEventListener('change', updateTotalPrice);
     });
+    // a pre-ticked add-on (the 2018+ Cummins patch cable) counts from the start
+    if (document.querySelector('.upsell-checkbox:checked')) updateTotalPrice();
 
     if (product.category === 'Tuning & Electronics') {
         const tuneCards = document.querySelectorAll('.pdp-tune-card');
@@ -2420,6 +2420,9 @@ function initPDP() {
             const qtyInput = document.getElementById("pdp-qty-input");
             const qty = qtyInput ? (parseInt(qtyInput.value) || 1) : 1;
             addToCart(product.id, qty, customAttributes, variantOverride);
+            document.querySelectorAll('.upsell-checkbox:checked[data-product-id]').forEach(cb => {
+                addToCart(cb.dataset.productId, 1, { "Add-On To": product.name });
+            });
             
             // Add hardware to cart synchronously and robustly
             try {
