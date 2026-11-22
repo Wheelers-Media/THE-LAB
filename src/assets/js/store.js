@@ -1863,7 +1863,7 @@ function initPDP() {
                         <div class="mb-4">
                             <input type="text" id="fitment-search" placeholder="Search your vehicle (e.g., 2018 Ford 6.7L)..." class="w-full bg-void border border-edge rounded-lg p-3 text-white text-sm focus:outline-none focus:border-labBlue transition-colors">
                         </div>
-                        <ul class="space-y-3 bg-[#111115] p-5 rounded-lg border border-edge h-64 overflow-y-auto" id="fitment-list">
+                        <ul class="space-y-3 bg-[#111115] p-5 rounded-lg border border-edge" id="fitment-list">
                             ${product.makes.filter(m => m !== 'Universal').length === 0 ? `<li class="text-zinc-400 text-sm">Universal Fitment</li>` : ''}
                             ${product.makes.filter(m => m !== 'Universal').map(make => `
                                 <li>
