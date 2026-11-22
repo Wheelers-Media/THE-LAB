@@ -33,17 +33,19 @@
       "title": "Tuning Device",
       "required": false,
       "mode": "one",
-      "text": "The device loads your tune onto the truck. Already have one? Skip this step. Choose the device that matches the tune you picked.",
+      "text": "The device loads your tune onto the truck. We pick the one that runs your tune. Already have one? Remove it.",
       "options": [
         {
           "handle": "ez-lynk-autoagent-3",
           "brand": "EZ LYNK",
-          "name": "AutoAgent 3"
+          "name": "AutoAgent 3",
+          "runner": "EZ LYNK"
         },
         {
           "handle": "hp-tuners-mpvi3",
           "brand": "HP Tuners",
-          "name": "MPVI4 Interface"
+          "name": "MPVI4 Interface",
+          "runner": "HP Tuners"
         }
       ]
     },
@@ -72,37 +74,44 @@
         {
           "handle": "2017-2025-duramax-6-6l-4-exhaust",
           "brand": "Polar",
-          "name": "4\" Exhaust"
+          "name": "4\" Exhaust",
+          "inlet": 4
         },
         {
           "handle": "2017-2025-duramax-6-6l-5-exhaust",
           "brand": "Polar",
-          "name": "5\" Exhaust"
+          "name": "5\" Exhaust",
+          "inlet": 5
         },
         {
           "handle": "2017-2025-duramax-6-6l-4-polar-exhaust-with-muffler",
           "brand": "Polar",
-          "name": "4\" Exhaust With Muffler"
+          "name": "4\" Exhaust With Muffler",
+          "inlet": 4
         },
         {
           "handle": "2017-2025-duramax-6-6l-5-polar-exhaust-with-muffler",
           "brand": "Polar",
-          "name": "5\" Exhaust With Muffler"
+          "name": "5\" Exhaust With Muffler",
+          "inlet": 5
         },
         {
           "handle": "2017-2025-duramax-6-6l-304ss-5-polar-exhaust",
           "brand": "Polar",
-          "name": "304SS 5\" Exhaust"
+          "name": "304SS 5\" Exhaust",
+          "inlet": 5
         },
         {
           "handle": "2017-2025-duramax-6-6l-304ss-5-polar-exhaust-with-muffler",
           "brand": "Polar",
-          "name": "304SS 5\" Exhaust With Muffler"
+          "name": "304SS 5\" Exhaust With Muffler",
+          "inlet": 5
         },
         {
           "handle": "2017-2025-duramax-6-6l-5-polished-polar-exhaust",
           "brand": "Polar",
-          "name": "304SS 5\" Polished Exhaust"
+          "name": "304SS 5\" Polished Exhaust",
+          "inlet": 5
         }
       ]
     },
@@ -111,7 +120,7 @@
       "title": "Exhaust Tips",
       "required": false,
       "mode": "one",
-      "text": "Finish the exhaust with a tip. Match the inlet size to your pipe (4 inch or 5 inch).",
+      "text": "Finish the exhaust with a tip. We size it to your exhaust: a 4 inch exhaust gets a 4 inch inlet tip, a 5 inch exhaust a 5 inch inlet.",
       "options": [
         {
           "handle": "polar-diesel-polished-oval-exhaust-tip-1",

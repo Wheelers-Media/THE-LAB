@@ -32,7 +32,9 @@
         contact: {},        // name, email, phone: asked on the review step, before checkout
         ship: 'shop',       // 'shop' = parts ship to THE LAB and we install; 'home' = ship to the buyer
         i: 0,
-        seen: new Set()     // steps the person has passed (so an optional step skipped shows a tick)
+        seen: new Set(),    // steps the person has passed (so an optional step skipped shows a tick)
+        auto: new Map(),    // handle -> why the builder added it ("Runs your HP Tuners tune")
+        runner: null        // the tuning platform the device step last matched
     };
 
     // ---------- data ----------
@@ -61,6 +63,7 @@
             const v = o.preselect && firstOk(o.handle);
             if (v) choose(s, o.handle, v.id);
         }));
+        sync(null);
         S.steps.push({ id: 'truck', title: 'Your Truck', required: true, kind: 'truck' });
         S.steps.push({ id: 'review', title: 'Review', required: true, kind: 'review' });
     }
@@ -121,6 +124,101 @@
     }
     function unchoose(step, h) {
         if (S.pick[step.id]) delete S.pick[step.id][h];
+        S.auto.delete(h);
+    }
+
+    // What the person did, then everything that goes with it (see sync)
+    function pickOption(step, h, variantId) {
+        choose(step, h, variantId);
+        sync({ step, opt: optOf(step, h) });
+    }
+    function dropOption(step, h) {
+        unchoose(step, h);
+        sync(null);
+    }
+
+    // ---------- pairing ----------
+    // Choices on one step set up the next, from fields in the package file:
+    // - device: the device whose "runner" matches the tune's "runner" (EZ LYNK, HP Tuners, EFILive) is added
+    //   when the tune changes, a device for another platform is removed, and only matching devices are shown.
+    // - tips: the exhaust's "inlet" (4 or 5) picks the tip variant with the same inlet ("5\" Inlet 6\" Outlet");
+    //   other sizes are greyed out. A tip already chosen is switched to the right size, keeping its finish.
+    // - "needs": handles in other steps added with the option (the 2023+ downpipe needs the EGR delete).
+    // Anything added here can be removed; it is not added again until the choice that brought it changes.
+    function pickedOpt(stepId) {
+        const s = stepById(stepId);
+        const h = s && s.options && Object.keys(S.pick[stepId] || {})[0];
+        return h ? optOf(s, h) : null;
+    }
+    const tuneRunner = () => { const o = pickedOpt('tune'); return (o && o.runner) || null; };
+    const exhaustInlet = () => { const o = pickedOpt('exhaust'); return (o && o.inlet) || null; };
+    function findOpt(h) {
+        for (const s of S.steps) {
+            const o = s.options && optOf(s, h);
+            if (o) return { step: s, opt: o };
+        }
+        return null;
+    }
+    const sized = (h) => variants(h).some((v) => /"\s*Inlet/i.test(v.title));
+    function fitsInlet(v, n) {
+        if (!n) return true;
+        const inlet = v.title.match(/(\d)"\s*Inlet/i);
+        if (inlet && Number(inlet[1]) !== n) return false;
+        const clamp = v.title.match(/(\d)"\s*Clamp/i);
+        return !(clamp && Number(clamp[1]) !== n);
+    }
+    // the variant for this pipe size, keeping the finish of `prefer` ("Satin Black") when it has one
+    function bestFit(h, n, prefer) {
+        const ok = variants(h).filter((v) => v.availableForSale && fitsInlet(v, n));
+        const finish = (t) => t.split(' / ').slice(1).join(' / ');
+        const same = prefer && ok.find((v) => finish(v.title) === finish(prefer.title));
+        return same || ok[0] || null;
+    }
+    function deviceFits(o) {
+        const r = tuneRunner();
+        return !r || !o.runner || o.runner === r;
+    }
+
+    function sync(changed) {
+        // the device follows the tune
+        const dev = stepById('device');
+        const runner = tuneRunner();
+        if (dev && dev.options && runner && runner !== S.runner) {
+            const p = S.pick.device || (S.pick.device = {});
+            Object.keys(p).forEach((h) => { if (!deviceFits(optOf(dev, h) || {})) unchoose(dev, h); });
+            if (!Object.keys(p).length) {
+                const o = dev.options.find((x) => x.runner === runner && firstOk(x.handle));
+                if (o) {
+                    choose(dev, o.handle, firstOk(o.handle).id);
+                    S.auto.set(o.handle, 'Runs your ' + runner + ' tune');
+                }
+            }
+        }
+        S.runner = runner;
+
+        // tips follow the exhaust size
+        const n = exhaustInlet();
+        S.steps.forEach((s) => {
+            const p = s.options && S.pick[s.id];
+            if (!p) return;
+            Object.keys(p).forEach((h) => {
+                if (!sized(h)) return;
+                const v = vOf(h, p[h]);
+                if (v && fitsInlet(v, n)) return;
+                const b = bestFit(h, n, v);
+                if (b) p[h] = b.id; else unchoose(s, h);
+            });
+        });
+
+        // an option brings the parts it needs
+        const needs = (changed && changed.opt && changed.opt.needs) || [];
+        needs.forEach((h) => {
+            const f = findOpt(h);
+            const v = f && firstOk(h);
+            if (!v || (S.pick[f.step.id] || {})[h]) return;
+            choose(f.step, h, v.id);
+            S.auto.set(h, 'Needed with the ' + changed.opt.name);
+        });
     }
 
     // ---------- render ----------
@@ -190,15 +288,21 @@
         body.append(el('p', 'db-brand', opt.brand || p.vendor), el('h3', 'display db-card-t', opt.name));
         // A platform with two tuning platforms (EZ LYNK and HP Tuners) lists both as separate cards, each tagged here.
         if (opt.runner) body.append(el('p', 'db-chip', 'Runs on ' + opt.runner));
+        const inlet = sized(opt.handle) ? exhaustInlet() : null;
         if (opt.preselect && sel) body.append(el('p', 'db-chip is-added', 'Added for your truck'));
+        else if (sel && S.auto.has(opt.handle)) body.append(el('p', 'db-chip is-added', S.auto.get(opt.handle)));
+        if (inlet) body.append(el('p', 'db-chip', 'Sized for your ' + inlet + '" exhaust'));
         if (opt.note) body.append(el('p', 'db-card-n', opt.note));
 
-        let cur = (sel && vOf(opt.handle, sel)) || firstOk(opt.handle) || vs[0];
+        let cur = (sel && vOf(opt.handle, sel)) || (inlet && bestFit(opt.handle, inlet)) || firstOk(opt.handle) || vs[0];
         const price = el('p', 'db-price');
         const showPrice = () => {
             const amt = parseFloat(cur.price.amount);
-            const lo = Math.min.apply(null, vs.map((v) => parseFloat(v.price.amount)));
-            price.textContent = vs.length > 1 && !sel ? 'From ' + money(lo) : money(amt);
+            const fit = vs.filter((v) => fitsInlet(v, inlet));
+            const lo = Math.min.apply(null, (fit.length ? fit : vs).map((v) => parseFloat(v.price.amount)));
+            const pool = fit.length ? fit : vs;
+            const varies = new Set(pool.map((v) => v.price.amount)).size > 1;
+            price.textContent = varies && !sel ? 'From ' + money(lo) : money(sel || !varies ? amt : lo);
         };
 
         let select = null;
@@ -211,14 +315,15 @@
             vs.forEach((v) => {
                 const o = document.createElement('option');
                 o.value = v.id;
-                o.textContent = v.title + ' (' + money(parseFloat(v.price.amount)) + ')' + (v.availableForSale ? '' : ' - ask us');
-                o.disabled = !v.availableForSale;
+                const fits = fitsInlet(v, inlet);
+                o.textContent = v.title + ' (' + money(parseFloat(v.price.amount)) + ')' + (!v.availableForSale ? ' - ask us' : !fits ? ' - not for a ' + inlet + '" exhaust' : '');
+                o.disabled = !v.availableForSale || !fits;
                 if (v.id === cur.id) o.selected = true;
                 select.append(o);
             });
             select.addEventListener('change', () => {
                 cur = vOf(opt.handle, select.value);
-                if ((S.pick[step.id] || {})[opt.handle]) { choose(step, opt.handle, cur.id); render(false); }
+                if ((S.pick[step.id] || {})[opt.handle]) { pickOption(step, opt.handle, cur.id); render(false); }
                 else showPrice();
             });
             foot.append(lab, select);
@@ -240,7 +345,7 @@
             btn.textContent = sel ? 'Selected' : (step.mode === 'one' ? 'Choose this' : 'Add');
             btn.setAttribute('aria-pressed', sel ? 'true' : 'false');
             btn.addEventListener('click', () => {
-                if (sel) unchoose(step, opt.handle); else choose(step, opt.handle, cur.id);
+                if (sel) dropOption(step, opt.handle); else pickOption(step, opt.handle, cur.id);
                 render(false);
             });
             foot.append(btn);
@@ -264,21 +369,27 @@
         wrap.append(head, el('p', 'db-step-p', step.text));
         wrap.append(el('p', 'db-choose', step.mode === 'one' ? 'Choose one.' : 'Choose as many as you like.' + (step.required ? '' : ' Skip it if you don\'t need it.')));
 
+        // the device step shows only devices that run the chosen tune
+        const opts = step.id === 'device' ? step.options.filter(deviceFits) : step.options;
+        if (step.id === 'device' && opts.length < step.options.length) {
+            wrap.append(el('p', 'db-choose', 'Showing the device that runs your ' + tuneRunner() + ' tune.'));
+        }
+
         const inc = included();
         if (inc.has(step.id)) {
             const n = el('p', 'db-included', 'Your exhaust package already includes this part. You can skip this step.');
             wrap.append(n);
         } else {
             const grid = el('div', 'db-grid');
-            const n = step.options.length;
+            const n = opts.length;
             grid.dataset.n = String(n);
             if (ROWS.matches || n <= 2) grid.classList.add('is-rows');
             else if (n === 3) grid.classList.add('is-three');
-            step.options.forEach((o) => grid.append(card(step, o)));
+            opts.forEach((o) => grid.append(card(step, o)));
             const rail = el('div', 'db-rail');
             rail.append(grid);
             wrap.append(rail);
-            if (step.options.length > 1) {
+            if (opts.length > 1) {
                 const mk = (dir, label) => {
                     const b = el('button', 'db-arrow db-arrow-' + (dir < 0 ? 'prev' : 'next'));
                     b.type = 'button';
@@ -294,7 +405,7 @@
                 const upd = () => {
                     const first = grid.firstElementChild, second = grid.children[1];
                     const w = (second ? second.offsetLeft - first.offsetLeft : first.offsetWidth) || 1;
-                    const n = step.options.length;
+                    const n = opts.length;
                     const k = Math.min(n, Math.round(grid.scrollLeft / w) + 1);
                     const shown = Math.max(1, Math.round((grid.clientWidth + 16) / w));
                     ctr.textContent = (shown > 1 ? k + '-' + Math.min(n, k + shown - 1) : k) + ' of ' + n + (matchMedia('(max-width: 767px)').matches ? '. Swipe for more.' : '');
