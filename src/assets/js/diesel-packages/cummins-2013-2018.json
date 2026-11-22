@@ -50,6 +50,20 @@
       ]
     },
     {
+      "id": "bypass",
+      "title": "Bypass Cable",
+      "required": false,
+      "mode": "one",
+      "text": "2018 trucks have a Security Gateway Module that blocks the tune from loading, so they need this bypass cable to flash, on EZ LYNK or EFILive. 2013-2017 trucks don't need it. Already have one? Skip it.",
+      "options": [
+        {
+          "handle": "2018-2021-cummins-bypass-cable",
+          "brand": "FISH Tuning",
+          "name": "Security Gateway Bypass Cable"
+        }
+      ]
+    },
+    {
       "id": "exhaust",
       "title": "Exhaust",
       "required": true,

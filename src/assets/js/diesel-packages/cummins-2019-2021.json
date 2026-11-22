@@ -17,14 +17,20 @@
           "brand": "AMDP",
           "name": "EZ LYNK Custom Tuning Support Package",
           "note": "Limited is a 4-week support window. Full is longer support.",
-          "runner": "EZ LYNK"
+          "runner": "EZ LYNK",
+          "needs": [
+            "2018-2021-cummins-bypass-cable"
+          ]
         },
         {
           "handle": "amdp-2019-2021-6-7l-cummins-efi-live-custom-tuning",
           "brand": "AMDP",
           "name": "EFILive Custom Tuning",
           "note": "Choose your tune level, VIN licence and transmission tuning.",
-          "runner": "EFILive"
+          "runner": "EFILive",
+          "needs": [
+            "2018-2021-cummins-bypass-cable"
+          ]
         }
       ]
     },
@@ -46,6 +52,20 @@
           "brand": "EFILive",
           "name": "AutoCal V3",
           "runner": "EFILive"
+        }
+      ]
+    },
+    {
+      "id": "bypass",
+      "title": "Bypass Cable",
+      "required": false,
+      "mode": "one",
+      "text": "Every 2019-2021 Cummins has a Security Gateway Module that blocks the tune from loading. The bypass cable lets your device flash the truck, on EZ LYNK or EFILive. We add it with your tune. Already have one? Remove it.",
+      "options": [
+        {
+          "handle": "2018-2021-cummins-bypass-cable",
+          "brand": "FISH Tuning",
+          "name": "Security Gateway Bypass Cable"
         }
       ]
     },
