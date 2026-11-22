@@ -489,7 +489,7 @@ function buildFilterOptions(catalog) {
 
 // ── Sale codes the website applies at checkout ─────────────────
 // Black Friday 2026 (Eric, 2026-11-19): 15% off Polar Diesel online. POLARBF15 only discounts products in the
-// Shopify collection "Polar Diesel (all)", so it is safe to send with every cart. The shop uses POLARSHOP10 at the register.
+// Shopify collection "Polar Diesel (15% eligible, no billet)" (billet gets a separate automatic 5%, Eric 2026-11-21), so it is safe to send with every cart. The shop uses POLARSHOP10 at the register.
 // Times are Fort St. John (MST). Preview test: add ?checkout-test=1 on a Vercel preview (not thelabfsj.ca) to send LABTEST15.
 const LAB_CHECKOUT_CODES = [
     { code: 'POLARBF15', from: '2026-11-23T00:00:00-07:00', to: '2026-12-04T23:59:59-07:00' }

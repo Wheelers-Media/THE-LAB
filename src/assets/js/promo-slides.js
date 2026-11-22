@@ -19,7 +19,7 @@
         polar: {
             start: '2026-11-23T00:00:00-07:00',
             end: '2026-12-04T23:59:59-07:00',
-            pct: 15,                       // online (website) discount. Eric, 2026-11-19: 15% online, 10% in the shop
+            pct: 15,                       // online (website) discount. Eric, 2026-11-19: 15% online, 10% in the shop. Eric, 2026-11-21: Polar billet max 5% (automatic discount in Shopify)
             shopPct: 10,                   // in-shop (register) discount, shown in the fine print
             atCheckout: true,              // true = discount is an automatic discount applied at checkout, so the chips work out
                                            // the sale price themselves. If compare-at prices are loaded in Shopify instead, those win.
@@ -44,7 +44,7 @@
                         clock: { to: 'polar.start', label: 'Starts in' },
                         chips: 'teaser',
                         ctas: [['Plan my build', '/diesel/'], ['See Polar parts', '/store/catalog/?brand=Polar+Diesel']],
-                        fine: 'In the shop: {shopPct}% off Polar from Nov 23. ' + OFFROAD
+                        fine: 'In the shop: {shopPct}% off Polar from Nov 23. Polar billet parts are 5% off, online and in the shop. ' + OFFROAD
                     },
                     {   // last 48 hours
                         from: '2026-12-03T00:00:00-07:00', to: 'polar.end', rank: 1,
@@ -54,7 +54,7 @@
                         clock: { to: 'polar.end', label: 'Ends in' },
                         chips: 'sale',
                         ctas: [['Shop the sale', '/store/catalog/?brand=Polar+Diesel'], ['Build a power package', '/diesel/']],
-                        fine: 'Online price applies at checkout; {shopPct}% off in the shop. Ends December 4 at 11:59 p.m. MT. ' + OFFROAD
+                        fine: 'Online price applies at checkout; {shopPct}% off in the shop. Polar billet parts are 5% off. Ends December 4 at 11:59 p.m. MT. ' + OFFROAD
                     },
                     {   // sale is on
                         from: 'polar.start', to: 'polar.end', rank: 1,
@@ -63,7 +63,7 @@
                         text: 'Exhaust, tips and elbows at the lowest Polar pricing of the year. Ships across Canada and to the US, or installed here.',
                         chips: 'sale',
                         ctas: [['Shop the sale', '/store/catalog/?brand=Polar+Diesel'], ['Build a power package', '/diesel/']],
-                        fine: 'Online price applies at checkout; {shopPct}% off in the shop. Ends December 4 at 11:59 p.m. MT. ' + OFFROAD
+                        fine: 'Online price applies at checkout; {shopPct}% off in the shop. Polar billet parts are 5% off. Ends December 4 at 11:59 p.m. MT. ' + OFFROAD
                     }
                 ]
             },
