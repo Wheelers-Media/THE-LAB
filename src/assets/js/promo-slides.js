@@ -120,6 +120,14 @@
             {
                 id: 'gridiron', bay: 'parts', img: '/assets/promo-gridiron.jpg', alt: 'White Ford Super Duty with a Gridiron steel front bumper and winch parked outside THE LAB',
                 versions: [
+                    {   // Black Friday (Gridiron's own promo, Nov 23 to Dec 4): free 30" Hi-Lux 2.0 with an OG or Street Series front bumper
+                        from: 'polar.start', to: 'polar.end', rank: 2.5,
+                        eyebrow: 'Gridiron Black Friday &middot; Nov 23 to Dec 4',
+                        title: 'Free 30&quot; light bar with a Gridiron front bumper.',
+                        text: 'Order a Base, Prerunner, Full Tube or Street Series front bumper by December 4 and get a Speed Demon 30&quot; Hi-Lux 2.0 light bar free. {gridiron}',
+                        ctas: [['Get a bumper quote', '/contact/?form=build&service=Bumpers%20%26%20Accessories#form'], ['See Gridiron', '/gridiron/']],
+                        fine: 'One light bar per bumper order. Wiring harness not included. Installs at our $125/hr shop rate. Ends December 4 at 11:59 p.m. MT.'
+                    },
                     {
                         rank: 5,
                         eyebrow: 'Gridiron bumpers &middot; Made in Canada',
