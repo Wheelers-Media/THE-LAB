@@ -933,6 +933,8 @@ textarea.lf-input { min-height:104px; padding:12px 14px; resize:vertical; }
 .results-grid figure { margin:0; }
 .results-grid img { width:100%; height:auto; aspect-ratio:3/4; object-fit:cover; display:block; }
 .results-grid .results-wide img { aspect-ratio:auto; }
+.results-grid.results-grid--wide { margin-top:8px; grid-template-columns:repeat(2,1fr); }
+.results-grid--wide img { aspect-ratio:3/2; }
 .results-grid figcaption { font-size:14px; line-height:1.4; color:var(--mute); margin-top:6px; }
 .results-wide { grid-column:1 / -1; }
 @media (min-width:900px) {
@@ -1157,6 +1159,10 @@ main img { background-color:var(--panel); }
 .ab-hustle strong { color:var(--text); }
 .lab-page .ab-q { max-width:20ch; margin:var(--sp-5) 0; font-size:clamp(2rem,7vw,3.4rem); line-height:1.05; text-transform:none; text-wrap:balance; }
 .ab-q--ice { color:var(--ice); }
+.ab-duo { display:grid; gap:var(--sp-2); margin-top:var(--sp-7); }
+.ab-duo figure { margin:0; }
+.ab-duo img { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; }
+@media (min-width:700px) { .ab-duo { grid-template-columns:1fr 1fr; gap:var(--sp-4); } }
 .ab-work img { display:block; width:100%; aspect-ratio:4/5; object-fit:cover; object-position:30% 50%; }
 .ab-team { margin-top:var(--sp-6); }
 .ab-team p { margin:0; }
