@@ -311,7 +311,8 @@
         body.append(el('p', 'db-brand', opt.brand || p.vendor), el('h3', 'display db-card-t', opt.name));
         if (flag && flag.why) body.append(el('p', 'db-why', flag.why));
         // A platform with two tuning platforms (EZ LYNK and HP Tuners) lists both as separate cards, each tagged here.
-        if (opt.runner) body.append(el('p', 'db-chip', 'Runs on ' + opt.runner));
+        // the matched device already says it runs your tune, so skip the generic "Runs on" chip there
+        if (opt.runner && !(sel && S.auto.has(opt.handle))) body.append(el('p', 'db-chip', 'Runs on ' + opt.runner));
         const inlet = sized(opt.handle) ? exhaustInlet() : null;
         if (opt.preselect && sel) body.append(el('p', 'db-chip is-added', 'Added for your truck'));
         else if (sel && S.auto.has(opt.handle)) body.append(el('p', 'db-chip is-added', S.auto.get(opt.handle)));
@@ -409,9 +410,6 @@
         const fitting = paired ? step.options.filter(deviceFits) : step.options;
         // our picks first, then what people buy most; ties keep the package file's order
         const opts = fitting.map((o, i) => [o, i]).sort((a, b) => (flagRank(step, b[0]) - flagRank(step, a[0])) || (units(b[0].handle) - units(a[0].handle)) || (a[1] - b[1])).map((x) => x[0]);
-        if (paired && opts.length && opts.length < step.options.length) {
-            wrap.append(el('p', 'db-choose', 'Showing the ' + (step.id === 'device' ? 'device' : 'cable') + ' that runs your ' + tuneRunner() + ' tune.'));
-        }
 
         if (step.id === 'bypass' && !opts.length) {
             wrap.append(el('p', 'db-included', 'Your ' + tuneRunner() + ' tune needs a Security Gateway cable too. Call or text (250) 261-9502 and we\'ll match the right one. You can carry on.'));

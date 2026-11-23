@@ -50,7 +50,6 @@
           "includes": [
             "downpipe"
           ],
-          "note": "Includes the downpipe.",
           "inlet": 4,
           "needs": [
             "2011-2026-ford-powerstroke-6-7l-egr-delete-kit"
@@ -63,7 +62,6 @@
           "includes": [
             "downpipe"
           ],
-          "note": "Includes the downpipe.",
           "inlet": 5,
           "needs": [
             "2011-2026-ford-powerstroke-6-7l-egr-delete-kit"
@@ -76,7 +74,6 @@
           "includes": [
             "downpipe"
           ],
-          "note": "Includes the downpipe.",
           "inlet": 4,
           "needs": [
             "2011-2026-ford-powerstroke-6-7l-egr-delete-kit"
@@ -89,7 +86,6 @@
           "includes": [
             "downpipe"
           ],
-          "note": "Includes the downpipe.",
           "inlet": 5,
           "needs": [
             "2011-2026-ford-powerstroke-6-7l-egr-delete-kit"
@@ -102,7 +98,6 @@
           "includes": [
             "downpipe"
           ],
-          "note": "Includes the downpipe.",
           "inlet": 5,
           "needs": [
             "2011-2026-ford-powerstroke-6-7l-egr-delete-kit"
@@ -115,7 +110,6 @@
           "includes": [
             "downpipe"
           ],
-          "note": "Includes the downpipe.",
           "needs": [
             "2011-2026-ford-powerstroke-6-7l-egr-delete-kit"
           ]
@@ -127,7 +121,6 @@
           "includes": [
             "downpipe"
           ],
-          "note": "Includes the downpipe.",
           "inlet": 5,
           "needs": [
             "2011-2026-ford-powerstroke-6-7l-egr-delete-kit"
@@ -140,7 +133,6 @@
           "includes": [
             "downpipe"
           ],
-          "note": "Includes the downpipe.",
           "inlet": 5,
           "needs": [
             "2011-2026-ford-powerstroke-6-7l-egr-delete-kit"
