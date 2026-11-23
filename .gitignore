@@ -8,3 +8,4 @@ src/pages/store/accessories/
 
 # Built on deploy by tools/build_reviews.mjs
 src/assets/data/reviews.json
+.omc/
