@@ -120,13 +120,21 @@
             {
                 id: 'gridiron', bay: 'parts', img: '/assets/promo-gridiron.jpg', alt: 'White Ford Super Duty with a Gridiron steel front bumper and winch parked outside THE LAB',
                 versions: [
-                    {   // Black Friday (Gridiron's own promo, Nov 23 to Dec 4): free 30" Hi-Lux 2.0 with an OG or Street Series front bumper
+                    {   // teaser: from now until Gridiron's Black Friday opens
+                        to: 'polar.start', rank: 2.5,
+                        eyebrow: 'Gridiron Black Friday &middot; Starts Nov 23',
+                        title: 'Free Speed Demon lights with your Gridiron bumper.',
+                        text: 'Starting November 23: a free light bar with a front bumper, pods with Street Series, scene lights with a rear bumper, plus 25% off valances. {gridiron}',
+                        ctas: [['See the deals', '/gridiron/#black-friday'], ['See Gridiron', '/gridiron/']],
+                        fine: 'Wiring harness not included. Installs at our $125/hr shop rate.'
+                    },
+                    {   // Black Friday (Gridiron's own promo, Nov 23 to Dec 4)
                         from: 'polar.start', to: 'polar.end', rank: 2.5,
                         eyebrow: 'Gridiron Black Friday &middot; Nov 23 to Dec 4',
-                        title: 'Free 30&quot; light bar with a Gridiron front bumper.',
-                        text: 'Order a Base, Prerunner, Full Tube or Street Series front bumper by December 4 and get a Speed Demon 30&quot; Hi-Lux 2.0 light bar free. {gridiron}',
-                        ctas: [['Get a bumper quote', '/contact/?form=build&service=Bumpers%20%26%20Accessories#form'], ['See Gridiron', '/gridiron/']],
-                        fine: 'One light bar per bumper order. Wiring harness not included. Installs at our $125/hr shop rate. Ends December 4 at 11:59 p.m. MT.'
+                        title: 'Free Speed Demon lights with your Gridiron bumper.',
+                        text: 'A free 30&quot; Hi-Lux 2.0 light bar with an OG front bumper, free pods with Street Series, free scene lights with a rear bumper. Valances are 25% off with code VAL25. {gridiron}',
+                        ctas: [['See the deals', '/gridiron/#black-friday'], ['Get a bumper quote', '/contact/?form=build&service=Bumpers%20%26%20Accessories#form']],
+                        fine: 'Wiring harness not included. Lights are added to your bumper order. Installs at our $125/hr shop rate. Ends December 4 at 11:59 p.m. MT.'
                     },
                     {
                         rank: 5,
