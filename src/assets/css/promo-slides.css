@@ -87,13 +87,14 @@
     .promo-slide { min-height:clamp(540px,74vh,700px); }
     .promo-slide::after { content:''; position:absolute; inset:0; z-index:1; background:linear-gradient(100deg,#0A0A0B 0%,#0A0A0B 78%,#141517 100%); clip-path:polygon(0 0,67% 0,55% 100%,0 100%); }
     .promo-media::after { background:linear-gradient(to top, rgba(10,10,11,.7) 0%, rgba(10,10,11,0) 38%); }
-    .promo-media::before { content:''; position:absolute; inset:0; z-index:2; background:var(--bay); clip-path:polygon(67% 0,68% 0,56% 100%,55% 100%); }
-    .promo-media img { object-position:70% 50%; }
+    .promo-media::before { content:''; position:absolute; inset:0; z-index:2; background:var(--bay); clip-path:polygon(52.9% 0,54.3% 0,37.1% 100%,35.7% 100%); }
+    .promo-media { inset:0 0 0 30%; }
+    .promo-media img { object-position:var(--focus,60% 50%); }
     .promo-body { z-index:3; padding:64px 0 92px; max-width:min(640px,54vw); }
     .promo-chips { width:min(640px,52vw); }
     .promo-title { font-size:clamp(3.4rem,6vw,5.75rem); line-height:.9; }
     .promo-eyebrow { font-size:13.5px; }
-    .promo-ghost { display:block; position:absolute; z-index:2; left:max(16px,calc((100vw - 1200px) / 2 + 16px)); bottom:-1.6vw; font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(8rem,20vw,18rem); line-height:.8; text-transform:uppercase; white-space:nowrap; color:transparent; -webkit-text-stroke:2px rgba(255,255,255,.1); pointer-events:none; }
+    .promo-ghost { display:block; position:absolute; z-index:2; left:calc(-42.9% + max(16px,calc((100vw - 1200px) / 2 + 16px))); bottom:-1.6vw; font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(8rem,20vw,18rem); line-height:.8; text-transform:uppercase; white-space:nowrap; color:transparent; -webkit-text-stroke:2px rgba(255,255,255,.1); pointer-events:none; }
     .promo-big { left:auto; right:max(16px,calc((100vw - 1200px) / 2 + 16px)); bottom:96px; align-items:flex-end; }
     .promo-big b { font-size:clamp(9rem,17vw,16rem); text-shadow:8px 8px 0 rgba(0,0,0,.55); }
     .promo-big span { align-self:flex-end; font-size:13px; }
