@@ -453,6 +453,19 @@ window.initShopifyCatalog = async function () {
             });
         }
 
+        // What the shop has sold and our editorial picks (src/assets/data/*.json). Failure just means no badges.
+        const [sales, picks] = await Promise.all(['sales', 'picks'].map((n) => fetch('/assets/data/' + n + '.json').then((r) => r.json()).catch(() => ({}))));
+        const BEST_AT = 5; // units in the window that earn "Best seller"
+        classified.forEach((p) => {
+            const [units, orders] = (sales.sold && sales.sold[p.handle]) || [0, 0];
+            p.sold = units;
+            p.orders = orders;
+            const pick = picks.picks && picks.picks[p.handle];
+            p.pick = pick ? pick.label : '';
+            p.pickWhy = pick ? pick.why : '';
+            p.badge = p.pick || (units >= BEST_AT ? 'Best seller' : (p.isPopular ? 'Popular' : ''));
+        });
+
         window.storeCatalog = classified;
         console.log(`[THE LAB] Catalog ready: ${classified.length} parts (${excluded} services/tint/detail excluded)`);
 

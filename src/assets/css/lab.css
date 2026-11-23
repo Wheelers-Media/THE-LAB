@@ -589,6 +589,9 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .pcard-img img { width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.16,1,.3,1); }
 .pcard:hover .pcard-img img { transform:scale(1.04); }
 .pcard-tag { position:absolute; top:0; left:0; z-index:2; padding:6px 10px; background:var(--amber); color:#000; font:800 12px/1 'Barlow',sans-serif; letter-spacing:.08em; text-transform:uppercase; }
+.pcard-tag--pick { background:var(--text); }
+.pdp-pick { margin:0 0 16px; padding:10px 14px; border-left:3px solid var(--amber); background:var(--panel); color:var(--mute); font-size:14px; line-height:1.45; }
+.pdp-pick b { color:var(--text); }
 .pcard-body { display:flex; flex-direction:column; flex:1; padding:14px 14px 16px; }
 .pcard-meta { margin:0 0 6px; color:var(--amber); font:600 12px/1.25 'Barlow',sans-serif; letter-spacing:.08em; text-transform:uppercase; }
 .pcard-meta span + span::before { content:' · '; color:var(--mute); }

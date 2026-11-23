@@ -60,6 +60,10 @@
         const handles = [...new Set(S.pkg.steps.flatMap((s) => s.options.map((o) => o.handle)))];
         const data = await shopifyGraphQL(productQuery(handles));
         Object.values(data).forEach((p) => { if (p) S.products[p.handle] = p; });
+        // What the shop has sold and our editorial picks (src/assets/data/*.json). Missing files just mean no badges.
+        const [sales, picks] = await Promise.all(['sales', 'picks'].map((n) => fetch('/assets/data/' + n + '.json').then((r) => r.json()).catch(() => ({}))));
+        S.sold = sales.sold || {};
+        S.picks = picks.picks || {};
         S.steps = S.pkg.steps
             .map((s) => Object.assign({}, s, { options: s.options.filter((o) => S.products[o.handle]) }))
             .filter((s) => s.options.length);
@@ -302,7 +306,10 @@
         // top = photo + name and price; foot = option menu and button (rows on phones put the photo beside the name)
         const body = el('div', 'db-card-meta');
         const foot = el('div', 'db-card-foot');
+        const flag = flagFor(step, opt);
+        if (flag) body.append(el('p', 'db-flag' + (flag.label === 'Most chosen' ? '' : ' is-pick'), flag.label));
         body.append(el('p', 'db-brand', opt.brand || p.vendor), el('h3', 'display db-card-t', opt.name));
+        if (flag && flag.why) body.append(el('p', 'db-why', flag.why));
         // A platform with two tuning platforms (EZ LYNK and HP Tuners) lists both as separate cards, each tagged here.
         if (opt.runner) body.append(el('p', 'db-chip', 'Runs on ' + opt.runner));
         const inlet = sized(opt.handle) ? exhaustInlet() : null;
@@ -375,6 +382,17 @@
         return c;
     }
 
+    // Badge for an option: our pick wins, else the part people in this step have bought most (3+ sold)
+    const units = (h) => (S.sold && S.sold[h] ? S.sold[h][0] : 0);
+    function flagFor(step, opt) {
+        const pick = S.picks && S.picks[opt.handle];
+        if (pick) return pick;
+        if (step.options.length < 2 || units(opt.handle) < 3) return null;
+        const top = Math.max.apply(null, step.options.map((o) => units(o.handle)));
+        return units(opt.handle) === top ? { label: 'Most chosen' } : null;
+    }
+    const flagRank = (step, o) => { const f = flagFor(step, o); return f ? (f.label === 'Top pick' ? 3 : f.label === 'We recommend' ? 2 : 1) : 0; };
+
     function optionStep(step) {
         const wrap = el('section', 'db-step');
         const head = el('div', 'db-step-head');
@@ -388,7 +406,9 @@
 
         // the device step shows only devices that run the chosen tune
         const paired = step.id === 'device' || step.id === 'bypass';
-        const opts = paired ? step.options.filter(deviceFits) : step.options;
+        const fitting = paired ? step.options.filter(deviceFits) : step.options;
+        // our picks first, then what people buy most; ties keep the package file's order
+        const opts = fitting.map((o, i) => [o, i]).sort((a, b) => (flagRank(step, b[0]) - flagRank(step, a[0])) || (units(b[0].handle) - units(a[0].handle)) || (a[1] - b[1])).map((x) => x[0]);
         if (paired && opts.length && opts.length < step.options.length) {
             wrap.append(el('p', 'db-choose', 'Showing the ' + (step.id === 'device' ? 'device' : 'cable') + ' that runs your ' + tuneRunner() + ' tune.'));
         }
