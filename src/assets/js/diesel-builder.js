@@ -678,6 +678,10 @@
         refs.buy.disabled = true;
         refs.status.textContent = 'Taking you to checkout...';
         emailBuild(install).finally(() => {}); // fire and forget: never hold up checkout
+        if (window.labTrack) window.labTrack('AddToCart', {
+            content_ids: chosen().map((c) => String(c.variant.id).split('/').pop()), content_name: S.pkg.title, content_type: 'product',
+            value: Math.round(total() * 100) / 100, currency: 'CAD'
+        });
         window.createShopifyCheckout(lines, opts).then(() => { refs.buy.disabled = false; }, () => { refs.buy.disabled = false; });
     }
 

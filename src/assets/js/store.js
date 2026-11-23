@@ -65,6 +65,10 @@ function addToCart(productId, quantity = 1, customAttributes = {}, variantOverri
     }
     saveCart();
     openCart();
+    if (window.labTrack) window.labTrack('AddToCart', {
+        content_ids: [String(resolvedVariantId).split('/').pop()], content_name: resolvedTitle, content_type: 'product',
+        value: Number(resolvedPrice) * quantity || 0, currency: 'CAD'
+    });
 }
 
 function removeFromCart(cartItemId) {
