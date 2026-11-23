@@ -238,3 +238,6 @@ body:has(.db-nav) a[aria-label^="Text us"] { display: none; }
 .db-banner { margin: 0 0 var(--sp-5); background: var(--panel); overflow: hidden; }
 .db-banner img { display: block; width: 100%; height: auto; aspect-ratio: 10 / 3; object-fit: cover; }
 @media (max-width: 640px) { .db-banner img { aspect-ratio: 2 / 1; } }
+.db-flag { display: inline-block; margin: 0 0 6px; padding: 3px 8px; border: 1px solid var(--amber); color: var(--amber); font: 800 12px/1.2 'Barlow', sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.db-flag.is-pick { background: var(--amber); color: #000; }
+.db-why { margin: 4px 0 8px; color: var(--mute); font-size: 13.5px; line-height: 1.4; }

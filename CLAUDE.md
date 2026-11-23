@@ -14,6 +14,7 @@ Luxx Automotive Boutique Inc., Fort St. John BC. Owners Eric and Christine Wheel
 - Tailwind is prebuilt: after adding classes run `cd tools/tailwind && npm run build` (`npm install` first; `node_modules` is gitignored).
 - Local server: `node dev-server.js` (port 3000, mimics `vercel.json` rewrites).
 - Part pages (`/store/parts/<handle>/`), the parts category pages (`/store/egr/`, `/exhaust/`, `/ccv/`, `/accessories/`), `parts-index.js` and the parts half of `sitemap.xml` are built on every Vercel deploy by `node tools/build_parts.mjs` from the live Shopify catalog. They are gitignored; run the script locally to see them (it needs Shopify access, or `--fixture <storefront-response.json>`), and do not commit its changes to `sitemap.xml` or `parts-index.js`.
+- Shop ranking: `src/assets/data/sales.json` (units sold per product handle) feeds the "Best selling" sort, the Best seller card tag and the builder's "Most chosen" tag. Refresh monthly: export Shopify sales by product (or the ShopifyQL in `tools/refresh_sales.py`), run `python tools/refresh_sales.py <file>`, commit the JSON. `src/assets/data/picks.json` holds the editorial Top pick / We recommend badges by handle; Eric confirms them. Aggregate counts only, never customer or order data.
 - Test in a background browser tab; the user often clicks in the shared pane and cancels long scripts. Block the Web3Forms call when testing forms so nothing is emailed to Eric.
 - After any change: no console errors, forms/cart/checkout still work, step changes land below the sticky header.
 

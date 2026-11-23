@@ -353,7 +353,7 @@ let activeFilters = {
     brands: [],
     year: null,
     searchQuery: "",
-    sortBy: "featured"
+    sortBy: "best"
 };
 
 window.toggleFilters = function() {
@@ -883,7 +883,7 @@ function initStore() {
     const resetBtn = document.getElementById('filter-reset-btn');
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
-            activeFilters = { makes: [], categories: [], engines: [], brands: [], year: null, searchQuery: "", sortBy: 'featured' };
+            activeFilters = { makes: [], categories: [], engines: [], brands: [], year: null, searchQuery: "", sortBy: 'best' };
             activeVehicle = null;
             sessionStorage.removeItem('lab_active_vehicle');
             renderPackageBanner();
@@ -1095,7 +1095,11 @@ function renderProducts() {
         
         const sortBy = activeFilters.sortBy || 'featured';
         
-        if (sortBy === 'featured') {
+        if (sortBy === 'best') {
+            // What people have actually bought, with our picks weighted in so a good part nobody has found yet still surfaces
+            const score = (p) => (p.sold || 0) + (p.pick === 'Top pick' ? 6 : p.pick ? 3 : 0);
+            return (score(b) - score(a)) || (Number(b.isPopular) - Number(a.isPopular)) || a.name.localeCompare(b.name);
+        } else if (sortBy === 'featured') {
             if (a.isPopular && !b.isPopular) return -1;
             if (!a.isPopular && b.isPopular) return 1;
             return 0;
@@ -1159,7 +1163,7 @@ function renderProducts() {
         return `
         <article class="pcard">
             <a href="${productUrl}" class="pcard-img" tabindex="-1" aria-hidden="true">
-                ${p.isPopular ? '<span class="pcard-tag">Popular</span>' : ''}
+                ${p.badge ? `<span class="pcard-tag${p.pick ? ' pcard-tag--pick' : ''}">${p.badge}</span>` : ''}
                 <img src="${p.image}" alt="" loading="lazy">
             </a>
             <div class="pcard-body">
@@ -1382,6 +1386,7 @@ function initPDP() {
                         </div>
                         ` : ''}
                         ${fitmentBadge}
+                        ${product.pick ? `<p class="pdp-pick"><b>${product.pick}.</b> ${product.pickWhy}</p>` : ''}
                     </div>
                     <div class="mb-6 lg:mb-8">
                         <p class="text-2xl font-extrabold text-white" data-price-cad="${product.price}" data-variant-id="${product.variantId || ''}">$${product.price.toFixed(2)} CAD</p>
