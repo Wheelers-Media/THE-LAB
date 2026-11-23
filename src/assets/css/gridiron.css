@@ -118,6 +118,8 @@
 .gx-bf-deals li { display:grid; grid-template-columns:auto 1fr; column-gap:var(--sp-3); align-items:baseline; padding:var(--sp-4); background:var(--ink); border:1px solid var(--line); }
 .gx-bf-free { grid-row:span 2; align-self:center; padding:6px 10px; background:var(--amber); color:#000; font:800 13px/1 'Barlow',sans-serif; letter-spacing:.1em; text-transform:uppercase; }
 .gx-bf-deals b { color:var(--text); font:700 20px/1.2 'Barlow',sans-serif; }
+.gx-bf-deals b a { color:inherit; text-decoration:none; border-bottom:1px solid var(--amber); }
+.gx-bf-deals b a:hover { color:var(--amber); }
 .gx-bf-deals em { color:var(--mute); font-style:normal; font-size:14px; line-height:1.4; }
 .gx-bf-val { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:var(--sp-3); margin:0 0 var(--sp-5); padding:var(--sp-4); border:1px dashed var(--amber); }
 .gx-bf-val p { margin:0; }
