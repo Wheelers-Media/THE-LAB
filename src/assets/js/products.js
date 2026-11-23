@@ -507,6 +507,34 @@ function buildFilterOptions(catalog) {
 const LAB_CHECKOUT_CODES = [
     { code: 'POLARBF15', from: '2026-11-23T00:00:00-07:00', to: '2026-12-04T23:59:59-07:00' }
 ];
+// ── Sale tags on product cards and product pages ────────────────
+// Mirrors the Shopify discounts above so shoppers see the sale before checkout: every Polar Diesel product (vendor)
+// is 15% off, except the billet parts in the Shopify collection "Polar Diesel billet (5% max)", which are 5% off.
+// That collection is not published to the storefront, so its handles are listed here: keep them in step with Shopify.
+// Preview another date on a Vercel preview (not thelabfsj.ca) with ?promo-date=2026-11-24T09:00
+const LAB_SALE = {
+    vendor: 'Polar Diesel', label: 'Black Friday', pct: 15, billetPct: 5,
+    from: '2026-11-23T00:00:00-07:00', to: '2026-12-04T23:59:59-07:00',
+    billet: ['2017-2026-duramax-6-6l-intake-resonator-delete-plug', '2023-2026-powerstroke-6-7l-high-output-coolant-caps',
+        'polar-diesel-sotf-switch-bracket-2023-2026-6-7l-powerstroke', 'polar-diesel-1-8th-npt-plug',
+        'polar-diesel-egt-probe-adapter-fitting', 'polar-diesel-venturi', '2000-2025-duramax-6-6l-firewall-coolant-fitting']
+};
+function labSaleNow() {
+    try {
+        const d = new URLSearchParams(location.search).get('promo-date');
+        if (d && !/(^|\.)thelabfsj\.ca$/.test(location.hostname)) return Date.parse(d + (/[zZ]|[+-]\d\d:?\d\d$/.test(d) ? '' : '-07:00'));
+    } catch (e) { /* fall through */ }
+    return Date.now();
+}
+// Returns { pct, text } for a product on sale now, or null.
+window.labSaleFor = function (p) {
+    if (!p || (p.vendor || '') !== LAB_SALE.vendor) return null;
+    const now = labSaleNow();
+    if (now < Date.parse(LAB_SALE.from) || now > Date.parse(LAB_SALE.to)) return null;
+    const pct = LAB_SALE.billet.includes(p.handle) ? LAB_SALE.billetPct : LAB_SALE.pct;
+    return { pct, text: LAB_SALE.label + ': ' + pct + '% off at checkout' };
+};
+
 function labCheckoutCodes() {
     const now = Date.now();
     const codes = LAB_CHECKOUT_CODES.filter(c => now >= Date.parse(c.from) && now <= Date.parse(c.to)).map(c => c.code);
