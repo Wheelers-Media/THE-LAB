@@ -1259,3 +1259,16 @@ body:has(.pdp-sticky:not([hidden])) .te-fab { bottom:88px; }
 /* SEO: keyword line inside the H1, styled as the page kicker */
 .lab-page .hero-kick { display:block; font-family:'Barlow',system-ui,sans-serif; line-height:1.4; margin-bottom:14px; }
 .lab-page .h1-place { display:block; font-size:.42em; line-height:1.1; margin-top:.35em; color:var(--mute); }
+
+/* CFMOTO bumper cards (Gridiron and SxS pages) */
+.cfm { margin-top:var(--section-y); }
+.cfm-logo { display:block; width:auto; height:44px; margin:0 0 var(--sp-4); }
+.cfm-grid { display:grid; gap:var(--sp-3); margin:var(--sp-5) 0 var(--sp-4); }
+.cfm-card { background:var(--panel); border:1px solid var(--line); }
+.cfm-img { display:block; border-top:3px solid var(--amber); }
+.cfm-img img { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; }
+.cfm-body { padding:var(--sp-4); }
+.cfm-body h3 { margin:0 0 var(--sp-2); font-size:var(--fs-h3); }
+.cfm-fit { margin:0 0 var(--sp-2); color:var(--mute); font-size:15px; }
+.cfm-price { margin:0 0 var(--sp-4); color:var(--text); font:700 22px/1.2 'Barlow',sans-serif; }
+@media (min-width:700px) { .cfm-grid { grid-template-columns:1fr 1fr; gap:var(--sp-4); } }
