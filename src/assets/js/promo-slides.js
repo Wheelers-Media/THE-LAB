@@ -34,7 +34,7 @@
         // rank orders the slides (lowest first). A slide with no version for "now" is left out.
         slides: [
             {
-                id: 'polar', bay: 'parts', ghost: 'Black Friday', big: '15%', bigLabel: 'off Polar online', img: '/assets/promo-polar.jpg', alt: 'Polished stainless diesel exhaust pipes laid out under white hex lights at THE LAB',
+                id: 'polar', bay: 'parts', focus: '40% 50%', ghost: 'Black Friday', big: '15%', bigLabel: 'off Polar online', img: '/assets/promo-polar.jpg', alt: 'Polished stainless diesel exhaust pipes laid out under white hex lights at THE LAB',
                 versions: [
                     {   // teaser: from now until the sale opens
                         to: 'polar.start', rank: 1,
@@ -68,7 +68,7 @@
                 ]
             },
             {
-                id: 'power', bay: 'parts', ghost: 'Tuned', img: '/assets/promo-power.jpg', alt: 'THE LAB tuner working on a laptop calibration inside a Ford Super Duty',
+                id: 'power', bay: 'parts', focus: '81% 40%', ghost: 'Tuned', img: '/assets/promo-power.jpg', alt: 'THE LAB tuner working on a laptop calibration inside a Ford Super Duty',
                 versions: [
                     {   // the $100 bonus was dropped (Eric and Christine, 2026-11-19)
                         rank: 2,
@@ -81,7 +81,7 @@
                 ]
             },
             {
-                id: 'winter', bay: 'boutique', ghost: 'Detailed', img: '/assets/promo-winter.jpg', alt: 'Black Chevrolet Silverado being washed under white hex lights in THE LAB detailing bay',
+                id: 'winter', bay: 'boutique', focus: '100% 50%', ghost: 'Detailed', img: '/assets/promo-winter.jpg', alt: 'Black Chevrolet Silverado being washed under white hex lights in THE LAB detailing bay',
                 versions: [
                     {   // Eric, 2026-11-19: Bio Bomb for $50 with a De-Luxx Interior booked by Dec 4
                         to: 'polar.end', rank: 3,
@@ -105,7 +105,7 @@
                 ]
             },
             {
-                id: 'gift', bay: 'boutique', ghost: 'Gift', img: '/assets/promo-gift.jpg', alt: 'THE LAB shop at dusk with a lifted GMC, a Ford pickup, an SUV and a side-by-side parked out front',
+                id: 'gift', bay: 'boutique', focus: '0% 50%', ghost: 'Gift', img: '/assets/promo-gift.jpg', alt: 'THE LAB shop at dusk with a lifted GMC, a Ford pickup, an SUV and a side-by-side parked out front',
                 versions: [
                     {
                         from: 'polar.start', to: '2026-12-24T23:59:59-07:00', rank: 4,
@@ -118,7 +118,7 @@
                 ]
             },
             {
-                id: 'gridiron', bay: 'parts', ghost: 'Black Friday', big: '$1', bigLabel: 'Speed Demon lights', img: '/assets/promo-gridiron.jpg', alt: 'White Ford Super Duty with a Gridiron steel front bumper and winch parked outside THE LAB',
+                id: 'gridiron', bay: 'parts', focus: '62% 50%', ghost: 'Black Friday', big: '$1', bigLabel: 'Speed Demon lights', img: '/assets/promo-gridiron.jpg', alt: 'White Ford Super Duty with a Gridiron steel front bumper and winch parked outside THE LAB',
                 versions: [
                     {   // teaser: from now until Gridiron's Black Friday opens
                         to: 'polar.start', rank: 2.5,
@@ -190,7 +190,7 @@
             '<li class="promo-chip promo-hide" data-handle="' + p.handle + '"><a href="/store/parts/' + p.handle + '/"><span class="promo-chip-name">' + p.name + '</span><span class="promo-chip-price"></span><span class="promo-chip-tag"></span></a></li>').join('') + '</ul>' : '';
         const clock = s.clock ? '<p class="promo-clock" data-clock="' + t(s.clock.to) + '"><small>' + s.clock.label + '</small><span aria-hidden="true"></span><span class="sr-only"></span></p>' : '';
         return '<div class="promo-slide promo-slide--' + s.bay + '"' + (s.bay === 'boutique' ? ' data-cad-only' : '') + ' role="group" aria-roledescription="slide" aria-label="' + (i + 1) + ' of ' + total + '" id="promo-' + s.id + '">' +
-            '<div class="promo-media"><img src="' + s.img + '" width="1024" height="576" alt="' + s.alt + '"' + (i ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
+            '<div class="promo-media"><img src="' + s.img + '" width="1024" height="576"' + (s.focus ? ' style="--focus:' + s.focus + '"' : '') + ' alt="' + s.alt + '"' + (i ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
                 (s.ghost ? '<span class="promo-ghost" aria-hidden="true">' + s.ghost + '</span>' : '') +
                 (s.big ? '<p class="promo-big" aria-hidden="true"><b>' + s.big + '</b><span>' + s.bigLabel + '</span></p>' : '') + '</div>' +
             '<div class="promo-body">' +
