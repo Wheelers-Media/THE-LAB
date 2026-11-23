@@ -34,7 +34,7 @@
         // rank orders the slides (lowest first). A slide with no version for "now" is left out.
         slides: [
             {
-                id: 'polar', bay: 'parts', img: '/assets/promo-polar.jpg', alt: 'Polished stainless diesel exhaust pipes laid out under white hex lights at THE LAB',
+                id: 'polar', bay: 'parts', ghost: 'Black Friday', big: '15%', bigLabel: 'off Polar online', img: '/assets/promo-polar.jpg', alt: 'Polished stainless diesel exhaust pipes laid out under white hex lights at THE LAB',
                 versions: [
                     {   // teaser: from now until the sale opens
                         to: 'polar.start', rank: 1,
@@ -68,7 +68,7 @@
                 ]
             },
             {
-                id: 'power', bay: 'parts', img: '/assets/promo-power.jpg', alt: 'THE LAB tuner working on a laptop calibration inside a Ford Super Duty',
+                id: 'power', bay: 'parts', ghost: 'Tuned', img: '/assets/promo-power.jpg', alt: 'THE LAB tuner working on a laptop calibration inside a Ford Super Duty',
                 versions: [
                     {   // the $100 bonus was dropped (Eric and Christine, 2026-11-19)
                         rank: 2,
@@ -81,7 +81,7 @@
                 ]
             },
             {
-                id: 'winter', bay: 'boutique', img: '/assets/promo-winter.jpg', alt: 'Black Chevrolet Silverado being washed under white hex lights in THE LAB detailing bay',
+                id: 'winter', bay: 'boutique', ghost: 'Detailed', img: '/assets/promo-winter.jpg', alt: 'Black Chevrolet Silverado being washed under white hex lights in THE LAB detailing bay',
                 versions: [
                     {   // Eric, 2026-11-19: Bio Bomb for $50 with a De-Luxx Interior booked by Dec 4
                         to: 'polar.end', rank: 3,
@@ -105,7 +105,7 @@
                 ]
             },
             {
-                id: 'gift', bay: 'boutique', img: '/assets/promo-gift.jpg', alt: 'THE LAB shop at dusk with a lifted GMC, a Ford pickup, an SUV and a side-by-side parked out front',
+                id: 'gift', bay: 'boutique', ghost: 'Gift', img: '/assets/promo-gift.jpg', alt: 'THE LAB shop at dusk with a lifted GMC, a Ford pickup, an SUV and a side-by-side parked out front',
                 versions: [
                     {
                         from: 'polar.start', to: '2026-12-24T23:59:59-07:00', rank: 4,
@@ -118,7 +118,7 @@
                 ]
             },
             {
-                id: 'gridiron', bay: 'parts', img: '/assets/promo-gridiron.jpg', alt: 'White Ford Super Duty with a Gridiron steel front bumper and winch parked outside THE LAB',
+                id: 'gridiron', bay: 'parts', ghost: 'Black Friday', big: '$1', bigLabel: 'Speed Demon lights', img: '/assets/promo-gridiron.jpg', alt: 'White Ford Super Duty with a Gridiron steel front bumper and winch parked outside THE LAB',
                 versions: [
                     {   // teaser: from now until Gridiron's Black Friday opens
                         to: 'polar.start', rank: 2.5,
@@ -180,6 +180,9 @@
         }).filter(Boolean).sort((a, b) => a.rank - b.rank);
     }
 
+    // numbers, prices and dates in a headline pick up the bay colour so the offer reads first
+    const hl = (t) => String(t || '').replace(/(\$\d[\d,.]*|\d+%|(?:Nov|Dec)(?:ember)? \d+|free|Free)/g, '<span class="hl">$1</span>');
+
     function slideHTML(s, i, total) {
         const ctas = (s.ctas || []).map((c, k) => '<a class="btn ' + (k ? 'btn-ghost' : 'btn-primary') + '" href="' + c[1] + '"' +
             (/^https?:/.test(c[1]) ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + c[0] + '</a>').join('');
@@ -187,10 +190,12 @@
             '<li class="promo-chip promo-hide" data-handle="' + p.handle + '"><a href="/store/parts/' + p.handle + '/"><span class="promo-chip-name">' + p.name + '</span><span class="promo-chip-price"></span><span class="promo-chip-tag"></span></a></li>').join('') + '</ul>' : '';
         const clock = s.clock ? '<p class="promo-clock" data-clock="' + t(s.clock.to) + '"><small>' + s.clock.label + '</small><span aria-hidden="true"></span><span class="sr-only"></span></p>' : '';
         return '<div class="promo-slide promo-slide--' + s.bay + '"' + (s.bay === 'boutique' ? ' data-cad-only' : '') + ' role="group" aria-roledescription="slide" aria-label="' + (i + 1) + ' of ' + total + '" id="promo-' + s.id + '">' +
-            '<div class="promo-media"><img src="' + s.img + '" width="1024" height="576" alt="' + s.alt + '"' + (i ? ' loading="lazy"' : ' fetchpriority="high"') + '></div>' +
+            '<div class="promo-media"><img src="' + s.img + '" width="1024" height="576" alt="' + s.alt + '"' + (i ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
+                (s.ghost ? '<span class="promo-ghost" aria-hidden="true">' + s.ghost + '</span>' : '') +
+                (s.big ? '<p class="promo-big" aria-hidden="true"><b>' + s.big + '</b><span>' + s.bigLabel + '</span></p>' : '') + '</div>' +
             '<div class="promo-body">' +
                 '<p class="promo-eyebrow">' + s.eyebrow + '</p>' +
-                '<p class="display promo-title">' + fill(s.title) + '</p>' +
+                '<p class="display promo-title">' + hl(fill(s.title)) + '</p>' +
                 clock +
                 '<p class="promo-text">' + fill(s.text) + '</p>' +
                 chips +
@@ -274,7 +279,7 @@
         let cur = 0, idleUntil = 0, hold = false, away = false;
 
         const go = (i) => { cur = (i + count) % count; track.scrollTo({ left: slides[cur].offsetLeft, behavior: reduced ? 'auto' : 'smooth' }); };
-        const mark = (i) => { cur = i; dots.forEach((d, k) => d.setAttribute('aria-current', String(k === i))); };
+        const mark = (i) => { cur = i; dots.forEach((d, k) => d.setAttribute('aria-current', String(k === i))); slides.forEach((s, k) => s.classList.toggle('is-current', k === i)); };
         const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && e.intersectionRatio > 0.6) mark(slides.indexOf(e.target)); }), { root: track, threshold: [0.6] });
         slides.forEach((s) => io.observe(s));
 
