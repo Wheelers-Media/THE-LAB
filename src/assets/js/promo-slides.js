@@ -124,7 +124,7 @@
                         to: 'polar.start', rank: 2.5,
                         eyebrow: 'Gridiron Black Friday &middot; Starts Nov 23',
                         title: 'Free Speed Demon lights with your Gridiron bumper.',
-                        text: 'Starting November 23: a free light bar with a front bumper, pods with Street Series, scene lights with a rear bumper, plus 25% off valances. {gridiron}',
+                        text: 'Starting November 23: a free light bar with a front bumper, pods with Street Series, scene lights with a rear bumper, plus 25% off valances with $1 shipping. {gridiron}',
                         ctas: [['See the deals', '/gridiron/#black-friday'], ['See Gridiron', '/gridiron/']],
                         fine: 'Wiring harness not included. Installs at our $125/hr shop rate.'
                     },
@@ -132,7 +132,7 @@
                         from: 'polar.start', to: 'polar.end', rank: 2.5,
                         eyebrow: 'Gridiron Black Friday &middot; Nov 23 to Dec 4',
                         title: 'Free Speed Demon lights with your Gridiron bumper.',
-                        text: 'A free 30&quot; Hi-Lux 2.0 light bar with an OG front bumper, free pods with Street Series, free scene lights with a rear bumper. Valances are 25% off with code VAL25. {gridiron}',
+                        text: 'A free 30&quot; Hi-Lux 2.0 light bar with an OG front bumper, free pods with Street Series, free scene lights with a rear bumper. Valances are 25% off with code VAL25, and ship for $1. {gridiron}',
                         ctas: [['See the deals', '/gridiron/#black-friday'], ['Get a bumper quote', '/contact/?form=build&service=Bumpers%20%26%20Accessories#form']],
                         fine: 'Wiring harness not included. Lights are added to your bumper order. Installs at our $125/hr shop rate. Ends December 4 at 11:59 p.m. MT.'
                     },
