@@ -65,6 +65,10 @@ function addToCart(productId, quantity = 1, customAttributes = {}, variantOverri
     }
     saveCart();
     openCart();
+    if (window.labTrack) window.labTrack('AddToCart', {
+        content_ids: [String(resolvedVariantId).split('/').pop()], content_name: resolvedTitle, content_type: 'product',
+        value: Number(resolvedPrice) * quantity || 0, currency: 'CAD'
+    });
 }
 
 function removeFromCart(cartItemId) {
@@ -1173,6 +1177,7 @@ function renderProducts() {
                 <div class="pcard-foot">
                     <div>
                         <span class="pcard-price" data-price-cad="${p.price}" data-variant-id="${p.variantId || ''}">$${p.price.toFixed(2)} CAD</span>
+                        ${(() => { const s = window.labSaleFor && window.labSaleFor(p); return s ? `<p class="pcard-sale">${s.text}</p>` : ''; })()}
                         ${(() => {
                             if (p.price >= 50 && p.price <= 30000) {
                                 let msg = "";
@@ -1390,6 +1395,7 @@ function initPDP() {
                     </div>
                     <div class="mb-6 lg:mb-8">
                         <p class="text-2xl font-extrabold text-white" data-price-cad="${product.price}" data-variant-id="${product.variantId || ''}">$${product.price.toFixed(2)} CAD</p>
+                        ${(() => { const s = window.labSaleFor && window.labSaleFor(product); return s ? `<p class="pdp-sale">${s.text}. No code needed.</p>` : ''; })()}
                         <div id="pdp-affirm-container" class="flex items-center gap-2 mt-3 text-[13px] text-zinc-300 bg-[#1a1a24] border border-edge rounded-lg py-2 px-3 inline-flex ${product.price >= 50 && product.price <= 30000 ? '' : 'hidden'}">
                             <span data-affirm-cad-total="${product.price}">${shopPayMessaging || 'Calculating...'}</span>
                             <img src="/assets/affirm-logo.png" alt="Affirm" class="h-4 w-auto object-contain flex-shrink-0">

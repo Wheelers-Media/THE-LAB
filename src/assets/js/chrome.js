@@ -1,5 +1,18 @@
 // Shared site chrome behaviour: currency toggle, mobile menu, cart badge, current-page highlight.
 // Loaded (not deferred) in <head> on every page so window.setCurrency exists before the service-page builders wrap it.
+// ── Meta pixel ───────────────────────────────────────────────────────────────
+// Dataset "666" (THE LAB) in Eric's Meta Business account. PageView on every page; AddToCart fires from store.js
+// and the diesel builder through window.labTrack. Shopify's Facebook & Instagram channel sends InitiateCheckout and
+// Purchase from checkout on the same pixel, so they are not fired here (no double counting).
+!function (f, b, e, v, n, t, s) {
+    if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+    if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+    t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+}(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '697977501958056');
+fbq('track', 'PageView');
+window.labTrack = function (event, data) { try { window.fbq && window.fbq('track', event, data || {}); } catch (e) { /* tracking never breaks the page */ } };
+
 (function () {
     'use strict';
 

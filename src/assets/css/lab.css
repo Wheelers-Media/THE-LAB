@@ -603,6 +603,8 @@ body:has(.wz-nav) a[aria-label^="Text us"] span:first-of-type { display:none; }
 .pcard-fit { margin:0 0 12px; color:var(--mute); font-size:13.5px; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .pcard-foot { margin-top:auto; display:flex; align-items:flex-end; justify-content:space-between; gap:10px; }
 .pcard-price { color:var(--text); font:800 20px/1 'Barlow',sans-serif; }
+.pcard-sale { margin:8px 0 0; color:var(--amber); font:800 12px/1.2 'Barlow',sans-serif; letter-spacing:.06em; text-transform:uppercase; }
+.pdp-sale { margin:8px 0 0; color:var(--amber); font:800 14px/1.3 'Barlow',sans-serif; letter-spacing:.06em; text-transform:uppercase; }
 .pcard-affirm { margin-top:8px; color:var(--mute); font-size:12px; line-height:1.3; }
 .pcard-affirm strong { color:var(--text); }
 .pcard-affirm img { display:inline-block; height:11px; width:auto; margin-left:4px; background:none; filter:brightness(0) invert(1); opacity:.7; }
