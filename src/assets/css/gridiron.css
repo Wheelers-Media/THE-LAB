@@ -92,7 +92,18 @@
 .gx-list li { max-width:70ch; padding:var(--sp-3) 0; border-bottom:1px solid var(--line); }
 .gx-install p { max-width:58ch; margin:0 0 var(--sp-5); }
 
+.gx-install-grid { display:grid; gap:var(--sp-6); }
+.gx-video { margin:0; max-width:340px; border-top:3px solid var(--amber); }
+.gx-video video { display:block; width:100%; height:auto; aspect-ratio:9/16; background:#000; }
+.gx-video figcaption { margin-top:var(--sp-2); font-size:13.5px; color:var(--muted); }
+.gx-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-2); margin-top:var(--sp-7); }
+.gx-strip figure { margin:0; }
+.gx-strip img { width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; display:block; }
+.gx-strip figcaption { margin-top:var(--sp-1); font-size:13.5px; color:var(--muted); }
+
 @media (min-width:900px) {
+    .gx-install-grid { grid-template-columns:1fr 340px; gap:var(--sp-8); align-items:start; }
+    .gx-strip { gap:var(--sp-4); }
     .gx-proof { grid-template-columns:repeat(4,1fr); }
     .gx-proof li { border-top:0; border-right:1px solid var(--line); }
     .gx-proof li:nth-child(2n) { border-right:1px solid var(--line); }
