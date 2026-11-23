@@ -105,6 +105,20 @@
                 ]
             },
             {
+                // Eric, 2026-11-23: code FULLDELETE10 at the till, 10% off a detail or tint for full-delete customers. No end date.
+                id: 'fulldelete', bay: 'boutique', focus: '18% 45%', ghost: 'Thank you', big: '10%', bigLabel: 'off a detail or tint', img: '/assets/boutique-tinting.jpg', alt: 'THE LAB technician fitting window tint film to a truck door in the hex-lit tint bay',
+                versions: [
+                    {
+                        rank: 3.5,
+                        eyebrow: 'The Boutique &middot; Full-delete customers',
+                        title: 'Full delete with us? 10% off your next detail or tint.',
+                        text: 'Interior, exterior or complete detailing, or carbon and ceramic window tint. Mention your build when you book and we take 10% off at the till.',
+                        ctas: [['Book a detail', '/contact/?service=Premium%20Detailing#form'], ['Get a tint quote', '/contact/?service=Window%20Tinting#form']],
+                        fine: 'For customers who had a full delete done at THE LAB. Applied in the shop. ' + OFFROAD
+                    }
+                ]
+            },
+            {
                 id: 'gift', bay: 'boutique', focus: '0% 50%', ghost: 'Gift', img: '/assets/promo-gift.jpg', alt: 'THE LAB shop at dusk with a lifted GMC, a Ford pickup, an SUV and a side-by-side parked out front',
                 versions: [
                     {
